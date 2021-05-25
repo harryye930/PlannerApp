@@ -1,6 +1,6 @@
 A. The preferred method of communication that your team will use outside of meetings
    (examples: discord, wechat, group emails, etc)
-   WhatsApp
+   WhatsApp, Zoom
 B. How frequently is everyone expected to check and respond to messages? Within 48 hours?
    At least every Monday, Wednesday, and Friday?
    Within 24 hours
@@ -35,8 +35,8 @@ G. Is there anything else that your team has agreed on? If not, you can just wri
     - add comments regularly and clearly
     - use of variable names (common and straightforward variable names that make sense to most people)
     - stick to clean architecture principles (textbook)
-    - try to avoid the use of things that aren't really taught in class unless it's super important (but make sure to
-      add comments and references)
+    - try to avoid the use of things that aren't really taught in class unless it's super important, so that it would be
+     easier for others to understand your code (but make sure to add comments and references)
 - code review
     - when people work together (in a zoom call for example), they can ensure the code quality
     - to be discussed more when we have the project and the deadline
