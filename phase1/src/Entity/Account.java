@@ -18,7 +18,7 @@ public class Account implements InterfaceInfo{
     private String[] header;
     private ArrayList<String[]> data = new ArrayList<>();
 
-    Account() {
+    public Account() {
         this.isAdmin = false;
     }
 
