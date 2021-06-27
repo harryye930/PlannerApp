@@ -20,6 +20,7 @@ public class Account implements InterfaceInfo{
 
     public Account() {
         this.isAdmin = false;
+        this.userId = ((Integer) this.hashCode()).toString();
     }
 
     public String getUserId() {
