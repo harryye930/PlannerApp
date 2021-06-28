@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
 
 /**
  * A instance of this class represent a account of this application.
@@ -15,12 +16,32 @@ public class Account implements InterfaceInfo{
     private String userName;
     private String userId;
     private String password;
-    private String[] header;
-    private ArrayList<String[]> data = new ArrayList<>();
+    protected String[] header;
+    protected ArrayList<String[]> data = new ArrayList<>();
+    protected String file_path;
 
     public Account() {
         this.isAdmin = false;
         this.userId = ((Integer) this.hashCode()).toString();
+    }
+
+    public String getInterfaceInfo(Integer stage) {
+        int index = this.find(this.header, "stage");
+        int info_index = this.find(this.header, "text");
+        for (String[] info: this.data) {
+            if (info[index].equals(stage.toString())) {
+                return info[info_index];
+            }
+        }
+        return "information not found, please try again.";
+    }
+
+    public String[] getInterfaceInfo() {
+        String[] result = new String[data.size()];
+        for (int i = 0; i < this.data.size(); i++) {
+            result[i] = this.getInterfaceInfo(i);
+        }
+        return result;
     }
 
     public String getUserId() {
@@ -47,14 +68,13 @@ public class Account implements InterfaceInfo{
         return this.isAdmin;
     }
 
-    @Override
-    public void read_csv(String file_path) {
+    protected void read_csv(String file_path) {
         File file = new File(file_path);
         try {
             if (file.createNewFile()) {
                 // The file hasn't already be created before this execution.
                 // Initialize the csv file.
-                String[] head = {"object", "kind", "widget", "info", "account", "stage"};
+                String[] head = {"object", "kind", "widget", "text", "account", "stage"};
                 this.header = head;
                 FileWriter csvFile = new FileWriter(file);
                 int i = 0;
@@ -95,6 +115,16 @@ public class Account implements InterfaceInfo{
             this.data.add(row.split(","));
         }
         scanner.close();
+    }
+
+    protected int find(String[] lst, String item) {
+        // return the index of the item in the list, -1 if not found.
+        for (int i = 0; i < lst.length; i++) {
+            if (lst[i].equals(item)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 }
