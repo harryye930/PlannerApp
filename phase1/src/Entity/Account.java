@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.List;
 
 /**
  * A instance of this class represent a account of this application.
@@ -25,6 +24,7 @@ public class Account implements InterfaceInfo{
         this.userId = ((Integer) this.hashCode()).toString();
     }
 
+    @Override
     public String getInterfaceInfo(Integer stage) {
         int index = this.find(this.header, "stage");
         int info_index = this.find(this.header, "text");

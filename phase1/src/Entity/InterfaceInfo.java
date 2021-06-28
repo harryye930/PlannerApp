@@ -2,7 +2,7 @@ package Entity;
 
 public interface InterfaceInfo {
 
-    //read csv file.
-    void read_csv(String file_path);
+    // get the interface information needed for text UI.
+    String getInterfaceInfo(Integer stage);
 
 }
