@@ -1,5 +1,7 @@
 package Entity;
 
+import java.sql.Time;
+
 public class ChronologyPlanner extends Planner {
     /**
      * Show the current planner
@@ -18,6 +20,27 @@ public class ChronologyPlanner extends Planner {
      */
     @Override
     public Boolean Add(String s) {
+        return null;
+    }
+
+    /**
+     * @param i index of new agenda item
+     * @param s content of new item
+     * @return true iff the agenda is correctly added
+     */
+    @Override
+    public Boolean Add(int i, String s) {
+        return null;
+    }
+
+    /**
+     * @param t the start time of this agenda item
+     * @param i the duration of this agenda item
+     * @param s the content of the agenda item
+     * @return true iff the agenda is correctly added
+     */
+    @Override
+    public Boolean Add(Time t, int i, String s) {
         return null;
     }
 
