@@ -17,7 +17,7 @@ public class ChronologyPlanner extends Planner {
      * @return true iff the agenda is correctly added to current planner
      */
     @Override
-    public Boolean Add() {
+    public Boolean Add(String s) {
         return null;
     }
 
@@ -27,7 +27,7 @@ public class ChronologyPlanner extends Planner {
      * @return true iff the agenda is correctly edited on current planner
      */
     @Override
-    public Boolean Edit() {
+    public Boolean Edit(int i, String s) {
         return null;
     }
 
@@ -37,7 +37,7 @@ public class ChronologyPlanner extends Planner {
      * @return true iff the agenda is correctly deleted from current planner
      */
     @Override
-    public boolean Delete() {
+    public boolean Delete(int i) {
         return false;
     }
 }

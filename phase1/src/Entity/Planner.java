@@ -6,26 +6,27 @@ package Entity;
 
 public abstract class Planner {
 
-    /** Show the current planner
+
+    /** show the current planner
      * @return a string represent this planner's content
      */
-    public abstract String Display();
+    public abstract Object Display();
 
 
     /** add agenda to current planner
      * @return true iff the agenda is correctly added to current planner
      */
-    public abstract Boolean Add();
+    public abstract Boolean Add(String s);
 
     /** edit agenda to current planner
      * @return true iff the agenda is correctly edited on current planner
      */
-    public abstract Boolean Edit();
+    public abstract Boolean Edit(int i, String s);
 
     /** delete agenda to current planner
      * @return true iff the agenda is correctly deleted from current planner
      */
-    public abstract boolean Delete();
+    public abstract boolean Delete(int i);
 
 
 
