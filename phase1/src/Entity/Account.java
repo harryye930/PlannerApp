@@ -10,7 +10,7 @@ import java.util.Scanner;
 /**
  * A instance of this class represent a account of this application.
  */
-public class Account implements InterfaceInfo{
+public abstract class Account implements InterfaceInfo{
     private boolean isAdmin;
     private String userName;
     private String userId;
@@ -21,6 +21,11 @@ public class Account implements InterfaceInfo{
 
     public Account() {
         this.isAdmin = false;
+        this.userId = ((Integer) this.hashCode()).toString();
+    }
+
+    public Account(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
         this.userId = ((Integer) this.hashCode()).toString();
     }
 
@@ -64,8 +69,12 @@ public class Account implements InterfaceInfo{
         this.password = password;
     }
 
-    public boolean getIsAdmin() {
-        return this.isAdmin;
+    public boolean IsAdmin() {
+        return false;
+    }
+
+    public boolean IsUser() {
+        return false;
     }
 
     protected void read_csv(String file_path) {
