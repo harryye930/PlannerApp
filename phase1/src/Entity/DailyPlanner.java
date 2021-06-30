@@ -28,7 +28,7 @@ public class DailyPlanner extends Planner {
      * @param s content of new item
      * @return true iff the agenda is correctly added
      */
-    @Override
+
     public Boolean Add(int i, String s) {
         return null;
     }
@@ -39,7 +39,7 @@ public class DailyPlanner extends Planner {
      * @param s the content of the agenda item
      * @return true iff the agenda is correctly added
      */
-    @Override
+
     public Boolean Add(Time t, int i, String s) {
         return null;
     }
