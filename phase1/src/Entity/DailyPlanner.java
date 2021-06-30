@@ -2,7 +2,7 @@ package Entity;
 
 import java.sql.Time;
 
-public class ChronologyPlanner extends Planner {
+public class DailyPlanner extends Planner {
     /**
      * Show the current planner
      *

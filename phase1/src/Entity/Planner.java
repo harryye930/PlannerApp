@@ -22,22 +22,7 @@ public abstract class Planner {
      */
     public abstract Boolean Add(String s);
 
-    /**
-     *
-     * @param i index of new agenda item
-     * @param s content of new item
-     * @return true iff the agenda is correctly added
-     */
-    public abstract Boolean Add(int i, String s);
 
-    /**
-     *
-     * @param t the start time of this agenda item
-     * @param i the duration of this agenda item
-     * @param s the content of the agenda item
-     * @return true iff the agenda is correctly added
-     */
-    public abstract Boolean Add(Time t, int i, String s);
 
     /** edit agenda to current planner
      * @param i index of the agenda user wish to edit

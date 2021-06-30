@@ -2,9 +2,9 @@ package Entity;
 import java.sql.Time;
 import java.util.ArrayList;
 
-public class TaskPlanner extends Planner {
+public class ProjectPlanner extends Planner {
     public ArrayList<String> tasks;
-    public TaskPlanner() {
+    public ProjectPlanner() {
         this.tasks = new ArrayList<String>();
     }
 
@@ -37,12 +37,11 @@ public class TaskPlanner extends Planner {
         }
         }
 
-    /**
+    /** add agenda to current planner - index specified
      * @param i index of new agenda item
      * @param s content of new item
      * @return true iff the agenda is correctly added
      */
-    @Override
     public Boolean Add(int i, String s) {
         if (i >= this.tasks.size() - 1){ // if i is over the size limit
             return false;
@@ -53,16 +52,7 @@ public class TaskPlanner extends Planner {
         }
     }
 
-    /**
-     * @param t the start time of this agenda item
-     * @param i the duration of this agenda item
-     * @param s the content of the agenda item
-     * @return true iff the agenda is correctly added
-     */
-    @Override
-    public Boolean Add(Time t, int i, String s) {
-        return null;
-    }
+
 
     /**
      * edit agenda to current planner
