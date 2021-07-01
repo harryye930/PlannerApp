@@ -24,11 +24,6 @@ public abstract class Account implements InterfaceInfo{
         this.userId = ((Integer) this.hashCode()).toString();
     }
 
-    public Account(Boolean isAdmin) {
-        this.isAdmin = isAdmin;
-        this.userId = ((Integer) this.hashCode()).toString();
-    }
-
     @Override
     public String getInterfaceInfo(Integer stage) {
         int index = this.find(this.header, "stage");
@@ -69,12 +64,12 @@ public abstract class Account implements InterfaceInfo{
         this.password = password;
     }
 
-    public boolean IsAdmin() {
-        return false;
+    public boolean getIsAdmin() {
+        return this.isAdmin;
     }
 
-    public boolean IsUser() {
-        return false;
+    public boolean getIsUser() {
+        return this.isAdmin;
     }
 
     protected void read_csv(String file_path) {

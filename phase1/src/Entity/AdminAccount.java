@@ -2,17 +2,18 @@ package Entity;
 
 public class AdminAccount  extends Account {
 
+    private boolean isAdmin;
+
     public AdminAccount() {
-        super(true);
+        super();
+        this.isAdmin = true;
+        super.file_path = "phase1/src/Entity/adminInfo.csv";
+        super.read_csv(super.file_path);
     }
 
     @Override
-    public Boolean isAdmin() {
-        return true;
-    }
-
-    public String getInterfaceInfo(Integer stage) {
-
+    public boolean getIsUser() {
+        return  this.isAdmin;
     }
 
 }

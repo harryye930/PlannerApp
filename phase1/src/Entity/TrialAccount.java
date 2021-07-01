@@ -1,13 +1,21 @@
 package Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TrialAccount extends Account{
+    private final boolean isAdmin;
 
     public TrialAccount() {
         super();
+        this.isAdmin = false;
+        super.file_path = "phase1/src/Entity/regularInfo.csv";
+        super.read_csv(super.file_path);
     }
 
-    public String getInterfaceInfo(Integer stage) {
-
+    @Override
+    public boolean getIsUser() {
+        return  !this.isAdmin;
     }
 
 }
