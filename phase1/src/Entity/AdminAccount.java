@@ -1,8 +1,7 @@
 package Entity;
 
 public class AdminAccount  extends Account {
-
-    private boolean isAdmin;
+    private final boolean isAdmin;
 
     public AdminAccount() {
         super();
