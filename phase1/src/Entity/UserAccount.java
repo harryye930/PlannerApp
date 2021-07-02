@@ -22,6 +22,39 @@ public class UserAccount extends Account {
         super.read_csv(super.file_path);
     }
 
+    public List<Planner> getPlanner() {
+        return this.planners;
+    }
+
+    /**
+     * Add single plan to planners.
+     * @param plan The plan that need to be added.
+     * @return Return true if the plan is successfully added and false if not.
+     */
+    public boolean setPlanners(Planner plan) {
+        if (!this.planners.contains(plan)) {
+            this.planners.add(plan);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *  Add a list of planners to planners.
+     * @param planners the planners that need to be added.
+     * @return Return true if any one of the planner is successfully added.
+     */
+    public boolean setPlanners(ArrayList<Planner> planners) {
+        boolean flag = false;
+        for (Planner planner : planners) {
+            if (!this.planners.contains(planner)) {
+                this.planners.add(planner);
+                flag = true;
+            }
+        }
+        return flag;
+    }
+
     @Override
     public boolean getIsUser() {
         return  !this.isAdmin;
