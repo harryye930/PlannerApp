@@ -1,11 +1,14 @@
 package Entity;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.SplittableRandom;
 
 /**
  * A instance of this class represent a account of this application.
@@ -14,6 +17,7 @@ public abstract class Account implements InterfaceInfo{
     private boolean isAdmin;
     private String userName;
     private String userId;
+    private String email;
     private String password;
     protected String[] header;
     protected ArrayList<String[]> data = new ArrayList<>();
@@ -24,6 +28,11 @@ public abstract class Account implements InterfaceInfo{
         this.userId = ((Integer) this.hashCode()).toString();
     }
 
+    /**
+     * Return the available options for this account at given stage.
+     * @param stage int that represent the phase of the information needed.
+     * @return String that represent the text needed for textUI
+     */
     @Override
     public String getInterfaceInfo(Integer stage) {
         int index = this.find(this.header, "stage");
@@ -36,12 +45,37 @@ public abstract class Account implements InterfaceInfo{
         return "information not found, please try again.";
     }
 
-    public String[] getInterfaceInfo() {
+    @Override
+    public String toString() {
+        String result;
+        String temp;
+        if (this.isAdmin) {
+            temp = "Admin";
+        } else {
+            temp = "Regular";
+        }
+        result = "This is an " + temp + " Account with following information available:\n" +
+                "User Name: " + this.userName + "\n" +
+                "User ID: " + this.userId + "\n" +
+                "User Email" + this.email + "\n";
+        return result;
+    }
+
+    private String[] getInterfaceInfo() {
+        // Return the available options for this account.
         String[] result = new String[data.size()];
         for (int i = 0; i < this.data.size(); i++) {
             result[i] = this.getInterfaceInfo(i);
         }
         return result;
+    }
+
+    public String  getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUserId() {
@@ -73,12 +107,13 @@ public abstract class Account implements InterfaceInfo{
     }
 
     protected void read_csv(String file_path) {
+        // read in the csv file into data attribute.
         File file = new File(file_path);
         try {
             if (file.createNewFile()) {
                 // The file hasn't already be created before this execution.
                 // Initialize the csv file.
-                String[] head = {"object", "kind", "widget", "text", "account", "stage"};
+                String[] head = {"object", "widget", "text", "stage"};
                 this.header = head;
                 FileWriter csvFile = new FileWriter(file);
                 int i = 0;
