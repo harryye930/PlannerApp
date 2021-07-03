@@ -13,10 +13,10 @@ public class ProjectPlanner extends Planner {
      *
      * @return a string represent this planner's content
      */
-    @Override
-    public String Display() {
-        return this.tasks.toString();
-    }
+//    @Override
+//    public String Display() {
+//        return this.tasks.toString();
+//    }
 
     /**
      * add agenda to current planner

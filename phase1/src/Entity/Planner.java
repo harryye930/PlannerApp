@@ -13,7 +13,7 @@ public abstract class Planner {
     /** show the current planner
      * @return a string represent this planner's content
      */
-    public abstract Object Display();
+//    public abstract Object Display();
 
 
     /** add agenda to current planner
