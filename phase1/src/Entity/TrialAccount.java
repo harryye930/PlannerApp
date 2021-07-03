@@ -11,7 +11,7 @@ public class TrialAccount extends Account{
     }
 
     @Override
-    public boolean getIsUser() {
+    public boolean getIsAdmin() {
         return  !this.isAdmin;
     }
 
