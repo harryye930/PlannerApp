@@ -1,30 +1,33 @@
 package Entity;
-import java.sql.Time;
 import java.util.ArrayList;
 
 public class ProjectPlanner extends Planner {
     public ArrayList<String> tasks;
+    public ArrayList<String> taskStatus;
     public ProjectPlanner() {
         this.tasks = new ArrayList<String>();
+        this.taskStatus = new ArrayList<String>();
+
     }
 
-    /**
-     * Show the current planner
+    /** Show the current planner
      *
-     * @return a string represent this planner's content
+     * @return a string representation of this planner's content
      */
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("Project tasks: \n");
-        for (String task : this.tasks) {
-            sb.append(task);
+        for (int i = 0; i < tasks.size(); i++){
+            sb.append(this.tasks.get(i));
+            sb.append("--");
+            sb.append(this.taskStatus.get(i));
             sb.append("\n");
         }
         return sb.toString();
     }
 
-    /**
-     * add agenda to current planner
+    /** Add agenda to current planner
+     *
      * @param s the agenda user wish to add
      * @return true iff the agenda is correctly added to current planner
      */
@@ -38,11 +41,13 @@ public class ProjectPlanner extends Planner {
         }
         else{
             this.tasks.add(s);
+            this.taskStatus.add("not completed");
             return true;
-        }
+            }
         }
 
-    /** add agenda to current planner - index specified
+    /** Add agenda to current planner - index specified
+     *
      * @param i index of new agenda item
      * @param s content of new item
      * @return true iff the agenda is correctly added
@@ -53,19 +58,36 @@ public class ProjectPlanner extends Planner {
         }
         else{
             this.tasks.add(i, s);
+            this.taskStatus.add(i, "not completed");
             return true;
         }
     }
 
+    /** Complete certain agenda item
+     *
+     * @param Agenda: the agenda item to change status to completed
+     * @return true iff the agenda is successfully changed to complete
+     */
+    public Boolean Complete(String Agenda){
+        if (this.tasks.contains(Agenda)){
+            int index = this.tasks.indexOf(Agenda);
+            if (this.taskStatus.get(index).equals("not completed")){
+                this.taskStatus.set(index, "completed");
+                return true;
+            }
+
+        }
+        return false;
+    }
 
 
-    /**
-     * edit agenda to current planner
+    /** Edit agenda to current planner
+     *
      * @param i index of the agenda user wish to edit
      * @param s content of the agenda user wish to edit
      * @return true iff the agenda is correctly edited on current planner
      */
-    //@Override
+    @Override
     public Boolean Edit(int i, String s) {
         if (i >= this.tasks.size() - 1){ // if i is over the size limit
             return false;
@@ -75,12 +97,13 @@ public class ProjectPlanner extends Planner {
         }
         else{
             this.tasks.set(i, s);
+            this.taskStatus.set(i, "not completed");
             return true;
         }
     }
 
-    /**
-     * delete agenda to current planner
+    /** Delete agenda item on current planner
+     *
      *
      * @return true iff the agenda is correctly deleted from current planner
      */
@@ -91,6 +114,7 @@ public class ProjectPlanner extends Planner {
         }
         else{
             this.tasks.remove(i);
+            this.taskStatus.remove(i);
             return true;
         }
     }
