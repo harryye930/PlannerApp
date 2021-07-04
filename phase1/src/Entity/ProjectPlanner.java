@@ -4,9 +4,11 @@ import java.util.ArrayList;
 public class ProjectPlanner extends Planner {
     public ArrayList<String> tasks;
     public ArrayList<String> taskStatus;
+    public String privacyStatus;
     public ProjectPlanner() {
         this.tasks = new ArrayList<String>();
         this.taskStatus = new ArrayList<String>();
+        this.privacyStatus = "private";
 
     }
 
@@ -118,4 +120,30 @@ public class ProjectPlanner extends Planner {
             return true;
         }
     }
-}
+
+    /**
+     * Change the planner's privacy status
+     *
+     *
+     * @return true iff the planner is correctly changed the privacy status
+     */
+    @Override
+    public boolean SetPrivacyStatus(String status) {
+        if (status.equals("public")) {
+            if (this.privacyStatus.equals("private")) {
+                this.privacyStatus = "public";
+                return true;
+            }
+        }
+        else if (status.equals("private")){
+            if (this.privacyStatus.equals("public")){
+                this.privacyStatus = "private";
+                return true;
+            }
+        else {
+            return false;
+            }
+            }
+        return false;
+        }
+    }

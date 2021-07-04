@@ -38,6 +38,13 @@ public abstract class Planner {
      */
     public abstract boolean Delete(int i);
 
+    /** Change the planner's privacy status
+     *
+     * @param status : expected status of this planner: public or private
+     * @return true iff the planner is correctly changed the privacy status
+     */
+    public abstract boolean SetPrivacyStatus(String status);
+
 
 
 }
