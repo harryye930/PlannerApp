@@ -13,10 +13,15 @@ public class ProjectPlanner extends Planner {
      *
      * @return a string represent this planner's content
      */
-//    @Override
-//    public String Display() {
-//        return this.tasks.toString();
-//    }
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Project tasks: \n");
+        for (String task : this.tasks) {
+            sb.append(task);
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 
     /**
      * add agenda to current planner

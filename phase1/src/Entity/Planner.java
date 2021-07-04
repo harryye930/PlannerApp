@@ -13,6 +13,7 @@ public abstract class Planner {
     /** show the current planner
      * @return a string represent this planner's content
      */
+    public abstract String toString();
 //    public abstract Object Display();
 
 

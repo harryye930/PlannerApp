@@ -53,10 +53,11 @@ public class DailyPlanner extends Planner {
      * @return a string represent this planner's content
      */
     @Override
-//    public String Display() {
-//        return "Nah";
-//        // TODO
-//    }
+    public String toString() {
+        String result;
+        result = "Daily tasks: \n";
+        return result;
+    }
 
 
     /**
