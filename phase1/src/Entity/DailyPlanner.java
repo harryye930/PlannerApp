@@ -3,6 +3,8 @@ package Entity;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 public class DailyPlanner extends Planner {
     HashMap<String, String> dailyPlannerTask;
@@ -61,15 +63,43 @@ public class DailyPlanner extends Planner {
 
 
     /**
-     * add agenda to current planner
-     *
+     * add agenda to current planner, if the user does not give a time.
+     * @param s: the content of new agenda item
      * @return true iff the agenda is correctly added to current planner
      */
     @Override
     public Boolean Add(String s) {
         // add task to the available time slot closest to start time and last an hour
         // call overloaded complete add method
-        return false;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+        dtf.format(now);
+        String time = dtf.toString();
+        return this.Add(time, s);
+    }
+
+
+    /**
+     * add agenda to current planner, if the user give a time newStartTime
+     * @param newStartTime: start time for new agenda item
+     * @param s:            content of new agenda item
+     * @return true iff the new agenda is successfully added
+     */
+    public Boolean Add(String newStartTime, String s) {
+        // assume start time and duration on whole clock (10:00, 10:15 ... if interval for daily planner is 15 mins)
+        // check if time slots already occupied, check if start time and end time is within legal time frame
+        // (for phase 2) add warning for double booking
+        // add to agenda
+        int newStartHour = Integer.parseInt(newStartTime.substring(0, 1));
+        int newStartMins = Integer.parseInt(newStartTime.substring(3, 4));
+        if (newStartHour < this.startHour || newStartHour > this.endHour || newStartMins < 0 || newStartMins > 60) {
+            return false;
+        } else {
+            newStartMins = GetCloestMins(newStartMins, this.interval);
+            String newTime = String.format("%d:%d", newStartHour, newStartMins);
+            this.dailyPlannerTask.replace(newTime, s);
+            return true;
+        }
     }
 
     /**
@@ -97,27 +127,6 @@ public class DailyPlanner extends Planner {
     }
 
 
-    /**
-     * @param newStartTime: start time for new agenda item
-     * @param s:            content of new agenda item
-     * @return true iff the new agenda is successfully added
-     */
-    public Boolean Add(String newStartTime, String s) {
-        // assume start time and duration on whole clock (10:00, 10:15 ... if interval for daily planner is 15 mins)
-        // check if time slots already occupied, check if start time and end time is within legal time frame
-        // (for phase 2) add warning for double booking
-        // add to agenda
-        int newStartHour = Integer.parseInt(newStartTime.substring(0, 1));
-        int newStartMins = Integer.parseInt(newStartTime.substring(3, 4));
-        if (newStartHour < this.startHour || newStartHour > this.endHour || newStartMins < 0 || newStartMins > 60) {
-            return false;
-        } else {
-            newStartMins = GetCloestMins(newStartMins, this.interval);
-            String newTime = String.format("%d:%d", newStartHour, newStartMins);
-            this.dailyPlannerTask.replace(newTime, s);
-            return true;
-        }
-    }
 
     public int GetCloestMins(int NewStartMins, int Interval) {
         //new list of all possible mins given ineterval, ie. 0, 5, 10, 15... for interval=5
@@ -164,6 +173,15 @@ public class DailyPlanner extends Planner {
         // delete everything on that time slot, i.e. no option to delete one thing
         // check if is legal time frame
         return Edit(time, "N/A");
+    }
+
+    /**
+     * get the remaining minutes of one agenda
+     *
+     * @return a int iff the agenda is not passed.
+     */
+    public int RemainTime(){
+        //ToDo
     }
 }
 
