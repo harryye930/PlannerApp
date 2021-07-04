@@ -63,4 +63,13 @@ public class AccountManager implements Serializable {
         }
     }
 
+    public void removeAccount(Account account){
+        allAccount.remove(account);
+        idToAccount.values().remove(account);
+    }
+
+    public boolean accountRole(Account account){
+        return account.getIsAdmin();
+    }
+
 }
