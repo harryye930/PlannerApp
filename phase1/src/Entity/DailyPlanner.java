@@ -1,6 +1,5 @@
 package Entity;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.time.format.DateTimeFormatter;
@@ -56,9 +55,15 @@ public class DailyPlanner extends Planner {
      */
     @Override
     public String toString() {
-        String result;
-        result = "Daily tasks: \n";
-        return result;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Daily tasks: \n");
+        for (String time : timesList) {
+            sb.append(time);
+            sb.append(":");
+            sb.append(this.dailyPlannerTask.get(time));
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 
 
