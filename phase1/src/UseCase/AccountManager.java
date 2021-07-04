@@ -9,8 +9,34 @@ import java.util.HashMap;
 import java.util.List;
 
 public class AccountManager implements Serializable {
-    private HashMap<String, Account> idToAccount = new HashMap<>();
-    private ArrayList<Account> allAccount = new ArrayList<>();
+    private HashMap<String, Account> idToAccount;
+    private ArrayList<Account> allAccount;
+
+    public AccountManager(){
+        idToAccount = new HashMap<>();
+        allAccount = new ArrayList<>();
+    }
+
+    public void setUserName(Account account, String userName){
+        account.setUserName(userName);
+    }
+
+    public boolean setPassword(Account account, String enteredPassword, String newPassword){
+        if (enteredPassword.equals(account.getPassword())){
+            account.setPassword(newPassword);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean checkPassword(Account account, String enteredPassword){
+        return account.getPassword().equals(enteredPassword);
+    }
+
+    public Account findAccount(String userId){
+        return idToAccount.getOrDefault(userId, null);
+    }
 
     private void createRegAcc(String email){
         UserAccount newAccount = new UserAccount(email);
