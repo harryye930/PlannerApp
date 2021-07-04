@@ -187,6 +187,9 @@ public class DailyPlanner extends Planner {
      */
     public int RemainTime(){
         //ToDo
+        return -1;
     }
+
+
 }
 

@@ -6,6 +6,7 @@ package Entity;
  */
 
 public abstract class Planner {
+    public String privacyStatus = "private";
 
 
     /** Show the current planner
@@ -38,13 +39,28 @@ public abstract class Planner {
      */
     public abstract boolean Delete(int i);
 
+
     /** Change the planner's privacy status
      *
      * @param status : expected status of this planner: public or private
      * @return true iff the planner is correctly changed the privacy status
      */
-    public abstract boolean SetPrivacyStatus(String status);
-
-
-
+    public boolean SetPrivacyStatus(String status){
+        if (status.equals("public")) {
+            if (this.privacyStatus.equals("private")) {
+                this.privacyStatus = "public";
+                return true;
+            }
+        }
+        else if (status.equals("private")){
+            if (this.privacyStatus.equals("public")){
+                this.privacyStatus = "private";
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        return false;
+    }
 }
