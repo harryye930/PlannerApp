@@ -101,7 +101,7 @@ public class DailyPlanner extends Planner {
         if (newStartHour < this.startHour || newStartHour > this.endHour || newStartMins < 0 || newStartMins > 60) {
             return false;
         } else {
-            newStartMins = GetCloestMins(newStartMins, this.interval);
+            newStartMins = GetClosestMins(newStartMins, this.interval);
             String newTime = String.format("%d:%d", newStartHour, newStartMins);
             this.dailyPlannerTask.replace(newTime, s);
             return true;
@@ -156,8 +156,14 @@ public class DailyPlanner extends Planner {
     }
 
 
-
-    public int GetCloestMins(int NewStartMins, int Interval) {
+    /**
+     * take the new agenda start time to the closest minutes based on the interval
+     *
+     * @param NewStartMins the start time for a agenda
+     * @param Interval the time interval set by the user
+     * @return the closest time the user may reach
+     */
+    public int GetClosestMins(int NewStartMins, int Interval) {
         //new list of all possible mins given ineterval, ie. 0, 5, 10, 15... for interval=5
         ArrayList<Integer> numbers = new ArrayList<>(0);
         for (int i = 0; i < (60 - Interval); i = i + Interval) {
