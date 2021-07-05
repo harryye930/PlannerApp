@@ -25,6 +25,7 @@ public class DailyPlanner extends Planner {
         // generate hashmap with given time interval with empty content
         // and a arraylist of time for reference since hashmap don't have order per se
         // https://facingissuesonit.com/2019/05/10/java-generate-15-minute-time-interval-am-pm/
+        super();
         this.interval = Interval;
         this.startHour = Integer.parseInt(startTime.substring(0, 1));
         this.startMins = Integer.parseInt(startTime.substring(3, 4));
@@ -121,14 +122,30 @@ public class DailyPlanner extends Planner {
     }
 
     /**
+     * edit agenda to current planner
+     *
+     * @return true iff the agenda is correctly edited on current planner
+     */
+
+    public Boolean Edit(String time, String newAgenda) {
+        if (this.dailyPlannerTask.containsKey(time)) {
+            this.dailyPlannerTask.replace(time, newAgenda);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * delete agenda to current planner
      *
-     * @param i index of the agenda user wish to delete
+     * @param time index of the agenda user wish to delete
      * @return true iff the agenda is correctly deleted from current planner
      */
-    @Override
-    public boolean Delete(int i) {
-        return false;
+    public boolean Delete(String time) {
+        // delete everything on that time slot, i.e. no option to delete one thing
+        // check if is legal time frame
+        return Edit(time, "N/A");
     }
 
 
@@ -152,20 +169,7 @@ public class DailyPlanner extends Planner {
 
     }
 
-    /**
-     * edit agenda to current planner
-     *
-     * @return true iff the agenda is correctly edited on current planner
-     */
 
-    public Boolean Edit(String time, String newAgenda) {
-        if (this.dailyPlannerTask.containsKey(time)) {
-            this.dailyPlannerTask.replace(time, newAgenda);
-            return true;
-        } else {
-            return false;
-        }
-    }
     // edit everything on that time slot, i.e. no option to change one thing
     // check if time is within legal time frame
 
@@ -174,11 +178,7 @@ public class DailyPlanner extends Planner {
      *
      * @return true iff the agenda is correctly deleted from current planner
      */
-    public boolean Delete(String time) {
-        // delete everything on that time slot, i.e. no option to delete one thing
-        // check if is legal time frame
-        return Edit(time, "N/A");
-    }
+
 
     /**
      * get the remaining minutes of one agenda
