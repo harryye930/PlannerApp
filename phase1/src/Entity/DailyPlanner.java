@@ -117,8 +117,16 @@ public class DailyPlanner extends Planner {
      */
     @Override
     public Boolean Edit(int i, String s) {
-        return null;
-        // TODO
+        if (i > this.dailyPlannerTask.size() - 1){ // if i is over the size limit
+            return false;
+        }
+        else if (s.length() == 0){ // if the new agenda is empty
+            return false;
+        }
+        else{
+            this.dailyPlannerTask.replace(this.timesList.get(i),s); // replace the string.
+            return true;
+        }
     }
 
     /**
@@ -126,7 +134,6 @@ public class DailyPlanner extends Planner {
      *
      * @return true iff the agenda is correctly edited on current planner
      */
-
     public Boolean Edit(String time, String newAgenda) {
         if (this.dailyPlannerTask.containsKey(time)) {
             this.dailyPlannerTask.replace(time, newAgenda);
@@ -152,7 +159,7 @@ public class DailyPlanner extends Planner {
 
     public int GetCloestMins(int NewStartMins, int Interval) {
         //new list of all possible mins given ineterval, ie. 0, 5, 10, 15... for interval=5
-        ArrayList<Integer> numbers = new ArrayList<Integer>(0);
+        ArrayList<Integer> numbers = new ArrayList<>(0);
         for (int i = 0; i < (60 - Interval); i = i + Interval) {
             numbers.add(i);
         }
@@ -168,16 +175,6 @@ public class DailyPlanner extends Planner {
         return numbers.get(idx);
 
     }
-
-
-    // edit everything on that time slot, i.e. no option to change one thing
-    // check if time is within legal time frame
-
-    /**
-     * delete agenda to current planner
-     *
-     * @return true iff the agenda is correctly deleted from current planner
-     */
 
 
     /**
