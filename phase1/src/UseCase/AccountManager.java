@@ -170,5 +170,7 @@ public class AccountManager implements Serializable {
         }
     }
 
-
+    public ArrayList<Account> getAllAccount() {
+        return allAccount;
+    }
 }
