@@ -45,7 +45,7 @@ public abstract class Planner {
      * @param status : expected status of this planner: public or private
      * @return true iff the planner is correctly changed the privacy status
      */
-    public boolean SetPrivacyStatus(String status){
+    public boolean ChangePrivacyStatus(String status){
         if (status.equals("public")) {
             if (this.privacyStatus.equals("private")) {
                 this.privacyStatus = "public";
@@ -61,6 +61,6 @@ public abstract class Planner {
                 return false;
             }
         }
-        return false;
+        return false; // the current status is the same as input status
     }
 }
