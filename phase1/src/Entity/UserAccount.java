@@ -5,18 +5,21 @@ import java.util.List;
 
 public class UserAccount extends Account {
     private final boolean isAdmin;
+    private String email;
     private ArrayList<Planner> planners = new ArrayList<>();
 
-    public UserAccount() {
+    public UserAccount(String email) {
         super();
         this.isAdmin = false;
+        this.email = email;
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
     }
 
-    public UserAccount(List<Planner> planners) {
+    public UserAccount(List<Planner> planners, String email) {
         super();
         this.isAdmin = false;
+        this.email = email;
         this.planners = (ArrayList<Planner>) planners;
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
@@ -57,7 +60,7 @@ public class UserAccount extends Account {
 
     @Override
     public boolean getIsAdmin() {
-        return  !this.isAdmin;
+        return  this.isAdmin;
     }
 
 }
