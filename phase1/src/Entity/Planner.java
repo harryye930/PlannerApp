@@ -6,7 +6,11 @@ package Entity;
  */
 
 public abstract class Planner {
-    public String privacyStatus = "private";
+    public String privacyStatus;
+    public Planner(){
+        privacyStatus = "private";
+    }
+
 
 
     /** Show the current planner

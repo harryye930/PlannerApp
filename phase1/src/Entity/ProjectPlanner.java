@@ -4,7 +4,9 @@ import java.util.ArrayList;
 public class ProjectPlanner extends Planner {
     public ArrayList<String> tasks;
     public ArrayList<String> taskStatus;
+
     public ProjectPlanner() {
+        super();
         this.tasks = new ArrayList<String>();
         this.taskStatus = new ArrayList<String>();
 
