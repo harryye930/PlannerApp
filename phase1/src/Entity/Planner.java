@@ -36,13 +36,6 @@ public abstract class Planner {
      */
     public abstract Boolean Edit(int i, String s);
 
-    /** Delete agenda to current planner
-     *
-     * @param i index of the agenda user wish to delete
-     * @return true iff the agenda is correctly deleted from current planner
-     */
-    public abstract boolean Delete(int i);
-
 
     /** Change the planner's privacy status
      *
