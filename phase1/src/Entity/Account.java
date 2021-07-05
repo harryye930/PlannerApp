@@ -17,7 +17,7 @@ public abstract class Account implements InterfaceInfo{
     private boolean isAdmin;
     private String userName;
     private String userId;
-    private String email;
+    protected String email;
     private String password;
     protected String[] header;
     protected ArrayList<String[]> data = new ArrayList<>();
