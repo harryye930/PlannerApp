@@ -150,9 +150,20 @@ public class AccountManager implements Serializable {
         return account.getIsAdmin();
     }
 
+    /**
+     * log the user in. If the user uses email to login and the email is not found, create
+     * new account for them and return false. If they use userid and the id is not found, return false. If the
+     * account exists but the user's entered password is not correct, return false. else, return true.
+     * @param userInput user's input to login. may be an email or an userId.
+     * @param password user's entered password for their account.
+     * @return true if successfully logged in, false other wise.
+     */
     public boolean login(String userInput, String password){
         Account acc = findAccount(userInput);
-        if (acc == null){
+        if (acc == null && (userInput.contains("@") || userInput.equals(""))) {
+            createAccount(userInput);
+            return false;
+        } else if (acc == null){
             return false;
         } else {
             return acc.getPassword().equals(password);
