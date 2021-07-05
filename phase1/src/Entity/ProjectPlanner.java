@@ -7,8 +7,8 @@ public class ProjectPlanner extends Planner {
 
     public ProjectPlanner() {
         super();
-        this.tasks = new ArrayList<String>();
-        this.taskStatus = new ArrayList<String>();
+        this.tasks = new ArrayList<>();
+        this.taskStatus = new ArrayList<>();
 
     }
 
@@ -55,7 +55,7 @@ public class ProjectPlanner extends Planner {
      * @return true iff the agenda is correctly added
      */
     public Boolean Add(int i, String s) {
-        if (i >= this.tasks.size() - 1){ // if i is over the size limit
+        if (i > this.tasks.size() - 1){ // if i is over the size limit
             return false;
         }
         else{
@@ -91,7 +91,7 @@ public class ProjectPlanner extends Planner {
      */
     @Override
     public Boolean Edit(int i, String s) {
-        if (i >= this.tasks.size() - 1){ // if i is over the size limit
+        if (i > this.tasks.size() - 1){ // if i is over the size limit
             return false;
         }
         else if (s.length() == 0){  // if the new agenda is empty
@@ -109,9 +109,8 @@ public class ProjectPlanner extends Planner {
      *
      * @return true iff the agenda is correctly deleted from current planner
      */
-    @Override
     public boolean Delete(int i) {
-        if (i >= this.tasks.size() - 1){ // if i is over the size limit
+        if (i > this.tasks.size() - 1){ // if i is over the size limit
             return false;
         }
         else{
