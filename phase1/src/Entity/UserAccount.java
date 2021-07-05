@@ -8,18 +8,16 @@ public class UserAccount extends Account {
     private String email;
     private ArrayList<Planner> planners = new ArrayList<>();
 
-    public UserAccount(String email) {
+    public UserAccount() {
         super();
         this.isAdmin = false;
-        this.email = email;
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
     }
 
-    public UserAccount(List<Planner> planners, String email) {
+    public UserAccount(List<Planner> planners) {
         super();
         this.isAdmin = false;
-        this.email = email;
         this.planners = (ArrayList<Planner>) planners;
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
