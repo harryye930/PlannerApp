@@ -5,6 +5,7 @@ import java.util.List;
 
 public class UserAccount extends Account {
     private final boolean isAdmin;
+    private String email;
     private ArrayList<Planner> planners = new ArrayList<>();
 
     public UserAccount() {
@@ -12,6 +13,14 @@ public class UserAccount extends Account {
         this.isAdmin = false;
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
+    }
+
+    public UserAccount(String email) {
+        super();
+        this.isAdmin = false;
+        super.file_path = "phase1/src/Entity/regularInfo.csv";
+        super.read_csv(super.file_path);
+        super.email = email;
     }
 
     public UserAccount(List<Planner> planners) {
@@ -57,7 +66,7 @@ public class UserAccount extends Account {
 
     @Override
     public boolean getIsAdmin() {
-        return  !this.isAdmin;
+        return  this.isAdmin;
     }
 
 }
