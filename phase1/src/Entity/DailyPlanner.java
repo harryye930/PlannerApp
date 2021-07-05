@@ -33,8 +33,8 @@ public class DailyPlanner extends Planner {
         this.timesList = new ArrayList<>();
         this.dailyPlannerTask = new HashMap<>();
         String timeFormat;
-        for (int h = 0; h < 24; h++) {
-            for (int m = 0; m < 60; ) {
+        for (int h = this.startHour; h < 24; h++) {
+            for (int m = this.startMins; m < 60; ) {
                 timeFormat = String.format("%02d:%02d", h, m);
                 timesList.add(timeFormat);
                 m = m + interval;
