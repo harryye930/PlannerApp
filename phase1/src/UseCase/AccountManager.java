@@ -9,10 +9,12 @@ import java.util.HashMap;
 public class AccountManager implements Serializable {
     private HashMap<String, Account> idToAccount;
     private ArrayList<Account> allAccount;
+    private HashMap<String, Account> emailToAccount;
 
     public AccountManager(){
         idToAccount = new HashMap<>();
         allAccount = new ArrayList<>();
+        emailToAccount = new HashMap<>();
     }
 
     /**
@@ -53,39 +55,45 @@ public class AccountManager implements Serializable {
     }
 
     /**
-     * Find the corresponding account of the given userId. If the userId is not recorded in idToAccount,
-     * the method will return null.
-     * @param userId: the userId as key to find the account
-     * @return account: the account corresponding to the userId
+     * find an account by email or userId. Since both email and id are String, we differentiate
+     * them by the keyword "@". If the input contains @, then it is email. else, it is userId.
+     * @param userInput the input from user. May be an email or an userId.
+     * @return the account if the account is found, null if otherwise.
      */
-    public Account findAccount(String userId){
-        return idToAccount.getOrDefault(userId, null);
+    public Account findAccount(String userInput){
+        if (userInput.contains("@")){
+            return emailToAccount.getOrDefault(userInput, null);
+        } else {
+            return idToAccount.getOrDefault(userInput, null);
+        }
     }
 
     /**
-     * create a regular account
+     * create a regular account, add it to all accounts and the hashmaps.
      * @return the userId of the new account.
      */
     private String createRegAcc(String email){
         UserAccount newAccount = new UserAccount(email);
+        emailToAccount.put(email, newAccount);
         idToAccount.put(newAccount.getUserId(), newAccount);
         allAccount.add(newAccount);
         return newAccount.getUserId();
     }
 
     /**
-     * create a admin account
+     * create a admin account, add it to all accounts and the hashmaps.
      * @return the userId of the new account.
      */
     private String createAdminAcc(String email){
         AdminAccount newAccount = new AdminAccount(email);
+        emailToAccount.put(email, newAccount);
         idToAccount.put(newAccount.getUserId(), newAccount);
         allAccount.add(newAccount);
         return newAccount.getUserId();
     }
 
     /**
-     * create a trial account
+     * create a trial account. The trial account is not added to emailToAccount.
      * @return the userId of the new account.
      */
     private String createTrialAcc(){
@@ -115,15 +123,18 @@ public class AccountManager implements Serializable {
     }
 
     /**
-     * remove an account from allAccount and idToAccount. If successfully removed, return true, else
-     * return false.
+     * remove an account from allAccount, emailToAccount, and idToAccount. If successfully
+     * removed, return true, else return false.
      * @param account: the account want to be removed
      * @return true if successfully removed account, false otherwise.
      */
     public boolean removeAccount(Account account){
-        if (this.allAccount.contains(account)) {
-            this.allAccount.remove(account);
-            this.idToAccount.remove(account.getUserId());
+        if (allAccount.contains(account)) {
+            allAccount.remove(account);
+            idToAccount.remove(account.getUserId());
+            if (emailToAccount.containsKey(account.getEmail())){
+                emailToAccount.remove(account.getEmail());
+            }
             return true; //Return true if the account object is in the collection.
         } else {
             return false; //Return false if the account object is not in the collection.
@@ -138,5 +149,15 @@ public class AccountManager implements Serializable {
     public boolean accountRole(Account account){
         return account.getIsAdmin();
     }
+
+    public boolean login(String userInput, String password){
+        Account acc = findAccount(userInput);
+        if (acc == null){
+            return false;
+        } else {
+            return acc.getPassword().equals(password);
+        }
+    }
+
 
 }
