@@ -1,6 +1,6 @@
 package Entity;
 
-
+// TODO: need Template ID, getID method
 /**
  * Represents a Template in the program. Can be a Daily Template, or a Project Template, and so on, which are
  * implemented as subclasses.

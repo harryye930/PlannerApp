@@ -1,54 +1,121 @@
 package UseCase;
 
+import Entity.ProjectTemplate;
 import Entity.Template;
-import java.util.ArrayList;
+import Entity.DailyTemplate;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
 
 /**
  * Manages templates.
  */
 public class TemplateManager {
 
-    // TODO: how do we identify unique template
-    // TODO: based on this, all methods with type Template parameters should change
+    // TODO: how do we identify unique template (e.g., Name (current implementation)? ID?)
 
-    private ArrayList<Template> templateCollections;  // subjected to change (placeholder for now)
+    private Map<String, Template> templates;  // a mapping of template name to Template
 
-    public TemplateManager() {
-        templateCollections = new ArrayList<>();
+    /**
+     * Creates a new empty TemplateManager.
+     *
+     * @param filePath is the path of the data file.
+     * @throws IOException if an I/O error occurs.
+     */
+    public TemplateManager(String filePath) throws IOException {
+        templates = new HashMap<String, Template>();
+
+        // Read .csv file and create Template objects from file.
+        // Populates the record list using stored data, if it exists.
+        File file = new File(filePath);
+        if (file.exists()) {
+            readFromCSVFile(filePath);
+        } else {
+            file.createNewFile();
+        }
     }
 
     /**
-     * Manages the stored template collections - e.g., add, remove, count.
+     * Populates the records map from the file at path filePath.
+     *
+     * @param filePath the path of the data file
+     * @throws FileNotFoundException if filePath is not a valid path
+     * Citation: this code is adopted from Week6 CSC207H Summer2021 demo code.
+     */
+    public void readFromCSVFile(String filePath) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new FileInputStream(filePath));
+        String[] record;
+        Template template;
+
+        while (scanner.hasNextLine()) {
+            record = scanner.nextLine().split(",");
+            if (record[0].equals("daily")) {
+                template = new DailyTemplate(record[1], record[2], record[3], record[4], record[5]); // TODO: edit DailyTemplate
+                // TODO: DailyTemplate(template name, id, String[] <-- prompts)
+            } else {  // template type is "project"
+                List<String> placeholder = new ArrayList<>(); // TODO: edit ProjectTemplate to String[] - this should be deleted afterwards
+                template = new ProjectTemplate(record[1], record[2], placeholder);
+            }
+            templates.put(template.getName(), template);
+        }
+        scanner.close();
+    }
+
+    /**
+     * Manages the stored template collections (i.e., add or remove) of this TemplateManager.
+     *
+     * @param t is the template either being added or removed from this TemplateManager.
      */
     public void add(Template t) {
         // Add template <t> to the collection of templates stored in this TemplateManager object.
-        templateCollections.add(t);
+        templates.put(t.getName(), t);
     }
-
     public void remove(Template t) {
         // Remove template <t> from the collection of templates stored in this TemplateManager object.
-        templateCollections.remove(t);
-    }
-
-    public int count() {
-        // Returns the number of templates stored in this TemplateManager object.
-        return templateCollections.size();
+        templates.remove(t.getName(), t);
     }
 
     /**
-     * Edits a given template - e.g., change template name.
+     * Change the name of the template <t> to <newName>.
+     *
+     * @param t is the template being edited.
+     * @param newName is the new name given to the template.
      */
     public void editTemplateName(Template t, String newName) {
-        // Change the name of the template <t> to <newName>.
         t.setName(newName);
     }
 
     /**
-     * Returns a string representation of the TemplateManager object.
+     * @return number of templates in this TemplateManager.
+     */
+    public int numberOfTemplates() {
+        return templates.size();
+    }
+
+    /**
+     * Create an empty template to be filled.
+     *
+     * @param t is the template to be used.
+     * @return mapping of template name to prompts to be filled in the template.
+     */
+    public Map<String, String[]> emptyTemplate(Template t) {
+        // TODO: Create a method in Template that returns all the fields necessary to be filled out
+        // TODO: This method can return that as String[] and name of the template as the key
+        String[] prompts;
+        Map<String, String[]> template;
+        template = new HashMap<>();
+        prompts = new String[10]; // TODO: Call the method from template for all prompts
+        template.put("name", prompts);
+        return template;
+    }
+
+    /**
      * @return String that represents the TemplateManager object.
      */
     public String toString() {
-        String stringRep = "Number of templates: " + this.count();
-        return stringRep;
+        return "Number of templates: " + this.numberOfTemplates();
     }
 }

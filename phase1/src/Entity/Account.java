@@ -11,7 +11,7 @@ import java.util.Scanner;
 import java.util.SplittableRandom;
 
 /**
- * A instance of this class represent a account of this application.
+ * A instance of this class represent an account in this application.
  */
 public abstract class Account implements InterfaceInfo{
     private boolean isAdmin;
@@ -100,7 +100,7 @@ public abstract class Account implements InterfaceInfo{
     }
 
     /**
-     * @return A String that represent the uer name.
+     * @return A String that represent the user name.
      */
     public String getUserName() {
         return this.userName;
