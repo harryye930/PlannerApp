@@ -1,5 +1,8 @@
 package Entity;
 
+/**
+ * A instance of this class represents a trial account in this application.
+ */
 public class TrialAccount extends Account{
     private final boolean isAdmin;
 
@@ -10,6 +13,10 @@ public class TrialAccount extends Account{
         super.read_csv(super.file_path);
     }
 
+    /**
+     * Return whether this account belongs to an admin.
+     * @return Return false.
+     */
     @Override
     public boolean getIsAdmin() {
         return  this.isAdmin;

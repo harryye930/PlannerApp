@@ -1,5 +1,8 @@
 package Entity;
 
+/**
+ * A instance of this class represents a admin account in this application.
+ */
 public class AdminAccount  extends Account {
     private final boolean isAdmin;
 
@@ -10,6 +13,9 @@ public class AdminAccount  extends Account {
         super.read_csv(super.file_path);
     }
 
+    /**
+     * @param email represent the email of this admin account.
+     */
     public AdminAccount(String email) {
         super();
         this.isAdmin = true;
@@ -18,6 +24,10 @@ public class AdminAccount  extends Account {
         super.email = email;
     }
 
+    /**
+     * Return whether this account belongs to an admin.
+     * @return Return true.
+     */
     @Override
     public boolean getIsAdmin() {
         return  this.isAdmin;

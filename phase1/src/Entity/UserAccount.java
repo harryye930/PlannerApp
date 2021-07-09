@@ -3,6 +3,9 @@ package Entity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A instance of this class represents a user account in this application.
+ */
 public class UserAccount extends Account {
     private final boolean isAdmin;
     private String email;
@@ -15,6 +18,9 @@ public class UserAccount extends Account {
         super.read_csv(super.file_path);
     }
 
+    /**
+     * @param email represent the email of this user account.
+     */
     public UserAccount(String email) {
         super();
         this.isAdmin = false;
@@ -23,6 +29,9 @@ public class UserAccount extends Account {
         super.email = email;
     }
 
+    /**
+     * @param planners represent a list of planners that belong to this user.
+     */
     public UserAccount(List<Planner> planners) {
         super();
         this.isAdmin = false;
@@ -31,6 +40,9 @@ public class UserAccount extends Account {
         super.read_csv(super.file_path);
     }
 
+    /**
+     * @return A List containing all planners of this user.
+     */
     public List<Planner> getPlanner() {
         return this.planners;
     }
@@ -64,6 +76,10 @@ public class UserAccount extends Account {
         return flag;
     }
 
+    /**
+     * Return whether this account belongs to an admin.
+     * @return Return false.
+     */
     @Override
     public boolean getIsAdmin() {
         return  this.isAdmin;
