@@ -15,7 +15,9 @@ import java.io.FileInputStream;
  */
 public class TemplateManager {
 
-    // TODO: how do we identify unique template (e.g., Name (current implementation)? ID?)
+    // TODO: *** note from office hour ***
+    // TODO: (1) Make template gateway - use an interface (week7) to not violate dependency rule while using gateway to
+    // TODO: read the information
 
     private Map<String, Template> templates;  // a mapping of template name to Template
 
@@ -53,11 +55,9 @@ public class TemplateManager {
         while (scanner.hasNextLine()) {
             record = scanner.nextLine().split(",");
             if (record[0].equals("daily")) {
-                template = new DailyTemplate(record[1], record[2], record[3], record[4], record[5]); // TODO: edit DailyTemplate
-                // TODO: DailyTemplate(template name, id, String[] <-- prompts)
+                template = new DailyTemplate("TemplateName", record); // TODO: WIP
             } else {  // template type is "project"
-                List<String> placeholder = new ArrayList<>(); // TODO: edit ProjectTemplate to String[] - this should be deleted afterwards
-                template = new ProjectTemplate(record[1], record[2], placeholder);
+                template = new ProjectTemplate("TemplateName", record);
             }
             templates.put(template.getName(), template);
         }
@@ -102,12 +102,10 @@ public class TemplateManager {
      * @return mapping of template name to prompts to be filled in the template.
      */
     public Map<String, String[]> emptyTemplate(Template t) {
-        // TODO: Create a method in Template that returns all the fields necessary to be filled out
-        // TODO: This method can return that as String[] and name of the template as the key
         String[] prompts;
         Map<String, String[]> template;
         template = new HashMap<>();
-        prompts = new String[10]; // TODO: Call the method from template for all prompts
+        prompts = t.getPrompts();
         template.put("name", prompts);
         return template;
     }
