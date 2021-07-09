@@ -54,12 +54,14 @@ public class TemplateManager {
             record = scanner.nextLine().split(",");
             if (record[0].equals("daily")) {
                 template = new DailyTemplate(record[1], record[2], record[3], record[4], record[5]); // TODO: edit DailyTemplate
+                // TODO: DailyTemplate(template name, id, String[] <-- prompts)
             } else {  // template type is "project"
                 List<String> placeholder = new ArrayList<>(); // TODO: edit ProjectTemplate to String[] - this should be deleted afterwards
                 template = new ProjectTemplate(record[1], record[2], placeholder);
             }
             templates.put(template.getName(), template);
         }
+        scanner.close();
     }
 
     /**
