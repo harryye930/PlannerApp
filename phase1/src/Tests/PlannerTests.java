@@ -24,8 +24,7 @@ public class PlannerTests {
         dailyPlanner.Add("18:20","B");
         dailyPlanner.Add("19:55","C");
         System.out.println(dailyPlanner);
-        dailyPlanner.RemainTasks();
-
+        System.out.println(dailyPlanner.RemainTasks());
 
         //Testing ProjectPlanner
         System.out.println("Testing ProjectPlanner...");

@@ -212,21 +212,20 @@ public class DailyPlanner extends Planner {
      * @return a int iff the agenda is not passed.
      *
      */
-    public String RemainTasks() {
+    public String RemainTasks(){
         //get the current time from the system.
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
         LocalDateTime now = LocalDateTime.now();
-        dtf.format(now);
+        String current_time = dtf.format(now);
         //make to the current time toString, and find the substring of the current hour and current mins.
-        String current_time = dtf.toString();
-        int current_hour = Integer.parseInt(current_time.substring(0, 1));
-        int current_min = Integer.parseInt(current_time.substring(3, 4));
+        int current_hour = Integer.parseInt(current_time.substring(0, 2));
+        int current_min = Integer.parseInt(current_time.substring(3, 5));
         //construct a empty arraylist that will store the remaining tasks today.
         ArrayList<String> remain_tasks = new ArrayList<>();
         //compare the daily tasks time with the current time, if it is later than now, then add to remain_tasks.
         for (String time : timesList) {
-            String task_hour = time.substring(0, 1);
-            String task_min = time.substring(3, 4);
+            String task_hour = time.substring(0, 2);
+            String task_min = time.substring(3, 5);
             //the condition while the hour is the same but min is different.
             if (Integer.parseInt(task_hour) == current_hour) {
                 if (Integer.parseInt(task_min) > current_min) {
@@ -235,21 +234,19 @@ public class DailyPlanner extends Planner {
             }
             //the condition while the hour and minn are both different.
             if (Integer.parseInt(task_hour) > current_hour) {
-                if (Integer.parseInt(task_min) > current_min) {
-                    remain_tasks.add(time);
-                }
+                remain_tasks.add(time);
             }
         }
         //set up a StringBuilder to collect all the information for the remaining tasks.
-        StringBuilder sb = new StringBuilder();
-        sb.append("Remain tasks: \n");
+        StringBuilder RemainTaskSb = new StringBuilder();
+        RemainTaskSb.append("Remain tasks: \n");
         for (String task_time : remain_tasks) {
-            sb.append(task_time);
-            sb.append(":");
-            sb.append(this.dailyPlannerTask.get(task_time));
-            sb.append("\n");
+            RemainTaskSb.append(task_time);
+            RemainTaskSb.append(":");
+            RemainTaskSb.append(this.dailyPlannerTask.get(task_time));
+            RemainTaskSb.append("\n");
         }
-        return sb.toString();
+        return RemainTaskSb.toString();
 
 
     }
