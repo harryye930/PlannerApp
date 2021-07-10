@@ -27,14 +27,14 @@ public class DailyPlanner extends Planner {
         // https://facingissuesonit.com/2019/05/10/java-generate-15-minute-time-interval-am-pm/
         super();
         this.interval = Interval;
-        this.startHour = Integer.parseInt(startTime.substring(0, 1));
-        this.startMins = Integer.parseInt(startTime.substring(3, 4));
-        this.endHour = Integer.parseInt(endTime.substring(0, 1));
-        this.endMins = Integer.parseInt(endTime.substring(3, 4));
+        this.startHour = Integer.parseInt(startTime.substring(0, 2));
+        this.startMins = Integer.parseInt(startTime.substring(3, 5));
+        this.endHour = Integer.parseInt(endTime.substring(0, 2));
+        this.endMins = Integer.parseInt(endTime.substring(3, 5));
         this.timesList = new ArrayList<>();
         this.dailyPlannerTask = new HashMap<>();
         String timeFormat;
-        for (int h = this.startHour; h < 24; h++) {
+        for (int h = this.startHour; h < this.endHour; h++) {
             for (int m = this.startMins; m < 60; ) {
                 timeFormat = String.format("%02d:%02d", h, m);
                 timesList.add(timeFormat);
@@ -58,6 +58,9 @@ public class DailyPlanner extends Planner {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Daily tasks: \n");
+        String timeInfo = String.format("Start time -> %d:%d, End time -> %d:%d. \n",
+                this.startHour, this.startMins, this.endHour, this.endMins);
+        sb.append(timeInfo);
         for (String time : timesList) {
             sb.append(time);
             sb.append(":");
@@ -79,8 +82,7 @@ public class DailyPlanner extends Planner {
         // call overloaded complete add method
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
         LocalDateTime now = LocalDateTime.now();
-        dtf.format(now);
-        String time = dtf.toString();
+        String time = dtf.format(now);
         return this.Add(time, s);
     }
 
@@ -96,13 +98,27 @@ public class DailyPlanner extends Planner {
         // check if time slots already occupied, check if start time and end time is within legal time frame
         // (for phase 2) add warning for double booking
         // add to agenda
-        int newStartHour = Integer.parseInt(newStartTime.substring(0, 1));
-        int newStartMins = Integer.parseInt(newStartTime.substring(3, 4));
+        int newStartHour = Integer.parseInt(newStartTime.substring(0, 2));
+        int newStartMins = Integer.parseInt(newStartTime.substring(3, 5));
+        String hourIndex;
+        String minIndex;
         if (newStartHour < this.startHour || newStartHour > this.endHour || newStartMins < 0 || newStartMins > 60) {
             return false;
         } else {
             newStartMins = GetClosestMins(newStartMins, this.interval);
-            String newTime = String.format("%d:%d", newStartHour, newStartMins);
+            if (newStartHour<10){
+                 hourIndex = String.format("0%d", newStartHour);
+            }
+            else{
+                 hourIndex = String.format("%d", newStartHour);
+            }
+            if (newStartMins<10){
+                 minIndex = String.format("0%d", newStartMins);
+            }
+            else{
+                 minIndex = String.format("%d", newStartMins);
+            }
+            String newTime = new String(hourIndex + ":" + minIndex);
             this.dailyPlannerTask.replace(newTime, s);
             return true;
         }
@@ -166,6 +182,7 @@ public class DailyPlanner extends Planner {
     public int GetClosestMins(int NewStartMins, int Interval) {
         //new list of all possible mins given ineterval, ie. 0, 5, 10, 15... for interval=5
         ArrayList<Integer> numbers = new ArrayList<>(0);
+        numbers.add(0);
         for (int i = 0; i < (60 - Interval); i = i + Interval) {
             numbers.add(i);
         }
