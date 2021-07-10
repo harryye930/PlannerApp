@@ -8,7 +8,7 @@ public class PlannerTests {
     public static void main(String[] args) {
         // Testing DailyPlanner entity
         System.out.println("Testing DailyPlanner...");
-        DailyPlanner dailyPlanner = new DailyPlanner("09:00", "20:00", 60);
+        DailyPlanner dailyPlanner = new DailyPlanner("09:00", "24:00", 60);
         System.out.println(dailyPlanner);
         dailyPlanner.Add("12:01","CSC207");
         System.out.println(dailyPlanner);
@@ -20,6 +20,12 @@ public class PlannerTests {
         dailyPlanner.Delete("55:99");
         dailyPlanner.Delete("12:00");
         System.out.println(dailyPlanner);
+        dailyPlanner.Add("18:05","A");
+        dailyPlanner.Add("18:20","B");
+        dailyPlanner.Add("19:55","C");
+        System.out.println(dailyPlanner);
+        dailyPlanner.RemainTasks();
+
 
         //Testing ProjectPlanner
         System.out.println("Testing ProjectPlanner...");

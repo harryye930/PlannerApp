@@ -90,10 +90,10 @@ public class DailyPlanner extends Planner {
     /**
      * add agenda to current planner, if the user give a time newStartTime
      * @param newStartTime: start time for new agenda item
-     * @param s:            content of new agenda item
+     * @param agenda:            content of new agenda item
      * @return true iff the new agenda is successfully added
      */
-    public Boolean Add(String newStartTime, String s) {
+    public Boolean Add(String newStartTime, String agenda) {
         // assume start time and duration on whole clock (10:00, 10:15 ... if interval for daily planner is 15 mins)
         // check if time slots already occupied, check if start time and end time is within legal time frame
         // (for phase 2) add warning for double booking
@@ -119,7 +119,13 @@ public class DailyPlanner extends Planner {
                  minIndex = String.format("%d", newStartMins);
             }
             String newTime = new String(hourIndex + ":" + minIndex);
-            this.dailyPlannerTask.replace(newTime, s);
+            if (this.dailyPlannerTask.get(newTime).equals("N/A")){
+                this.dailyPlannerTask.replace(newTime, agenda);
+            }
+            else {
+                String updatedTasks = this.dailyPlannerTask.get(newTime) + ", " + agenda;
+                this.dailyPlannerTask.put(newTime, updatedTasks);
+            }
             return true;
         }
     }
@@ -206,21 +212,30 @@ public class DailyPlanner extends Planner {
      * @return a int iff the agenda is not passed.
      *
      */
-    public String Remaintasks(){
+    public String RemainTasks() {
         //get the current time from the system.
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
         LocalDateTime now = LocalDateTime.now();
         dtf.format(now);
         //make to the current time toString, and find the substring of the current hour and current mins.
         String current_time = dtf.toString();
-        int current_hour = Integer.parseInt(current_time.substring(0,1));
-        int current_min = Integer.parseInt(current_time.substring(3,4));
+        int current_hour = Integer.parseInt(current_time.substring(0, 1));
+        int current_min = Integer.parseInt(current_time.substring(3, 4));
         //construct a empty arraylist that will store the remaining tasks today.
         ArrayList<String> remain_tasks = new ArrayList<>();
         //compare the daily tasks time with the current time, if it is later than now, then add to remain_tasks.
         for (String time : timesList) {
-            if (Integer.parseInt(time.substring(0,1)) > current_hour){
-                if (Integer.parseInt(time.substring(3, 4)) > current_min){
+            String task_hour = time.substring(0, 1);
+            String task_min = time.substring(3, 4);
+            //the condition while the hour is the same but min is different.
+            if (Integer.parseInt(task_hour) == current_hour) {
+                if (Integer.parseInt(task_min) > current_min) {
+                    remain_tasks.add(time);
+                }
+            }
+            //the condition while the hour and minn are both different.
+            if (Integer.parseInt(task_hour) > current_hour) {
+                if (Integer.parseInt(task_min) > current_min) {
                     remain_tasks.add(time);
                 }
             }
@@ -228,13 +243,15 @@ public class DailyPlanner extends Planner {
         //set up a StringBuilder to collect all the information for the remaining tasks.
         StringBuilder sb = new StringBuilder();
         sb.append("Remain tasks: \n");
-        for (String time : remain_tasks) {
-            sb.append(time);
+        for (String task_time : remain_tasks) {
+            sb.append(task_time);
             sb.append(":");
-            sb.append(this.dailyPlannerTask.get(time));
+            sb.append(this.dailyPlannerTask.get(task_time));
             sb.append("\n");
         }
         return sb.toString();
+
+
     }
 
 
