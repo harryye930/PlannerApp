@@ -184,13 +184,40 @@ public class DailyPlanner extends Planner {
 
 
     /**
-     * get the remaining minutes of one agenda
+     * get the remaining tasks the user need to do
      *
      * @return a int iff the agenda is not passed.
+     *
      */
-    public int RemainTime(){
-        //ToDo
-        return -1;
+    public String Remaintasks(){
+        //get the current time from the system.
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+        dtf.format(now);
+        //make to the current time toString, and find the substring of the current hour and current mins.
+        String current_time = dtf.toString();
+        int current_hour = Integer.parseInt(current_time.substring(0,1));
+        int current_min = Integer.parseInt(current_time.substring(3,4));
+        //construct a empty arraylist that will store the remaining tasks today.
+        ArrayList<String> remain_tasks = new ArrayList<>();
+        //compare the daily tasks time with the current time, if it is later than now, then add to remain_tasks.
+        for (String time : timesList) {
+            if (Integer.parseInt(time.substring(0,1)) > current_hour){
+                if (Integer.parseInt(time.substring(3, 4)) > current_min){
+                    remain_tasks.add(time);
+                }
+            }
+        }
+        //set up a StringBuilder to collect all the information for the remaining tasks.
+        StringBuilder sb = new StringBuilder();
+        sb.append("Remain tasks: \n");
+        for (String time : remain_tasks) {
+            sb.append(time);
+            sb.append(":");
+            sb.append(this.dailyPlannerTask.get(time));
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 
 
