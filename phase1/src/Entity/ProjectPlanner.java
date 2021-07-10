@@ -19,7 +19,10 @@ public class ProjectPlanner extends Planner {
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("Project tasks: \n");
-        for (int i = 0; i < tasks.size(); i++){
+        if (this.tasks.isEmpty()){
+            sb.append("N/A");
+        }
+        for (int i = 0; i < this.tasks.size(); i++){
             sb.append(this.tasks.get(i));
             sb.append("--");
             sb.append(this.taskStatus.get(i));
@@ -30,19 +33,19 @@ public class ProjectPlanner extends Planner {
 
     /** Add agenda to current planner
      *
-     * @param s the agenda user wish to add
+     * @param agenda the agenda user wish to add
      * @return true iff the agenda is correctly added to current planner
      */
     @Override
-    public Boolean Add(String s){
-        if (this.tasks.contains(s)){
+    public Boolean Add(String agenda){
+        if (this.tasks.contains(agenda)){
             return false;
         }
-        else if (s.length() == 0){
+        else if (agenda.length() == 0){
             return false;
         }
         else{
-            this.tasks.add(s);
+            this.tasks.add(agenda);
             this.taskStatus.add("not completed");
             return true;
             }
@@ -51,15 +54,15 @@ public class ProjectPlanner extends Planner {
     /** Add agenda to current planner - index specified
      *
      * @param i index of new agenda item
-     * @param s content of new item
+     * @param agenda content of new item
      * @return true iff the agenda is correctly added
      */
-    public Boolean Add(int i, String s) {
+    public Boolean Add(int i, String agenda) {
         if (i > this.tasks.size() - 1){ // if i is over the size limit
             return false;
         }
         else{
-            this.tasks.add(i, s);
+            this.tasks.add(i, agenda);
             this.taskStatus.add(i, "not completed");
             return true;
         }
@@ -86,19 +89,20 @@ public class ProjectPlanner extends Planner {
     /** Edit agenda to current planner
      *
      * @param i index of the agenda user wish to edit
-     * @param s content of the agenda user wish to edit
+     * @param agenda content of the agenda user wish to edit
      * @return true iff the agenda is correctly edited on current planner
      */
     @Override
-    public Boolean Edit(int i, String s) {
+    public Boolean Edit(int i, String agenda) {
         if (i > this.tasks.size() - 1){ // if i is over the size limit
             return false;
         }
-        else if (s.length() == 0){  // if the new agenda is empty
+        else if (agenda.length() == 0){  // if the new agenda is empty
             return false;
         }
+
         else{
-            this.tasks.set(i, s);
+            this.tasks.set(i, agenda);
             this.taskStatus.set(i, "not completed");
             return true;
         }
@@ -116,6 +120,18 @@ public class ProjectPlanner extends Planner {
         else{
             this.tasks.remove(i);
             this.taskStatus.remove(i);
+            return true;
+        }
+    }
+
+    public boolean Delete(String agenda) {
+        if (!this.tasks.contains(agenda)){ // if agenda is not one of the task
+            return false;
+        }
+        else{
+
+            this.taskStatus.remove(this.tasks.indexOf(agenda));
+            this.tasks.remove(agenda);
             return true;
         }
     }
