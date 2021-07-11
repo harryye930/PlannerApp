@@ -51,18 +51,7 @@ public abstract class Account implements InterfaceInfo{
      */
     @Override
     public String toString() {
-        String result;
-        String temp;
-        if (this.isAdmin.equals("admin")) {
-            temp = "Admin";
-        } else {
-            temp = "Regular";
-        }
-        result = "This is an " + temp + " Account with following information available:\n" +
-                "User Name: " + this.userName + "\n" +
-                "User ID: " + this.userId + "\n" +
-                "User Email" + this.email + "\n";
-        return result;
+        throw new NotImplementedException();
     }
 
     /**

@@ -24,22 +24,23 @@ public class AdminAccount  extends Account {
     }
 
     /**
-     * Return whether this account belongs to an admin.
-     * @return Return true.
+     * Return the role of this account: admin, regular or trial.
+     * @return Return false.
      */
     @Override
     public String getIsAdmin() {
         return  this.isAdmin;
     }
 
+    /**
+     * Return the available information of this account including username, id, and email.
+     * @return A String that contains the user name, id and email of this account.
+     */
     @Override
     public String toString() {
         String result;
-        String temp;
 
-        temp = "Admin";
-
-        result = "This is an " + temp + " Account with following information available:\n" +
+        result = "This is an Admin Account with following information available:\n" +
                 "User Name: " + this.userName + "\n" +
                 "User ID: " + this.userId + "\n" +
                 "User Email" + this.email + "\n";

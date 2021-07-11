@@ -13,12 +13,20 @@ public class TrialAccount extends Account{
     }
 
     /**
-     * Return whether this account belongs to an admin.
+     * Return the role of this account: admin, regular or trial.
      * @return Return false.
      */
     @Override
     public String getIsAdmin() {
         return  this.isAdmin;
+    }
+
+    /**
+     * Return the available information of this account including username, id, and email.
+     * @return A String that contains id of this account.
+     */
+    @Override public String toString() {
+        return "This is a trial account with user id:" + this.userId;
     }
 
 }

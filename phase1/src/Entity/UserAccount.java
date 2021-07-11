@@ -77,7 +77,7 @@ public class UserAccount extends Account {
     }
 
     /**
-     * Return whether this account belongs to an admin.
+     * Return the role of this account: admin, regular or trial.
      * @return Return false.
      */
     @Override
@@ -85,13 +85,14 @@ public class UserAccount extends Account {
         return  this.isAdmin;
     }
 
+    /**
+     * Return the available information of this account including username, id, and email.
+     * @return A String that contains the user name, id and email of this account.
+     */
     @Override public String toString() {
         String result;
-        String temp;
 
-        temp = "Regular";
-
-        result = "This is an " + temp + " Account with following information available:\n" +
+        result = "This is an Regular Account with following information available:\n" +
                 "User Name: " + this.userName + "\n" +
                 "User ID: " + this.userId + "\n" +
                 "User Email" + this.email + "\n";
