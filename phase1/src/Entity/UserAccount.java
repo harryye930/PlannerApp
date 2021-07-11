@@ -7,13 +7,13 @@ import java.util.List;
  * A instance of this class represents a user account in this application.
  */
 public class UserAccount extends Account {
-    private final boolean isAdmin;
+
     private String email;
     private ArrayList<Planner> planners = new ArrayList<>();
 
     public UserAccount() {
         super();
-        this.isAdmin = false;
+        this.isAdmin = "regular";
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
     }
@@ -23,7 +23,7 @@ public class UserAccount extends Account {
      */
     public UserAccount(String email) {
         super();
-        this.isAdmin = false;
+        this.isAdmin = "regular";
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
         super.email = email;
@@ -34,7 +34,7 @@ public class UserAccount extends Account {
      */
     public UserAccount(List<Planner> planners) {
         super();
-        this.isAdmin = false;
+        this.isAdmin = "regular";
         this.planners = (ArrayList<Planner>) planners;
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
@@ -81,8 +81,20 @@ public class UserAccount extends Account {
      * @return Return false.
      */
     @Override
-    public boolean getIsAdmin() {
+    public String getIsAdmin() {
         return  this.isAdmin;
     }
 
+    @Override public String toString() {
+        String result;
+        String temp;
+
+        temp = "Regular";
+
+        result = "This is an " + temp + " Account with following information available:\n" +
+                "User Name: " + this.userName + "\n" +
+                "User ID: " + this.userId + "\n" +
+                "User Email" + this.email + "\n";
+        return result;
+    }
 }

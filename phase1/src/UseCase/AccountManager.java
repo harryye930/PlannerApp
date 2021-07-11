@@ -144,7 +144,7 @@ public class AccountManager implements Serializable {
      * @param account the target account to check role
      * @return true if the account is admin, false otherwise.
      */
-    public boolean accountRole(Account account){
+    public String accountRole(Account account){
         return account.getIsAdmin();
     }
 

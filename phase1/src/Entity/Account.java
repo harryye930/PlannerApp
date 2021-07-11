@@ -14,17 +14,17 @@ import java.util.SplittableRandom;
  * A instance of this class represent an account in this application.
  */
 public abstract class Account implements InterfaceInfo{
-    private boolean isAdmin;
-    private String userName;
-    private String userId;
+    protected String isAdmin;
+    protected String userName;
+    protected String userId;
     protected String email;
-    private String password;
+    protected String password;
     protected String[] header;
     protected ArrayList<String[]> data = new ArrayList<>();
     protected String file_path;
 
     public Account() {
-        this.isAdmin = false;
+        this.isAdmin = "regular";
         this.userId = ((Integer) this.hashCode()).toString();
     }
 
@@ -53,7 +53,7 @@ public abstract class Account implements InterfaceInfo{
     public String toString() {
         String result;
         String temp;
-        if (this.isAdmin) {
+        if (this.isAdmin.equals("admin")) {
             temp = "Admin";
         } else {
             temp = "Regular";
@@ -130,7 +130,7 @@ public abstract class Account implements InterfaceInfo{
     /**
      * @return A boolean value indicating that whether this account id admin.
      */
-    public boolean getIsAdmin() {
+    public String getIsAdmin() {
         return this.isAdmin;
     }
 

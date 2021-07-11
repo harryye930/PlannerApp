@@ -4,11 +4,10 @@ package Entity;
  * A instance of this class represents a trial account in this application.
  */
 public class TrialAccount extends Account{
-    private final boolean isAdmin;
 
     public TrialAccount() {
         super();
-        this.isAdmin = false;
+        this.isAdmin = "trial";
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
     }
@@ -18,7 +17,7 @@ public class TrialAccount extends Account{
      * @return Return false.
      */
     @Override
-    public boolean getIsAdmin() {
+    public String getIsAdmin() {
         return  this.isAdmin;
     }
 

@@ -4,11 +4,10 @@ package Entity;
  * A instance of this class represents a admin account in this application.
  */
 public class AdminAccount  extends Account {
-    private final boolean isAdmin;
 
     public AdminAccount() {
         super();
-        this.isAdmin = true;
+        super.isAdmin = "admin";
         super.file_path = "phase1/src/Entity/adminInfo.csv";
         super.read_csv(super.file_path);
     }
@@ -18,7 +17,7 @@ public class AdminAccount  extends Account {
      */
     public AdminAccount(String email) {
         super();
-        this.isAdmin = true;
+        this.isAdmin = "admin";
         super.file_path = "phase1/src/Entity/adminInfo.csv";
         super.read_csv(super.file_path);
         super.email = email;
@@ -29,8 +28,21 @@ public class AdminAccount  extends Account {
      * @return Return true.
      */
     @Override
-    public boolean getIsAdmin() {
+    public String getIsAdmin() {
         return  this.isAdmin;
     }
 
+    @Override
+    public String toString() {
+        String result;
+        String temp;
+
+        temp = "Admin";
+
+        result = "This is an " + temp + " Account with following information available:\n" +
+                "User Name: " + this.userName + "\n" +
+                "User ID: " + this.userId + "\n" +
+                "User Email" + this.email + "\n";
+        return result;
+    }
 }
