@@ -8,15 +8,7 @@ import java.util.List;
  */
 public class UserAccount extends Account {
 
-    private String email;
     private ArrayList<Planner> planners = new ArrayList<>();
-
-    public UserAccount() {
-        super();
-        this.isAdmin = "regular";
-        super.file_path = "phase1/src/Entity/regularInfo.csv";
-        super.read_csv(super.file_path);
-    }
 
     /**
      * @param email represent the email of this user account.
@@ -27,6 +19,7 @@ public class UserAccount extends Account {
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
         super.email = email;
+        super.userId = ((Integer) this.hashCode()).toString();
     }
 
     /**

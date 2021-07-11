@@ -2,6 +2,7 @@ package Controller;
 
 import Entity.Account;
 import UseCase.*;
+import Entity.*;
 
 /**
  * Account accessibility controller.
@@ -14,12 +15,12 @@ public class AccessController {
     }
 
     /**
-     * Check whether the given password is correct.
+     * Check whether the given password is correct to to account.
      * @param retriever A String representing User ID or Email.
      * @param passWord A String representing password.
      * @return A boolean value representing whether the password is correct or not.
      */
-    public boolean checkPassword(String retriever, String passWord) {
+    public boolean logIn(String retriever, String passWord) {
         return accManager.findAccount(retriever).getPassword().equals(passWord);
     }
 
@@ -86,16 +87,20 @@ public class AccessController {
         return accManager.removeAccount(accManager.findAccount(retriever));
     }
 
-    public boolean logIn(String retriever, String password){
-        return accManager.login(retriever, password);
-    }
-
+    /**
+     * Log out the account, delete the account if it is a trial account.
+     * @param retriever A String representing the User ID or Email.
+     * @return A boolean representing whether the log out is success.
+     */
     public boolean logOut(String retriever){
         if(accManager.findAccount(retriever).getIsAdmin().equals("trial")){
-            removeAccount(retriever);
+            this.removeAccount(retriever);
         }
         return true;
     }
 
+    public boolean setPlanner(Planner planner) {
+        return true;
+    }
 
 }

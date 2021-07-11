@@ -3,21 +3,42 @@ package UseCase;
 import Entity.*;
 import Exceptions.WrongAccTypeException;
 
-import java.io.Serializable;
+import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 
 public class AccountManager implements Serializable{
     private HashMap<String, Account> idToAccount;
     private ArrayList<Account> allAccount;
     private HashMap<String, Account> emailToAccount;
 
+    private final String filePath = "phase1/src/UserData/";
+    private String idMapPath = "phase1/src/UserData/idMap.ser";
+    private String emailMapPath = "phase1/src/UserData/emailMap.ser";
+
     public AccountManager(){
-        idToAccount = new HashMap<>();
-        allAccount = new ArrayList<>();
-        emailToAccount = new HashMap<>();
-    }
+        this.allAccount = new ArrayList<>();
+
+        try {
+            this.idToAccount = this.readFile(idMapPath);
+            this.emailToAccount = this.readFile(emailMapPath);
+
+            if (this.idToAccount == null) {
+                System.out.println(11);
+                this.idToAccount = new HashMap<>();
+            }
+            if (this.emailToAccount == null) {
+                this.emailToAccount = new HashMap<>();
+            }
+            for (String id: this.idToAccount.keySet()) {
+                this.readAccount(id);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        }
 
     /**
      * change the userName of an account
@@ -119,6 +140,9 @@ public class AccountManager implements Serializable{
         } else {
             userId = createRegAcc(email);
         }
+        this.writeAccount(email);
+        this.writeObject(this.idToAccount, this.idMapPath);
+        this.writeObject(this.emailToAccount, this.emailMapPath);
         return userId;
     }
 
@@ -130,6 +154,7 @@ public class AccountManager implements Serializable{
      */
     public boolean removeAccount(Account account){
         if (allAccount.contains(account)) {
+            this.deleteAccount(account.getUserId()); // Delete the .ser file of this account.
             allAccount.remove(account);
             idToAccount.remove(account.getUserId());
             emailToAccount.remove(account.getEmail());
@@ -164,7 +189,7 @@ public class AccountManager implements Serializable{
      * @return allAccount: the list that contains all accounts.
      */
     public ArrayList<Account> getAllAccount() {
-        return allAccount;
+        return this.allAccount;
     }
 
     /**
@@ -176,6 +201,13 @@ public class AccountManager implements Serializable{
         return account.getIsAdmin();
     }
 
+    /**
+     * Add new planner to a given account. return true if any one of the planners is added.
+     * @param account An Account object that need to be read.
+     * @param planner An array list of Planners that need to be added.
+     * @return A boolean value representing whether the adding is successful or not.
+     * @throws WrongAccTypeException
+     */
     public boolean setPlanners(Account account, ArrayList<Planner> planner) throws WrongAccTypeException{
         try{
             ((UserAccount)account).setPlanners(planner);
@@ -185,6 +217,13 @@ public class AccountManager implements Serializable{
         }
     }
 
+    /**
+     * Add new planner to a given account. return true if the planner is added.
+     * @param account An Account object that need to be read.
+     * @param planner An array list of Planners that need to be added.
+     * @return A boolean value representing whether the adding is successful or not.
+     * @throws WrongAccTypeException Wrong type of Account subclass.
+     */
     public boolean setPlanners(Account account, Planner planner) throws WrongAccTypeException{
         try{
             ((UserAccount)account).setPlanners(planner);
@@ -194,4 +233,107 @@ public class AccountManager implements Serializable{
         }
     }
 
+    /**
+     * Write an object into a .ser file.
+     * @param retriever A String representing User ID or email.
+     */
+    private void writeAccount(String retriever) {
+        Account acc = this.findAccount(retriever);
+        String id = acc.getUserId();
+        String thisPath = this.filePath + id + ".ser";
+
+        try {
+            FileOutputStream fileOut = new FileOutputStream(new File(thisPath));
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(acc);
+            objectOut.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Return a Account object by reading the file corresponding to the given retriever.
+     * @param retriever A String representing the user ID or Email of which account that we want.
+     * @return An Account object with given email or ID.
+     */
+    private Object readAccount(String retriever) {
+        Account acc = this.findAccount(retriever);
+        String id = acc.getUserId();
+        String fileName = id + ".ser";
+        String fp = this.filePath + fileName;
+        try {
+            FileInputStream fileIn = new FileInputStream(fp);
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+            Object obj = objectIn.readObject();
+            objectIn.close();
+            return obj;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Delete an account by its ID ot Email
+     * @param retriever A string representing Usr ID or email to find the account.
+     * @return A boolean value representing whether the deleting is successful or not.
+     */
+    public boolean deleteAccount(String retriever) {
+        Account acc = this.findAccount(retriever);
+        String id = acc.getUserId();
+        String fileName = id + ".ser";
+        String fp = this.filePath + fileName;
+
+        File accFile = new File(fp);
+        return accFile.delete();
+    }
+
+    private HashMap<String, Account> readFile(String filePath) throws IOException {
+        File f = new File(filePath);
+        return this.readObject(filePath);
+    }
+
+    private HashMap<String, Account> readObject(String filepath) throws IOException {
+        try {
+            InputStream file = new FileInputStream(filepath);
+            InputStream buffer = new BufferedInputStream(file);
+            if (buffer.available() == 0){
+                return null;
+            }
+            ObjectInput input = new ObjectInputStream(buffer);
+            HashMap<String, Account> res = (HashMap<String, Account>) input.readObject();
+            input.close();
+
+            return res;
+
+        } catch (FileNotFoundException | ClassNotFoundException e) {
+            try {
+                File newFile = new File(filepath);
+                newFile.createNewFile();
+                return null;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return null;
+            }
+        }
+    }
+
+    private void writeObject(HashMap<String, Account> obj, String fp) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(new File(fp));
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(obj);
+            objectOut.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        AccountManager am = new AccountManager();
+        System.out.println(am.idToAccount.toString());
+    }
 }

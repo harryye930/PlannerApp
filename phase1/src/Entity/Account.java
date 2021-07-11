@@ -2,18 +2,16 @@ package Entity;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.SplittableRandom;
+import java.io.Serializable;
 
 /**
  * A instance of this class represent an account in this application.
  */
-public abstract class Account implements InterfaceInfo{
+public abstract class Account implements InterfaceInfo, Serializable {
     protected String isAdmin;
     protected String userName;
     protected String userId;
