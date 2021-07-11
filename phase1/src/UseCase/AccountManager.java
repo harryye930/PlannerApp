@@ -185,4 +185,13 @@ public class AccountManager implements Serializable{
         }
     }
 
+    public boolean setPlanners(Account account, Planner planner) throws WrongAccTypeException{
+        try{
+            ((UserAccount)account).setPlanners(planner);
+            return true;
+        }catch (Exception e){
+            throw new WrongAccTypeException();
+        }
+    }
+
 }
