@@ -27,16 +27,14 @@ public class AccountManager implements Serializable {
     }
 
     /**
-     * set the password. User need to enter a password that is correct first, then they can change their
-     * password to something different from the previous one.
+     * set the password. User can change their password to something different from the previous one.
      * @param account the account that the password is changed
-     * @param enteredPassword the user's entered password, should be the same as the original password
      * @param newPassword the new password that user want to change to.
      * @return true if successfully changed password, false otherwise.
      */
-    public boolean setPassword(Account account, String enteredPassword, String newPassword){
+    public boolean setPassword(Account account, String newPassword){
         // users need to enter the correct password to set a new password (just like iPhone)
-        if (enteredPassword.equals(account.getPassword()) && (!account.getPassword().equals(newPassword))){
+        if ((!account.getPassword().equals(newPassword))){
             account.setPassword(newPassword);
             return true;
         } else {
