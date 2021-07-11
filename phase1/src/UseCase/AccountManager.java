@@ -171,4 +171,8 @@ public class AccountManager implements Serializable {
     public ArrayList<Account> getAllAccount() {
         return allAccount;
     }
+
+    public String checkAccountRole(Account account){
+        return account.getIsAdmin();
+    }
 }
