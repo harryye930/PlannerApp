@@ -164,7 +164,7 @@ public class AccountManager implements Serializable {
         } else if (acc == null){
             return false;
         } else {
-            return acc.getPassword().equals(password);
+            return checkPassword(acc, password);
         }
     }
 
