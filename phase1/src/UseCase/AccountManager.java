@@ -140,15 +140,6 @@ public class AccountManager implements Serializable {
     }
 
     /**
-     * return whether the account is admin or not.
-     * @param account the target account to check role
-     * @return true if the account is admin, false otherwise.
-     */
-    public String accountRole(Account account){
-        return account.getIsAdmin();
-    }
-
-    /**
      * log the user in. If the user uses email to login and the email is not found, create
      * new account for them and return false. If they use userid and the id is not found, return false. If the
      * account exists but the user's entered password is not correct, return false. else, return true.
@@ -168,10 +159,19 @@ public class AccountManager implements Serializable {
         }
     }
 
+    /**
+     * return the list of all accounts
+     * @return allAccount: the list that contains all accounts.
+     */
     public ArrayList<Account> getAllAccount() {
         return allAccount;
     }
 
+    /**
+     * find the role of the account
+     * @param account the account that is to be checked
+     * @return the String that represents the role of the account ("regular", "admin", or "trial").
+     */
     public String checkAccountRole(Account account){
         return account.getIsAdmin();
     }
