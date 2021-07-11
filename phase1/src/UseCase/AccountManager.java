@@ -1,12 +1,14 @@
 package UseCase;
 
 import Entity.*;
+import Exceptions.WrongAccTypeException;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AccountManager implements Serializable {
+public class AccountManager implements Serializable{
     private HashMap<String, Account> idToAccount;
     private ArrayList<Account> allAccount;
     private HashMap<String, Account> emailToAccount;
@@ -130,9 +132,7 @@ public class AccountManager implements Serializable {
         if (allAccount.contains(account)) {
             allAccount.remove(account);
             idToAccount.remove(account.getUserId());
-            if (emailToAccount.containsKey(account.getEmail())){
-                emailToAccount.remove(account.getEmail());
-            }
+            emailToAccount.remove(account.getEmail());
             return true; //Return true if the account object is in the collection.
         } else {
             return false; //Return false if the account object is not in the collection.
@@ -175,4 +175,14 @@ public class AccountManager implements Serializable {
     public String checkAccountRole(Account account){
         return account.getIsAdmin();
     }
+
+    public boolean setPlanners(Account account, ArrayList<Planner> planner) throws WrongAccTypeException{
+        try{
+            ((UserAccount)account).setPlanners(planner);
+            return true;
+        }catch (Exception e){
+            throw new WrongAccTypeException();
+        }
+    }
+
 }

@@ -7,7 +7,11 @@ import UseCase.*;
  * Account accessibility controller.
  */
 public class AccessController {
-    private AccountManager accManager = new AccountManager();
+    private AccountManager accManager;
+
+    public AccessController(){
+        accManager = new AccountManager();
+    }
 
     /**
      * Check whether the given password is correct.
@@ -80,6 +84,17 @@ public class AccessController {
      */
     public boolean removeAccount(String retriever) {
         return accManager.removeAccount(accManager.findAccount(retriever));
+    }
+
+    public boolean logIn(String retriever, String password){
+        return accManager.login(retriever, password);
+    }
+
+    public boolean logOut(String retriever){
+        if(accManager.findAccount(retriever).getIsAdmin().equals("trial")){
+            removeAccount(retriever);
+        }
+        return true;
     }
 
 
