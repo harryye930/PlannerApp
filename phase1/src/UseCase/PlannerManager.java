@@ -17,7 +17,7 @@ public class PlannerManager {
     public boolean NewDailyPlanner(){
 //        this.planner = new DailyPlanner("09:00", "17:00", 60);
 //        return true;
-        dailyPlanner = new DailyPlanner("09:00", "17:00", 60);
+        this.dailyPlanner = new DailyPlanner("09:00", "17:00", 60);
         return true;
 
     }
@@ -31,7 +31,7 @@ public class PlannerManager {
     public boolean NewDailyPlanner(String startTime, String endTime){
 //        this.planner = new DailyPlanner(startTime, endTime, 60);
 //        return true;
-        dailyPlanner = new DailyPlanner(startTime, endTime, 60);
+        this.dailyPlanner = new DailyPlanner(startTime, endTime, 60);
         return true;
     }
 
@@ -45,7 +45,7 @@ public class PlannerManager {
     public boolean NewDailyPlanner(String startTime, String endTime, int Interval){
 //        this.planner = new DailyPlanner(startTime, endTime, Interval);
 //        return true;
-        dailyPlanner = new DailyPlanner(startTime, endTime, Interval);
+        this.dailyPlanner = new DailyPlanner(startTime, endTime, Interval);
         return true;
     }
 
@@ -56,7 +56,7 @@ public class PlannerManager {
     public boolean NewProjectPlanner(){
 //        this.planner = new ProjectPlanner();
 //        return true;
-        projectPlanner = new ProjectPlanner();
+        this.projectPlanner = new ProjectPlanner();
         return true;
     }
 
@@ -65,7 +65,7 @@ public class PlannerManager {
      * @return a string representation of the planner
      */
     public String toString(){
-        return planner.toString();
+        return this.planner.toString();
     }
 
     /** Create a string representation of daily planner remain tasks
@@ -73,7 +73,7 @@ public class PlannerManager {
      * @return a string representation of the remain tasks for the daily planners.
      */
     public String DailyPlannerRemainTasks(){
-        return dailyPlanner.RemainTasks();
+        return this.dailyPlanner.RemainTasks();
     }
 
     /** Create a DailyPlanner with Agendas
@@ -87,9 +87,9 @@ public class PlannerManager {
 //            this.planner.Add(Agenda);
 //        }
 //        return true;
-        projectPlanner = new ProjectPlanner();
+        this.projectPlanner = new ProjectPlanner();
         for (String Agenda: Agendas){
-            projectPlanner.Add(Agenda);
+            this.projectPlanner.Add(Agenda);
         }
         return true;
     }
@@ -101,7 +101,7 @@ public class PlannerManager {
      * @return true iff the agenda is correctly edited on current planner
      */
     public boolean Edit(int i, String agenda){
-        planner.Edit(i, agenda);
+        this.planner.Edit(i, agenda);
         return true;
     }
 
@@ -119,8 +119,8 @@ public class PlannerManager {
 //        else{
 //            return false;
 //        }
-        if (dailyPlanner.getClass() == DailyPlanner.class){
-            dailyPlanner.Edit(time, newAgenda);
+        if (this.dailyPlanner.getClass() == DailyPlanner.class){
+            this.dailyPlanner.Edit(time, newAgenda);
             return true;
         }
         else{
@@ -134,7 +134,7 @@ public class PlannerManager {
      * @return true iff the status is correctly changed (from "public to "private or vise versa)
      */
     public boolean ChangePrivacyStatus(String status){
-        return planner.ChangePrivacyStatus(status);
+        return this.planner.ChangePrivacyStatus(status);
     }
 
 }
