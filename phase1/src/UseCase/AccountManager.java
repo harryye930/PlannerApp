@@ -14,10 +14,14 @@ public class AccountManager implements Serializable{
     private ArrayList<Account> allAccount;
     private HashMap<String, Account> emailToAccount;
 
+    //Assign the file path of data.
     private final String filePath = "phase1/src/UserData/";
     private String idMapPath = "phase1/src/UserData/idMap.ser";
     private String emailMapPath = "phase1/src/UserData/emailMap.ser";
 
+    /**
+     * Create an AccountManager Object and restore the information.
+     */
     public AccountManager(){
         this.allAccount = new ArrayList<>();
 
@@ -25,6 +29,7 @@ public class AccountManager implements Serializable{
             this.idToAccount = this.readFile(idMapPath);
             this.emailToAccount = this.readFile(emailMapPath);
 
+            // Try to read in the ArrayList object into idToAccount and emailToAccount
             if (this.idToAccount == null) {
                 System.out.println(11);
                 this.idToAccount = new HashMap<>();
@@ -32,6 +37,8 @@ public class AccountManager implements Serializable{
             if (this.emailToAccount == null) {
                 this.emailToAccount = new HashMap<>();
             }
+
+            // Iterate through the ID and read the Account object into allAccount.
             for (String id: this.idToAccount.keySet()) {
                 this.readAccount(id);
             }
@@ -165,26 +172,6 @@ public class AccountManager implements Serializable{
     }
 
     /**
-     * log the user in. If the user uses email to login and the email is not found, create
-     * new account for them and return false. If they use userid and the id is not found, return false. If the
-     * account exists but the user's entered password is not correct, return false. else, return true.
-     * @param userInput user's input to login. may be an email or an userId.
-     * @param password user's entered password for their account.
-     * @return true if successfully logged in, false other wise.
-     */
-    public boolean login(String userInput, String password){
-        Account acc = findAccount(userInput);
-        if (acc == null && (userInput.contains("@") || userInput.equals(""))) {
-            createAccount(userInput);
-            return false;
-        } else if (acc == null){
-            return false;
-        } else {
-            return checkPassword(acc, password);
-        }
-    }
-
-    /**
      * return the list of all accounts
      * @return allAccount: the list that contains all accounts.
      */
@@ -206,7 +193,7 @@ public class AccountManager implements Serializable{
      * @param account An Account object that need to be read.
      * @param planner An array list of Planners that need to be added.
      * @return A boolean value representing whether the adding is successful or not.
-     * @throws WrongAccTypeException
+     * @throws WrongAccTypeException Exception if class type is not UserAccount.
      */
     public boolean setPlanners(Account account, ArrayList<Planner> planner) throws WrongAccTypeException{
         try{
@@ -234,9 +221,30 @@ public class AccountManager implements Serializable{
     }
 
     /**
-     * Write an object into a .ser file.
-     * @param retriever A String representing User ID or email.
+     *
+     * @param retriever A String representing the User ID or Email.
+     * @return An ArrayList of Planner that owned by this account.
+     * @throws WrongAccTypeException Exception if the class type is not UserAccount.
      */
+    public ArrayList<Planner> getPlanners(String retriever) throws WrongAccTypeException {
+        try {
+            UserAccount acc = (UserAccount) this.findAccount(retriever);
+            return (ArrayList<Planner>) acc.getPlanner();
+        } catch (Exception ex) {
+            throw new WrongAccTypeException();
+        }
+    }
+
+    private boolean deleteAccount(String retriever) {
+        Account acc = this.findAccount(retriever);
+        String id = acc.getUserId();
+        String fileName = id + ".ser";
+        String fp = this.filePath + fileName;
+
+        File accFile = new File(fp);
+        return accFile.delete();
+    }
+
     private void writeAccount(String retriever) {
         Account acc = this.findAccount(retriever);
         String id = acc.getUserId();
@@ -253,11 +261,6 @@ public class AccountManager implements Serializable{
         }
     }
 
-    /**
-     * Return a Account object by reading the file corresponding to the given retriever.
-     * @param retriever A String representing the user ID or Email of which account that we want.
-     * @return An Account object with given email or ID.
-     */
     private Object readAccount(String retriever) {
         Account acc = this.findAccount(retriever);
         String id = acc.getUserId();
@@ -273,21 +276,6 @@ public class AccountManager implements Serializable{
             ex.printStackTrace();
             return null;
         }
-    }
-
-    /**
-     * Delete an account by its ID ot Email
-     * @param retriever A string representing Usr ID or email to find the account.
-     * @return A boolean value representing whether the deleting is successful or not.
-     */
-    public boolean deleteAccount(String retriever) {
-        Account acc = this.findAccount(retriever);
-        String id = acc.getUserId();
-        String fileName = id + ".ser";
-        String fp = this.filePath + fileName;
-
-        File accFile = new File(fp);
-        return accFile.delete();
     }
 
     private HashMap<String, Account> readFile(String filePath) throws IOException {

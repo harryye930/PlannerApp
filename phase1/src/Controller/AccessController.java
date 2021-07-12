@@ -1,8 +1,11 @@
 package Controller;
 
 import Entity.Account;
+import Exceptions.WrongAccTypeException;
 import UseCase.*;
 import Entity.*;
+
+import java.util.ArrayList;
 
 /**
  * Account accessibility controller.
@@ -99,8 +102,44 @@ public class AccessController {
         return true;
     }
 
-    public boolean setPlanner(Planner planner) {
-        return true;
+    /**
+     *
+     * @param retriever A String representing the User ID or Email.
+     * @param planner A planner object that need to be added to the account.
+     * @return A boolean value representing whether the adding is successful or not..
+     * @throws WrongAccTypeException Exception if the class type is not UserAccount.
+     */
+    public boolean setPlanner(String retriever, Planner planner) throws WrongAccTypeException {
+        return this.accManager.setPlanners(accManager.findAccount(retriever), planner);
+    }
+
+    /**
+     * Add new planner to a given account. return true if any one of the planners is added.
+     * @param retriever A String representing the User ID or Email.
+     * @param planner A planner object that need to be added to the account.
+     * @return A boolean value representing whether the adding is successful or not..
+     * @throws WrongAccTypeException Exception if the class type is not UserAccount.
+     */
+    public boolean setPlanner(String retriever, ArrayList<Planner> planner) throws WrongAccTypeException{
+        return this.accManager.setPlanners(accManager.findAccount(retriever), planner);
+    }
+
+    /**
+     * return the list of all accounts
+     * @return allAccount: the list that contains all accounts.
+     */
+    public ArrayList<Account> getAllAccount() {
+        return this.accManager.getAllAccount();
+    }
+
+    /**
+     *
+     * @param retriever A String representing the User ID or Email.
+     * @return An ArrayList of Planner that owned by this account.
+     * @throws WrongAccTypeException Exception if the class type is wrong.
+     */
+    public ArrayList<Planner> getPlanners(String retriever) throws WrongAccTypeException {
+        return accManager.getPlanners(retriever);
     }
 
 }
