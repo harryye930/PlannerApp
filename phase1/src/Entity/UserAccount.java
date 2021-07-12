@@ -7,26 +7,19 @@ import java.util.List;
  * A instance of this class represents a user account in this application.
  */
 public class UserAccount extends Account {
-    private final boolean isAdmin;
-    private String email;
-    private ArrayList<Planner> planners = new ArrayList<>();
 
-    public UserAccount() {
-        super();
-        this.isAdmin = false;
-        super.file_path = "phase1/src/Entity/regularInfo.csv";
-        super.read_csv(super.file_path);
-    }
+    private ArrayList<Planner> planners = new ArrayList<>();
 
     /**
      * @param email represent the email of this user account.
      */
     public UserAccount(String email) {
         super();
-        this.isAdmin = false;
+        this.isAdmin = "regular";
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
         super.email = email;
+        super.userId = ((Integer) this.hashCode()).toString();
     }
 
     /**
@@ -34,7 +27,7 @@ public class UserAccount extends Account {
      */
     public UserAccount(List<Planner> planners) {
         super();
-        this.isAdmin = false;
+        this.isAdmin = "regular";
         this.planners = (ArrayList<Planner>) planners;
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
@@ -77,12 +70,25 @@ public class UserAccount extends Account {
     }
 
     /**
-     * Return whether this account belongs to an admin.
+     * Return the role of this account: admin, regular or trial.
      * @return Return false.
      */
     @Override
-    public boolean getIsAdmin() {
+    public String getIsAdmin() {
         return  this.isAdmin;
     }
 
+    /**
+     * Return the available information of this account including username, id, and email.
+     * @return A String that contains the user name, id and email of this account.
+     */
+    @Override public String toString() {
+        String result;
+
+        result = "This is an Regular Account with following information available:\n" +
+                "User Name: " + this.userName + "\n" +
+                "User ID: " + this.userId + "\n" +
+                "User Email" + this.email + "\n";
+        return result;
+    }
 }

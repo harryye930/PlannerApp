@@ -2,29 +2,27 @@ package Entity;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.SplittableRandom;
+import java.io.Serializable;
 
 /**
  * A instance of this class represent an account in this application.
  */
-public abstract class Account implements InterfaceInfo{
-    private boolean isAdmin;
-    private String userName;
-    private String userId;
+public abstract class Account implements InterfaceInfo, Serializable {
+    protected String isAdmin;
+    protected String userName;
+    protected String userId;
     protected String email;
-    private String password;
+    protected String password;
     protected String[] header;
     protected ArrayList<String[]> data = new ArrayList<>();
     protected String file_path;
 
     public Account() {
-        this.isAdmin = false;
+        this.isAdmin = "regular";
         this.userId = ((Integer) this.hashCode()).toString();
     }
 
@@ -51,18 +49,7 @@ public abstract class Account implements InterfaceInfo{
      */
     @Override
     public String toString() {
-        String result;
-        String temp;
-        if (this.isAdmin) {
-            temp = "Admin";
-        } else {
-            temp = "Regular";
-        }
-        result = "This is an " + temp + " Account with following information available:\n" +
-                "User Name: " + this.userName + "\n" +
-                "User ID: " + this.userId + "\n" +
-                "User Email" + this.email + "\n";
-        return result;
+        throw new NotImplementedException();
     }
 
     /**
@@ -130,7 +117,7 @@ public abstract class Account implements InterfaceInfo{
     /**
      * @return A boolean value indicating that whether this account id admin.
      */
-    public boolean getIsAdmin() {
+    public String getIsAdmin() {
         return this.isAdmin;
     }
 

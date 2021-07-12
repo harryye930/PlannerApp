@@ -19,25 +19,30 @@ public class TemplateManager {
     // TODO: (1) Make template gateway - use an interface (week7) to not violate dependency rule while using gateway to
     // TODO: read the information
 
-    private Map<String, Template> templates;  // a mapping of template name to Template
+    private Map<Integer, Template> templates;  // a mapping of template ID to Template
 
     /**
      * Creates a new empty TemplateManager.
-     *
-     * @param filePath is the path of the data file.
-     * @throws IOException if an I/O error occurs.
      */
-    public TemplateManager(String filePath) throws IOException {
-        templates = new HashMap<String, Template>();
+//     *
+//     * @param filePath is the path of the data file.
+//     * @throws IOException if an I/O error occurs.
 
-        // Read .csv file and create Template objects from file.
-        // Populates the record list using stored data, if it exists.
-        File file = new File(filePath);
-        if (file.exists()) {
-            readFromCSVFile(filePath);
-        } else {
-            file.createNewFile();
-        }
+//    public TemplateManager(String filePath) throws IOException {
+//        templates = new HashMap<String, Template>();
+//
+//        // Read .csv file and create Template objects from file.
+//        // Populates the record list using stored data, if it exists.
+//        File file = new File(filePath);
+//        if (file.exists()) {
+//            readFromCSVFile(filePath);
+//        } else {
+//            file.createNewFile();
+//        }
+//    }
+
+    public TemplateManager(){
+        templates = new HashMap<>();
     }
 
     /**
@@ -115,5 +120,29 @@ public class TemplateManager {
      */
     public String toString() {
         return "Number of templates: " + this.numberOfTemplates();
+    }
+
+    /**
+     * @return String that contains preview of all Template objects stored in the TemplateManager.
+     */
+    public String previewAllTemplates(){
+        StringBuilder allPreview = new StringBuilder();
+        for (Map.Entry items: this.templates.entrySet()){
+            String key = (String)items.getKey();
+            Template value = (Template)items.getValue();
+
+            allPreview.append("Template ID: ").append(key).append(System.lineSeparator());
+            allPreview.append(value.getTemplatePreview());
+        }
+        return allPreview.toString();
+    }
+
+    /**
+     * @param ID ID of the Template.
+     * @return String representation of the Template object corresponding to the ID. String representation contains
+     * detailed representation of the Template, including name, type, number of prompts, and what those prompts are.
+     */
+    public String viewDetailedTemplate(int ID){
+        return this.templates.get(ID).toString();
     }
 }
