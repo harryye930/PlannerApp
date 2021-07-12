@@ -47,7 +47,20 @@ public abstract class Template {
         String stringRep = "Name: " + this.getName() + System.lineSeparator();
         stringRep += "Type: " + this.isType() + System.lineSeparator();
         stringRep += "Number of Prompts: " + this.numPrompts() + System.lineSeparator();
+        // TODO: retrieve all prompts, not just display the number of prompts
         return stringRep;
+    }
+
+    /**
+     * Returns a preview of Template object that just includes the name and the type of the Template, in String format.
+     * Different from the toString method in that the preview only includes the basic information, and does nto include
+     * the detailed prompts.
+     * @return String preview of Template that includes the name and type.
+     */
+    public String getTemplatePreview(){
+        String preview = "Name: " + this.getName() + System.lineSeparator();
+        preview += "Type: " + this.isType() + System.lineSeparator();
+        return preview;
     }
 
     /**
