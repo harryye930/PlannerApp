@@ -31,7 +31,6 @@ public class AccountManager implements Serializable{
 
             // Try to read in the ArrayList object into idToAccount and emailToAccount
             if (this.idToAccount == null) {
-                System.out.println(11);
                 this.idToAccount = new HashMap<>();
             }
             if (this.emailToAccount == null) {

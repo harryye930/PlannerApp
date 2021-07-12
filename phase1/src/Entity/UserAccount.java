@@ -19,7 +19,7 @@ public class UserAccount extends Account {
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
         super.email = email;
-        super.userId = ((Integer) this.hashCode()).toString();
+        super.userId = ((Integer) (email).hashCode()).toString();
     }
 
     /**
