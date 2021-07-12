@@ -31,10 +31,10 @@ public abstract class Planner {
     /** Edit agenda to current planner
      *
      * @param i index of the agenda user wish to edit
-     * @param s content of the agenda user wish to edit
+     * @param agenda content of the agenda user wish to edit
      * @return true iff the agenda is correctly edited on current planner
      */
-    public abstract Boolean Edit(int i, String s);
+    public abstract Boolean Edit(int i, String agenda);
 
 
     /** Change the planner's privacy status

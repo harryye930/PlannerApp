@@ -7,14 +7,19 @@ import java.util.ArrayList;
 
 public class PlannerManager {
     Planner planner;
+    DailyPlanner dailyPlanner;
+    ProjectPlanner projectPlanner;
 
     /** Create new DailyPlanner -- default start at 09:00, end at 17:00, interval 60 mins
      *
      * @return true iff a new DailyPlanner is created
      */
     public boolean NewDailyPlanner(){
-        this.planner = new DailyPlanner("09:00", "17:00", 60);
+//        this.planner = new DailyPlanner("09:00", "17:00", 60);
+//        return true;
+        dailyPlanner = new DailyPlanner("09:00", "17:00", 60);
         return true;
+
     }
 
     /** Create new DailyPlanner -- default interval 60 mins
@@ -24,7 +29,9 @@ public class PlannerManager {
      * @return true iff a new DailyPlanner is created
      */
     public boolean NewDailyPlanner(String startTime, String endTime){
-        this.planner = new DailyPlanner(startTime, endTime, 60);
+//        this.planner = new DailyPlanner(startTime, endTime, 60);
+//        return true;
+        dailyPlanner = new DailyPlanner(startTime, endTime, 60);
         return true;
     }
 
@@ -36,7 +43,9 @@ public class PlannerManager {
      * @return true
      */
     public boolean NewDailyPlanner(String startTime, String endTime, int Interval){
-        this.planner = new DailyPlanner(startTime, endTime, Interval);
+//        this.planner = new DailyPlanner(startTime, endTime, Interval);
+//        return true;
+        dailyPlanner = new DailyPlanner(startTime, endTime, Interval);
         return true;
     }
 
@@ -45,8 +54,26 @@ public class PlannerManager {
      * @return true iff a new ProjectPlanner is correctly created
      */
     public boolean NewProjectPlanner(){
-        this.planner = new ProjectPlanner();
+//        this.planner = new ProjectPlanner();
+//        return true;
+        projectPlanner = new ProjectPlanner();
         return true;
+    }
+
+    /** Create a string representation of planner tasks
+     *
+     * @return a string representation of the planner
+     */
+    public String toString(){
+        return planner.toString();
+    }
+
+    /** Create a string representation of daily planner remain tasks
+     *
+     * @return a string representation of the remain tasks for the daily planners.
+     */
+    public String DailyPlannerRemainTasks(){
+        return dailyPlanner.RemainTasks();
     }
 
     /** Create a DailyPlanner with Agendas
@@ -55,9 +82,14 @@ public class PlannerManager {
      * @return true iff a new ProjectPlanner is correctly created and agendas are added
      */
     public boolean NewProjectPlanner(ArrayList<String> Agendas){
-        this.planner = new ProjectPlanner();
+//        this.planner = new ProjectPlanner();
+//        for (String Agenda: Agendas){
+//            this.planner.Add(Agenda);
+//        }
+//        return true;
+        projectPlanner = new ProjectPlanner();
         for (String Agenda: Agendas){
-            this.planner.Add(Agenda);
+            projectPlanner.Add(Agenda);
         }
         return true;
     }
@@ -65,11 +97,11 @@ public class PlannerManager {
     /** Edit agenda on current planner
      *
      * @param i index of the agenda user wish to edit
-     * @param s content of the agenda user wish to edit
+     * @param agenda content of the agenda user wish to edit
      * @return true iff the agenda is correctly edited on current planner
      */
-    public boolean Edit(int i, String s){
-        planner.Edit(i, s);
+    public boolean Edit(int i, String agenda){
+        planner.Edit(i, agenda);
         return true;
     }
 
@@ -80,8 +112,15 @@ public class PlannerManager {
      * @return true iff is correctly edited
      */
     public boolean Edit(String time, String newAgenda){
-        if (this.planner.getClass() == DailyPlanner.class){
-            ((DailyPlanner)this.planner).Edit(time, newAgenda);
+//        if (this.planner.getClass() == DailyPlanner.class){
+//            ((DailyPlanner)this.planner).Edit(time, newAgenda);
+//            return true;
+//        }
+//        else{
+//            return false;
+//        }
+        if (dailyPlanner.getClass() == DailyPlanner.class){
+            dailyPlanner.Edit(time, newAgenda);
             return true;
         }
         else{

@@ -64,7 +64,7 @@ public class TemplateManager {
             } else {  // template type is "project"
                 template = new ProjectTemplate("TemplateName", record);
             }
-            templates.put(template.getName(), template);
+            templates.put(template.getId(), template);
         }
         scanner.close();
     }
@@ -76,11 +76,11 @@ public class TemplateManager {
      */
     public void add(Template t) {
         // Add template <t> to the collection of templates stored in this TemplateManager object.
-        templates.put(t.getName(), t);
+        templates.put(t.getId(), t);
     }
     public void remove(Template t) {
         // Remove template <t> from the collection of templates stored in this TemplateManager object.
-        templates.remove(t.getName(), t);
+        templates.remove(t.getId(), t);
     }
 
     /**
@@ -106,12 +106,12 @@ public class TemplateManager {
      * @param t is the template to be used.
      * @return mapping of template name to prompts to be filled in the template.
      */
-    public Map<String, String[]> emptyTemplate(Template t) {
+    public Map<Integer, String[]> emptyTemplate(Template t) {
         String[] prompts;
-        Map<String, String[]> template;
+        Map<Integer, String[]> template;
         template = new HashMap<>();
         prompts = t.getPrompts();
-        template.put("name", prompts);
+        template.put(t.getId(), prompts);
         return template;
     }
 

@@ -134,25 +134,28 @@ public class DailyPlanner extends Planner {
      * edit agenda to current planner
      *
      * @param i index of the agenda user wish to edit
-     * @param s content of the agenda user wish to edit
+     * @param agenda content of the agenda user wish to edit
      * @return true iff the agenda is correctly edited on current planner
      */
     @Override
-    public Boolean Edit(int i, String s) {
+    public Boolean Edit(int i, String agenda) {
         if (i > this.dailyPlannerTask.size() - 1){ // if i is over the size limit
             return false;
         }
-        else if (s.length() == 0){ // if the new agenda is empty
+        else if (agenda.length() == 0){ // if the new agenda is empty
             return false;
         }
         else{
-            this.dailyPlannerTask.replace(this.timesList.get(i),s); // replace the string.
+            this.dailyPlannerTask.replace(this.timesList.get(i),agenda); // replace the string.
             return true;
         }
     }
 
     /**
      * edit agenda to current planner
+     *
+     * @param time the time for the new agenda
+     * @param newAgenda the new agenda
      *
      * @return true iff the agenda is correctly edited on current planner
      */
