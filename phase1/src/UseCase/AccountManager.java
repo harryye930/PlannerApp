@@ -319,9 +319,4 @@ public class AccountManager implements Serializable{
             ex.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
-        AccountManager am = new AccountManager();
-        System.out.println(am.idToAccount.toString());
-    }
 }
