@@ -115,6 +115,27 @@ public abstract class Account implements InterfaceInfo, Serializable {
     }
 
     /**
+     * @return A String representing the File Path of this account.
+     */
+    public String getFilePath() {
+        return this.file_path;
+    }
+
+    /**
+     * @param head Represent the header of this account.
+     */
+    public void setHeader(String[] head) {
+        this.header = head;
+    }
+
+    /**
+     * @param data Represent the information from file.
+     */
+    public void addData(String[] data) {
+        this.data.add(data);
+    }
+
+    /**
      * @return A boolean value indicating that whether this account id admin.
      */
     public String getAccountType() {
