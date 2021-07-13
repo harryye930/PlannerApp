@@ -15,9 +15,9 @@ public class Reader {
     private final Account account;
     private final String filePath;
 
-    public Reader(Account account) {
+    public Reader(Account account, String filePath) {
         this.account = account;
-        this.filePath = account.getFilePath();
+        this.filePath = filePath;
     }
 
     /**
