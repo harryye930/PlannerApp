@@ -184,7 +184,7 @@ public class AccountManager implements Serializable{
      * @return the String that represents the role of the account ("regular", "admin", or "trial").
      */
     public String checkAccountRole(Account account){
-        return account.getIsAdmin();
+        return account.getAccountType();
     }
 
     /**

@@ -96,7 +96,7 @@ public class AccessController {
      * @return A boolean representing whether the log out is success.
      */
     public boolean logOut(String retriever){
-        if(accManager.findAccount(retriever).getIsAdmin().equals("trial")){
+        if(accManager.findAccount(retriever).getAccountType().equals("trial")){
             this.removeAccount(retriever);
         }
         return true;

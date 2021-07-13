@@ -7,7 +7,7 @@ public class AdminAccount  extends Account {
 
     public AdminAccount() {
         super();
-        super.isAdmin = "admin";
+        super.accountType = "admin";
         super.file_path = "phase1/src/Entity/adminInfo.csv";
         super.read_csv(super.file_path);
     }
@@ -17,7 +17,7 @@ public class AdminAccount  extends Account {
      */
     public AdminAccount(String email) {
         super();
-        this.isAdmin = "admin";
+        this.accountType = "admin";
         super.file_path = "phase1/src/Entity/adminInfo.csv";
         super.read_csv(super.file_path);
         super.email = email;
@@ -29,8 +29,8 @@ public class AdminAccount  extends Account {
      * @return Return false.
      */
     @Override
-    public String getIsAdmin() {
-        return  this.isAdmin;
+    public String getAccountType() {
+        return  this.accountType;
     }
 
     /**
