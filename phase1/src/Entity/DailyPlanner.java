@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class DailyPlanner extends Planner {
     HashMap<String, String> dailyPlannerTask;
@@ -16,16 +17,16 @@ public class DailyPlanner extends Planner {
 
     /**
      * initialize DailyPlanner
-     *
+     * @param plannerName: the name of the planner
      * @param startTime: the start time of the current planner, "HH:MM"
      * @param endTime:   the end time of the current planner, "HH:MM"
      * @param Interval:  time interval between each calendar time, in minutes
      */
-    public DailyPlanner(String startTime, String endTime, int Interval) {
+    public DailyPlanner(String plannerName, String startTime, String endTime, int Interval) {
         // generate hashmap with given time interval with empty content
         // and a arraylist of time for reference since hashmap don't have order per se
         // https://facingissuesonit.com/2019/05/10/java-generate-15-minute-time-interval-am-pm/
-        super();
+        super(plannerName);
         this.interval = Interval;
         this.startHour = Integer.parseInt(startTime.substring(0, 2));
         this.startMins = Integer.parseInt(startTime.substring(3, 5));
@@ -57,10 +58,11 @@ public class DailyPlanner extends Planner {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Daily tasks: \n");
+
         String timeInfo = String.format("Start time -> %d:%d, End time -> %d:%d. \n",
                 this.startHour, this.startMins, this.endHour, this.endMins);
-        sb.append(timeInfo);
+        String plannerInfo = this.plannerName + "\n" + "ID: " + this.ID + "\n" + timeInfo + "\nTasks: \n";
+        sb.append(plannerInfo);
         for (String time : timesList) {
             sb.append(time);
             sb.append(":");
@@ -131,7 +133,7 @@ public class DailyPlanner extends Planner {
     }
 
     /**
-     * edit agenda to current planner
+     * edit agenda to current planner (given index)
      *
      * @param i index of the agenda user wish to edit
      * @param agenda content of the agenda user wish to edit
@@ -152,7 +154,7 @@ public class DailyPlanner extends Planner {
     }
 
     /**
-     * edit agenda to current planner
+     * edit agenda to current planner (given time)
      *
      * @param time the time for the new agenda
      * @param newAgenda the new agenda

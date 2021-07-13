@@ -1,14 +1,23 @@
 package Entity;
 
+import java.util.UUID;
+
 /** the planner entity
  * @author Runlong, Zifan
  * @version 1.0
  */
 
 public abstract class Planner {
+    public String plannerName;
+    public String ID;
     public String privacyStatus;
-    public Planner(){
-        privacyStatus = "private";
+
+
+    public Planner(String plannerName){
+        this.plannerName = plannerName;
+        this.ID = UUID.randomUUID().toString();
+        this.privacyStatus = "private";
+
     }
 
 

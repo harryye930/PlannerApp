@@ -17,6 +17,7 @@ public class PlannerController {
         plannerManager = new PlannerManager();
 //        dailyplannerManager = plannerManager.NewDailyPlanner();
 //        projectplannerManager = plannerManager.NewProjectPlanner();
+        PlannerManager dailyplannerManager = new PlannerManager();
     }
 
     /** Pass on request to get a string representation of a planner

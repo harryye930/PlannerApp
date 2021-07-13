@@ -12,26 +12,28 @@ public class PlannerManager {
 
     /** Create new DailyPlanner -- default start at 09:00, end at 17:00, interval 60 mins
      *
+     * @param plannerName: name of the planner
      * @return true iff a new DailyPlanner is created
      */
-    public boolean NewDailyPlanner(){
+    public boolean NewDailyPlanner(String plannerName){
 //        this.planner = new DailyPlanner("09:00", "17:00", 60);
 //        return true;
-        this.dailyPlanner = new DailyPlanner("09:00", "17:00", 60);
+        this.dailyPlanner = new DailyPlanner(plannerName, "09:00", "17:00", 60);
         return true;
-
+        
     }
 
     /** Create new DailyPlanner -- default interval 60 mins
      *
+     * @param plannerName name of the planner
      * @param startTime start time of planner
      * @param endTime end time of planner
      * @return true iff a new DailyPlanner is created
      */
-    public boolean NewDailyPlanner(String startTime, String endTime){
+    public boolean NewDailyPlanner(String plannerName, String startTime, String endTime){
 //        this.planner = new DailyPlanner(startTime, endTime, 60);
 //        return true;
-        this.dailyPlanner = new DailyPlanner(startTime, endTime, 60);
+        this.dailyPlanner = new DailyPlanner(plannerName, startTime, endTime, 60);
         return true;
     }
 
@@ -42,21 +44,22 @@ public class PlannerManager {
      * @param Interval interval
      * @return true
      */
-    public boolean NewDailyPlanner(String startTime, String endTime, int Interval){
+    public boolean NewDailyPlanner(String plannerName, String startTime, String endTime, int Interval){
 //        this.planner = new DailyPlanner(startTime, endTime, Interval);
 //        return true;
-        this.dailyPlanner = new DailyPlanner(startTime, endTime, Interval);
+        this.dailyPlanner = new DailyPlanner(plannerName, startTime, endTime, Interval);
         return true;
     }
 
     /** Create an empty DailyPlanner
      *
+     * @param plannerName name of planner
      * @return true iff a new ProjectPlanner is correctly created
      */
-    public boolean NewProjectPlanner(){
+    public boolean NewProjectPlanner(String plannerName){
 //        this.planner = new ProjectPlanner();
 //        return true;
-        this.projectPlanner = new ProjectPlanner();
+        this.projectPlanner = new ProjectPlanner(plannerName);
         return true;
     }
 
@@ -78,16 +81,17 @@ public class PlannerManager {
 
     /** Create a DailyPlanner with Agendas
      *
+     * @param plannerName name of planner
      * @param Agendas: agendas for this agenda
      * @return true iff a new ProjectPlanner is correctly created and agendas are added
      */
-    public boolean NewProjectPlanner(ArrayList<String> Agendas){
+    public boolean NewProjectPlanner(String plannerName, ArrayList<String> Agendas){
 //        this.planner = new ProjectPlanner();
 //        for (String Agenda: Agendas){
 //            this.planner.Add(Agenda);
 //        }
 //        return true;
-        this.projectPlanner = new ProjectPlanner();
+        this.projectPlanner = new ProjectPlanner(plannerName);
         for (String Agenda: Agendas){
             this.projectPlanner.Add(Agenda);
         }

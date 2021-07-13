@@ -8,7 +8,7 @@ public class PlannerTests {
     public static void main(String[] args) {
         // Testing DailyPlanner entity
         System.out.println("Testing DailyPlanner...");
-        DailyPlanner dailyPlanner = new DailyPlanner("09:00", "24:00", 60);
+        DailyPlanner dailyPlanner = new DailyPlanner("Test Daily Planner", "09:00", "24:00", 60);
         System.out.println(dailyPlanner);
         dailyPlanner.Add("12:01","CSC207");
         System.out.println(dailyPlanner);
@@ -28,7 +28,7 @@ public class PlannerTests {
 
         //Testing ProjectPlanner
         System.out.println("Testing ProjectPlanner...");
-        ProjectPlanner projectPlanner = new ProjectPlanner();
+        ProjectPlanner projectPlanner = new ProjectPlanner("Test Task Planner");
         System.out.println(projectPlanner);
         projectPlanner.Add("Write Entity");
         projectPlanner.Add("Write Use Case");

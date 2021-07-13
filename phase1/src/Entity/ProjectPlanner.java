@@ -5,8 +5,8 @@ public class ProjectPlanner extends Planner {
     public ArrayList<String> tasks;
     public ArrayList<String> taskStatus;
 
-    public ProjectPlanner() {
-        super();
+    public ProjectPlanner(String plannerName) {
+        super(plannerName);
         this.tasks = new ArrayList<>();
         this.taskStatus = new ArrayList<>();
 
@@ -18,7 +18,8 @@ public class ProjectPlanner extends Planner {
      */
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Project tasks: \n");
+        String plannerInfo = this.plannerName + "\n" + "ID: " + this.ID + "\n" + "\nTasks: \n";
+        sb.append(plannerInfo);
         if (this.tasks.isEmpty()){
             sb.append("N/A");
         }
