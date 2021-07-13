@@ -115,13 +115,6 @@ public abstract class Account implements InterfaceInfo, Serializable {
     }
 
     /**
-     * @return A String representing the File Path of this account.
-     */
-    public String getFilePath() {
-        return this.file_path;
-    }
-
-    /**
      * @param head Represent the header of this account.
      */
     public void setHeader(String[] head) {
