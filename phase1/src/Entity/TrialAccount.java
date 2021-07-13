@@ -7,7 +7,7 @@ public class TrialAccount extends Account{
 
     public TrialAccount() {
         super();
-        this.isAdmin = "trial";
+        this.accountType = "trial";
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
     }
@@ -17,8 +17,8 @@ public class TrialAccount extends Account{
      * @return Return false.
      */
     @Override
-    public String getIsAdmin() {
-        return  this.isAdmin;
+    public String getAccountType() {
+        return  this.accountType;
     }
 
     /**

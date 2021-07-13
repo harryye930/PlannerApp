@@ -12,7 +12,7 @@ import java.io.Serializable;
  * A instance of this class represent an account in this application.
  */
 public abstract class Account implements InterfaceInfo, Serializable {
-    protected String isAdmin;
+    protected String accountType;
     protected String userName;
     protected String userId;
     protected String email;
@@ -22,7 +22,7 @@ public abstract class Account implements InterfaceInfo, Serializable {
     protected String file_path;
 
     public Account() {
-        this.isAdmin = "regular";
+        this.accountType = "regular";
         this.userId = ((Integer) this.hashCode()).toString();
     }
 
@@ -117,8 +117,8 @@ public abstract class Account implements InterfaceInfo, Serializable {
     /**
      * @return A boolean value indicating that whether this account id admin.
      */
-    public String getIsAdmin() {
-        return this.isAdmin;
+    public String getAccountType() {
+        return this.accountType;
     }
 
     /**

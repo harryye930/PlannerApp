@@ -15,7 +15,7 @@ public class UserAccount extends Account {
      */
     public UserAccount(String email) {
         super();
-        this.isAdmin = "regular";
+        this.accountType = "regular";
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
         super.email = email;
@@ -27,7 +27,7 @@ public class UserAccount extends Account {
      */
     public UserAccount(List<Planner> planners) {
         super();
-        this.isAdmin = "regular";
+        this.accountType = "regular";
         this.planners = (ArrayList<Planner>) planners;
         super.file_path = "phase1/src/Entity/regularInfo.csv";
         super.read_csv(super.file_path);
@@ -74,8 +74,8 @@ public class UserAccount extends Account {
      * @return Return false.
      */
     @Override
-    public String getIsAdmin() {
-        return  this.isAdmin;
+    public String getAccountType() {
+        return  this.accountType;
     }
 
     /**
