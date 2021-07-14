@@ -19,6 +19,10 @@ public class TemplateManager {
     // TODO: (1) Make template gateway - use an interface (week7) to not violate dependency rule while using gateway to
     // TODO: read the information
 
+    //TODO: Idea for Gateway:
+    // Gateway reader should return a HashMap, with key being name of the file,
+    // and value being ArrayList<String> - each row in the csv file should be a String in ArrayList<String>
+
     private Map<Integer, Template> templates;  // a mapping of template ID to Template
 
     /**
@@ -46,103 +50,204 @@ public class TemplateManager {
     }
 
     /**
-     * Populates the records map from the file at path filePath.
-     *
-     * @param filePath the path of the data file
-     * @throws FileNotFoundException if filePath is not a valid path
-     * Citation: this code is adopted from Week6 CSC207H Summer2021 demo code.
+     * Getter for HashMap of Template objects stored in TemplateManager, keys are Template ID's, values are the Template
+     * object corresponding to the ID.
+     * @return HashMap of Template objects stored in TemplateManager.
      */
-    public void readFromCSVFile(String filePath) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new FileInputStream(filePath));
-        String[] record;
-        Template template;
-
-        while (scanner.hasNextLine()) {
-            record = scanner.nextLine().split(",");
-            if (record[0].equals("daily")) {
-                template = new DailyTemplate("TemplateName", record); // TODO: WIP
-            } else {  // template type is "project"
-                template = new ProjectTemplate("TemplateName", record);
-            }
-            templates.put(template.getId(), template);
-        }
-        scanner.close();
+    public Map<Integer, Template> getTemplates() {
+        return templates;
     }
 
     /**
-     * Manages the stored template collections (i.e., add or remove) of this TemplateManager.
-     *
-     * @param t is the template either being added or removed from this TemplateManager.
+     * Adds a Template to TemplateManager.
+     * @param t Template being added to TemplateManager.
      */
-    public void add(Template t) {
+    public void addTemplate(Template t) {
         // Add template <t> to the collection of templates stored in this TemplateManager object.
         templates.put(t.getId(), t);
     }
-    public void remove(Template t) {
+
+    /**
+     * Removes a Template from TemplateManager.
+     * @param t Template being removed from TemplateManager.
+     */
+    // TODO: we need a docstring for each method.
+    public void removeTemplate(Template t) {
         // Remove template <t> from the collection of templates stored in this TemplateManager object.
         templates.remove(t.getId(), t);
     }
 
     /**
-     * Change the name of the template <t> to <newName>.
-     *
-     * @param t is the template being edited.
-     * @param newName is the new name given to the template.
+     * Changes the name of the Template with ID to newName.
+     * @param ID ID of template being edited.
+     * @param newName New value to set the name of the Template to.
      */
-    public void editTemplateName(Template t, String newName) {
-        t.setName(newName);
+    public void editTemplateName(int ID, String newName) {
+        this.getTemplates().get(ID).setName(newName);
     }
 
     /**
-     * @return number of templates in this TemplateManager.
+     * For Template with ID, renames the prompt with the corresponding promptNumber to newName.
+     * Note that the prompt numbers start from 0.
+     * @param ID ID of template being edited.
+     * @param promptNumber The number of the prompt to rename.
+     * @param newName The new name to give to the prompt.
+     */
+    public void renameTemplatePrompt(int ID, int promptNumber, String newName) {
+        this.getTemplates().get(ID).renamePrompt(promptNumber, newName);
+    }
+
+    /**
+     * For Template with ID, adds a new prompt named promptName to the list of prompts and numbers it with promptNumber
+     * (i.e., all existing prompts that have number equal to or greater than promptNumber will have their number
+     * increased by 1).
+     * Note that the prompt numbers start from 0.
+     * @param ID ID of template being edited.
+     * @param promptNumber The number to give to the new prompt.
+     * @param promptName The name to give to the new prompt.
+     */
+    public void addTemplatePrompt(int ID, int promptNumber, String promptName){
+        this.getTemplates().get(ID).addPrompt(promptNumber, promptName);
+    }
+
+    /**
+     * For Template with ID, adds a new prompt named promptName to the end of the existing list of prompts.
+     * @param ID ID of template being edited.
+     * @param promptName The name to give to the new prompt.
+     */
+    public void addTemplatePrompt(int ID, String promptName){
+        this.getTemplates().get(ID).addPrompt(promptName);
+    }
+
+    /**
+     * For Template with ID,  removes an existing prompt with promptNumber.
+     * @param ID ID of template being edited.
+     * @param promptNumber The number that corresponds to the prompt to remove.
+     */
+    public void removeTemplatePrompt(int ID, int promptNumber){
+        this.getTemplates().get(ID).removePrompt(promptNumber);
+    }
+
+    /**
+     * @return Number of templates in TemplateManager.
      */
     public int numberOfTemplates() {
         return templates.size();
     }
 
-    /**
-     * Create an empty template to be filled.
-     *
-     * @param t is the template to be used.
-     * @return mapping of template name to prompts to be filled in the template.
-     */
-    public Map<Integer, String[]> emptyTemplate(Template t) {
-        String[] prompts;
-        Map<Integer, String[]> template;
-        template = new HashMap<>();
-        prompts = t.getPrompts();
-        template.put(t.getId(), prompts);
-        return template;
-    }
+    //TODO: added more information to toString() and renamed to viewTemplateManager()
+//    /**
+//     * @return String that represents the TemplateManager object.
+//     */
+//    public String toString() {
+//        return "Number of templates stored in the TemplateManager: " + this.numberOfTemplates();
+//
+//    }
 
-    /**
-     * @return String that represents the TemplateManager object.
-     */
-    public String toString() {
-        return "Number of templates: " + this.numberOfTemplates();
-    }
+//    /**
+//     * @return String that contains preview of all Template objects stored in the TemplateManager.
+//     */
+//    public String toString(){
+//        StringBuilder stringRep = new StringBuilder();
+//        stringRep.append("Number of templates stored in the TemplateManager: ").append(this.numberOfTemplates());
+//        for (Map.Entry<Integer, Template> items: this.templates.entrySet()){
+//            Integer key = items.getKey();
+//            Template value = items.getValue();
+//
+//            stringRep.append("Template ID: ").append(key).append(System.lineSeparator());
+//            stringRep.append(value.getTemplatePreview());
+//        }
+//        return stringRep.toString();
+//    }
 
-    /**
-     * @return String that contains preview of all Template objects stored in the TemplateManager.
+    /** Returns a string representation of the TemplateManager object, with the option of:
+     * - either including full details of each Template stored in it;
+     * - or including only the summary of each Template stored in it.
+     * @param viewOption Can only have one of these two values: "Detail", "Summary".
+     * @return String that contains a representation of all Template objects stored in the TemplateManager.
      */
-    public String previewAllTemplates(){
-        StringBuilder allPreview = new StringBuilder();
-        for (Map.Entry items: this.templates.entrySet()){
-            String key = (String)items.getKey();
-            Template value = (Template)items.getValue();
-
-            allPreview.append("Template ID: ").append(key).append(System.lineSeparator());
-            allPreview.append(value.getTemplatePreview());
+    public String viewTemplateManager (String viewOption) throws IllegalArgumentException{
+        if ((!viewOption.equals("Detail")) & (!viewOption.equals("Summary"))){
+            throw new IllegalArgumentException(
+                    String.format("Invalid user input %s. Please enter either \"Detail\" or \"Summary\".", viewOption));
         }
-        return allPreview.toString();
+        String stringRep = "Number of templates stored in the TemplateManager: " + this.numberOfTemplates()
+                            + System.lineSeparator();
+        stringRep += "Templates: " + System.lineSeparator();
+
+        // Traverse through all key-value pairs in templates, and add those templates' string representation
+        // to stringRep.
+        for (Map.Entry<Integer, Template> items: this.getTemplates().entrySet()){
+            Template value = items.getValue();
+
+            if (viewOption.equals("Detail")){
+                stringRep += value.toString();
+            } else {
+                stringRep += value.getTemplatePreview();
+            }
+
+            stringRep += System.lineSeparator();
+        }
+
+        return stringRep;
     }
 
     /**
+     * Get detailed string representation of a specified Template that's stored in TemplateManager.
      * @param ID ID of the Template.
      * @return String representation of the Template object corresponding to the ID. String representation contains
      * detailed representation of the Template, including name, type, number of prompts, and what those prompts are.
      */
-    public String viewDetailedTemplate(int ID){
-        return this.templates.get(ID).toString();
+    public String detailViewTemplate(int ID){
+        return this.getTemplates().get(ID).toString();
     }
+
+    /**
+     * Get preview (a summary that only includes basic info) of a specified Template that's stored in TemplateManager.
+     * @param ID ID of the Template.
+     * @return String preview of Template corresponding to ID that includes basic information.
+     */
+    public String previewTemplate(int ID){
+        return this.getTemplates().get(ID).getTemplatePreview();
+    }
+
+//    /**
+//     * Create an empty template to be filled.
+//     *
+//     * @param t is the template to be used.
+//     * @return mapping of template name to prompts to be filled in the template.
+//     */
+//    public Map<Integer, String[]> emptyTemplate(Template t) {
+//        String[] prompts;
+//        Map<Integer, String[]> template;
+//        template = new HashMap<>();
+//        prompts = t.getPrompts();
+//        template.put(t.getId(), prompts);
+//        return template;
+//    }
+
+//    /**
+//     * Populates the records map from the file at path filePath.
+//     *
+//     * @param filePath the path of the data file
+//     * @throws FileNotFoundException if filePath is not a valid path
+//     * Citation: this code is adopted from Week6 CSC207H Summer2021 demo code.
+//     */
+//    public void readFromCSVFile(String filePath) throws FileNotFoundException {
+//        Scanner scanner = new Scanner(new FileInputStream(filePath));
+//        String[] record;
+//        Template template;
+//
+//        while (scanner.hasNextLine()) {
+//            record = scanner.nextLine().split(",");
+//            if (record[0].equals("daily")) {
+//                template = new DailyTemplate("TemplateName", record); // TODO: WIP
+//            } else {  // template type is "project"
+//                template = new ProjectTemplate("TemplateName", record);
+//            }
+//            templates.put(template.getId(), template);
+//        }
+//        scanner.close();
+//    }
+
 }
