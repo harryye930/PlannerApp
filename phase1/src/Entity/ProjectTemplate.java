@@ -1,6 +1,7 @@
 package Entity;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class ProjectTemplate extends Template{
 
     private final int PROMPTS_START = 3;
 
-    public ProjectTemplate(String name, String[] prompts) {
+    public ProjectTemplate(String name, ArrayList<String> prompts) {
         super(name, prompts);
     }
 
@@ -48,28 +49,28 @@ public class ProjectTemplate extends Template{
      * @return the setting prompt for the first heading (i.e., start)
      */
     public String firstStatusPrompt() {
-        return this.getPrompts()[STATUS_START];
+        return this.getPrompts().get(STATUS_START);
     }
 
     /**
      * @return the setting prompt for the second heading (i.e., middle)
      */
     public String secondStatusPrompt() {
-        return this.getPrompts()[STATUS_MIDDLE];
+        return this.getPrompts().get(STATUS_MIDDLE);
     }
 
     /**
      * @return the setting prompt for the third heading (i.e., end)
      */
     public String thirdStatusPrompt() {
-        return this.getPrompts()[STATUS_END];
+        return this.getPrompts().get(STATUS_END);
     }
 
-    /**
-     * @return the prompts for event detail (i.e., set of prompts asked for each event)
-     */
-    public String[] eventPrompts() {
-        String[] holder = this.getPrompts();
-        return Arrays.copyOfRange(holder, PROMPTS_START, holder.length);
-    }
+//    /**
+//     * @return the prompts for event detail (i.e., set of prompts asked for each event)
+//     */
+//    public String[] eventPrompts() {
+//        String[] holder = this.getPrompts();
+//        return Arrays.copyOfRange(holder, PROMPTS_START, holder.length);
+//    }
 }

@@ -3,8 +3,10 @@ package Entity;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+//TODO: Add save template method.
+
 /**
- * Represents a Template in the program. Can be a Daily Template, or a Project Template, and so on, which are
+ * Represents a Template in the program. Can be a Daily Template, or a Project Template, etc., which are
  * implemented as subclasses.
  */
 public abstract class Template {
@@ -19,48 +21,13 @@ public abstract class Template {
 //    }
 
     private String name; // name of this template
-    private ArrayList<String> prompts; // template prompts of this template
-
+    private ArrayList<String> prompts; // prompts of this template
     private static int id; // id of this template
 
-    public Template(String name, String[] prompts) {
+    public Template(String name, ArrayList<String> prompts) {
         this.name = name;
-
-        this.prompts = new ArrayList<>();
-        this.prompts.addAll(Arrays.asList(prompts));
-
+        this.prompts = prompts;
         id++;
-    }
-
-    /**
-     * Returns a string representation of the Template object.
-     * @return String that represents the Template object.
-     */
-//    public String toString(){
-//        String stringRep = "Name: " + this.getName() + System.lineSeparator();
-//        stringRep += "Last Edit Time: " + this.getLastEditTime() + System.lineSeparator();
-//        stringRep += "Last Edit User: " + this.getLastEditUser() + System.lineSeparator();
-//        return stringRep;
-//    }
-
-    public String toString() {
-        String stringRep = "Name: " + this.getName() + System.lineSeparator();
-        stringRep += "Type: " + this.isType() + System.lineSeparator();
-        stringRep += "Number of Prompts: " + this.numPrompts() + System.lineSeparator();
-        // TODO: retrieve all prompts, not just display the number of prompts
-        return stringRep;
-    }
-
-    /**
-     * Returns a preview of Template object that just includes the name and the type of the Template, in String format.
-     * Different from the toString method in that the preview only includes the basic information, and does nto include
-     * the detailed prompts.
-     * @return String preview of Template that includes the name and type.
-     */
-    public String getTemplatePreview(){
-        String preview = "Name: " + this.getName() + System.lineSeparator();
-        preview += "Type: " + this.isType() + System.lineSeparator();
-        return preview;
     }
 
     /**
@@ -79,41 +46,34 @@ public abstract class Template {
         return name;
     }
 
+    // TODO: not sure if we need this method
 //    /**
-//     * Getter for retrieving the time when the template was last edited.
-//     * @return String that represents the time.
+//     * Setter for changing the prompts of the template.
+//     * @param newPrompts the new prompts of the template.
 //     */
-//    public String getLastEditTime() {
-//        return lastEditTime;
+//    public void setPrompts(String[] newPrompts) {
+//        this.prompts = new ArrayList<>();
+//        this.prompts.addAll(Arrays.asList(newPrompts));
 //    }
 
 //    /**
-//     * Getter for retrieving the user who last edited the template.
-//     * @return String that represents the user ID.
+//     * Getter for retrieving the prompts of the template.
+//     * @return String[] that contains prompts of the template.
 //     */
-//    public String getLastEditUser() {
-//        return lastEditUser;
+//    public String[] getPrompts() {
+//        String[] temp = new String[this.numPrompts()];
+//        for (int i = 0; i < this.numPrompts(); i++) {
+//            temp[i] = prompts.get(i);
+//        }
+//        return temp;
 //    }
-
-    /**
-     * Setter for changing the prompts of the template.
-     * @param newPrompts the new prompts of the template.
-     */
-    public void setPrompts(String[] newPrompts) {
-        this.prompts = new ArrayList<>();
-        this.prompts.addAll(Arrays.asList(newPrompts));
-    }
 
     /**
      * Getter for retrieving the prompts of the template.
-     * @return String[] that contains prompts of the template.
+     * @return ArrayList<String> that contains prompts of the template.
      */
-    public String[] getPrompts() {
-        String[] temp = new String[this.numPrompts()];
-        for (int i = 0; i < this.numPrompts(); i++) {
-            temp[i] = prompts.get(i);
-        }
-        return temp;
+    public ArrayList<String> getPrompts() {
+        return prompts;
     }
 
     /**
@@ -122,6 +82,47 @@ public abstract class Template {
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * Returns a string representation of the Template object.
+     * @return String that represents the Template object in detail.
+     */
+//    public String toString(){
+//        String stringRep = "Name: " + this.getName() + System.lineSeparator();
+//        stringRep += "Last Edit Time: " + this.getLastEditTime() + System.lineSeparator();
+//        stringRep += "Last Edit User: " + this.getLastEditUser() + System.lineSeparator();
+//        return stringRep;
+//    }
+
+    public String toString() {
+        String stringRep = "ID: " + this.getId() + System.lineSeparator();
+        stringRep += "Name: " + this.getName() + System.lineSeparator();
+        stringRep += "Type: " + this.isType() + System.lineSeparator() + System.lineSeparator();
+        // stringRep += "Number of Prompts: " + this.numPrompts() + System.lineSeparator();
+        // if we already show all the prompts, its not necessary to show numPrompts - moved this to preview
+        stringRep += "Prompts: " + System.lineSeparator();
+        int i = 0;
+        for (String p: this.getPrompts()){
+            stringRep += "Prompt" + i + ": " + p + System.lineSeparator();
+            i++;
+        }
+        return stringRep;
+    }
+
+    /**
+     * Returns a preview of Template object that just includes the basic and identifying information of a Template,
+     * in String format.
+     * Different from the toString method in that the preview only includes the basic information, and does nto include
+     * the detailed prompts.
+     * @return String preview of Template that includes basic information.
+     */
+    public String getTemplatePreview(){
+        String preview = "ID: " + this.getId() + System.lineSeparator();
+        preview += "Name: " + this.getName() + System.lineSeparator();
+        preview += "Type: " + this.isType() + System.lineSeparator();
+        preview += "Number of Prompts: " + this.numPrompts() + System.lineSeparator();
+        return preview;
     }
 
     /**
@@ -137,4 +138,57 @@ public abstract class Template {
      * @return String that's the type of the template.
      */
     public abstract String isType();
+
+    /**
+     * Renames the prompt with the corresponding promptNumber to newName. Note that the prompt numbers start from 0.
+     * @param promptNumber The number of the prompt to rename.
+     * @param newName The new name to give to the prompt.
+     */
+    public void renamePrompt(int promptNumber, String newName){
+        // promptNumber corresponds to the index of the prompt in the ArrayList prompts.
+        this.prompts.set(promptNumber, newName);
+    }
+
+    /**
+     * Adds a new prompt named promptName to the list of prompts and number it with promptNumber (i.e., all existing
+     * prompts that have number equal to or greater than promptNumber will have their number increased by 1).
+     * Note that the prompt numbers start from 0.
+     * @param promptNumber The number to give to the new prompt.
+     * @param promptName The name to give to the new prompt.
+     */
+    public void addPrompt(int promptNumber, String promptName){
+        this.prompts.add(promptNumber, promptName);
+    }
+
+    /**
+     * Adds a new prompt named promptName to the end of the existing list of prompts.
+     * @param promptName The name to give to the new prompt.
+     */
+    public void addPrompt(String promptName){
+        addPrompt(this.numPrompts(), promptName);
+    }
+
+    /**
+     * Removes an existing prompt with promptNumber.
+     * @param promptNumber The number that corresponds to the prompt to remove.
+     */
+    public void removePrompt(int promptNumber){
+        this.prompts.remove(promptNumber);
+    }
+
+//    /**
+//     * Getter for retrieving the time when the template was last edited.
+//     * @return String that represents the time.
+//     */
+//    public String getLastEditTime() {
+//        return lastEditTime;
+//    }
+
+//    /**
+//     * Getter for retrieving the user who last edited the template.
+//     * @return String that represents the user ID.
+//     */
+//    public String getLastEditUser() {
+//        return lastEditUser;
+//    }
 }
