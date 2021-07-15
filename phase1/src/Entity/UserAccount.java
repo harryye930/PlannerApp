@@ -36,7 +36,7 @@ public class UserAccount extends Account {
     /**
      * @return A List containing all planners of this user.
      */
-    public List<Planner> getPlanner() {
+    public ArrayList<Planner> getPlanner() {
         return this.planners;
     }
 
