@@ -19,7 +19,6 @@ public abstract class Account implements InterfaceInfo, Serializable {
     protected String password;
     protected String[] header;
     protected ArrayList<String[]> data = new ArrayList<>();
-    protected String file_path;
 
     public Account() {
         this.accountType = "regular";
@@ -115,83 +114,10 @@ public abstract class Account implements InterfaceInfo, Serializable {
     }
 
     /**
-     * @param head Represent the header of this account.
-     */
-    public void setHeader(String[] head) {
-        this.header = head;
-    }
-
-    /**
-     * @param data Represent the information from file.
-     */
-    public void addData(String[] data) {
-        this.data.add(data);
-    }
-
-    /**
      * @return A boolean value indicating that whether this account id admin.
      */
     public String getAccountType() {
         return this.accountType;
-    }
-
-    /**
-     * Read in data from the given file path.
-     * The headers in csv file have following meanings:
-     *  - object: the identity we make operations on.
-     *  - stage: indicate the phase of interaction.
-     *  - message: the text that TextUI needs to convey.
-     *  - options: the available options that can be provided for the user at current sate.
-     * @param file_path the file path of the file that we want to load in.
-     */
-    protected void read_csv(String file_path) {
-        // read in the csv file into data attribute.
-        File file = new File(file_path);
-        try {
-            if (file.createNewFile()) {
-                // The file hasn't already be created before this execution.
-                // Initialize the csv file.
-                String[] head = {"object", "options", "message", "stage"};
-                this.header = head;
-                FileWriter csvFile = new FileWriter(file);
-                int i = 0;
-                for (; i < head.length - 1; i++){
-                    csvFile.append(head[i]).append(",");
-                }
-                csvFile.append(head[i]).append("\n");
-                csvFile.flush();
-                csvFile.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        // Read in the data from csv file.
-        try {
-            this.read_in_data(file_path);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void read_in_data(String file_path) throws FileNotFoundException {
-        // Read in the data from csv file.
-        Scanner scanner = new Scanner(new FileInputStream(file_path));
-
-        // read in the header.
-        if (scanner.hasNext()) {
-            String header_info = scanner.nextLine();
-            this.header = header_info.split(",");
-        }
-
-        // read in the data.
-        String row;
-        while (scanner.hasNext()){
-            row = scanner.nextLine();
-            String[] curr = row.split(",");
-            //ArrayList<String> arr = new A
-            this.data.add(row.split(","));
-        }
-        scanner.close();
     }
 
     private int find(String[] lst, String item) {
@@ -203,6 +129,5 @@ public abstract class Account implements InterfaceInfo, Serializable {
         }
         return -1;
     }
-
 }
 

@@ -8,8 +8,6 @@ public class AdminAccount  extends Account {
     public AdminAccount() {
         super();
         super.accountType = "admin";
-        super.file_path = "phase1/src/Entity/adminInfo.csv";
-        super.read_csv(super.file_path);
     }
 
     /**
@@ -18,8 +16,6 @@ public class AdminAccount  extends Account {
     public AdminAccount(String email) {
         super();
         this.accountType = "admin";
-        super.file_path = "phase1/src/Entity/adminInfo.csv";
-        super.read_csv(super.file_path);
         super.email = email;
         super.userId = ((Integer) (email).hashCode()).toString();
     }
