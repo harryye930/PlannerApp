@@ -1,7 +1,6 @@
 package Controller;
 
 import Entity.Account;
-import Exceptions.WrongAccTypeException;
 import UseCase.*;
 import Entity.*;
 

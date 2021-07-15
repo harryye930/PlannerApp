@@ -1,11 +1,8 @@
 package UseCase;
 
 import Entity.*;
-import Exceptions.WrongAccTypeException;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -246,7 +243,7 @@ public class AccountManager implements Serializable{
         String thisPath = this.filePath + id + ".ser";
 
         try {
-            FileOutputStream fileOut = new FileOutputStream(new File(thisPath));
+            FileOutputStream fileOut = new FileOutputStream(thisPath);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
             objectOut.writeObject(acc);
             objectOut.close();
@@ -305,7 +302,7 @@ public class AccountManager implements Serializable{
 
     private void writeObject(HashMap<String, Account> obj, String fp) {
         try {
-            FileOutputStream fileOut = new FileOutputStream(new File(fp));
+            FileOutputStream fileOut = new FileOutputStream(fp);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
             objectOut.writeObject(obj);
             objectOut.close();
