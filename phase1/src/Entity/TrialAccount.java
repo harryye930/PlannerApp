@@ -8,8 +8,6 @@ public class TrialAccount extends Account{
     public TrialAccount() {
         super();
         this.accountType = "trial";
-        super.file_path = "phase1/src/Entity/regularInfo.csv";
-        super.read_csv(super.file_path);
     }
 
     /**

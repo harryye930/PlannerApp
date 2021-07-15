@@ -16,8 +16,6 @@ public class UserAccount extends Account {
     public UserAccount(String email) {
         super();
         this.accountType = "regular";
-        super.file_path = "phase1/src/Entity/regularInfo.csv";
-        super.read_csv(super.file_path);
         super.email = email;
         super.userId = ((Integer) (email).hashCode()).toString();
     }
@@ -29,8 +27,6 @@ public class UserAccount extends Account {
         super();
         this.accountType = "regular";
         this.planners = (ArrayList<Planner>) planners;
-        super.file_path = "phase1/src/Entity/regularInfo.csv";
-        super.read_csv(super.file_path);
     }
 
     /**
