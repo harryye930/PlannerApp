@@ -107,9 +107,8 @@ public class AccessController {
      * @param retriever A String representing the User ID or Email.
      * @param planner A planner object that need to be added to the account.
      * @return A boolean value representing whether the adding is successful or not..
-     * @throws WrongAccTypeException Exception if the class type is not UserAccount.
      */
-    public boolean setPlanner(String retriever, Planner planner) throws WrongAccTypeException {
+    public boolean setPlanner(String retriever, Planner planner){
         return this.accManager.setPlanners(accManager.findAccount(retriever), planner);
     }
 
@@ -118,9 +117,8 @@ public class AccessController {
      * @param retriever A String representing the User ID or Email.
      * @param planner A planner object that need to be added to the account.
      * @return A boolean value representing whether the adding is successful or not..
-     * @throws WrongAccTypeException Exception if the class type is not UserAccount.
      */
-    public boolean setPlanner(String retriever, ArrayList<Planner> planner) throws WrongAccTypeException{
+    public boolean setPlanner(String retriever, ArrayList<Planner> planner){
         return this.accManager.setPlanners(accManager.findAccount(retriever), planner);
     }
 
@@ -136,9 +134,8 @@ public class AccessController {
      *
      * @param retriever A String representing the User ID or Email.
      * @return An ArrayList of Planner that owned by this account.
-     * @throws WrongAccTypeException Exception if the class type is wrong.
      */
-    public ArrayList<Planner> getPlanners(String retriever) throws WrongAccTypeException {
+    public ArrayList<Planner> getPlanners(String retriever){
         return accManager.getPlanners(retriever);
     }
 

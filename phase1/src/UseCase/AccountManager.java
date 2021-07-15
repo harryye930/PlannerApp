@@ -193,14 +193,12 @@ public class AccountManager implements Serializable{
      * @param account An Account object that need to be read.
      * @param planner An array list of Planners that need to be added.
      * @return A boolean value representing whether the adding is successful or not.
-     * @throws WrongAccTypeException Exception if class type is not UserAccount.
      */
-    public boolean setPlanners(Account account, ArrayList<Planner> planner) throws WrongAccTypeException{
-        try{
-            ((UserAccount)account).setPlanners(planner);
-            return true;
-        }catch (Exception e){
-            throw new WrongAccTypeException();
+    public boolean setPlanners(Account account, ArrayList<Planner> planner){
+        if (account.getAccountType().equals("regular")){
+            return ((UserAccount) account).setPlanners(planner);
+        } else {
+            return false;
         }
     }
 
@@ -209,14 +207,12 @@ public class AccountManager implements Serializable{
      * @param account An Account object that need to be read.
      * @param planner An array list of Planners that need to be added.
      * @return A boolean value representing whether the adding is successful or not.
-     * @throws WrongAccTypeException Wrong type of Account subclass.
      */
-    public boolean setPlanners(Account account, Planner planner) throws WrongAccTypeException{
-        try{
-            ((UserAccount)account).setPlanners(planner);
-            return true;
-        }catch (Exception e){
-            throw new WrongAccTypeException();
+    public boolean setPlanners(Account account, Planner planner){
+        if (account.getAccountType().equals("regular")){
+            return ((UserAccount) account).setPlanners(planner);
+        } else {
+            return false;
         }
     }
 
