@@ -2,6 +2,7 @@ package UseCase;
 
 import Entity.*;
 import Exceptions.WrongAccTypeException;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 
 import java.io.*;
 import java.lang.reflect.Array;
@@ -222,15 +223,14 @@ public class AccountManager implements Serializable{
     /**
      *
      * @param retriever A String representing the User ID or Email.
-     * @return An ArrayList of Planner that owned by this account.
-     * @throws WrongAccTypeException Exception if the class type is not UserAccount.
+     * @return An ArrayList of Planner that owned by this account, if the account is regular. Else, return
+     * null.
      */
-    public ArrayList<Planner> getPlanners(String retriever) throws WrongAccTypeException {
-        try {
-            UserAccount acc = (UserAccount) this.findAccount(retriever);
-            return (ArrayList<Planner>) acc.getPlanner();
-        } catch (Exception ex) {
-            throw new WrongAccTypeException();
+    public ArrayList<Planner> getPlanners(String retriever) {
+        if (findAccount(retriever).getAccountType().equals("regular")){
+            return ((UserAccount) findAccount(retriever)).getPlanner();
+        } else {
+            return null;
         }
     }
 
