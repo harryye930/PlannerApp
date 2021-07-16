@@ -6,17 +6,17 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+/**
+ * Manages Accounts.
+ */
 public class AccountManager implements Serializable{
     private HashMap<String, Account> idToAccount;
-    private ArrayList<Account> allAccount;
     private HashMap<String, Account> emailToAccount;
 
     /**
      * Create an AccountManager Object.
      */
     public AccountManager(){
-        this.allAccount = new ArrayList<>();
         this.emailToAccount = new HashMap<>();
         this.idToAccount = new HashMap<>();
         }
@@ -94,7 +94,6 @@ public class AccountManager implements Serializable{
         UserAccount newAccount = new UserAccount(email);
         emailToAccount.put(email, newAccount);
         idToAccount.put(newAccount.getUserId(), newAccount);
-        allAccount.add(newAccount);
         return newAccount.getUserId();
     }
 
@@ -106,7 +105,6 @@ public class AccountManager implements Serializable{
         AdminAccount newAccount = new AdminAccount(email);
         emailToAccount.put(email, newAccount);
         idToAccount.put(newAccount.getUserId(), newAccount);
-        allAccount.add(newAccount);
         return newAccount.getUserId();
     }
 
@@ -117,7 +115,6 @@ public class AccountManager implements Serializable{
     private String createTrialAcc(){
         TrialAccount newAccount = new TrialAccount();
         idToAccount.put(newAccount.getUserId(), newAccount);
-        allAccount.add(newAccount);
         return newAccount.getUserId();
     }
 
@@ -147,8 +144,7 @@ public class AccountManager implements Serializable{
      * @return true if successfully removed account, false otherwise.
      */
     public boolean removeAccount(Account account){
-        if (allAccount.contains(account)) {
-            allAccount.remove(account);
+        if (this.getAllAccount().contains(account)) {
             idToAccount.remove(account.getUserId());
             emailToAccount.remove(account.getEmail());
             return true; //Return true if the account object is in the collection.
@@ -162,7 +158,7 @@ public class AccountManager implements Serializable{
      * @return allAccount: the list that contains all accounts.
      */
     public ArrayList<Account> getAllAccount() {
-        return this.allAccount;
+        return new ArrayList<>(this.idToAccount.values());
     }
 
     /**
