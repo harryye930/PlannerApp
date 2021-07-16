@@ -132,6 +132,7 @@ public class DailyPlanner extends Planner {
         }
     }
 
+
     /**
      * edit agenda to current planner (given index)
      *
