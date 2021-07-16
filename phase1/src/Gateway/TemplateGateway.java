@@ -50,6 +50,9 @@ public class TemplateGateway extends Reader {
     }
 
     private boolean writeMaps() {
+        for (Template temp: tm.getTemplates().values()) {
+            this.idToTemplate.put(temp.getId() + "", temp);
+        }
         return super.writeSer(this.filePath, this.idToTemplate);
     }
 }
