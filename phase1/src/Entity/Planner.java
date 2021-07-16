@@ -14,8 +14,8 @@ public abstract class Planner implements Serializable {
     public String privacyStatus;
 
 
-    public Planner(String plannerName){
-        this.plannerName = plannerName;
+    public Planner(){
+        this.plannerName = "New Planner";
         this.ID = UUID.randomUUID().toString();
         this.privacyStatus = "private";
 
@@ -35,6 +35,17 @@ public abstract class Planner implements Serializable {
      */
     public String getID() {return this.ID;}
 
+    public void setPlannerName(String name){
+        plannerName = name;
+    }
+
+    public String getPlannerName(){
+        return plannerName;
+    }
+
+    public String getPrivacyStatus() {
+        return privacyStatus;
+    }
 
     /** Add agenda to current planner
      *

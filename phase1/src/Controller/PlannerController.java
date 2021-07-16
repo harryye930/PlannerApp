@@ -21,6 +21,18 @@ public class PlannerController {
         PlannerManager dailyplannerManager = new PlannerManager();
     }
 
+    public String createNewPlanner(String input){
+        if (input.equals("daily")){
+            String id = plannerManager.NewDailyPlanner();
+            return id;
+        } else if (input.equals("project")){
+            String id = plannerManager.NewProjectPlanner("Untitled");
+            return id;
+        } else {
+            return null;
+        }
+    }
+
     /** Pass on request to get a string representation of a planner
      *
      * @return a string of the planner tasks

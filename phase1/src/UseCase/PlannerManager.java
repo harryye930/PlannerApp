@@ -24,6 +24,13 @@ public class PlannerManager {
         
     }
 
+    public String NewDailyPlanner(){
+        DailyPlanner nd = new DailyPlanner();
+        nd.setPlannerInfo("Unititled", "09:00", "17:00", 60);
+        this.idToPlanner.put(nd.getID(), nd);
+        return nd.getID();
+    }
+
     /** Create new DailyPlanner -- default interval 60 mins
      *
      * @param plannerName name of the planner
