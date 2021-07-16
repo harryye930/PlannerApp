@@ -118,15 +118,19 @@ public class TextUI {
                             switch (plannerMenuOption){
                                 case 'A':
                                     // TODO: print user's planner
+                                    System.out.println("PlannerA");
                                     break;
                                 case 'B':
                                     // TODO: create a new planner from template
+                                    System.out.println("PlannerB");
                                     break;
                                 case 'C':
                                     // TODO: edit planner
+                                    System.out.println("PlannerC");
                                     break;
                                 case 'D':
                                     // TODO: delete planner
+                                    System.out.println("PlannerD");
                                     break;
                                 case 'E':
                                     System.out.println("Returning to Main Menu...");
@@ -151,9 +155,8 @@ public class TextUI {
 //                        "C. Edit a current template (Admin Only) \n" +
 //                        "D. Delete a current template (Admin Only) \n" +
 //                        "E. Exist to Main Menu\n"
-                        System.out.println(templateMenu);
                         do{
-                            System.out.println(plannerMenu);
+                            System.out.println(templateMenu);
                             templateMenuOption= scanner.next().charAt(0);
                             switch (templateMenuOption){
                                 case 'A':
