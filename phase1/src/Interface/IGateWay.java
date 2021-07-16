@@ -5,14 +5,14 @@ import java.util.ArrayList;
 /**
  * The interface of the Gateway.
  */
-public interface IGateWay{
+public interface IGateWay<T>{
     /**
      * Store an object into a .ser file.
      * @param filePath A String representing the file path you want to store.
      * @param obj The Object you want to store
      * @return A boolean value representing whether the process is successful or not.
      */
-    public boolean writeSer(String filePath, Object obj);
+    public boolean writeSer(String filePath, T obj);
 
     /**
      * Store the given data into a .csv file.
@@ -29,7 +29,7 @@ public interface IGateWay{
      * @param filePath A String representing the file path you want to store.
      * @return A Object of object type T, return null if failed to load in file.
      */
-    public Object readSer(String filePath);
+    public T readSer(String filePath);
 
     /**
      * Read .csv file into an two dimensional ArrayList.
