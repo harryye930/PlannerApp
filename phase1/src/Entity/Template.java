@@ -10,16 +10,6 @@ import java.util.Arrays;
  * implemented as subclasses.
  */
 public abstract class Template {
-//    protected String name; // name of the template
-//    private String lastEditTime; // last time the template was edited by a user in the program
-//    private String lastEditUser; // the ID of the user who last edited the template in the program
-
-//    public Template(String initEditTime, String initEditUser){
-//        this.name = "Template";
-//        this.lastEditTime = initEditTime;
-//        this.lastEditUser = initEditUser;
-//    }
-
     private String name; // name of this template
     private ArrayList<String> prompts; // prompts of this template
     private static int id; // id of this template
@@ -46,28 +36,6 @@ public abstract class Template {
         return name;
     }
 
-    // TODO: not sure if we need this method
-//    /**
-//     * Setter for changing the prompts of the template.
-//     * @param newPrompts the new prompts of the template.
-//     */
-//    public void setPrompts(String[] newPrompts) {
-//        this.prompts = new ArrayList<>();
-//        this.prompts.addAll(Arrays.asList(newPrompts));
-//    }
-
-//    /**
-//     * Getter for retrieving the prompts of the template.
-//     * @return String[] that contains prompts of the template.
-//     */
-//    public String[] getPrompts() {
-//        String[] temp = new String[this.numPrompts()];
-//        for (int i = 0; i < this.numPrompts(); i++) {
-//            temp[i] = prompts.get(i);
-//        }
-//        return temp;
-//    }
-
     /**
      * Getter for retrieving the prompts of the template.
      * @return ArrayList<String> that contains prompts of the template.
@@ -88,19 +56,10 @@ public abstract class Template {
      * Returns a string representation of the Template object.
      * @return String that represents the Template object in detail.
      */
-//    public String toString(){
-//        String stringRep = "Name: " + this.getName() + System.lineSeparator();
-//        stringRep += "Last Edit Time: " + this.getLastEditTime() + System.lineSeparator();
-//        stringRep += "Last Edit User: " + this.getLastEditUser() + System.lineSeparator();
-//        return stringRep;
-//    }
-
     public String toString() {
         String stringRep = "ID: " + this.getId() + System.lineSeparator();
         stringRep += "Name: " + this.getName() + System.lineSeparator();
         stringRep += "Type: " + this.isType() + System.lineSeparator() + System.lineSeparator();
-        // stringRep += "Number of Prompts: " + this.numPrompts() + System.lineSeparator();
-        // if we already show all the prompts, its not necessary to show numPrompts - moved this to preview
         stringRep += "Prompts: " + System.lineSeparator();
         int i = 0;
         for (String p: this.getPrompts()){
@@ -176,19 +135,4 @@ public abstract class Template {
         this.prompts.remove(promptNumber);
     }
 
-//    /**
-//     * Getter for retrieving the time when the template was last edited.
-//     * @return String that represents the time.
-//     */
-//    public String getLastEditTime() {
-//        return lastEditTime;
-//    }
-
-//    /**
-//     * Getter for retrieving the user who last edited the template.
-//     * @return String that represents the user ID.
-//     */
-//    public String getLastEditUser() {
-//        return lastEditUser;
-//    }
 }

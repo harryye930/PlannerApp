@@ -28,22 +28,6 @@ public class TemplateManager {
     /**
      * Creates a new empty TemplateManager.
      */
-//     *
-//     * @param filePath is the path of the data file.
-//     * @throws IOException if an I/O error occurs.
-
-//    public TemplateManager(String filePath) throws IOException {
-//        templates = new HashMap<String, Template>();
-//
-//        // Read .csv file and create Template objects from file.
-//        // Populates the record list using stored data, if it exists.
-//        File file = new File(filePath);
-//        if (file.exists()) {
-//            readFromCSVFile(filePath);
-//        } else {
-//            file.createNewFile();
-//        }
-//    }
 
     public TemplateManager(){
         templates = new HashMap<>();
@@ -71,7 +55,6 @@ public class TemplateManager {
      * Removes a Template from TemplateManager.
      * @param t Template being removed from TemplateManager.
      */
-    // TODO: we need a docstring for each method.
     public void removeTemplate(Template t) {
         // Remove template <t> from the collection of templates stored in this TemplateManager object.
         templates.remove(t.getId(), t);
@@ -135,31 +118,6 @@ public class TemplateManager {
         return templates.size();
     }
 
-    //TODO: added more information to toString() and renamed to viewTemplateManager()
-//    /**
-//     * @return String that represents the TemplateManager object.
-//     */
-//    public String toString() {
-//        return "Number of templates stored in the TemplateManager: " + this.numberOfTemplates();
-//
-//    }
-
-//    /**
-//     * @return String that contains preview of all Template objects stored in the TemplateManager.
-//     */
-//    public String toString(){
-//        StringBuilder stringRep = new StringBuilder();
-//        stringRep.append("Number of templates stored in the TemplateManager: ").append(this.numberOfTemplates());
-//        for (Map.Entry<Integer, Template> items: this.templates.entrySet()){
-//            Integer key = items.getKey();
-//            Template value = items.getValue();
-//
-//            stringRep.append("Template ID: ").append(key).append(System.lineSeparator());
-//            stringRep.append(value.getTemplatePreview());
-//        }
-//        return stringRep.toString();
-//    }
-
     /** Returns a string representation of the TemplateManager object, with the option of:
      * - either including full details of each Template stored in it;
      * - or including only the summary of each Template stored in it.
@@ -210,44 +168,5 @@ public class TemplateManager {
     public String previewTemplate(int ID){
         return this.getTemplates().get(ID).getTemplatePreview();
     }
-
-//    /**
-//     * Create an empty template to be filled.
-//     *
-//     * @param t is the template to be used.
-//     * @return mapping of template name to prompts to be filled in the template.
-//     */
-//    public Map<Integer, String[]> emptyTemplate(Template t) {
-//        String[] prompts;
-//        Map<Integer, String[]> template;
-//        template = new HashMap<>();
-//        prompts = t.getPrompts();
-//        template.put(t.getId(), prompts);
-//        return template;
-//    }
-
-//    /**
-//     * Populates the records map from the file at path filePath.
-//     *
-//     * @param filePath the path of the data file
-//     * @throws FileNotFoundException if filePath is not a valid path
-//     * Citation: this code is adopted from Week6 CSC207H Summer2021 demo code.
-//     */
-//    public void readFromCSVFile(String filePath) throws FileNotFoundException {
-//        Scanner scanner = new Scanner(new FileInputStream(filePath));
-//        String[] record;
-//        Template template;
-//
-//        while (scanner.hasNextLine()) {
-//            record = scanner.nextLine().split(",");
-//            if (record[0].equals("daily")) {
-//                template = new DailyTemplate("TemplateName", record); // TODO: WIP
-//            } else {  // template type is "project"
-//                template = new ProjectTemplate("TemplateName", record);
-//            }
-//            templates.put(template.getId(), template);
-//        }
-//        scanner.close();
-//    }
 
 }
