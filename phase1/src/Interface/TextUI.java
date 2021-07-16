@@ -111,28 +111,86 @@ public class TextUI {
                                 case 'A':
                                     // TODO: print user's planner
                                     break;
-                                case "B":
+                                case 'B':
                                     // TODO: create a new planner from template
                                     break;
-                                case "C":
-                                    // TODO:
+                                case 'C':
+                                    // TODO: edit planner
                                     break;
-                                case "D":
-                                    break:
-
-
+                                case 'D':
+                                    // TODO: delete planner
+                                    break;
+                                default:
+                                    System.out.println("Invalid Option! Please enter again. ");
+                                    break;
                             }
-
                         }while(plannerMenuOption != 'E');
                         // return to main menu
                         break;
+
                     case 'B':  // user select template
+//                        "A. View all templates\n" +
+//                        "B. Create a new template (Admin Only) \n" +
+//                        "C. Edit a current template (Admin Only) \n" +
+//                        "D. Delete a current template (Admin Only) \n" +
+//                        "E. Exist to Main Menu\n"
                         System.out.println(templateMenu);
+                        do{
+                            System.out.println(plannerMenu);
+                            plannerMenuOption = scanner.next().charAt(0);
+                            switch (plannerMenuOption){
+                                case 'A':
+                                    // TODO: print all templates
+                                    break;
+                                case 'B':
+                                    // TODO: check admin and create new template
+                                    break;
+                                case 'C':
+                                    // TODO: check admin and edit one template
+                                    break;
+                                case 'D':
+                                    // TODO: check admin and delete one template
+                                    break;
+                                default:
+                                    System.out.println("Invalid Option! Please enter again. ");
+                                    break;
+                            }
+                        }while(plannerMenuOption != 'E');
+                        // return to main menu
                         break;
+
                     case 'C': // user select account
-                        System.out.println(accountMenu);
+//                        "A. Create a new account\n" +
+//                        "B. Create a new admin account\n" +
+//                        "C. Edit your user name\n" +
+//                        "D. Edit your password\n" +
+//                        "E. Exist to Main Menu\n"
+
+                        do{
+                            System.out.println(accountMenu);
+                            accountMenuOption = scanner.next().charAt(0);
+                            switch (accountMenuOption){
+                                case 'A':
+                                    // TODO: print user's planner
+                                    break;
+                                case 'B':
+                                    // TODO: create a new planner from template
+                                    break;
+                                case 'C':
+                                    // TODO: edit planner
+                                    break;
+                                case 'D':
+                                    // TODO: delete planner
+                                    break;
+                                default:
+                                    System.out.println("Invalid Option! Please enter again. ");
+                                    break;
+                            }
+                        }while(accountMenuOption != 'E');
+                        // return to main menu
                         break;
-                    default:
+
+                        default:
                         System.out.println("Invalid Option! Please enter again. ");
                         break;
 
@@ -143,18 +201,5 @@ public class TextUI {
             }while (mainMenuOption != 'D');
         System.out.println("You are logged out, see you next time.");
 
-
-
-
-
-
-        do {
-
-
-            Scanner scanner = new Scanner(System.in);
-            String userName = scanner.nextLine();
-
-
-        }while
     }
 }
