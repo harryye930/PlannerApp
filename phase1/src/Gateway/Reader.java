@@ -10,7 +10,7 @@ import java.util.Arrays;
 /**
  * Data reader gateway.
  */
-public class Reader implements IGateWay {
+public class Reader<T> implements IGateWay<T> {
 
     /**
      * Store an object into a .ser file.
@@ -19,7 +19,7 @@ public class Reader implements IGateWay {
      * @return A boolean value representing whether the process is successful or not.
      */
     @Override
-    public boolean writeSer(String filePath, Object obj) {
+    public boolean writeSer(String filePath, T obj) {
         File nf = new File(filePath);
         try {
             if (nf.createNewFile() || nf.delete()) {
@@ -42,15 +42,15 @@ public class Reader implements IGateWay {
      * @return A Object of object type T, return null if failed to load in file.
      */
     @Override
-    public Object readSer(String filePath) {
+    public T readSer(String filePath) {
         File nf = new File(filePath);
         try {
             if (nf.createNewFile() && nf.delete()) {
-                return false;
+                return null;
             }
             FileInputStream fileIn = new FileInputStream(filePath);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            Object obj = objectIn.readObject();
+            T obj = (T) objectIn.readObject();
             objectIn.close();
             return obj;
         } catch (Exception ex) {

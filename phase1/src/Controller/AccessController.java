@@ -1,6 +1,7 @@
 package Controller;
 
 import Entity.Account;
+import Gateway.AccountGateway;
 import UseCase.*;
 import Entity.*;
 
@@ -11,9 +12,28 @@ import java.util.ArrayList;
  */
 public class AccessController {
     private AccountManager accManager;
+    private AccountGateway accGateway;
 
     public AccessController(){
         accManager = new AccountManager();
+        accGateway = new AccountGateway(accManager);
+    }
+
+    /**
+     * Save the data to the database, call this function when a saving is needed. Must be called
+     * when exit the application.
+     * @return A boolean value representing whether the loading process is successful or not.
+     */
+    public boolean save() {
+        return this.accGateway.save();
+    }
+
+    /**
+     * Load in the data from database to AccountManager.
+     * @return A boolean value representing whether the loading process is successful or not.
+     */
+    public boolean load() {
+        return this.accGateway.load();
     }
 
     /**
@@ -35,7 +55,7 @@ public class AccessController {
     public String isAdmin(String retriever) {
         Account acc = accManager.findAccount(retriever);
         if (acc != null) {
-            return accManager.checkAccountRole(acc);
+            return accManager.checkAccountRole(retriever);
         }
         return null;
     }
@@ -49,8 +69,8 @@ public class AccessController {
      */
     public String createAccount(String email, String userName, String passWord) {
         String id = accManager.createAccount(email);
-        accManager.setPassword(accManager.findAccount(email), passWord);
-        accManager.setUserName(accManager.findAccount(email), userName);
+        accManager.setPassword(email, passWord);
+        accManager.setUserName(email, userName);
         return id;
     }
 
@@ -62,9 +82,8 @@ public class AccessController {
      * @return A boolean representing whether the password is successfully changed or not.
      */
     public boolean changePassword(String retriever, String oldPassWord, String newPassWord) {
-        Account account = accManager.findAccount(retriever);
-        if (accManager.checkPassword(account, oldPassWord)) {
-            return accManager.setPassword(account, newPassWord);
+        if (accManager.checkPassword(retriever, oldPassWord)) {
+            return accManager.setPassword(retriever, newPassWord);
         } else {
             return false;
         }
@@ -76,8 +95,7 @@ public class AccessController {
      * @param userName A String representing the new user name.
      */
     public void changeUserName(String retriever, String userName) {
-        Account account = accManager.findAccount(retriever);
-        accManager.setUserName(account, userName);
+        accManager.setUserName(retriever, userName);
     }
 
     /**
@@ -86,7 +104,7 @@ public class AccessController {
      * @return A boolean value representing whether the remove operation is successful or not.
      */
     public boolean removeAccount(String retriever) {
-        return accManager.removeAccount(accManager.findAccount(retriever));
+        return accManager.removeAccount(retriever);
     }
 
     /**
@@ -108,7 +126,7 @@ public class AccessController {
      * @return A boolean value representing whether the adding is successful or not..
      */
     public boolean setPlanner(String retriever, Planner planner){
-        return this.accManager.setPlanners(accManager.findAccount(retriever), planner);
+        return this.accManager.setPlanners(retriever, planner);
     }
 
     /**
@@ -118,7 +136,7 @@ public class AccessController {
      * @return A boolean value representing whether the adding is successful or not..
      */
     public boolean setPlanner(String retriever, ArrayList<Planner> planner){
-        return this.accManager.setPlanners(accManager.findAccount(retriever), planner);
+        return this.accManager.setPlanners(retriever, planner);
     }
 
     /**

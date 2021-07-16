@@ -23,22 +23,28 @@ public class AccountManager implements Serializable{
 
     /**
      * change the userName of an account
-     * @param account the target account to change userName
+     * @param retriever A String representing the user ID or Email.
      * @param userName the userName user enters that they want to change to
      */
-    public void setUserName(Account account, String userName){
+    public void setUserName(String retriever, String userName){
+        Account account = this.findAccount(retriever);
         account.setUserName(userName);
     }
 
     /**
      * set the password. User can change their password to something different from the previous one.
-     * @param account the account that the password is changed
+     * @param retriever A String representing the user ID or Email.
      * @param newPassword the new password that user want to change to.
      * @return true if successfully changed password, false otherwise.
      */
-    public boolean setPassword(Account account, String newPassword){
+    public boolean setPassword(String retriever, String newPassword){
+        Account account = this.findAccount(retriever);
+        if (account.getPassword() == null) {
+            account.setPassword(newPassword);
+            return true;
+        }
         // users need to enter the correct password to set a new password (just like iPhone)
-        if ((!account.getPassword().equals(newPassword))){
+        else if ((!account.getPassword().equals(newPassword))){
             account.setPassword(newPassword);
             return true;
         } else {
@@ -47,28 +53,22 @@ public class AccountManager implements Serializable{
     }
 
     /**
-     * totally reset the HashMap of ID to Account.
-     * @param hm A HashMap object we want to assign.
+     * Add an Account object to the HashMaps.
+     * @param acc A Account object we want to assign.
      */
-    public void setIdToAccount(HashMap<String, Account> hm) {
-        this.idToAccount = hm;
-    }
-
-    /**
-     * totally reset the HashMap of Email to Account.
-     * @param hm A HashMap we want to assign.
-     */
-    public void setEmailToAccount(HashMap<String, Account> hm) {
-        this.emailToAccount = hm;
+    public void addAccount(Account acc) {
+        this.idToAccount.put(acc.getUserId(), acc);
+        this.emailToAccount.put(acc.getEmail(), acc);
     }
 
     /**
      * return whether user's entered password is same as the password of the account
-     * @param account the account that user wants to login to
+     * @param retriever A String representing the user ID or Email.
      * @param enteredPassword the password that user enters
      * @return true if user's entered password is correct, false otherwise
      */
-    public boolean checkPassword(Account account, String enteredPassword){
+    public boolean checkPassword(String retriever, String enteredPassword){
+        Account account = this.findAccount(retriever);
         return account.getPassword().equals(enteredPassword);
     }
 
@@ -92,8 +92,7 @@ public class AccountManager implements Serializable{
      */
     private String createRegAcc(String email){
         UserAccount newAccount = new UserAccount(email);
-        emailToAccount.put(email, newAccount);
-        idToAccount.put(newAccount.getUserId(), newAccount);
+        this.addAccount(newAccount);
         return newAccount.getUserId();
     }
 
@@ -103,8 +102,7 @@ public class AccountManager implements Serializable{
      */
     private String createAdminAcc(String email){
         AdminAccount newAccount = new AdminAccount(email);
-        emailToAccount.put(email, newAccount);
-        idToAccount.put(newAccount.getUserId(), newAccount);
+        this.addAccount(newAccount);
         return newAccount.getUserId();
     }
 
@@ -140,10 +138,11 @@ public class AccountManager implements Serializable{
     /**
      * remove an account from allAccount, emailToAccount, and idToAccount. If successfully
      * removed, return true, else return false.
-     * @param account: the account want to be removed
+     * @param retriever A String representing the user ID or Email.
      * @return true if successfully removed account, false otherwise.
      */
-    public boolean removeAccount(Account account){
+    public boolean removeAccount(String retriever){
+        Account account = this.findAccount(retriever);
         if (this.getAllAccount().contains(account)) {
             idToAccount.remove(account.getUserId());
             emailToAccount.remove(account.getEmail());
@@ -163,20 +162,22 @@ public class AccountManager implements Serializable{
 
     /**
      * find the role of the account
-     * @param account the account that is to be checked
+     * @param retriever A String representing the user ID or Email.
      * @return the String that represents the role of the account ("regular", "admin", or "trial").
      */
-    public String checkAccountRole(Account account){
+    public String checkAccountRole(String retriever){
+        Account account = this.findAccount(retriever);
         return account.getAccountType();
     }
 
     /**
      * Add new planner to a given account. return true if any one of the planners is added.
-     * @param account An Account object that need to be read.
+     * @param retriever A String representing the user ID or Email.
      * @param planner An array list of Planners that need to be added.
      * @return A boolean value representing whether the adding is successful or not.
      */
-    public boolean setPlanners(Account account, ArrayList<Planner> planner){
+    public boolean setPlanners(String retriever, ArrayList<Planner> planner){
+        Account account = this.findAccount(retriever);
         if (account.getAccountType().equals("regular")){
             return ((UserAccount) account).setPlanners(planner);
         } else {
@@ -186,11 +187,12 @@ public class AccountManager implements Serializable{
 
     /**
      * Add new planner to a given account. return true if the planner is added.
-     * @param account An Account object that need to be read.
+     * @param retriever A String representing the user ID or Email.
      * @param planner An array list of Planners that need to be added.
      * @return A boolean value representing whether the adding is successful or not.
      */
-    public boolean setPlanners(Account account, Planner planner){
+    public boolean setPlanners(String retriever, Planner planner){
+        Account account = this.findAccount(retriever);
         if (account.getAccountType().equals("regular")){
             return ((UserAccount) account).setPlanners(planner);
         } else {
