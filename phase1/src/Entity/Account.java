@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * A instance of this class represent an account in this application.
  */
-public abstract class Account implements InterfaceInfo, Serializable {
+public abstract class Account implements Serializable {
     protected String accountType;
     protected String userName;
     protected String userId;
@@ -25,22 +25,6 @@ public abstract class Account implements InterfaceInfo, Serializable {
         this.userId = ((Integer) this.hashCode()).toString();
     }
 
-    /**
-     * Return the available options for this account at given stage.
-     * @param stage int that represent the phase of the information needed.
-     * @return String that represent the text needed for textUI
-     */
-    @Override
-    public String getInterfaceInfo(Integer stage) {
-        int index = this.find(this.header, "stage");
-        int info_index = this.find(this.header, "message");
-        for (String[] info: this.data) {
-            if (info[index].equals(stage.toString())) {
-                return info[info_index];
-            }
-        }
-        return "information not found, please try again.";
-    }
 
     /**
      * Return the available information of this account including username, id, and email.
@@ -51,18 +35,6 @@ public abstract class Account implements InterfaceInfo, Serializable {
         throw new NotImplementedException();
     }
 
-    /**
-     * Return the available options of this account at all stage.
-     * @return A String that contains every stage of the available options.
-     */
-    public String[] getInterfaceInfo() {
-        // Return the available options for this account.
-        String[] result = new String[data.size()];
-        for (int i = 0; i < this.data.size(); i++) {
-            result[i] = this.getInterfaceInfo(i);
-        }
-        return result;
-    }
 
     /**
      * @return A String that represent the email of this account.

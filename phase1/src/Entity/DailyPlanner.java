@@ -26,7 +26,8 @@ public class DailyPlanner extends Planner {
         // generate hashmap with given time interval with empty content
         // and a arraylist of time for reference since hashmap don't have order per se
         // https://facingissuesonit.com/2019/05/10/java-generate-15-minute-time-interval-am-pm/
-        super(plannerName);
+        super();
+        this.plannerName = plannerName;
         this.interval = Interval;
         this.startHour = Integer.parseInt(startTime.substring(0, 2));
         this.startMins = Integer.parseInt(startTime.substring(3, 5));
@@ -49,6 +50,51 @@ public class DailyPlanner extends Planner {
         }
     }
 
+    public DailyPlanner(){
+        super();
+        timesList = new ArrayList<>();
+        dailyPlannerTask = new HashMap<>();
+    }
+
+    public void setInterval(int interval) {
+        this.interval = interval;
+    }
+
+    public void setStartTime(int startHour, int startMins){
+        this.startHour = startHour;
+        this.startMins = startMins;
+    }
+
+    public void setEndTime(int endHour, int endMins){
+        this.endHour = endHour;
+        this.endMins = endMins;
+    }
+
+    public void setPlannerInfo(String plannerName, String startTime, String endTime, int Interval){
+        setPlannerName(plannerName);
+        setInterval(Interval);
+        setStartTime(Integer.parseInt(startTime.substring(0, 2)), Integer.parseInt(startTime.substring(3, 5)));
+        setEndTime(Integer.parseInt(endTime.substring(0, 2)), Integer.parseInt(endTime.substring(3, 5)));
+        setTimesList(Integer.parseInt(startTime.substring(0, 2)), Integer.parseInt(endTime.substring(0, 2)));
+        setDailyPlannerTask(timesList);
+    }
+
+    public void setTimesList(int startHour, int endHour){
+        String timeFormat;
+        for (int h = this.startHour; h < this.endHour; h++) {
+            for (int m = this.startMins; m < 60; ) {
+                timeFormat = String.format("%02d:%02d", h, m);
+                timesList.add(timeFormat);
+                m = m + interval;
+            }
+        }
+    }
+
+    public void setDailyPlannerTask(ArrayList<String> timesList){
+        for (String time : timesList) {
+            dailyPlannerTask.put(time, "N/A");
+        }
+    }
 
     /**
      * Show the current planner
@@ -131,6 +177,7 @@ public class DailyPlanner extends Planner {
             return true;
         }
     }
+
 
     /**
      * edit agenda to current planner (given index)

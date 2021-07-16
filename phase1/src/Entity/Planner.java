@@ -1,5 +1,6 @@
 package Entity;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /** the planner entity
@@ -7,12 +8,18 @@ import java.util.UUID;
  * @version 1.0
  */
 
-public abstract class Planner {
+public abstract class Planner implements Serializable {
     public String plannerName;
     public String ID;
     public String privacyStatus;
 
 
+    public Planner(){
+        this.plannerName = "New Planner";
+        this.ID = UUID.randomUUID().toString();
+        this.privacyStatus = "private";
+
+    }
     public Planner(String plannerName){
         this.plannerName = plannerName;
         this.ID = UUID.randomUUID().toString();
@@ -21,13 +28,30 @@ public abstract class Planner {
     }
 
 
-
     /** Show the current planner
      *
      * @return a string represent this planner's content
      */
     public abstract String toString();
 
+
+    /** Return the Id of current planner.
+     *
+     * @return A String representing the ID of this planner.
+     */
+    public String getID() {return this.ID;}
+
+    public void setPlannerName(String name){
+        plannerName = name;
+    }
+
+    public String getPlannerName(){
+        return plannerName;
+    }
+
+    public String getPrivacyStatus() {
+        return privacyStatus;
+    }
 
     /** Add agenda to current planner
      *
