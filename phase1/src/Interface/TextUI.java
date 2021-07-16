@@ -1,26 +1,31 @@
 package Interface;
 
 import Controller.AccessController;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class TextUI {
-    public void showMenu() {
+    public TextUI showMenu() {
         System.out.println("Welcome to your planner!");
-        System.out.println("Do you have an existing account? (options: yes / no)");
+        System.out.println("Do you have an existing account? (yes / no)");
         Scanner scanner = new Scanner(System.in);
         String existAccount = scanner.nextLine();
 
         switch (existAccount){
             case "no":  // the user does not have a existing account
+                // TODO: what's the process of non-registered user to interact?
                 System.out.println("Do you like to create an account, or login as guest? " +
-                        "(options: create new account / login as guest");
-                String newUser = scanner.nextLine();
-                switch (newUser){
-                    case "create new account": // TODO
+                        "(create new account / login as guest");
+                String newUserOption = scanner.nextLine();
+                switch (newUserOption){
+                    case "create new account":
+                        // TODO
+                        System.out.println("TODO create new account");
                         break;
-                    case "login as guest":  // TODO
+                    case "login as guest":
+                        // TODO
+                        System.out.println("TODO login as guest");
                         break;
             }
             case "yes":  // the user have exsiting account
@@ -30,17 +35,19 @@ public class TextUI {
                 System.out.println("Password:");
                 String password = scanner.nextLine();
                 AccessController accessController = new AccessController();
-                boolean authResult = accessController.logIn(username, password);
+                //TODO boolean authResult = accessController.logIn(username, password);
+                System.out.println("TODO check password");
 
-                do{
-                    System.out.println("Sorry, your username and password don't match! Please try again.");
-                    System.out.println("User Name:");
-                    username = scanner.nextLine();
-                    System.out.println("Password:");
-                    password = scanner.nextLine();
-                    authResult = accessController.logIn(username, password);
-                }while(!authResult);
-                System.out.println("You are now logged in!");
+//                do{
+//                    System.out.println("Sorry, your username and password don't match! Please try again.");
+//                    System.out.println("User Name:");
+//                    username = scanner.nextLine();
+//                    System.out.println("Password:");
+//                    password = scanner.nextLine();
+//                    authResult = accessController.logIn(username, password);
+//                    System.out.println("");
+//                }while(!authResult);
+
 
 
 
@@ -84,10 +91,11 @@ public class TextUI {
                     "C. Edit your user name\n" +
                     "D. Edit your password\n" +
                     "E. Exist to Main Menu\n";
-            char mainMenuOption = '\0';
-            char plannerMenuOption = '\0';
-            char templateMenuOption = '\0';
-            char accountMenuOption = '\0';
+
+            char mainMenuOption;
+            char plannerMenuOption;
+            char templateMenuOption;
+            char accountMenuOption;
 
 
             do{
@@ -120,9 +128,18 @@ public class TextUI {
                                 case 'D':
                                     // TODO: delete planner
                                     break;
+                                case 'E':
+                                    System.out.println("Returning to Main Menu...");
+                                    try {
+                                        TimeUnit.SECONDS.sleep(1);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
                                 default:
                                     System.out.println("Invalid Option! Please enter again. ");
                                     break;
+
                             }
                         }while(plannerMenuOption != 'E');
                         // return to main menu
@@ -137,8 +154,8 @@ public class TextUI {
                         System.out.println(templateMenu);
                         do{
                             System.out.println(plannerMenu);
-                            plannerMenuOption = scanner.next().charAt(0);
-                            switch (plannerMenuOption){
+                            templateMenuOption= scanner.next().charAt(0);
+                            switch (templateMenuOption){
                                 case 'A':
                                     // TODO: print all templates
                                     break;
@@ -151,11 +168,20 @@ public class TextUI {
                                 case 'D':
                                     // TODO: check admin and delete one template
                                     break;
+                                case 'E':
+                                    System.out.println("Returning to Main Menu...");
+                                    try {
+                                        TimeUnit.SECONDS.sleep(1);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    break;
                                 default:
                                     System.out.println("Invalid Option! Please enter again. ");
                                     break;
                             }
-                        }while(plannerMenuOption != 'E');
+                        }while(templateMenuOption != 'E');
                         // return to main menu
                         break;
 
@@ -182,24 +208,32 @@ public class TextUI {
                                 case 'D':
                                     // TODO: delete planner
                                     break;
+                                case 'E':
+                                    System.out.println("Returning to Main Menu...");
+                                    try {
+                                        TimeUnit.SECONDS.sleep(1);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
                                 default:
-                                    System.out.println("Invalid Option! Please enter again. ");
+                                    System.out.println("Invalid Option! Please enter again! ");
                                     break;
                             }
                         }while(accountMenuOption != 'E');
                         // return to main menu
                         break;
 
-                        default:
-                        System.out.println("Invalid Option! Please enter again. ");
+                    case 'D':
                         break;
 
-
-
+                    default:
+                        System.out.println("Invalid Option! Please enter again. ");
+                        break;
                 }
-
             }while (mainMenuOption != 'D');
-        System.out.println("You are logged out, see you next time.");
+        System.out.println("You are logged out, see you next time!");
 
+        return null;
     }
 }
