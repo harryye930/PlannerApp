@@ -156,4 +156,14 @@ public class AccessController {
         return accManager.getPlanners(retriever);
     }
 
+
+    /**
+     * Return the information of the Account with given id.
+     * @param retriever A String representing
+     * @return A String representing the information of the account.
+     */
+    public String getInfo(String retriever) {
+        return this.accManager.findAccount(retriever).toString();
+    }
+
 }
