@@ -1,11 +1,16 @@
 package Interface;
 
 import Controller.AccessController;
+import Controller.TemplateController;
 
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class TextUI {
+
+    private AccessController ac = new AccessController();
+    private TemplateController tc = new TemplateController();
+
     public TextUI showMenu() {
         System.out.println("Welcome to your planner!");
         System.out.println("Do you have an existing account? (yes / no)");
@@ -83,6 +88,31 @@ public class TextUI {
                     "E. Exist to Main Menu\n"+
                     "-------------------------------------------------------------------------\n";
 
+            String viewAllTemplatesMenu =
+                    "-------------------------------------------------------------------------\n"+
+                            "Options for viewing all templates -- Please choose the letter associated to the option\n" +
+                            "A. Summary view \n" +
+                            "B. Detailed view \n" +
+                            "C. Return to previous menu \n" +
+                            "-------------------------------------------------------------------------\n";
+
+             String editTemplateMenu =
+                "-------------------------------------------------------------------------\n"+
+                        "Options for editing a template -- Please choose the letter associated to the option\n" +
+                        "A. Template name \n" +
+                        "B. Template prompts \n" +
+                        "C. Return to previous menu \n" +
+                        "-------------------------------------------------------------------------\n";
+
+            String editPromptMenu =
+                "-------------------------------------------------------------------------\n"+
+                        "Options for editing a prompt -- Please choose the letter associated to the option\n" +
+                        "A. Rename prompt \n" +
+                        "B. Add prompt \n" +
+                        "C. Delete prompt \n" +
+                        "D. Return to previous menu \n" +
+                        "-------------------------------------------------------------------------\n";
+
             String accountMenu =
                     "-------------------------------------------------------------------------\n" +
                     "Account Menu -- Please choose the letter associated to the option\n" +
@@ -158,18 +188,112 @@ public class TextUI {
                         do{
                             System.out.println(templateMenu);
                             templateMenuOption= scanner.next().charAt(0);
-                            switch (templateMenuOption){
+                            switch (templateMenuOption) {
                                 case 'A':
-                                    // TODO: print all templates
+                                    char viewAllTemplatesOption;
+                                    do {
+                                        System.out.println(viewAllTemplatesMenu);
+                                        viewAllTemplatesOption = scanner.next().charAt(0);
+                                        switch (viewAllTemplatesOption) {
+                                            case 'A':
+                                                System.out.println(tc.previewAllTemplates());
+                                                break;
+
+                                            case 'B':
+                                                System.out.println(tc.detailViewAllTemplates());
+                                                break;
+
+                                            case 'C':
+                                                System.out.println("Returning to previous menu...");
+                                                try {
+                                                    TimeUnit.SECONDS.sleep(1);
+                                                } catch (InterruptedException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                break;
+
+                                            default:
+                                                System.out.println("Invalid option! Please enter again. ");
+                                                break;
+                                        }
+                                    } while (viewAllTemplatesOption != 'C');
                                     break;
                                 case 'B':
-                                    // TODO: check admin and create new template
+                                    System.out.println("Feature currently not available. Check back later!");
+                                    // Just putting a place holder for now - this feature is not required in phase 1
                                     break;
                                 case 'C':
-                                    // TODO: check admin and edit one template
+                                    String username = "abc";
+                                    // TODO: update this placeholder for username - currently throwing NullPointerException
+                                    // TODO: after fixing username, add do{}while() to allow for multiple edits
+                                    //  (allows user to stay in the same menu after they've chosen an option and the
+                                    //  activity in that chosen option is done)
+                                    if (ac.isAdmin(username).equals("admin")) {
+                                        System.out.println(
+                                                "Which template would you like to edit? Enter the template ID");
+                                        int templateID = scanner.nextInt();
+
+                                        System.out.println("This is the what the template currently looks like:\n");
+                                        System.out.println(tc.detailViewTemplate(templateID));
+
+                                        // print options for editing template - name or prompts
+                                        System.out.println(editTemplateMenu);
+                                        char editTemplateOption = scanner.next().charAt(0);
+                                        switch (editTemplateOption) {
+                                            case 'A': // choose to edit template name
+                                                System.out.println("Enter new template name");
+                                                String newTemplateName = scanner.nextLine();
+                                                tc.editTemplateName(templateID, newTemplateName);
+
+                                            case 'B': // choose to edit prompts
+                                                System.out.println("Here are the current prompts: \n");
+                                                System.out.println(tc.detailViewTemplate(templateID));
+                                                System.out.println(editPromptMenu); //print options for editing a prompt
+                                                char editPromptOption = scanner.next().charAt(0);
+                                                switch (editPromptOption) {
+                                                    case 'A': // choose to rename prompt
+                                                        System.out.println(
+                                                                "Enter the ID of the prompt you'd like to rename");
+                                                        int promptID = scanner.nextInt();
+                                                        System.out.println("Enter the desired new name for the prompt");
+                                                        String newPromptName = scanner.nextLine();
+                                                        tc.renameTemplatePrompt(templateID, promptID, newPromptName);
+
+                                                    case 'B': // choose to add prompt
+                                                        System.out.println(
+                                                                "Would you like to add a new prompt to the end of prompts? " +
+                                                                        "(yes/no)");
+                                                        String addToLastPrompt = scanner.nextLine();
+                                                        switch (addToLastPrompt) {
+                                                            case "yes":
+                                                                System.out.println("Enter the name for the new prompt");
+                                                                String nameForNewPrompt = scanner.nextLine();
+                                                                tc.addTemplatePrompt(templateID, nameForNewPrompt);
+
+                                                            case "no":
+                                                                System.out.println(
+                                                                        "Enter the desired ID for the new prompt");
+                                                                int idForNewPrompt = scanner.nextInt();
+                                                                System.out.println("Enter the name for the new prompt");
+                                                                nameForNewPrompt = scanner.nextLine();
+                                                                tc.addTemplatePrompt(templateID,
+                                                                        idForNewPrompt, nameForNewPrompt);
+                                                        }
+
+                                                    case 'C': // choose to delete prompt
+                                                        System.out.println(
+                                                                "Enter the ID of the prompt you'd like to delete");
+                                                        int promptIDToDelete = scanner.nextInt();
+                                                        tc.removeTemplatePrompt(templateID, promptIDToDelete);
+                                                }
+
+                                        }
+                                        System.out.println("Edit successful!");
+                                    }
                                     break;
                                 case 'D':
-                                    // TODO: check admin and delete one template
+                                    System.out.println("Feature currently not available. Check back later!");
+                                    // Just putting a place holder for now - this feature is not required in phase 1
                                     break;
                                 case 'E':
                                     System.out.println("Returning to Main Menu...");
@@ -178,7 +302,6 @@ public class TextUI {
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
-
                                     break;
                                 default:
                                     System.out.println("Invalid Option! Please enter again. ");
