@@ -11,12 +11,13 @@ import java.util.ArrayList;
  *  the Planner controller.
  */
 public class PlannerController {
-    private PlannerManager plannerManager;
+    public PlannerManager plannerManager;
 
     public PlannerController(){
-        plannerManager = new PlannerManager();
-//        dailyplannerManager = plannerManager.NewDailyPlanner();
-//        projectplannerManager = plannerManager.NewProjectPlanner();
+        this.plannerManager = new PlannerManager();
+        this.plannerManager.NewDailyPlanner("Test ABC");
+
+
         PlannerManager dailyplannerManager = new PlannerManager();
     }
 
