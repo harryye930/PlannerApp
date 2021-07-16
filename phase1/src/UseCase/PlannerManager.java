@@ -175,4 +175,13 @@ public class PlannerManager {
         return this.findPlanner(id).ChangePrivacyStatus(status);
     }
 
+
+    /** Return all the planner in a Array List.
+     *
+     * @return An ArrayList containing all the Planners.
+     */
+    public ArrayList<Planner> getAllPlanner() {
+        return new ArrayList<>(this.idToPlanner.values());
+    }
+
 }
