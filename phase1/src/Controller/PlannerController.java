@@ -34,8 +34,8 @@ public class PlannerController {
      *
      * @return a string of the daily planner remain tasks.
      */
-    public String DailyPlannerRemainTasks(){
-        return plannerManager.DailyPlannerRemainTasks();
+    public String DailyPlannerRemainTasks(String id){
+        return plannerManager.DailyPlannerRemainTasks(id);
     }
 
     /** Pass on request to edit planner
@@ -44,8 +44,8 @@ public class PlannerController {
      * @param agenda content of the agenda user wish to edit
      * @return true iff the agenda is correctly requested to change based on current planner
      */
-    public boolean Edit(int i, String agenda){
-        return plannerManager.Edit(i, agenda);
+    public boolean Edit(String id, int i, String agenda){
+        return plannerManager.Edit(id, i, agenda);
     }
 
     /** Pass on request to edit daily planner.
@@ -54,10 +54,9 @@ public class PlannerController {
      * @param newAgenda: new agenda item
      * @return true iff is correctly request to change.
      */
-    public boolean Edit(String time, String newAgenda){
-        return plannerManager.Edit(time, newAgenda);
+    public boolean Edit(String id, String time, String newAgenda){
+        return plannerManager.Edit(id, time, newAgenda);
     }
-
 
 
     /** Pass on request to change their own planner
@@ -65,7 +64,7 @@ public class PlannerController {
      * @param status "private" or "public"
      * @return true iff the status is correctly requested to change. (from "public to "private or vise versa)
      */
-    public boolean changePrivacyStatus(String status){
-        return plannerManager.ChangePrivacyStatus(status);
+    public boolean changePrivacyStatus(String id, String status){
+        return plannerManager.ChangePrivacyStatus(id, status);
     }
 }
