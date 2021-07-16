@@ -6,7 +6,7 @@ import UseCase.PlannerManager;
 
 import java.util.HashMap;
 
-public class PlannerGateway extends Reader {
+public class PlannerGateway extends Reader<HashMap<String, Planner>> {
 
     private final String filePath = "phase1/src/PlannerData/idMap.ser";
     private HashMap<String, Planner> idToPlanner = new HashMap<String, Planner>();
@@ -44,7 +44,7 @@ public class PlannerGateway extends Reader {
 
     private boolean readMaps() {
         try {
-            this.idToPlanner = (HashMap<String, Planner>) super.readSer(this.filePath);
+            this.idToPlanner = super.readSer(this.filePath);
             pm.setIdToPlanner(this.idToPlanner);
 
             return true;
@@ -56,6 +56,9 @@ public class PlannerGateway extends Reader {
 
 
     private boolean writeMaps() {
+        for (Planner planner: pm.getAllPlanner()) {
+            this.idToPlanner.put(planner.getID(), planner);
+        }
         return super.writeSer(this.filePath, this.idToPlanner);
     }
 }
