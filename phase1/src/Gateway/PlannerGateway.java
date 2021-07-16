@@ -1,4 +1,4 @@
 package Gateway;
 
-public class PlannerGateway<Planner> extends Reader<Planner> {
+public class PlannerGateway<Planner> extends Reader {
 }

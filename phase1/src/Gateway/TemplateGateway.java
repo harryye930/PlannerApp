@@ -1,4 +1,4 @@
 package Gateway;
 
-public class TemplateGateway<Template> extends Reader<Template> {
+public class TemplateGateway<Template> extends Reader {
 }

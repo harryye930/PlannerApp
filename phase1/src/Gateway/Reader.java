@@ -10,24 +10,26 @@ import java.util.Arrays;
 /**
  * Data reader gateway.
  */
-public class Reader<T> implements IGateWay<T> {
+public class Reader implements IGateWay {
 
     /**
      * Store an object into a .ser file.
      * @param filePath A String representing the file path you want to store.
-     * @param fileName A String representing the file name you want to assign.
      * @param obj The Object you want to store
      * @return A boolean value representing whether the process is successful or not.
      */
     @Override
-    public boolean writeSer(String filePath, String fileName, T obj) {
+    public boolean writeSer(String filePath, Object obj) {
+        File nf = new File(filePath);
         try {
-            FileOutputStream fileOut = new FileOutputStream(new File(filePath + fileName));
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(obj);
-            objectOut.close();
-            return true;
-
+            if (nf.createNewFile() || nf.delete()) {
+                FileOutputStream fileOut = new FileOutputStream(new File(filePath));
+                ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+                objectOut.writeObject(obj);
+                objectOut.close();
+                return true;
+            }
+            return false;
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
@@ -37,15 +39,18 @@ public class Reader<T> implements IGateWay<T> {
     /**
      * Read .ser file into an object of given type T.
      * @param filePath A String representing the file path you want to store.
-     * @param fileName A String representing the file name you want to assign.
      * @return A Object of object type T, return null if failed to load in file.
      */
     @Override
-    public T readSer(String filePath, String fileName) {
+    public Object readSer(String filePath) {
+        File nf = new File(filePath);
         try {
-            FileInputStream fileIn = new FileInputStream(filePath + fileName);
+            if (nf.createNewFile() && nf.delete()) {
+                return false;
+            }
+            FileInputStream fileIn = new FileInputStream(filePath);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            T obj = (T) objectIn.readObject();
+            Object obj = objectIn.readObject();
             objectIn.close();
             return obj;
         } catch (Exception ex) {
@@ -58,11 +63,10 @@ public class Reader<T> implements IGateWay<T> {
     /**
      * Read .csv file into an two dimensional ArrayList.
      * @param filePath A String representing the file path you want to store.
-     * @param fileName A String representing the file name you want to assign.
      * @return A two dimensional ArrayList containing String.
      */
     @Override
-    public ArrayList<ArrayList<String>> readCSV(String filePath, String fileName) {
+    public ArrayList<ArrayList<String>> readCSV(String filePath) {
         try {
             // Read in the data from csv file.
             Scanner scanner = new Scanner(new FileInputStream(filePath));
@@ -87,13 +91,12 @@ public class Reader<T> implements IGateWay<T> {
     /**
      * Store the given data into a .csv file.
      * @param filePath A String representing the file path you want to store.
-     * @param fileName A String representing the file name you want to assign.
      * @param header An ArrayList representing the header of the csv file we want to set.
      * @param data A two dimensional ArrayList containing the body of the csv file.
      * @return A boolean value representing whether the process is successful or not.
      */
     @Override
-    public boolean writeCSV(String filePath, String fileName, ArrayList<String> header,
+    public boolean writeCSV(String filePath, ArrayList<String> header,
                             ArrayList<ArrayList<String>> data) {
         // read in the csv file into data attribute.
         File file = new File(filePath);

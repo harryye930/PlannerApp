@@ -12,36 +12,13 @@ public class AccountManager implements Serializable{
     private ArrayList<Account> allAccount;
     private HashMap<String, Account> emailToAccount;
 
-    //Assign the file path of data.
-    private final String filePath = "phase1/src/UserData/";
-    private String idMapPath = "phase1/src/UserData/idMap.ser";
-    private String emailMapPath = "phase1/src/UserData/emailMap.ser";
-
     /**
-     * Create an AccountManager Object and restore the information.
+     * Create an AccountManager Object.
      */
     public AccountManager(){
         this.allAccount = new ArrayList<>();
-
-        try {
-            this.idToAccount = this.readFile(idMapPath);
-            this.emailToAccount = this.readFile(emailMapPath);
-
-            // Try to read in the ArrayList object into idToAccount and emailToAccount
-            if (this.idToAccount == null) {
-                this.idToAccount = new HashMap<>();
-            }
-            if (this.emailToAccount == null) {
-                this.emailToAccount = new HashMap<>();
-            }
-
-            // Iterate through the ID and read the Account object into allAccount.
-            for (String id: this.idToAccount.keySet()) {
-                this.readAccount(id);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.emailToAccount = new HashMap<>();
+        this.idToAccount = new HashMap<>();
         }
 
     /**
@@ -67,6 +44,22 @@ public class AccountManager implements Serializable{
         } else {
             return false;
         }
+    }
+
+    /**
+     * totally reset the HashMap of ID to Account.
+     * @param hm A HashMap object we want to assign.
+     */
+    public void setIdToAccount(HashMap<String, Account> hm) {
+        this.idToAccount = hm;
+    }
+
+    /**
+     * totally reset the HashMap of Email to Account.
+     * @param hm A HashMap we want to assign.
+     */
+    public void setEmailToAccount(HashMap<String, Account> hm) {
+        this.emailToAccount = hm;
     }
 
     /**
@@ -144,9 +137,6 @@ public class AccountManager implements Serializable{
         } else {
             userId = createRegAcc(email);
         }
-        this.writeAccount(email);
-        this.writeObject(this.idToAccount, this.idMapPath);
-        this.writeObject(this.emailToAccount, this.emailMapPath);
         return userId;
     }
 
@@ -158,7 +148,6 @@ public class AccountManager implements Serializable{
      */
     public boolean removeAccount(Account account){
         if (allAccount.contains(account)) {
-            this.deleteAccount(account.getUserId()); // Delete the .ser file of this account.
             allAccount.remove(account);
             idToAccount.remove(account.getUserId());
             emailToAccount.remove(account.getEmail());
@@ -227,88 +216,4 @@ public class AccountManager implements Serializable{
         }
     }
 
-    private boolean deleteAccount(String retriever) {
-        Account acc = this.findAccount(retriever);
-        String id = acc.getUserId();
-        String fileName = id + ".ser";
-        String fp = this.filePath + fileName;
-
-        File accFile = new File(fp);
-        return accFile.delete();
-    }
-
-    private void writeAccount(String retriever) {
-        Account acc = this.findAccount(retriever);
-        String id = acc.getUserId();
-        String thisPath = this.filePath + id + ".ser";
-
-        try {
-            FileOutputStream fileOut = new FileOutputStream(thisPath);
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(acc);
-            objectOut.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private Object readAccount(String retriever) {
-        Account acc = this.findAccount(retriever);
-        String id = acc.getUserId();
-        String fileName = id + ".ser";
-        String fp = this.filePath + fileName;
-        try {
-            FileInputStream fileIn = new FileInputStream(fp);
-            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            Object obj = objectIn.readObject();
-            objectIn.close();
-            return obj;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    private HashMap<String, Account> readFile(String filePath) throws IOException {
-        File f = new File(filePath);
-        return this.readObject(filePath);
-    }
-
-    private HashMap<String, Account> readObject(String filepath) throws IOException {
-        try {
-            InputStream file = new FileInputStream(filepath);
-            InputStream buffer = new BufferedInputStream(file);
-            if (buffer.available() == 0){
-                return null;
-            }
-            ObjectInput input = new ObjectInputStream(buffer);
-            HashMap<String, Account> res = (HashMap<String, Account>) input.readObject();
-            input.close();
-
-            return res;
-
-        } catch (FileNotFoundException | ClassNotFoundException e) {
-            try {
-                File newFile = new File(filepath);
-                newFile.createNewFile();
-                return null;
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                return null;
-            }
-        }
-    }
-
-    private void writeObject(HashMap<String, Account> obj, String fp) {
-        try {
-            FileOutputStream fileOut = new FileOutputStream(fp);
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(obj);
-            objectOut.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 }
