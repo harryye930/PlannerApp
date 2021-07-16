@@ -57,13 +57,13 @@ public abstract class Template {
      * @return String that represents the Template object in detail.
      */
     public String toString() {
-        String stringRep = "ID: " + this.getId() + System.lineSeparator();
-        stringRep += "Name: " + this.getName() + System.lineSeparator();
-        stringRep += "Type: " + this.isType() + System.lineSeparator() + System.lineSeparator();
-        stringRep += "Prompts: " + System.lineSeparator();
+        String stringRep = "ID: " + this.getId() + "\n";
+        stringRep += "Name: " + this.getName() + "\n";
+        stringRep += "Type: " + this.isType() + "\n\n";
+        stringRep += "Prompts: " + "\n";
         int i = 0;
         for (String p: this.getPrompts()){
-            stringRep += "Prompt" + i + ": " + p + System.lineSeparator();
+            stringRep += "Prompt" + i + ": " + p + "\n";
             i++;
         }
         return stringRep;
@@ -77,10 +77,10 @@ public abstract class Template {
      * @return String preview of Template that includes basic information.
      */
     public String getTemplatePreview(){
-        String preview = "ID: " + this.getId() + System.lineSeparator();
-        preview += "Name: " + this.getName() + System.lineSeparator();
-        preview += "Type: " + this.isType() + System.lineSeparator();
-        preview += "Number of Prompts: " + this.numPrompts() + System.lineSeparator();
+        String preview = "ID: " + this.getId() + "\n";
+        preview += "Name: " + this.getName() + "\n";
+        preview += "Type: " + this.isType() + "\n";
+        preview += "Number of Prompts: " + this.numPrompts() + "\n";
         return preview;
     }
 

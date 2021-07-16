@@ -130,8 +130,8 @@ public class TemplateManager {
                     String.format("Invalid user input %s. Please enter either \"Detail\" or \"Summary\".", viewOption));
         }
         String stringRep = "Number of templates stored in the TemplateManager: " + this.numberOfTemplates()
-                            + System.lineSeparator();
-        stringRep += "Templates: " + System.lineSeparator();
+                            + "\n";
+        stringRep += "Templates: " + "\n";
 
         // Traverse through all key-value pairs in templates, and add those templates' string representation
         // to stringRep.
@@ -144,7 +144,7 @@ public class TemplateManager {
                 stringRep += value.getTemplatePreview();
             }
 
-            stringRep += System.lineSeparator();
+            stringRep += "\n";
         }
 
         return stringRep;
