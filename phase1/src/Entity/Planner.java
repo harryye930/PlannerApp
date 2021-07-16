@@ -20,6 +20,12 @@ public abstract class Planner implements Serializable {
         this.privacyStatus = "private";
 
     }
+    public Planner(String plannerName){
+        this.plannerName = plannerName;
+        this.ID = UUID.randomUUID().toString();
+        this.privacyStatus = "private";
+
+    }
 
 
     /** Show the current planner
