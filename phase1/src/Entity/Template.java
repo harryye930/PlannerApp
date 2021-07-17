@@ -1,5 +1,6 @@
 package Entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,7 +10,7 @@ import java.util.Arrays;
  * Represents a Template in the program. Can be a Daily Template, or a Project Template, etc., which are
  * implemented as subclasses.
  */
-public abstract class Template {
+public abstract class Template implements Serializable {
     private String name; // name of this template
     private ArrayList<String> prompts; // prompts of this template
     private static int id; // id of this template

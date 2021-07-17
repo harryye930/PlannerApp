@@ -9,7 +9,11 @@ import java.util.ArrayList;
  * Controller for Templates.
  */
 public class TemplateController {
-    private TemplateManager tm = new TemplateManager();
+    private TemplateManager tm;
+
+    public TemplateController() {
+        tm = new TemplateManager();
+    }
 
     /**
      * Preview all Templates stored in the system.

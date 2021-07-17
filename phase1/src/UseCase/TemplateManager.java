@@ -1,19 +1,13 @@
 package UseCase;
 
-import Entity.ProjectTemplate;
 import Entity.Template;
-import Entity.DailyTemplate;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
-import java.io.File;
-import java.io.FileInputStream;
 
 /**
  * Manages templates.
  */
-public class TemplateManager {
+public class TemplateManager implements Serializable {
 
     // TODO: *** note from office hour ***
     // TODO: (1) Make template gateway - use an interface (week7) to not violate dependency rule while using gateway to
