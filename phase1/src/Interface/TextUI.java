@@ -12,36 +12,37 @@ public class TextUI {
     private TemplateController tc = new TemplateController();
 
     public TextUI showMenu() {
+        this.ac = new AccessController();
+        String retriever = ""; // The ID or Email of the Account we currently work on.
+        this.ac.load();
         System.out.println("Welcome to your planner!");
-        System.out.println("Do you have an existing account? (yes / no)");
+        System.out.println("What do you want to do (login / create new account / login as guest)");
         Scanner scanner = new Scanner(System.in);
         String existAccount = scanner.nextLine();
 
         switch (existAccount){
-            case "no":  // the user does not have a existing account
-                // TODO: what's the process of non-registered user to interact?
-                System.out.println("Do you like to create an account, or login as guest? " +
-                        "(create new account / login as guest");
-                String newUserOption = scanner.nextLine();
-                switch (newUserOption){
-                    case "create new account":
-                        // TODO
-                        System.out.println("TODO create new account");
-                        break;
-                    case "login as guest":
-                        // TODO
-                        System.out.println("TODO login as guest");
-                        break;
-            }
-            case "yes":  // the user have exsiting account
-                // authenticating username and password
+            case "login":
+                System.out.println("Please enter your ID or Email:");
+                String userRetriever = scanner.nextLine();
+                System.out.println("Please enter your password:");
+                String userPassWord = scanner.nextLine();
+                if (this.ac.logIn(userRetriever, userPassWord)) {
+                    System.out.println("Login success.");
+                    retriever = userRetriever;
+                } else {
+                    System.out.println("Invalid input, please try again.");
+                }
+
+            case "create new account":
+                System.out.println("Email:");
+                String email = scanner.nextLine();
                 System.out.println("User Name:");
                 String username = scanner.nextLine();
                 System.out.println("Password:");
                 String password = scanner.nextLine();
-                AccessController accessController = new AccessController();
-                //TODO boolean authResult = accessController.logIn(username, password);
                 System.out.println("TODO check password");
+                String id = ac.createAccount(email, username, password);
+                System.out.println("Please remember your ID:" + id);
 
 //                do{
 //                    System.out.println("Sorry, your username and password don't match! Please try again.");
@@ -116,11 +117,10 @@ public class TextUI {
             String accountMenu =
                     "-------------------------------------------------------------------------\n" +
                     "Account Menu -- Please choose the letter associated to the option\n" +
-                    "A. Create a new account\n" +
-                    "B. Create a new admin account\n" +
-                    "C. Edit your user name\n" +
-                    "D. Edit your password\n" +
-                    "E. Exist to Main Menu\n";
+                    "A. logout\n" +
+                    "B. Edit your user name\n" +
+                    "C. Edit your password\n" +
+                    "D. Exist to Main Menu\n";
 
             char mainMenuOption;
             char plannerMenuOption;
@@ -312,29 +312,31 @@ public class TextUI {
                         break;
 
                     case 'C': // user select account
-//                        "A. Create a new account\n" +
-//                        "B. Create a new admin account\n" +
-//                        "C. Edit your user name\n" +
-//                        "D. Edit your password\n" +
-//                        "E. Exist to Main Menu\n"
+//                        "A. logout\n" +
+//                        "B. Edit your user name\n" +
+//                        "C. Edit your password\n" +
+//                        "D. Exist to Main Menu\n";
 
                         do{
                             System.out.println(accountMenu);
                             accountMenuOption = scanner.next().charAt(0);
                             switch (accountMenuOption){
                                 case 'A':
-                                    // TODO: print user's planner
+                                    ac.logOut(retriever);
                                     break;
                                 case 'B':
-                                    // TODO: create a new planner from template
+                                    System.out.println("Please enter your new user name:");
+                                    String newName = scanner.nextLine();
+                                    ac.changeUserName(retriever, newName);
                                     break;
                                 case 'C':
-                                    // TODO: edit planner
+                                    System.out.println("Please enter your original password:");
+                                    String oldPassword = scanner.nextLine();
+                                    System.out.println("Please enter your new password:");
+                                    String newPassword = scanner.nextLine();
+                                    ac.changePassword(retriever, oldPassword, newPassword);
                                     break;
                                 case 'D':
-                                    // TODO: delete planner
-                                    break;
-                                case 'E':
                                     System.out.println("Returning to Main Menu...");
                                     try {
                                         TimeUnit.SECONDS.sleep(1);
