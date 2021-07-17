@@ -14,10 +14,14 @@ public class UserActionController {
     TemplateController tc;
     PlannerController pc;
 
+    Scanner scanner;
+
     public UserActionController() {
         ac = new AccessController();
         tc = new TemplateController();
         pc = new PlannerController();
+
+        scanner = new Scanner(System.in);
     }
 
     /**
@@ -25,7 +29,7 @@ public class UserActionController {
      */
     public void runProgram() {
         // TODO: TextUI - welcoming page
-        initiateProgram();  // starting up the program.
+        initiatingProgram();  // starting up the program.
         runningProgram();  // running the program after the user logged in, includes closing the program option
         // TODO: TextUI - thanking the user for using the program.
     }
@@ -34,7 +38,7 @@ public class UserActionController {
      * Initiate the program.Provides options user can take in order to start using the features in the program
      * (e.g., log in with an existing account or create a new account).
      */
-    private void initiateProgram() {
+    private void initiatingProgram() {
         // TODO: TextUI - main menu (options - 1. login or 2. create new account or click "q" to quit)
         // TODO:            For Text UI method, how about it takes in a character as an argument (e.g., "q")
         // Re-prompts the user until the user enters the valid input.
@@ -55,7 +59,7 @@ public class UserActionController {
 
     /**
      * Presents the options and allows actions after the user successfully logged in, including as a guest.
-     * Precondition: initiateProgram()
+     * Precondition: initiatingProgram()
      */
     private void runningProgram() {
         // TODO: TextUI - main menu - Presents options users can choose from after logging in.
@@ -77,7 +81,7 @@ public class UserActionController {
 
     /**
      * Closing the program after the user completed using it.
-     * Precondition: initiateProgram()
+     * Precondition: initiatingProgram()
      */
     private void closingProgram() {
         // TODO: TextUI - successful / unsuccessful
@@ -89,8 +93,7 @@ public class UserActionController {
      * @param valid_options are valid options presented to the user by the program to choose from.
      * @return the valid option user has entered.
      */
-    private String validInput(String[] valid_options) {
-        Scanner scanner = new Scanner(System.in);
+    private String validInput(String[] valid_options) {  // TODO: we can switch it to do-while loop later
         String input = scanner.nextLine();
         List<String> options = Arrays.asList(valid_options);
         while (!options.contains(input)) {
@@ -105,7 +108,6 @@ public class UserActionController {
      * Allows a user to create an account.
      */
     private void createNewAccount() {
-        Scanner scanner = new Scanner(System.in);
         // TextUI for create new account (1. email, 2. username, 3. pw)
         String email = scanner.nextLine();
         String username = scanner.nextLine();
@@ -117,7 +119,6 @@ public class UserActionController {
      * Allows a user to log-in to their account.
      */
     private void logIn() {
-        Scanner scanner = new Scanner(System.in);
         // TextUI for log-in
         String username = scanner.nextLine();
         String password = scanner.nextLine();
@@ -143,6 +144,21 @@ public class UserActionController {
 
         switch (user_input) {
             // TODO: for people who worked on template
+            case "A":  // View all templates
+                templateViewOptions();
+                break;
+            case "B":  // Create a new template (admin only)
+                break;
+            case "C":  // Edit template name (admin only)
+                // TODO: checks admin status
+                // First, a user must select a template they would like to edit.
+                // TODO: TextUI - ask for template ID (present different templates and their ids)
+                int templateID = scanner.nextInt();  // Unique ID of the template they wish to edit
+                // Then, a user can proceed with selecting editing actions they can perform on a selected template.
+                aTemplateEditOptions(templateID);
+            case "E":
+                // TODO: TextUI - returning to previous menu
+                break;
         }
 
     }
@@ -154,5 +170,90 @@ public class UserActionController {
         // TODO: for people who worked on account
         String[] account_options = {"A", "B", "C", "D"};  // options user can choose from
         String user_input = validInput(account_options);
+    }
+
+    /**
+     * Template options helper method. Allows different options for template viewing.
+     */
+    private void templateViewOptions() {
+        String[] view_options = {"A", "B", "C"};  // options user can choose from
+        String user_input = validInput(view_options);
+
+        switch (user_input) {
+            // TODO: for people who worked on template
+            case "A":
+                tc.previewAllTemplates();
+                break;
+            case "B":
+                tc.detailViewAllTemplates();
+                break;
+            default:
+                // TODO: TextUI - returning to previous menu
+                break;
+        }
+    }
+
+    /**
+     * Template options helper method. Allows different options for editing this template.
+     * @param templateID is the unique id of the template to be edited.
+     */
+    private void aTemplateEditOptions(int templateID) {
+        String[] edit_options = {"name", "prompts", "delete"};  // options user can choose from
+        String user_input = validInput(edit_options);
+
+        // Then, a user can select
+        switch (user_input) {
+            case "name":
+                // TODO: TextUI - ask new name
+                String newTemplateName = scanner.nextLine();  // New template name they want to assign
+                tc.editTemplateName(templateID, newTemplateName);
+                break;
+            case "prompts":
+                // At the end of each edit, allows user to consecutively edit prompts without returning to the previous
+                // menu.
+                String[] user_options = {"yes", "no"};
+                do {
+                    editPrompts(templateID);
+                } while (validInput(user_options).equals("yes"));
+                break;
+            case "delete":
+                // TODO: TextUI -
+                break;
+            default:
+                // TODO: TextUI - returning to the previous menu
+                break;
+        }
+    }
+
+    /**
+     * It provides different edit options for editing prompts of this template.
+     *
+     */
+    private void editPrompts (int templateID) {
+        String[] edit_options = {"edit", "add", "delete"};  // options user can choose from
+        String user_input = validInput(edit_options);
+        switch (user_input) {
+            case "edit":
+                // At the end of each edit, allows user to consecutively edit prompts without returning to the previous
+                // menu.
+                String[] user_options = {"yes", "no"};
+                do {
+                    // TODO: TextUI - display the current prompts and ask which prompt to edit + newPrompt
+                    // TODO:    pass on detailed view of that specific template to TextUI??
+                    int promptID = scanner.nextInt();
+                    String newPromptName = scanner.nextLine(); // TODO: why is it prompt name??
+                    tc.renameTemplatePrompt(templateID, promptID, newPromptName);
+                } while (validInput(user_options).equals("yes"));
+                break;
+            case "add":
+                // TODO: TextUI - ask
+                break;
+            case "delete":
+                break;
+            default:
+                // TODO: TextUI - returning to the previous menu
+                break;
+        }
+
     }
 }
