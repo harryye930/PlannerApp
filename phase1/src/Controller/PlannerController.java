@@ -11,27 +11,29 @@ import java.util.ArrayList;
  *  the Planner controller.
  */
 public class PlannerController {
-    public PlannerManager plannerManager;
+    private PlannerManager plannerManager;
+//    private String dailyPlanner;
+//    private String projectPlanner;
 
     public PlannerController(){
         this.plannerManager = new PlannerManager();
-        this.plannerManager.NewDailyPlanner("Test ABC");
+//        this.dailyPlanner = this.plannerManager.NewDailyPlanner("daily planner", "9:00", "18:00");
+//        this.projectPlanner = this.plannerManager.NewProjectPlanner("project planner");
 
-
-        PlannerManager dailyplannerManager = new PlannerManager();
     }
 
     public String createNewPlanner(String input){
         if (input.equals("daily")){
-            String id = plannerManager.NewDailyPlanner();
+            String id = plannerManager.NewDailyPlanner("daily planner", "9:00", "18:00");
             return id;
         } else if (input.equals("project")){
-            String id = plannerManager.NewProjectPlanner("Untitled");
+            String id = plannerManager.NewProjectPlanner("project planner");
             return id;
         } else {
             return null;
         }
     }
+
 
     /** Pass on request to get a string representation of a planner
      *
