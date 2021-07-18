@@ -22,16 +22,16 @@ public class PlannerController {
 
     }
 
-    public String createNewPlanner(String input){
-        if (input.equals("daily")){
-            String id = plannerManager.NewDailyPlanner("daily planner", "9:00", "18:00");
-            return id;
-        } else if (input.equals("project")){
-            String id = plannerManager.NewProjectPlanner("project planner");
-            return id;
-        } else {
-            return null;
-        }
+    public String createNewDailyPlanner(){
+        String DailyPlannerID = plannerManager.NewDailyPlanner("daily planner", "09:00", "18:00");
+        return this.plannerManager.toString(DailyPlannerID);
+    }
+
+
+    public String createNewProjectPlanner(){
+        plannerManager.NewProjectPlanner("project planner");
+        String ProjectPlannerID = plannerManager.NewProjectPlanner("project planner");
+        return this.plannerManager.toString(ProjectPlannerID);
     }
 
 
@@ -80,5 +80,9 @@ public class PlannerController {
      */
     public boolean changePrivacyStatus(String id, String status){
         return plannerManager.ChangePrivacyStatus(id, status);
+    }
+
+    public void DeletePlanner(String id){
+        this.DeletePlanner(id);
     }
 }
