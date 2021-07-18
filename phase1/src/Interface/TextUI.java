@@ -32,6 +32,7 @@ public class TextUI {
                 } else {
                     System.out.println("Invalid input, please try again.");
                 }
+                break;
 
             case "create new account":
                 System.out.println("Email:");
@@ -45,6 +46,7 @@ public class TextUI {
                 assert tPassword.equals(password);
                 String id = ac.createAccount(email, username, password);
                 System.out.println("Please remember your ID:" + id);
+                break;
 
 //                do{
 //                    System.out.println("Sorry, your username and password don't match! Please try again.");
