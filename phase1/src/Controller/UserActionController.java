@@ -71,7 +71,7 @@ public class UserActionController {
             case "B":  // log in
                 logIn();
                 break;
-            case "C": // quest
+            case "C": // guest
                 // TODO: determine what should be done here...do we have to even do something?
                 // TODO: do we need createGuestAccount in account controller?
         }
@@ -108,6 +108,9 @@ public class UserActionController {
                     // TODO: are we allowing user to log-in to different accounts after they logged out????
                     break;
             }
+            if (!userInput.equals(QUIT)) {  // Adds in a delay before returning to the main menu.
+                returnToMainTimeDelay();
+            }
         } while (!userInput.equals(QUIT));
     }
 
@@ -127,7 +130,7 @@ public class UserActionController {
      * @param valid_options are valid options presented to the user by the program to choose from.
      * @return the valid option user has entered.
      */
-    private String validInput(String[] valid_options) {  // TODO: we can switch it to do-while loop later
+    private String validInput(String[] valid_options) {
         String input = scanner.nextLine();
         List<String> options = Arrays.asList(valid_options);
         while (!options.contains(input.trim())) {
@@ -151,15 +154,29 @@ public class UserActionController {
     }
 
     /**
-     * Allows a user to create an account.
+     * Allows a user to create an account. The same password must be entered consecutively for the program to proceed
+     * with creating a new account for this user.
      */
     private void createNewAccount() {
         p.showCreateNewAccountScreen(0); // ask user for email
         String email = scanner.nextLine();
         p.showCreateNewAccountScreen(1); // ask user for username
         String username = scanner.nextLine();
-        p.showCreateNewAccountScreen(2); // ask user for password
-        String password = scanner.nextLine();
+        // Allows user to create and confirm their password. The user must confirm their password before proceeding
+        // with their account creation.
+        boolean passwordConfirmed = false;
+        String password;
+        do {
+            p.showCreateNewAccountScreen(2); // ask user for password
+            password = scanner.nextLine();
+            // TODO: Presenter asking to confirm password
+            String confirmPassword = scanner.nextLine();
+            if (password.equals(confirmPassword)) {
+                passwordConfirmed = true;
+            } else {
+                // TODO: Presenter informing that the password doesn't match
+            }
+        } while (!passwordConfirmed); // continue if the password is not confirmed
         ac.createAccount(email, username, password);
         currentRetriever = username;  // TODO: ask if there is a different way to retrieve retriever
         p.showAccountCreatedScreen(username); // display message showing that new account with username has been created
@@ -169,12 +186,23 @@ public class UserActionController {
      * Allows a user to log-in to their account.
      */
     private void logIn() {
-        p.showLoginScreen(0); // ask user for username or email
-        String username = scanner.nextLine();
-        p.showLoginScreen(1); // ask user for password
-        String password = scanner.nextLine();
-        ac.logIn(username, password);
-        currentRetriever = username; // TODO: ask if there is a different way to retrieve retriever
+        String username;
+        String password;
+        boolean loginSuccess = false;  // indicates whether the log-in was successful or not.
+        do {
+            p.showLoginScreen(0); // ask user for username or email
+            username = scanner.nextLine();
+            p.showLoginScreen(1); // ask user for password
+            password = scanner.nextLine();
+            if (ac.logIn(username, password)) {
+                currentRetriever = username;
+                loginSuccess = true;
+            } else {
+                // TODO: Presenter - Invalid login credentials entered.
+                System.out.println("Invalid username or password entered."); // TODO: delete
+            }
+        } while (!loginSuccess);
+        // We know that the user logged in to their account successfully.
         p.showLoginSuccessfulScreen(); // login successful message
     }
 
@@ -183,6 +211,30 @@ public class UserActionController {
      */
     private void plannerOptions() {
         // TODO: for people who worked on planner!!! - can be done on Sunday
+        // TODO: Presenter - planner menu (e.g., view, edit, create, quit)
+        System.out.println("Select from: view, edit, create, q"); // TODO: delete
+        String[] plannerOptions = {"view", "edit", "create", "q"};  // options user can choose from
+        String userInput = validInput(plannerOptions);
+
+        switch (userInput) {
+            case "view":
+                plannerViewOptions();
+                break;
+            case "edit":
+                // First, a user must select a planner they would like to edit.
+                // TODO: presenter -  present all existing personal planners and their ids
+                // TODO: presenter -  ask for ID of template to edit
+                // TODO: update planner entity and change planner ID into int (OR change template ID into String)
+                System.out.println("Please enter the ID of the planner you wish to edit."); // TODO: delete
+                String plannerID = scanner.nextLine();  // Unique ID of the template they wish to edit
+                // Then, a user can proceed with selecting editing actions they can perform on the selected planner.
+                aPlannerEditOptions(plannerID);
+                break;
+            case "create":
+                plannerCreateOptions();
+                break;
+        }
+        // We know that: either the requested action is completed or user requested to "quit".
     }
 
     /**
@@ -191,9 +243,9 @@ public class UserActionController {
     private void templateOptions() {
         p.showTemplateMenu();
         String[] templateOptions = {"A", "B", "C", "D"};  // options user can choose from
-        String user_input = validInput(templateOptions);
+        String userInput = validInput(templateOptions);
 
-        switch (user_input) {
+        switch (userInput) {
             case "A":  // View all templates
                 templateViewOptions();
                 break;
@@ -365,6 +417,93 @@ public class UserActionController {
                 break;
             case "D": // return to edit template menu
                 // TODO: implement this
+        }
+        // We know that: either the requested action is completed or user requested to "quit".
+    }
+
+    /**
+     * Planner options helper method. Allows different options for template viewing.
+     */
+    private void plannerViewOptions() {
+        // TODO: presenter - planner view options ("personal", "public")
+        System.out.println("Please enter from the following: my planners, public planners, q");
+        String[] viewOptions = {"my planners", "public planners", QUIT};  // options user can choose from
+        String userInput = validInput(viewOptions);
+
+        switch (userInput) {
+            case "my planners":
+                // TODO: remains to be implemented
+                System.out.println("view my planners executed"); // TODO: delete
+                break;
+            case "public planners":
+                // TODO: remains to be implemented (use AccessController method???)
+                System.out.println("view public planners executed"); // TODO: delete
+                break;
+        }
+        // We know that: either the requested action is completed or user requested to "quit".
+    }
+
+    /**
+     * Planner options helper method. Allows different options for editing this planner.
+     * @param plannerID is the unique id of the planner to be edited.
+     */
+    private void aPlannerEditOptions(String plannerID) { // TODO: change planner ID to int???
+        // TODO: Presenter - similarly to aTemplateEditOptions first 3 lines
+        System.out.println("Please enter from the following: daily, project, delete, q"); // TODO: delete
+        String[] editOptions = {"daily", "project", "delete", QUIT};  // options user can choose from
+        String userInput = validInput(editOptions);
+
+        switch (userInput) {
+            case "daily": // edit template name
+                // TODO: Finish implementing
+                pc.Edit(plannerID, "10:00", "good day");
+                // TODO: Presenter message
+                System.out.println("Successfully edited"); // TODO: delete
+                break;
+            case "project": // edit template prompts
+                // TODO: Finish implementing
+                pc.Edit(plannerID, 2, "good project");
+                // TODO: Presenter message
+                System.out.println("Successfully edited"); // TODO: delete
+                break;
+            case "delete": // delete planner
+                // TODO: confirm if user wants to delete this planner
+                // TODO: visualize the planner
+                if (validInput(USER_DECISION).equals("yes")) {
+                    if (pc.DeletePlanner(plannerID)) {
+                        // TODO: presenter
+                        System.out.println("Successfully delete."); // TODO: delete
+                    }
+                    else {
+                        // TODO: presenter
+                        System.out.println("There is no such planner."); // TODO: delete
+                    }
+                    break;
+                }
+        }
+        // We know that: either the requested action is completed or user requested to "quit".
+    }
+
+    /**
+     * Planner options helper method. Allows different options for template viewing.
+     */
+    private void plannerCreateOptions() {
+        // TODO: presenter - planner view options ("daily", "project")
+        System.out.println("Please choose from the following: daily. project, q"); //TODO: delete
+        String[] createOptions = {"daily", "project", "q"};  // options user can choose from
+        String userInput = validInput(createOptions);
+
+        switch (userInput) {
+            case "daily":
+                // TODO: to be separated into presenter and USA
+                System.out.println("Successfully created Daily Planner, " +
+                        "these are the information: \n" + pc.createNewDailyPlanner());
+                break;
+            case "project":
+                // TODO: to be separated into presenter and USA
+                System.out.println("Successfully created Project Planner, " +
+                        "these are the information: \n" + pc.createNewProjectPlanner());
+                break;
         }
         // We know that: either the requested action is completed or user requested to "quit".
     }
