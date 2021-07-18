@@ -45,6 +45,7 @@ public class TextUI {
                 String tPassword = scanner.nextLine();
                 assert tPassword.equals(password);
                 String id = ac.createAccount(email, username, password);
+                ac.save();
                 System.out.println("Please remember your ID:" + id);
                 break;
 
