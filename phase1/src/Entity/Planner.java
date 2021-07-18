@@ -34,13 +34,15 @@ public abstract class Planner implements Serializable {
      */
     public abstract String toString();
 
+    public String getID(){
+        return this.ID;
+    }
 
-
-//     * @return A String representing of the planner status.
-//     */
-//    public String getPrivacyStatus() {
-//        return privacyStatus;
-//    }
+     /** @return a String representing of the planner status.
+     */
+    public String getPrivacyStatus() {
+        return privacyStatus;
+    }
 
     /** Add agenda to current planner
      *
