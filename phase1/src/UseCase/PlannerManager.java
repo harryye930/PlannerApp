@@ -9,6 +9,9 @@ import java.util.HashMap;
 public class PlannerManager {
     private HashMap<String, Planner> idToPlanner;
 
+    public PlannerManager() {
+        this.idToPlanner = new HashMap<>();
+    }
 
     /** Create new DailyPlanner -- default start at 09:00, end at 17:00, interval 60 mins
      *

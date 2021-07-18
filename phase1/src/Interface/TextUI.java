@@ -333,6 +333,7 @@ public class TextUI {
                         do{
                             System.out.println(accountMenu);
                             accountMenuOption = scanner.next().charAt(0);
+                            scanner.nextLine();
                             switch (accountMenuOption){
                                 case 'A':
                                     ac.logOut(retriever);
