@@ -45,7 +45,8 @@ public class Reader<T> implements IGateWay<T> {
     public T readSer(String filePath) {
         File nf = new File(filePath);
         try {
-            if (nf.createNewFile() && nf.delete()) {
+            if (nf.createNewFile()) {
+                nf.delete();
                 return null;
             }
             FileInputStream fileIn = new FileInputStream(filePath);
