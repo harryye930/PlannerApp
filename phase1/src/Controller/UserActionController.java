@@ -20,19 +20,28 @@ public class UserActionController {
 
     Scanner scanner;
 
-    private final String[] userDecision = {"yes", "no"};
+    private final String[] USER_DECISION = {"yes", "no"};
+    private final String QUIT = "q";
     private String currentRetriever = "guest";  // default
 
     public UserActionController() {
         ac = new AccessController();
-        ac.load();
+        // ac.load();
         tc = new TemplateController();
         // TODO: tc.load();
-        pc = new PlannerController();
+        // pc = new PlannerController();
         // TODO: pc.load();
-        p = new Presenter();
 
+        p = new Presenter();
         scanner = new Scanner(System.in);
+    }
+
+    /**
+     * Public method to test the methods being created during the implementation process.
+     * This method will be deleted once the implementation is completed.
+     */
+    public void test() {
+        runningProgram();
     }
 
     /**
@@ -51,24 +60,24 @@ public class UserActionController {
      */
     private void initiatingProgram() {
         p.showLoginOptions();
-        // TODO:            For Text UI method, how about it takes in a character as an argument (e.g., "q")
+        // TODO: For Text UI method, how about it takes in a character as an argument (e.g., "q")
         // Re-prompts the user until the user enters the valid input.
-        String[] userOptions = {"new account", "login", "guest", "quit"};  // options user can choose from
+        String[] userOptions = {"A", "B", "C", "q"};  // options user can choose from
         String userInput = validInput(userOptions);
 
         switch (userInput) {
-            case "new account":  // the user does not have an existing account
+            case "A":  // new account
                 createNewAccount();
                 break;
-            case "login":  // the user has an existing account
+            case "B":  // log in
                 logIn();
                 break;
-            case "guest":
+            case "C": // quest
                 // TODO: determine what should be done here...do we have to even do something?
                 // TODO: do we need createGuestAccount in account controller?
         }
         // We know that the userInput is one of the options suggested by our program.
-        if (!userInput.equals("quit")) {
+        if (!userInput.equals("q")) {
             runningProgram();  // run the actual program (i.e., display and allow users to use features of the program)
         }
         closingProgram(); // The user either selected "quit" or finished using the program.
@@ -80,22 +89,27 @@ public class UserActionController {
      * Precondition: initiatingProgram()
      */
     private void runningProgram() {
-        p.showMainMenu();
-        // QUESTION: should options be different for different type of users?
-        String[] main_menu_options = {"A", "B", "C", "D"};  // options user can choose from
-        String user_input = validInput(main_menu_options);
-
-        switch(user_input) {
-            case "A":  // Selected actions on planner
-                plannerOptions();
-            case "B":  // Selected actions on template
-                templateOptions();
-            case "C":  // Selected actions on account
-                accountOptions(currentRetriever);
-            case "D":  // Log out
-                ac.logOut(currentRetriever);
-        }
-        // TODO: are we allowing user to log-in to different accounts after they logged out????
+        String user_input;
+        do {  // Allows the user to continue to perform different user actions until they select to quit the program.
+            p.showMainMenu();  // TODO: add "q" as an option (e.g., click "q" to exit)
+            String[] main_menu_options = {"A", "B", "C", "D", "q"};  // options user can choose from
+            user_input = validInput(main_menu_options);
+            switch (user_input) {
+                case "A":  // Selected actions on planner
+                    plannerOptions();
+                    break;
+                case "B":  // Selected actions on template
+                    templateOptions();
+                    break;
+                case "C":  // Selected actions on account
+                    accountOptions(currentRetriever);
+                    break;
+                case "D":  // Log out
+                    ac.logOut(currentRetriever);
+                    // TODO: are we allowing user to log-in to different accounts after they logged out????
+                    break;
+            }
+        } while (!user_input.equals(QUIT));
     }
 
     /**
@@ -104,7 +118,7 @@ public class UserActionController {
      */
     private void closingProgram() {
         p.showSavingInfoScreen();
-        ac.save();
+        // ac.save();
         // TODO: tc.save() and pc.save()
         p.showSavingSuccessfulScreen();
     }
@@ -117,7 +131,7 @@ public class UserActionController {
     private String validInput(String[] valid_options) {  // TODO: we can switch it to do-while loop later
         String input = scanner.nextLine();
         List<String> options = Arrays.asList(valid_options);
-        while (!options.contains(input)) {
+        while (!options.contains(input.trim())) {
             // TODO: TextUI - "Invalid input, please try again."
             // TODO: TextUI - re-show the options (e.g. please select from the following options: )
             input = scanner.nextLine();
@@ -177,6 +191,7 @@ public class UserActionController {
      */
     private void templateOptions() {
         // TODO: TextUI - display options for the user to choose from
+        System.out.println("Select from the following: view, edit, create, quit"); // TODO: delete after TextUI implementation
         String[] template_options = {"view", "edit", "create", "quit"};  // options user can choose from
         String user_input = validInput(template_options);
 
@@ -246,6 +261,7 @@ public class UserActionController {
      */
     private void templateViewOptions() {
         // TODO: TextUI - display options for the user to choose from
+        System.out.println("Select from the following: preview, detailed, quit"); // TODO: delete after TextUI imp.
         String[] view_options = {"preview", "detailed", "quit"};  // options user can choose from
         String user_input = validInput(view_options);
 
@@ -253,9 +269,11 @@ public class UserActionController {
             // TODO: for people who worked on template
             case "preview":
                 tc.previewAllTemplates();
+                System.out.println("preview template executed"); // TODO: delete
                 break;
             case "detailed":
                 tc.detailViewAllTemplates();
+                System.out.println("detailed template view executed"); // TODO: delete
                 break;
         }
         // We know that: either the requested action is completed or user requested to "quit".
@@ -268,6 +286,7 @@ public class UserActionController {
     private void aTemplateEditOptions(int templateID) {
         // TODO: TextUI - show template: "This is the what the template currently looks like:\n"
         // TODO: TextUI - display options for the user to choose from
+        System.out.println("Select from: change name, edit prompts, delete, quit"); // TODO - delete post TextUI imp.
         String[] edit_options = {"change name", "edit prompts", "delete", "quit"};  // options user can choose from
         String user_input = validInput(edit_options);
 
@@ -283,11 +302,11 @@ public class UserActionController {
                 do {
                     editPrompts(templateID);
                     // TODO: TextUI - ask if they want to continue editing
-                } while (validInput(userDecision).equals("yes"));
+                } while (validInput(USER_DECISION).equals("yes"));
                 break;
             case "delete":
                 // TODO: TextUI - confirm if they want to delete this template (maybe visualize the template)
-                if (validInput(userDecision).equals("yes")) {
+                if (validInput(USER_DECISION).equals("yes")) {
                     // TODO: delete template - the function is not yet available
                     // TODO: TextUI - system message notifying that the feature is not yet available
                     break;
@@ -301,6 +320,7 @@ public class UserActionController {
      */
     private void editPrompts (int templateID) {
         // TODO: TextUI - display options for the user to choose from
+        System.out.println("select from: edit, add, delete, quit"); // TODO: delete post TextUI imp.
         String[] edit_options = {"edit", "add", "delete", "quit"};  // options user can choose from
         String user_input = validInput(edit_options);
         switch (user_input) {
@@ -312,10 +332,12 @@ public class UserActionController {
                     // TODO: TextUI - "Here are the current prompts: \n"
                     // TODO:    pass on detailed view of that specific template to TextUI??
                     // TODO: TextUI - "Enter the ID of the prompt you'd like to rename"
+                    System.out.println("id (int), type new prompt (str)"); // TODO: delete post TextUI imp.
                     int promptID = scanner.nextInt();
                     // TODO: TextUI - "Enter the desired new name for the prompt"
                     String newPromptName = scanner.nextLine();
                     tc.renameTemplatePrompt(templateID, promptID, newPromptName);
+                    // TODO: TextUI - "Would you like to continue editing more prompts?"
                 } while (validInput(user_options).equals("yes"));
                 break;
             case "add":
