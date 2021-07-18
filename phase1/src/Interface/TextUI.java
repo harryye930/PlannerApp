@@ -40,7 +40,9 @@ public class TextUI {
                 String username = scanner.nextLine();
                 System.out.println("Password:");
                 String password = scanner.nextLine();
-                System.out.println("TODO check password");
+                System.out.println("Please enter your password again:");
+                String tPassword = scanner.nextLine();
+                assert tPassword.equals(password);
                 String id = ac.createAccount(email, username, password);
                 System.out.println("Please remember your ID:" + id);
 
