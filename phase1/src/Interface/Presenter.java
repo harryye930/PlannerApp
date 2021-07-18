@@ -136,7 +136,7 @@ public class Presenter {
                         "A. View all templates\n" +
                         "B. Edit an existing template (Admin Only) \n" +
                         "C. Create a new template (Admin Only) \n" +
-                        "D. Exit to Main Menu\n"+
+                        "\nTo return to the MAIN MENU, enter \"m\"\n" +
                         "=========================================================================";
         System.out.println(templateMenu);
     }
@@ -268,7 +268,7 @@ public class Presenter {
                         "Please choose one of the options below and enter the letter associated with it.\n" +
                         "A. Log out\n" +
                         "B. Edit account info\n" +
-                        "C. Exit to Main Menu\n"+
+                        "\nTo return to the MAIN MENU, enter \"m\"\n" +
                         "=========================================================================";
         System.out.println(accountMenu);
     }
