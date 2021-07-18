@@ -160,10 +160,10 @@ public class TextUI {
                         scanner.nextLine();
                         switch (plannerMenuOption){
                             case 'A':
-                                ArrayList<Planner> planners = new ArrayList<>(ac.getPlanners(retriever));
-                                for (Planner planner: planners) {
-                                    System.out.println(planner.toString());
-                                }
+//                                ArrayList<Planner> planners = new ArrayList<>(ac.getPlanners(retriever));
+//                                for (Planner planner: planners) {
+//                                    System.out.println(planner.toString());
+//                                }
                                 break;
                             case 'B':
                                 System.out.println("Successfully created Daily Planner, " +
@@ -367,6 +367,8 @@ public class TextUI {
                         switch (accountMenuOption){
                             case 'A':
                                 ac.logOut(retriever);
+                                accountMenuOption = 'D';
+                                mainMenuOption = 'D';
                                 break;
                             case 'B':
                                 System.out.println("Please enter your new user name:");
@@ -378,7 +380,11 @@ public class TextUI {
                                 String oldPassword = scanner.nextLine();
                                 System.out.println("Please enter your new password:");
                                 String newPassword = scanner.nextLine();
-                                ac.changePassword(retriever, oldPassword, newPassword);
+                                if (ac.changePassword(retriever, oldPassword, newPassword)) {
+                                    System.out.println("Reset success.");
+                                } else {
+                                    System.out.println("Invalid password.");
+                                }
                                 break;
                             case 'D':
                                 System.out.println("Returning to Main Menu...");
@@ -392,7 +398,7 @@ public class TextUI {
                                 System.out.println("Invalid Option! Please enter again! ");
                                 break;
                         }
-                    }while(accountMenuOption != 'E');
+                    }while(accountMenuOption != 'D');
                     // return to main menu
                     break;
 
