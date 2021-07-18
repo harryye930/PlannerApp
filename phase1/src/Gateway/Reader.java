@@ -38,7 +38,7 @@ public class Reader<T> implements IGateWay<T> {
 
     /**
      * Read .ser file into an object of given type T.
-     * @param filePath A String representing the file path you want to store.
+     * @param filePath A String representing the file path you want to read in.
      * @return A Object of object type T, return null if failed to load in file.
      */
     @Override
@@ -63,8 +63,8 @@ public class Reader<T> implements IGateWay<T> {
 
     /**
      * Read .csv file into an two dimensional ArrayList.
-     * @param filePath A String representing the file path you want to store.
-     * @return A two dimensional ArrayList containing String.
+     * @param filePath A String representing the file path you want to read in.
+     * @return A two dimensional ArrayList containing Strings.
      */
     @Override
     public ArrayList<ArrayList<String>> readCSV(String filePath) {
@@ -103,7 +103,7 @@ public class Reader<T> implements IGateWay<T> {
         File file = new File(filePath);
         try {
             if (file.createNewFile() || file.delete()) {
-                // The file hasn't already be created before this execution.
+                // The file hasn't already been created before this execution.
                 // Initialize the csv file.
                 FileWriter csvFile = new FileWriter(file);
                 int i = 0;
