@@ -173,13 +173,13 @@ public class AccountManager implements Serializable{
     /**
      * Add new planner to a given account. return true if any one of the planners is added.
      * @param retriever A String representing the user ID or Email.
-     * @param planner An array list of Planners that need to be added.
+     * @param plannerIds An array list of Planner id that need to be added.
      * @return A boolean value representing whether the adding is successful or not.
      */
-    public boolean setPlanners(String retriever, ArrayList<Planner> planner){
+    public boolean setPlanners(String retriever, ArrayList<String > plannerIds){
         Account account = this.findAccount(retriever);
         if (account.getAccountType().equals("regular")){
-            return ((UserAccount) account).setPlanners(planner);
+            return ((UserAccount) account).setPlanners(plannerIds);
         } else {
             return false;
         }
@@ -188,13 +188,13 @@ public class AccountManager implements Serializable{
     /**
      * Add new planner to a given account. return true if the planner is added.
      * @param retriever A String representing the user ID or Email.
-     * @param planner An array list of Planners that need to be added.
+     * @param plannerId An Planner id that need to be added.
      * @return A boolean value representing whether the adding is successful or not.
      */
-    public boolean setPlanners(String retriever, Planner planner){
+    public boolean setPlanners(String retriever, String  plannerId){
         Account account = this.findAccount(retriever);
         if (account.getAccountType().equals("regular")){
-            return ((UserAccount) account).setPlanners(planner);
+            return ((UserAccount) account).setPlanners(plannerId);
         } else {
             return false;
         }
@@ -206,8 +206,8 @@ public class AccountManager implements Serializable{
      * @return An ArrayList of Planner that owned by this account, if the account is regular. Else, return
      * null.
      */
-    public ArrayList<Planner> getPlanners(String retriever) {
-        if (findAccount(retriever).getAccountType().equals("regular")){
+    public ArrayList<String > getPlanners(String retriever) {
+        if (this.findAccount(retriever).getAccountType().equals("regular")){
             return ((UserAccount) findAccount(retriever)).getPlanner();
         } else {
             return null;

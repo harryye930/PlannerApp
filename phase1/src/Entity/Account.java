@@ -17,8 +17,6 @@ public abstract class Account implements Serializable {
     protected String userId;
     protected String email;
     protected String password;
-    protected String[] header;
-    protected ArrayList<String[]> data = new ArrayList<>();
 
     public Account() {
         this.accountType = "regular";

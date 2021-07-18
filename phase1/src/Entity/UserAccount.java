@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class UserAccount extends Account {
 
-    private ArrayList<Planner> planners = new ArrayList<>();
+    private ArrayList<String > planners = new ArrayList<>();
 
     /**
      * @param email represent the email of this user account.
@@ -23,27 +23,27 @@ public class UserAccount extends Account {
     /**
      * @param planners represent a list of planners that belong to this user.
      */
-    public UserAccount(List<Planner> planners) {
+    public UserAccount(List<String> planners) {
         super();
         this.accountType = "regular";
-        this.planners = (ArrayList<Planner>) planners;
+        this.planners = (ArrayList<String>) planners;
     }
 
     /**
      * @return A List containing all planners of this user.
      */
-    public ArrayList<Planner> getPlanner() {
+    public ArrayList<String> getPlanner() {
         return this.planners;
     }
 
     /**
      * Add single plan to planners.
-     * @param plan The plan that need to be added.
+     * @param plannerId The planner id that need to be added.
      * @return Return true if the plan is successfully added and false if not.
      */
-    public boolean setPlanners(Planner plan) {
-        if (!this.planners.contains(plan)) {
-            this.planners.add(plan);
+    public boolean setPlanners(String  plannerId) {
+        if (!this.planners.contains(plannerId)) {
+            this.planners.add(plannerId);
             return true;
         }
         return false;
@@ -51,12 +51,12 @@ public class UserAccount extends Account {
 
     /**
      *  Add a list of planners to planners.
-     * @param planners the planners that need to be added.
+     * @param planners the planners id that need to be added.
      * @return Return true if any one of the planner is successfully added.
      */
-    public boolean setPlanners(ArrayList<Planner> planners) {
+    public boolean setPlanners(ArrayList<String> planners) {
         boolean flag = false;
-        for (Planner planner : planners) {
+        for (String planner : planners) {
             if (!this.planners.contains(planner)) {
                 this.planners.add(planner);
                 flag = true;

@@ -157,9 +157,10 @@ public class TextUI {
                             plannerMenuOption = scanner.next().charAt(0);
                             switch (plannerMenuOption){
                                 case 'A':
-                                    ArrayList<Planner> planners = new ArrayList<>(ac.getPlanners(retriever));
-                                    for (Planner planner: planners) {
-                                        System.out.println(planner.toString());
+                                    //System.out.println(ac.getPlanners(retriever));
+                                    ArrayList<String> planners = ac.getPlanners(retriever);
+                                    for (String planner: planners) {
+                                        System.out.println(pc.toString(planner));
                                     }
                                     break;
                                 case 'B':
