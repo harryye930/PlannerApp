@@ -11,27 +11,29 @@ import java.util.ArrayList;
  *  the Planner controller.
  */
 public class PlannerController {
-    public PlannerManager plannerManager;
+    private PlannerManager plannerManager;
+//    private String dailyPlanner;
+//    private String projectPlanner;
 
     public PlannerController(){
         this.plannerManager = new PlannerManager();
-        this.plannerManager.NewDailyPlanner("Test ABC");
+//        this.dailyPlanner = this.plannerManager.NewDailyPlanner("daily planner", "9:00", "18:00");
+//        this.projectPlanner = this.plannerManager.NewProjectPlanner("project planner");
 
-
-        PlannerManager dailyplannerManager = new PlannerManager();
     }
 
-    public String createNewPlanner(String input){
-        if (input.equals("daily")){
-            String id = plannerManager.NewDailyPlanner();
-            return id;
-        } else if (input.equals("project")){
-            String id = plannerManager.NewProjectPlanner("Untitled");
-            return id;
-        } else {
-            return null;
-        }
+    public String createNewDailyPlanner(){
+        String DailyPlannerID = plannerManager.NewDailyPlanner("daily planner", "09:00", "18:00");
+        return this.plannerManager.toString(DailyPlannerID);
     }
+
+
+    public String createNewProjectPlanner(){
+        plannerManager.NewProjectPlanner("project planner");
+        String ProjectPlannerID = plannerManager.NewProjectPlanner("project planner");
+        return this.plannerManager.toString(ProjectPlannerID);
+    }
+
 
     /** Pass on request to get a string representation of a planner
      *
@@ -78,5 +80,9 @@ public class PlannerController {
      */
     public boolean changePrivacyStatus(String id, String status){
         return plannerManager.ChangePrivacyStatus(id, status);
+    }
+
+    public void DeletePlanner(String id){
+        this.DeletePlanner(id);
     }
 }
