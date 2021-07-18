@@ -1,8 +1,11 @@
 package Interface;
 
 import Controller.AccessController;
+import Controller.PlannerController;
 import Controller.TemplateController;
+import Entity.Planner;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -10,10 +13,12 @@ public class TextUI {
 
     private AccessController ac = new AccessController();
     private TemplateController tc = new TemplateController();
+    private PlannerController pc = new PlannerController();
 
     public TextUI showMenu() {
         this.ac = new AccessController();
         String retriever = ""; // The ID or Email of the Account we currently work on.
+        String userId;
         this.ac.load();
         System.out.println("Welcome to your planner!");
         System.out.println("What do you want to do (login / create new account / login as guest)");
@@ -152,8 +157,10 @@ public class TextUI {
                             plannerMenuOption = scanner.next().charAt(0);
                             switch (plannerMenuOption){
                                 case 'A':
-                                    // TODO: print user's planner
-                                    System.out.println("PlannerA");
+                                    ArrayList<Planner> planners = new ArrayList<>(ac.getPlanners(retriever));
+                                    for (Planner planner: planners) {
+                                        System.out.println(planner.toString());
+                                    }
                                     break;
                                 case 'B':
                                     // TODO: create a new planner from template
@@ -161,7 +168,8 @@ public class TextUI {
                                     break;
                                 case 'C':
                                     // TODO: edit planner
-                                    System.out.println("PlannerC");
+                                    System.out.println("Please enter the Planner ID you want to change:");
+                                    String plannerId = scanner.next();
                                     break;
                                 case 'D':
                                     // TODO: delete planner

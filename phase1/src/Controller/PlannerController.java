@@ -37,8 +37,8 @@ public class PlannerController {
      *
      * @return a string of the planner tasks
      */
-    public String toString(){
-        return plannerManager.toString();
+    public String toString(String id){
+        return plannerManager.findPlanner(id).toString();
     }
 
 
