@@ -2,8 +2,8 @@ package Entity;
 import java.util.ArrayList;
 
 public class ProjectPlanner extends Planner {
-    public ArrayList<String> tasks;
-    public ArrayList<String> taskStatus;
+    private ArrayList<String> tasks;
+    private ArrayList<String> taskStatus;
 
     public ProjectPlanner(String plannerName) {
         super(plannerName);
@@ -49,8 +49,8 @@ public class ProjectPlanner extends Planner {
             this.tasks.add(agenda);
             this.taskStatus.add("not completed");
             return true;
-            }
         }
+    }
 
     /** Add agenda to current planner - index specified
      *

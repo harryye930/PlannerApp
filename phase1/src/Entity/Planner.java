@@ -9,9 +9,9 @@ import java.util.UUID;
  */
 
 public abstract class Planner implements Serializable {
-    public String plannerName;
-    public String ID;
-    public String privacyStatus;
+    protected String plannerName;
+    protected String ID;
+    protected String privacyStatus;
 
 
     public Planner(){
@@ -35,23 +35,12 @@ public abstract class Planner implements Serializable {
     public abstract String toString();
 
 
-    /** Return the Id of current planner.
-     *
-     * @return A String representing the ID of this planner.
-     */
-    public String getID() {return this.ID;}
 
-    public void setPlannerName(String name){
-        plannerName = name;
-    }
-
-    public String getPlannerName(){
-        return plannerName;
-    }
-
-    public String getPrivacyStatus() {
-        return privacyStatus;
-    }
+//     * @return A String representing of the planner status.
+//     */
+//    public String getPrivacyStatus() {
+//        return privacyStatus;
+//    }
 
     /** Add agenda to current planner
      *
@@ -93,4 +82,5 @@ public abstract class Planner implements Serializable {
         }
         return false; // the current status is the same as input status
     }
+
 }
