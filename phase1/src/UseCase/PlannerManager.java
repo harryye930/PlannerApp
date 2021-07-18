@@ -188,8 +188,14 @@ public class PlannerManager {
         return new ArrayList<>(this.idToPlanner.values());
     }
 
-    public void DeletePlanner(String id) {
-        this.idToPlanner.remove(id);
+    public Boolean DeletePlanner(String id) {
+        if (this.idToPlanner.containsKey(id)){
+            this.idToPlanner.remove(id);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 }

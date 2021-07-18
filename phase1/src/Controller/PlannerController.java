@@ -82,7 +82,7 @@ public class PlannerController {
         return plannerManager.ChangePrivacyStatus(id, status);
     }
 
-    public void DeletePlanner(String id){
-        this.DeletePlanner(id);
+    public boolean DeletePlanner(String id){
+        return this.plannerManager.DeletePlanner(id);
     }
 }
