@@ -1,5 +1,7 @@
 package Controller;
 
+import Interface.Presenter;
+
 import java.util.List;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -14,11 +16,12 @@ public class UserActionController {
     AccessController ac;
     TemplateController tc;
     PlannerController pc;
+    Presenter p;
 
     Scanner scanner;
 
-    private final String[] USER_DECISION = {"yes", "no"};
-    private String current_retriever = "guest";  // default
+    private final String[] userDecision = {"yes", "no"};
+    private String currentRetriever = "guest";  // default
 
     public UserActionController() {
         ac = new AccessController();
@@ -27,6 +30,7 @@ public class UserActionController {
         // TODO: tc.load();
         pc = new PlannerController();
         // TODO: pc.load();
+        p = new Presenter();
 
         scanner = new Scanner(System.in);
     }
@@ -36,38 +40,35 @@ public class UserActionController {
      * creating an instance of this UserActionController in the main.
      */
     public void runProgram() {
-        // TODO: TextUI - welcoming page
-        // TODO: TextUI - "Welcome to your planner!""Welcome to your planner!"
+        p.showWelcomeScreen();
         initiatingProgram();  // starting up the program, includes closing program.
-        // TODO: TextUI - thanking the user for using the program.
+        p.showClosingScreen();
     }
 
     /**
-     * Initiate and runs the program.Provides options user can take in order to start using the features in the program.
+     * Initiate and runs the program. Provides options user can take in order to start using the features in the program.
      * TODO: I think this can be combined with runProgram() into one method - can be done later!!
      */
     private void initiatingProgram() {
-        // TODO: TextUI - main menu (options - new account, login, guest, quit)
+        p.showLoginOptions();
         // TODO:            For Text UI method, how about it takes in a character as an argument (e.g., "q")
         // Re-prompts the user until the user enters the valid input.
-        String[] user_options = {"new account", "login", "guest", "quit"};  // options user can choose from
-        String user_input = validInput(user_options);
+        String[] userOptions = {"new account", "login", "guest", "quit"};  // options user can choose from
+        String userInput = validInput(userOptions);
 
-        switch (user_input) {
+        switch (userInput) {
             case "new account":  // the user does not have an existing account
                 createNewAccount();
-                // TODO: TextUI - account is created.
                 break;
             case "login":  // the user has an existing account
                 logIn();
-                // TODO: TextUI - welcome the existing user.
                 break;
             case "guest":
                 // TODO: determine what should be done here...do we have to even do something?
                 // TODO: do we need createGuestAccount in account controller?
         }
-        // We know that the user_input is one of the options suggested by our program.
-        if (!user_input.equals("quit")) {
+        // We know that the userInput is one of the options suggested by our program.
+        if (!userInput.equals("quit")) {
             runningProgram();  // run the actual program (i.e., display and allow users to use features of the program)
         }
         closingProgram(); // The user either selected "quit" or finished using the program.
@@ -79,7 +80,7 @@ public class UserActionController {
      * Precondition: initiatingProgram()
      */
     private void runningProgram() {
-        // TODO: TextUI - main menu - Presents options users can choose from after logging in.
+        p.showMainMenu();
         // QUESTION: should options be different for different type of users?
         String[] main_menu_options = {"A", "B", "C", "D"};  // options user can choose from
         String user_input = validInput(main_menu_options);
@@ -90,9 +91,9 @@ public class UserActionController {
             case "B":  // Selected actions on template
                 templateOptions();
             case "C":  // Selected actions on account
-                accountOptions(current_retriever);
+                accountOptions(currentRetriever);
             case "D":  // Log out
-                ac.logOut(current_retriever);
+                ac.logOut(currentRetriever);
         }
         // TODO: are we allowing user to log-in to different accounts after they logged out????
     }
@@ -102,10 +103,10 @@ public class UserActionController {
      * Precondition: initiatingProgram()
      */
     private void closingProgram() {
-        // TODO: TextUI - saving in progress...???
+        p.showSavingInfoScreen();
         ac.save();
         // TODO: tc.save() and pc.save()
-        // TODO: TextUI - successful / unsuccessful
+        p.showSavingSuccessfulScreen();
     }
 
     /**
@@ -146,7 +147,7 @@ public class UserActionController {
         String username = scanner.nextLine();
         String password = scanner.nextLine();
         ac.createAccount(email, username, password);
-        current_retriever = username;  // TODO: ask if there is a different way to retrieve retriever
+        currentRetriever = username;  // TODO: ask if there is a different way to retrieve retriever
         // TODO: TextUI - account created (e.g. "Please remember your ID:" + id)
     }
 
@@ -160,7 +161,7 @@ public class UserActionController {
         // TODO: TextUI - "Please enter your password:"
         String password = scanner.nextLine();
         ac.logIn(username, password);
-        current_retriever = username; // TODO: ask if there is a different way to retrieve retriever
+        currentRetriever = username; // TODO: ask if there is a different way to retrieve retriever
         // TODO: TextUI - "Login success."
     }
 
@@ -183,11 +184,11 @@ public class UserActionController {
             case "view":  // View all templates
                 templateViewOptions();
                 break;
-            case "edit":  // Create a new template (admin only)
+            case "create":  // Create a new template (admin only)
                 // TODO: create template - the function is not yet available
                 // TODO: TextUI - system message notifying that the feature is not yet available
                 break;
-            case "create":  // Edit template name (admin only)
+            case "edit":  // Edit template name (admin only)
                 // TODO: checks admin status
                 // First, a user must select a template they would like to edit.
                 // TODO: TextUI - ask for template ID (present different templates and their ids)
@@ -282,11 +283,11 @@ public class UserActionController {
                 do {
                     editPrompts(templateID);
                     // TODO: TextUI - ask if they want to continue editing
-                } while (validInput(USER_DECISION).equals("yes"));
+                } while (validInput(userDecision).equals("yes"));
                 break;
             case "delete":
                 // TODO: TextUI - confirm if they want to delete this template (maybe visualize the template)
-                if (validInput(USER_DECISION).equals("yes")) {
+                if (validInput(userDecision).equals("yes")) {
                     // TODO: delete template - the function is not yet available
                     // TODO: TextUI - system message notifying that the feature is not yet available
                     break;
