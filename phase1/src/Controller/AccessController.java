@@ -122,20 +122,20 @@ public class AccessController {
     /**
      *
      * @param retriever A String representing the User ID or Email.
-     * @param planner A planner object that need to be added to the account.
+     * @param plannerId A planner id that need to be added to the account.
      * @return A boolean value representing whether the adding is successful or not..
      */
-    public boolean setPlanner(String retriever, Planner planner){
-        return this.accManager.setPlanners(retriever, planner);
+    public boolean setPlanner(String retriever, String  plannerId){
+        return this.accManager.setPlanners(retriever, plannerId);
     }
 
     /**
      * Add new planner to a given account. return true if any one of the planners is added.
      * @param retriever A String representing the User ID or Email.
-     * @param planner A planner object that need to be added to the account.
+     * @param planner A planner id that need to be added to the account.
      * @return A boolean value representing whether the adding is successful or not..
      */
-    public boolean setPlanner(String retriever, ArrayList<Planner> planner){
+    public boolean setPlanner(String retriever, ArrayList<String > planner){
         return this.accManager.setPlanners(retriever, planner);
     }
 
@@ -152,7 +152,7 @@ public class AccessController {
      * @param retriever A String representing the User ID or Email.
      * @return An ArrayList of Planner that owned by this account.
      */
-    public ArrayList<Planner> getPlanners(String retriever){
+    public ArrayList<String> getPlanners(String retriever){
         return accManager.getPlanners(retriever);
     }
 
