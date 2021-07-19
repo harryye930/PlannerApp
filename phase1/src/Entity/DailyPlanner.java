@@ -137,13 +137,13 @@ public class DailyPlanner extends Planner {
      * @return true iff the agenda is correctly added to current planner
      */
     @Override
-    public Boolean Add(String s) {
+    public Boolean add(String s) {
         // add task to the available time slot closest to start time and last an hour
         // call overloaded complete add method
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
         LocalDateTime now = LocalDateTime.now();
         String time = dtf.format(now);
-        return this.Add(time, s);
+        return this.add(time, s);
     }
 
 
@@ -153,7 +153,7 @@ public class DailyPlanner extends Planner {
      * @param agenda:            content of new agenda item
      * @return true iff the new agenda is successfully added
      */
-    public Boolean Add(String newStartTime, String agenda) {
+    public Boolean add(String newStartTime, String agenda) {
         // assume start time and duration on whole clock (10:00, 10:15 ... if interval for daily planner is 15 mins)
         // check if time slots already occupied, check if start time and end time is within legal time frame
         // (for phase 2) add warning for double booking
@@ -165,7 +165,7 @@ public class DailyPlanner extends Planner {
         if (newStartHour < this.startHour || newStartHour > this.endHour || newStartMins < 0 || newStartMins > 60) {
             return false;
         } else {
-            newStartMins = GetClosestMins(newStartMins, this.interval);
+            newStartMins = getClosestMins(newStartMins, this.interval);
             if (newStartHour<10){
                 hourIndex = String.format("0%d", newStartHour);
             }
@@ -199,7 +199,7 @@ public class DailyPlanner extends Planner {
      * @return true iff the agenda is correctly edited on current planner
      */
     @Override
-    public Boolean Edit(int i, String agenda) {
+    public Boolean edit(int i, String agenda) {
         if (i > this.dailyPlannerTask.size() - 1){ // if i is over the size limit
             return false;
         }
@@ -220,7 +220,7 @@ public class DailyPlanner extends Planner {
      *
      * @return true iff the agenda is correctly edited on current planner
      */
-    public Boolean Edit(String time, String newAgenda) {
+    public Boolean edit(String time, String newAgenda) {
         if (this.dailyPlannerTask.containsKey(time)) {
             this.dailyPlannerTask.replace(time, newAgenda);
             return true;
@@ -235,10 +235,10 @@ public class DailyPlanner extends Planner {
      * @param time index of the agenda user wish to delete
      * @return true iff the agenda is correctly deleted from current planner
      */
-    public boolean Delete(String time) {
+    public boolean delete(String time) {
         // delete everything on that time slot, i.e. no option to delete one thing
         // check if is legal time frame
-        return Edit(time, "N/A");
+        return edit(time, "N/A");
     }
 
 
@@ -285,7 +285,7 @@ public class DailyPlanner extends Planner {
      * @param Interval the time interval set by the user
      * @return the closest time the user may reach
      */
-    public int GetClosestMins(int NewStartMins, int Interval) {
+    public int getClosestMins(int NewStartMins, int Interval) {
         //new list of all possible mins given ineterval, ie. 0, 5, 10, 15... for interval=5
         ArrayList<Integer> numbers = new ArrayList<>(0);
         numbers.add(0);
@@ -312,7 +312,7 @@ public class DailyPlanner extends Planner {
      * @return a int iff the agenda is not passed.
      *
      */
-    public String RemainTasks(){
+    public String remainTasks(){
         //get the current time from the system.
         String current_time = CurrentTime();
         //make to the current time toString, and find the substring of the current hour and current mins.

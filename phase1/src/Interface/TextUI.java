@@ -11,15 +11,14 @@ import java.util.concurrent.TimeUnit;
 
 public class TextUI {
 
-    private AccessController ac = new AccessController();
     private TemplateController tc = new TemplateController();
     private PlannerController pc = new PlannerController();
 
     public TextUI showMenu() {
-        this.ac = new AccessController();
+        AccessController ac = new AccessController();
         String retriever = ""; // The ID or Email of the Account we currently work on.
         String userId;
-        this.ac.load();
+        ac.load();
         System.out.println("Welcome to your planner!");
         System.out.println("What do you want to do (login / create new account / login as guest)");
         Scanner scanner = new Scanner(System.in);
@@ -31,7 +30,7 @@ public class TextUI {
                 String userRetriever = scanner.nextLine();
                 System.out.println("Please enter your password:");
                 String userPassWord = scanner.nextLine();
-                if (this.ac.logIn(userRetriever, userPassWord)) {
+                if (ac.logIn(userRetriever, userPassWord)) {
                     System.out.println("Login success.");
                     retriever = userRetriever;
                 } else {
@@ -180,13 +179,13 @@ public class TextUI {
                                 if (PlannerType.equals("Daily")){
                                     System.out.println("Please enter the Planner ID you want to change.");
                                     String PlannerID = scanner.nextLine();
-                                    pc.Edit(PlannerID, "10:00", "good day");
+                                    pc.edit(PlannerID, "10:00", "good day");
                                     System.out.println("Successfully edited");
                                 }
                                 else if(PlannerType.equals("Project")){
                                     System.out.println("Please enter the Planner ID you want to change.");
                                     String PlannerID = scanner.nextLine();
-                                    pc.Edit(PlannerID, 2, "good project");
+                                    pc.edit(PlannerID, 2, "good project");
                                     System.out.println("Successfully edited");
                                 }
                                 else{
@@ -198,7 +197,7 @@ public class TextUI {
                             case 'E':
                                 System.out.println("Please enter the Planner ID you want to delete.");
                                 String DeleteID = scanner.nextLine();
-                                if (pc.DeletePlanner(DeleteID)){
+                                if (pc.deletePlanner(DeleteID)){
                                     System.out.println("Successfully delete.");
                                 }
                                 else{

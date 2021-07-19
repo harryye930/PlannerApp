@@ -58,7 +58,7 @@ public class PlannerController {
      * @param agenda content of the agenda user wish to edit
      * @return true iff the agenda is correctly requested to change based on current planner
      */
-    public boolean Edit(String id, int i, String agenda){
+    public boolean edit(String id, int i, String agenda){
         return plannerManager.Edit(id, i, agenda);
     }
 
@@ -68,7 +68,7 @@ public class PlannerController {
      * @param newAgenda: new agenda item
      * @return true iff is correctly request to change.
      */
-    public boolean Edit(String id, String time, String newAgenda){
+    public boolean edit(String id, String time, String newAgenda){
         return plannerManager.Edit(id, time, newAgenda);
     }
 
@@ -82,7 +82,7 @@ public class PlannerController {
         return plannerManager.ChangePrivacyStatus(id, status);
     }
 
-    public boolean DeletePlanner(String id){
+    public boolean deletePlanner(String id){
         return this.plannerManager.DeletePlanner(id);
     }
 }
