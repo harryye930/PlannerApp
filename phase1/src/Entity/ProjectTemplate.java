@@ -17,14 +17,21 @@ public class ProjectTemplate extends Template{
     private final int STATUS_START = 0; // e.g., to do
     private final int STATUS_MIDDLE = 1; // e.g., doing
     private final int STATUS_END = 2; // e.g., done
+    private int id;
 
     public ProjectTemplate(String name, ArrayList<String> prompts) {
         super(name, prompts);
+        this.id = super.getId();
     }
 
     @Override
     public String isType() {
         return "Project";
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     /**

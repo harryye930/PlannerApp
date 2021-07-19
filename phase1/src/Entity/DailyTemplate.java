@@ -15,14 +15,21 @@ public class DailyTemplate extends Template{
     private final int START_TIME = 0;
     private final int END_TIME = 1;
     private final int INCREMENT = 2;
+    private int id;
 
     public DailyTemplate(String name, ArrayList<String> prompts) {
         super(name, prompts);
+        this.id = super.getId();
     }
 
     @Override
     public String isType() {
         return "Daily";
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     /**
