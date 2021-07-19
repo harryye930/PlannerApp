@@ -192,19 +192,19 @@ public class TextUI {
 //                                }
                                 break;
                             case 'B':
-                                System.out.println("Successfully created Daily Planner, " +
+                                System.out.println("Successfully created a Daily Planner, " +
                                         "these are the information: \n" + pc.createNewDailyPlanner());
                                 break;
                             case 'C':
-                                System.out.println("Successfully created Project Planner, " +
+                                System.out.println("Successfully created a Project Planner, " +
                                         "these are the information: \n" + pc.createNewProjectPlanner());
                                 break;
                             case 'D':
-                                System.out.println("Please enter the Planner type you want to change, " +
+                                System.out.println("Please enter the Planner type you want to edit, " +
                                         "(Daily or Project)");
                                 String PlannerType = scanner.nextLine();
                                 if (PlannerType.equals("Daily")){
-                                    System.out.println("Please enter the Planner ID you want to change.");
+                                    System.out.println("Please enter the Planner ID you want to edit.");
                                     String PlannerID = scanner.nextLine();
                                     pc.edit(PlannerID, "10:00", "good day");
                                     System.out.println("Successfully edited");
@@ -225,7 +225,7 @@ public class TextUI {
                                 System.out.println("Please enter the Planner ID you want to delete.");
                                 String DeleteID = scanner.nextLine();
                                 if (pc.deletePlanner(DeleteID)){
-                                    System.out.println("Successfully delete.");
+                                    System.out.println("Successfully deleted.");
                                 }
                                 else{
                                     System.out.println("There is no such planner.");
