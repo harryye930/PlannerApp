@@ -459,13 +459,13 @@ public class UserActionController {
         switch (userInput) {
             case "daily": // edit template name
                 // TODO: Finish implementing
-                pc.Edit(plannerID, "10:00", "good day");
+                pc.edit(plannerID, "10:00", "good day");
                 // TODO: Presenter message
                 System.out.println("Successfully edited"); // TODO: delete
                 break;
             case "project": // edit template prompts
                 // TODO: Finish implementing
-                pc.Edit(plannerID, 2, "good project");
+                pc.edit(plannerID, 2, "good project");
                 // TODO: Presenter message
                 System.out.println("Successfully edited"); // TODO: delete
                 break;
@@ -473,7 +473,7 @@ public class UserActionController {
                 // TODO: confirm if user wants to delete this planner
                 // TODO: visualize the planner
                 if (validInput(USER_DECISION).equals("yes")) {
-                    if (pc.DeletePlanner(plannerID)) {
+                    if (pc.deletePlanner(plannerID)) {
                         // TODO: presenter
                         System.out.println("Successfully delete."); // TODO: delete
                     }

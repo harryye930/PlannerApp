@@ -111,7 +111,7 @@ public class PlannerManager {
      */
     public String DailyPlannerRemainTasks(String id){
         if (this.findPlanner(id).getClass() == DailyPlanner.class) {
-            return ((DailyPlanner) this.findPlanner(id)).RemainTasks();
+            return ((DailyPlanner) this.findPlanner(id)).remainTasks();
         }
         return null;
     }
@@ -132,7 +132,7 @@ public class PlannerManager {
      * @return true iff the agenda is correctly edited on current planner
      */
     public boolean Edit(String id, int i, String agenda){
-        this.findPlanner(id).Edit(i, agenda);
+        this.findPlanner(id).edit(i, agenda);
         return true;
     }
 
@@ -151,7 +151,7 @@ public class PlannerManager {
 //            return false;
 //        }
         if (this.findPlanner(id).getClass() == DailyPlanner.class){
-            ((DailyPlanner) this.findPlanner(id)).Edit(time, newAgenda);
+            ((DailyPlanner) this.findPlanner(id)).edit(time, newAgenda);
             return true;
         }
         else{

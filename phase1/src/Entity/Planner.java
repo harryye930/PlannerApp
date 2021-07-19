@@ -49,7 +49,7 @@ public abstract class Planner implements Serializable {
      * @param s agenda of the agenda user wish to add
      * @return true iff the agenda is correctly added to current planner
      */
-    public abstract Boolean Add(String s);
+    public abstract Boolean add(String s);
 
 
     /** Edit agenda to current planner
@@ -58,7 +58,7 @@ public abstract class Planner implements Serializable {
      * @param agenda content of the agenda user wish to edit
      * @return true iff the agenda is correctly edited on current planner
      */
-    public abstract Boolean Edit(int i, String agenda);
+    public abstract Boolean edit(int i, String agenda);
 
 
     /** Change the planner's privacy status

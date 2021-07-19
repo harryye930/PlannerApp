@@ -10,37 +10,37 @@ public class PlannerTests {
         System.out.println("Testing DailyPlanner...");
         DailyPlanner dailyPlanner = new DailyPlanner("Test Daily Planner", "09:00", "24:00", 60);
         System.out.println(dailyPlanner);
-        dailyPlanner.Add("12:01","CSC207");
+        dailyPlanner.add("12:01","CSC207");
         System.out.println(dailyPlanner);
-        dailyPlanner.Edit("12:00", "CSC343");
-        dailyPlanner.Edit("29:00", "Fail");
+        dailyPlanner.edit("12:00", "CSC343");
+        dailyPlanner.edit("29:00", "Fail");
         System.out.println(dailyPlanner);
-        dailyPlanner.Add("Dinner");
+        dailyPlanner.add("Dinner");
         System.out.println(dailyPlanner);
-        dailyPlanner.Delete("55:99");
-        dailyPlanner.Delete("12:00");
+        dailyPlanner.delete("55:99");
+        dailyPlanner.delete("12:00");
         System.out.println(dailyPlanner);
-        dailyPlanner.Add("18:05","A");
-        dailyPlanner.Add("18:20","B");
-        dailyPlanner.Add("19:55","C");
+        dailyPlanner.add("18:05","A");
+        dailyPlanner.add("18:20","B");
+        dailyPlanner.add("19:55","C");
         System.out.println(dailyPlanner);
-        System.out.println(dailyPlanner.RemainTasks());
+        System.out.println(dailyPlanner.remainTasks());
 
         //Testing ProjectPlanner
         System.out.println("Testing ProjectPlanner...");
         ProjectPlanner projectPlanner = new ProjectPlanner("Test Task Planner");
         System.out.println(projectPlanner);
-        projectPlanner.Add("Write Entity");
-        projectPlanner.Add("Write Use Case");
+        projectPlanner.add("Write Entity");
+        projectPlanner.add("Write Use Case");
         System.out.println(projectPlanner);
-        projectPlanner.Complete("Write Entity");
-        projectPlanner.Add("Write Entity"); // will return false and do nothing
+        projectPlanner.complete("Write Entity");
+        projectPlanner.add("Write Entity"); // will return false and do nothing
         System.out.println(projectPlanner);
-        projectPlanner.Add(1, "Meeting at 10");
-        projectPlanner.Edit(1, "Meeting at 11");
+        projectPlanner.add(1, "Meeting at 10");
+        projectPlanner.edit(1, "Meeting at 11");
         System.out.println(projectPlanner);
-        projectPlanner.Delete(2);
-        projectPlanner.Delete("Write Entity");
+        projectPlanner.delete(2);
+        projectPlanner.delete("Write Entity");
         System.out.println(projectPlanner);
 
 

@@ -38,7 +38,7 @@ public class ProjectPlanner extends Planner {
      * @return true iff the agenda is correctly added to current planner
      */
     @Override
-    public Boolean Add(String agenda){
+    public Boolean add(String agenda){
         if (this.tasks.contains(agenda)){
             return false;
         }
@@ -58,7 +58,7 @@ public class ProjectPlanner extends Planner {
      * @param agenda content of new item
      * @return true iff the agenda is correctly added
      */
-    public Boolean Add(int i, String agenda) {
+    public Boolean add(int i, String agenda) {
         if (i > this.tasks.size() - 1){ // if i is over the size limit
             return false;
         }
@@ -74,7 +74,7 @@ public class ProjectPlanner extends Planner {
      * @param Agenda: the agenda item to change status to completed
      * @return true iff the agenda is successfully changed to complete
      */
-    public Boolean Complete(String Agenda){
+    public Boolean complete(String Agenda){
         if (this.tasks.contains(Agenda)){
             int index = this.tasks.indexOf(Agenda);
             if (this.taskStatus.get(index).equals("not completed")){
@@ -94,7 +94,7 @@ public class ProjectPlanner extends Planner {
      * @return true iff the agenda is correctly edited on current planner
      */
     @Override
-    public Boolean Edit(int i, String agenda) {
+    public Boolean edit(int i, String agenda) {
         if (i > this.tasks.size() - 1){ // if i is over the size limit
             return false;
         }
@@ -114,7 +114,7 @@ public class ProjectPlanner extends Planner {
      *
      * @return true iff the agenda is correctly deleted from current planner
      */
-    public boolean Delete(int i) {
+    public boolean delete(int i) {
         if (i > this.tasks.size() - 1){ // if i is over the size limit
             return false;
         }
@@ -125,7 +125,7 @@ public class ProjectPlanner extends Planner {
         }
     }
 
-    public boolean Delete(String agenda) {
+    public boolean delete(String agenda) {
         if (!this.tasks.contains(agenda)){ // if agenda is not one of the task
             return false;
         }
