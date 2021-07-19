@@ -1,6 +1,14 @@
 package Interface;
 
+import Controller.TemplateController;
+
 public class Presenter {
+
+    private TemplateController tc;
+
+    public Presenter(TemplateController tc){
+        this.tc = tc;
+    }
 
     /**
      * Prints out message for welcome screen at the start of the program.
@@ -28,7 +36,7 @@ public class Presenter {
                 "A. Create a new account\n" +
                 "B. Log in (have an existing account)\n" +
                 "C. Continue as guest (note that any changes made won't be saved)\n" +
-                "\nTo exit the program, enter \"q\"\n" +
+                "\nTo exit the program, enter \"q\".\n" +
                 "=========================================================================";
         System.out.println(loginMenu);
     }
@@ -44,7 +52,7 @@ public class Presenter {
                 "B. Templates options\n" +
                 "C. Account options\n" +
                 "D. Log out\n" +
-                "\nTo exit the program, enter \"q\"\n" +
+                "\nTo exit the program, enter \"q\".\n" +
                 "=========================================================================";
         System.out.println(mainMenu);
     }
@@ -96,6 +104,22 @@ public class Presenter {
     }
 
     /**
+     * Prints out message asking user to enter password again to confirm.
+     */
+    public void showConfirmPasswordScreen(){
+        String confirmPasswordScreen = "Please enter the password again to confirm.\n";
+        System.out.println(confirmPasswordScreen);
+    }
+
+    /**
+     * Prints out message showing that password does not match and asking user to try again.
+     */
+    public void showPasswordUnmatchedScreen(){
+        String passwordUnmatchedScreen = "Password does not match. Please try again.\n";
+        System.out.println(passwordUnmatchedScreen);
+    }
+
+    /**
      * Prints out message showing that a new account has been created with the specified username.
      * @param username Username of the new account.
      */
@@ -118,6 +142,14 @@ public class Presenter {
     }
 
     /**
+     * Prints out message showing that invalid username or password is entered and asking user to try again.
+     */
+    public void showLoginFailedScreen(){
+        String loginFailedScreen = "Invalid username or password. Please try again.\n";
+        System.out.println(loginFailedScreen);
+    }
+
+    /**
      * Prints out message showing that user has successfully logged in.
      */
     public void showLoginSuccessfulScreen(){
@@ -136,7 +168,7 @@ public class Presenter {
                         "A. View all templates\n" +
                         "B. Edit an existing template (Admin Only) \n" +
                         "C. Create a new template (Admin Only) \n" +
-                        "\nTo return to the MAIN MENU, enter \"m\"\n" +
+                        "\nTo return to the MAIN MENU, enter \"m\".\n" +
                         "=========================================================================";
         System.out.println(templateMenu);
     }
@@ -157,11 +189,34 @@ public class Presenter {
     }
 
     /**
-     * Prints out message asking user for the ID of the template they would like to edit.
+     * Prints out detail view of all existing templates.
      */
-    public void showTemplateIDForEditQuestion(){
-        String templateIDToEditQuestion = "Which template would you like to edit? Please enter the template ID.";
-        System.out.println(templateIDToEditQuestion);
+    public void showDetailViewAllTemplates(){
+        System.out.println(tc.detailViewAllTemplates());
+    }
+
+    /**
+     * Prints out preview of all existing templates.
+     */
+    public void showPreviewAllTemplates(){
+        System.out.println(tc.previewAllTemplates());
+    }
+
+    /**
+     * Prints out detail view of template with templateID.
+     * @param templateID ID of template to get detail view for.
+     */
+    public void showDetailViewTemplate(int templateID){
+        System.out.println(tc.detailViewTemplate(templateID));
+    }
+
+    /**
+     * Prints out message asking user for the ID of the template or planner they would like to edit.
+     * @param obj String representing the type of object. Can be "template" or "planner".
+     */
+    public void showIDForEditQuestion(String obj){
+        String idForEditQuestion = "Which %s would you like to edit? Please enter the ID.%n";
+        System.out.printf(idForEditQuestion, obj);
     }
 
     /**
@@ -268,7 +323,7 @@ public class Presenter {
                         "Please choose one of the options below and enter the letter associated with it.\n" +
                         "A. Log out\n" +
                         "B. Edit account info\n" +
-                        "\nTo return to the MAIN MENU, enter \"m\"\n" +
+                        "\nTo return to the MAIN MENU, enter \"m\".\n" +
                         "=========================================================================";
         System.out.println(accountMenu);
     }
@@ -299,6 +354,24 @@ public class Presenter {
                 String.format(editAccountInfo, "current password"),
                 String.format(editAccountInfo, "new password")};
         System.out.println(editAccountPrompts[index]);
+    }
+
+    /**
+     * Prints out Planner Menu.
+     */
+    public void showPlannerMenu(){
+        String plannerMenu =
+                "=========================================================================\n"+
+                        "This is the Planner Menu. " +
+                        "Please choose one of the options below and enter the letter associated with it.\n" +
+                        "A. View all planners \n" +
+                        "B. Create a new Daily Planner from template \n" +
+                        "C. Create a new Project Planner from template \n" +
+                        "D. Edit a current planner \n" +
+                        "E. Delete a current planner \n" +
+                        "\nTo return to the MAIN MENU, enter \"m\".\n" +
+                        "=========================================================================";
+        System.out.println(plannerMenu);
     }
 
 

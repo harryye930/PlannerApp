@@ -33,7 +33,7 @@ public class UserActionController {
         // pc = new PlannerController();
         // TODO: pc.load();
 
-        p = new Presenter();
+        p = new Presenter(tc);
         scanner = new Scanner(System.in);
     }
 
@@ -257,7 +257,7 @@ public class UserActionController {
                 case "B":  // Edit template (admin only)
                     // TODO: checks admin status
                     // First, a user must select a template they would like to edit.
-                    tc.detailViewAllTemplates(); // present all existing templates and their ids
+                    p.showDetailViewAllTemplates(); // present all existing templates and their ids
                     p.showIDForEditQuestion("template"); // ask for ID of template to edit
                     int templateID = scanner.nextInt();  // Unique ID of the template they wish to edit
                     // Then, a user can proceed with selecting editing actions they can perform on the selected template.
@@ -326,11 +326,11 @@ public class UserActionController {
 
         switch (userInput) {
             case "A": // summary view (preview)
-                System.out.println(tc.previewAllTemplates());
+                p.showPreviewAllTemplates();
                 System.out.println("preview template executed"); // TODO: delete
                 break;
             case "B": // detailed view
-                System.out.println(tc.detailViewAllTemplates());
+                p.showDetailViewAllTemplates();
                 System.out.println("detailed template view executed"); // TODO: delete
                 break;
             case "C": // exit to template menu
@@ -349,7 +349,7 @@ public class UserActionController {
         boolean templateDeleted = false;
         do {
             p.showTemplateIntroMessage(templateID); // intro message for showing what a template currently looks like
-            tc.detailViewTemplate(templateID);
+            p.showDetailViewTemplate(templateID);
             p.showEditTemplateMenu();// display edit options for user to choose from
             String[] editOptions = {"A", "B", "C", "D"};  // options user can choose from
             userInput = validInput(editOptions);
@@ -370,7 +370,7 @@ public class UserActionController {
                     break;
                 case "C": // delete template
                     p.showConfirmDeleteQuestion("template"); // confirm if user wants to delete template
-                    tc.detailViewTemplate(templateID); // visualize the template
+                    p.showDetailViewTemplate(templateID);// visualize the template
                     if (validInput(USER_DECISION).equals("yes")) {
                         // TODO: (phase 2) implement delete template
                         p.showFeatureUnavailableScreen();
@@ -396,7 +396,7 @@ public class UserActionController {
                 String[] userOptions = {"yes", "no"};
                 do {
                     p.showTemplatePromptsIntroScreen(); // display intro message for showing current template prompts
-                    tc.detailViewTemplate(templateID); // display detailed view of template including current prompts
+                    p.showDetailViewTemplate(templateID); // display detailed view of template including current prompts
                     p.showIDForEditPromptQuestion("rename");
                     // display message asking user for ID of prompt they want to rename
                     int promptID = scanner.nextInt();
