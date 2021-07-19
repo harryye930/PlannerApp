@@ -227,7 +227,7 @@ public class UserActionController {
                     break;
                 case "B": // edit an existing planner
                     p.showAllPlanners();
-                    // TODO: Harry & Raymond to implement this method in presenter
+                    // TODO: H&R to implement this method in presenter
                     //  (present all existing personal planners and their ids)
                     plannerEditOptions();
 //                    p.showIDForEditQuestion("planner"); // ask for ID of planner to edit
