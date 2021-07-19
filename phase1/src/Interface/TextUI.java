@@ -13,45 +13,71 @@ public class TextUI {
 
     private TemplateController tc = new TemplateController();
     private PlannerController pc = new PlannerController();
+    // three boolean indicate whether user have successfully logged in/created a new account/login as guest
+    private boolean loginStatus = false;
+    private boolean asGuest = false;
+    private boolean newAccountStatus = false;
 
     public TextUI showMenu() {
         AccessController ac = new AccessController();
         String retriever = ""; // The ID or Email of the Account we currently work on.
         String userId;
         ac.load();
-        System.out.println("Welcome to your planner!");
-        System.out.println("What do you want to do (login / create new account / login as guest)");
         Scanner scanner = new Scanner(System.in);
-        String existAccount = scanner.nextLine();
 
-        switch (existAccount){
-            case "login":
-                System.out.println("Please enter your ID or Email:");
-                String userRetriever = scanner.nextLine();
-                System.out.println("Please enter your password:");
-                String userPassWord = scanner.nextLine();
-                if (ac.logIn(userRetriever, userPassWord)) {
-                    System.out.println("Login success.");
-                    retriever = userRetriever;
-                } else {
-                    System.out.println("Invalid input, please try again.");
-                }
-                break;
 
-            case "create new account":
-                System.out.println("Email:");
-                String email = scanner.nextLine();
-                System.out.println("User Name:");
-                String username = scanner.nextLine();
-                System.out.println("Password:");
-                String password = scanner.nextLine();
-                System.out.println("Please enter your password again:");
-                String tPassword = scanner.nextLine();
-                assert tPassword.equals(password);
-                String id = ac.createAccount(email, username, password);
-                ac.save();
-                System.out.println("Please remember your ID:" + id);
-                break;
+
+        do {
+            System.out.println("Welcome to your planner!");
+            System.out.println("What do you want to do (login / create new account / login as guest)");
+            String existAccount = scanner.nextLine();
+
+            switch (existAccount) {
+                case "login":
+                    System.out.println("Please enter your ID or Email:");
+                    String userRetriever = scanner.nextLine();
+                    System.out.println("Please enter your password:");
+                    String userPassWord = scanner.nextLine();
+                    do {
+                        if (ac.logIn(userRetriever, userPassWord)) {
+                            System.out.println("Login success.");
+                            retriever = userRetriever;
+                            loginStatus = true;
+                        } else {
+                            System.out.println("Invalid input, please try again.");
+                        }
+                    }while (!loginStatus); // loop and get username and password if don't match
+
+                    break;
+
+                case "create new account":
+                    System.out.println("Email:");
+                    String email = scanner.nextLine();
+                    System.out.println("User Name:");
+                    String username = scanner.nextLine();
+                    System.out.println("Password:");
+                    String password = scanner.nextLine();
+                    System.out.println("Please enter your password again:");
+                    String tPassword = scanner.nextLine();
+                    assert tPassword.equals(password);
+                    String id = ac.createAccount(email, username, password);
+                    ac.save();
+                    System.out.println("Please remember your ID:" + id);
+                    newAccountStatus = true;
+                    break;
+
+                case "login as guest":
+                    System.out.println("Welcome guest!");
+                    asGuest = true;
+                    //TODO Guest account, or what do we do with guest?
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        }while (!loginStatus && !newAccountStatus && !asGuest);// TODO allow next step after user have coreectly logged in/created a new account/login as guest
 
 //                do{
 //                    System.out.println("Sorry, your username and password don't match! Please try again.");
@@ -67,14 +93,14 @@ public class TextUI {
 
 
 
-        }
+
         // Create menu
         String mainMenu = "=========================================================================\n" +
                 "Main Menu -- Please choose the letter associated to the option\n" +
                 "A. Planners Options\n" +
                 "B. Templates Options\n" +
                 "C. Account Options\n" +
-                "D. Log out\n" +
+                "D. Exist\n" +
                 "=========================================================================";
 
         String personalInfo = "You are logged in as TODO: UserName";
@@ -127,10 +153,11 @@ public class TextUI {
         String accountMenu =
                 "-------------------------------------------------------------------------\n" +
                         "Account Menu -- Please choose the letter associated to the option\n" +
-                        "A. logout\n" +
+                        "A. log Out\n" +
                         "B. Edit your user name\n" +
                         "C. Edit your password\n" +
-                        "D. Exist to Main Menu\n";
+                        "D. Exist to Main Menu\n" +
+                        "-------------------------------------------------------------------------\n";
 
         char mainMenuOption;
         char plannerMenuOption;
@@ -174,7 +201,7 @@ public class TextUI {
                                 break;
                             case 'D':
                                 System.out.println("Please enter the Planner type you want to change, " +
-                                        "Daily or Project:");
+                                        "(Daily or Project)");
                                 String PlannerType = scanner.nextLine();
                                 if (PlannerType.equals("Daily")){
                                     System.out.println("Please enter the Planner ID you want to change.");
@@ -217,7 +244,7 @@ public class TextUI {
                                 break;
 
                         }
-                    }while(plannerMenuOption != 'E');
+                    }while(plannerMenuOption != 'F');
                     // return to main menu
                     break;
 
@@ -354,7 +381,7 @@ public class TextUI {
                     break;
 
                 case 'C': // user select account
-//                        "A. logout\n" +
+//                        "A. log Out\n" +
 //                        "B. Edit your user name\n" +
 //                        "C. Edit your password\n" +
 //                        "D. Exist to Main Menu\n";
@@ -368,6 +395,7 @@ public class TextUI {
                                 ac.logOut(retriever);
                                 accountMenuOption = 'D';
                                 mainMenuOption = 'D';
+                                System.out.println("You are logged out, see you next time!");
                                 break;
                             case 'B':
                                 System.out.println("Please enter your new user name:");
@@ -409,7 +437,7 @@ public class TextUI {
                     break;
             }
         }while (mainMenuOption != 'D');
-        System.out.println("You are logged out, see you next time!");
+        System.out.println("Exiting... see you next time!");
 
         return null;
     }
