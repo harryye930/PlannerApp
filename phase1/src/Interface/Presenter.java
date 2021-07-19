@@ -1,13 +1,16 @@
 package Interface;
 
 import Controller.TemplateController;
+import UseCase.PlannerManager;
 
 public class Presenter {
 
     private TemplateController tc;
+    private PlannerManager pm;
 
-    public Presenter(TemplateController tc){
+    public Presenter(TemplateController tc, PlannerManager pm){
         this.tc = tc;
+        this.pm = pm;
     }
 
     /**
@@ -220,13 +223,14 @@ public class Presenter {
     }
 
     /**
-     * Prints out intro message for showing what an existing template with templateID currently looks like.
-     * @param templateID ID of the template selected.
+     * Prints out intro message for showing what an existing template or planner with ID currently looks like.
+     * @param obj Type of object - can be "planner" or "template".
+     * @param ID ID of the template or planner selected.
      */
-    public void showTemplateIntroMessage(int templateID){
-        String templateIntroMessage = "You have selected template with ID %d. " +
-                "This is what the template currently looks like: %n";
-        System.out.printf((templateIntroMessage), templateID);
+    public void showObjIntroMessage(String obj, int ID){
+        String templateIntroMessage = "You have selected %s with ID %d. " +
+                "This is what the %s currently looks like: %n";
+        System.out.printf((templateIntroMessage), obj, ID, obj);
     }
 
     /**
@@ -364,15 +368,128 @@ public class Presenter {
                 "=========================================================================\n"+
                         "This is the Planner Menu. " +
                         "Please choose one of the options below and enter the letter associated with it.\n" +
-                        "A. View all planners \n" +
-                        "B. Create a new Daily Planner from template \n" +
-                        "C. Create a new Project Planner from template \n" +
-                        "D. Edit a current planner \n" +
-                        "E. Delete a current planner \n" +
+                        "A. View planners \n" +
+                        "B. Edit an existing planner \n" +
+                        "C. Create a new planner \n" +
                         "\nTo return to the MAIN MENU, enter \"m\".\n" +
                         "=========================================================================";
         System.out.println(plannerMenu);
     }
 
+    /**
+     * Prints out options for editing planner.
+     */
+    public void showEditPlannerMenu(){
+        String editPlannerMenu =
+                "=========================================================================\n"+
+                        "Here are the options for editing a planner. " +
+                        "Please choose one of the options below and enter the letter associated with it.\n" +
+                        "A. Edit your personal planners \n" +
+                        "B. Edit other public planners \n" +
+                        "C. Return to Planner Menu \n" +
+                        "=========================================================================\n";
+        System.out.println(editPlannerMenu);
+    }
+
+    /**
+     * Prints out options for editing personal planner.
+     */
+    public void showEditPersonalPlannerMenu(){
+        String editPersonalPlannerMenu =
+                "=========================================================================\n"+
+                        "Here are the options for editing a personal planner. " +
+                        "Please choose one of the options below and enter the letter associated with it.\n" +
+                        "A. Edit planner agenda \n" +
+                        "B. Change privacy setting \n" +
+                        "C. Delete Planner \n" +
+                        "D. Return to Edit Planner Menu \n" +
+                        "=========================================================================\n";
+        System.out.println(editPersonalPlannerMenu);
+    }
+
+    /**
+     * Prints out options for editing public planner.
+     */
+    public void showEditPublicPlannerMenu(){
+        String editPublicPlannerMenu =
+                "=========================================================================\n"+
+                        "Here are the options for editing a public planner. " +
+                        "Please choose one of the options below and enter the letter associated with it.\n" +
+                        "A. Edit planner agenda \n" +
+                        "B. Return to Edit Planner Menu \n" +
+                        "=========================================================================\n";
+        System.out.println(editPublicPlannerMenu);
+    }
+
+    /**
+     * Prints out details of all existing personal planners and planners of others that have been made public.
+     */
+    public void showAllPlanners(){
+        // System.out.println(tc.detailViewAllTemplates());
+        // TODO: H&R to implement method in PlannerManager / PlannerController:
+        //  print out all planners stored in PlannerManager by type (personal / public, daily / project)
+    }
+
+    /**
+     * Prints out details of all existing personal planners.
+     */
+    public void showAllPersonalPlanners(){
+        //TODO: H&R to implement method in PlannerManager / PlannerController:
+        // prints out all personal planners
+    }
+
+    /**
+     * Prints out details of all existing public planners.
+     */
+    public void showAllPublicPlanners(){
+        //TODO: H&R to implement method in PlannerManager / PlannerController:
+        // prints out all public planners
+    }
+
+    /**
+     * Prints out detail view of planner with plannerID.
+     * @param plannerID ID of planner to get detail view for.
+     */
+    public void showDetailViewPlanner(String plannerID){
+        System.out.println(pm.toString(plannerID));
+    } //TODO: H&R to change plannerID to int then change this method
+
+    /**
+     * Prints out message showing the type of the planner with plannerID
+     * @param type Type of the planner.
+     */
+    public void showPlannerType(String type){
+        System.out.printf("You have selected a planner of type: %s.%n", type);
+    }
+
+    /**
+     * Prints out Planner view options.
+     */
+    public void showPlannerViewMenu(){
+        String PlannerViewMenu =
+                "=========================================================================\n"+
+                        "Options for viewing planners. " +
+                        "Please choose one of the options below and enter the letter associated with it.\n" +
+                        "A. View all personal planners \n" +
+                        "B. View all public planners created by others \n" +
+                        "C. Exit to Planner Menu \n" +
+                        "=========================================================================\n";
+        System.out.println(PlannerViewMenu);
+    }
+
+    /**
+     * Prints out Planner creation options.
+     */
+    public void showPlannerCreateMenu(){
+        String plannerCreateMenu =
+                "=========================================================================\n"+
+                        "Options for creating planners. " +
+                        "Please choose one of the options below and enter the letter associated with it.\n" +
+                        "A. Create a daily planner \n" +
+                        "B. Create a project planner \n" +
+                        "C. Exit to Planner Menu \n" +
+                        "=========================================================================\n";
+        System.out.println(plannerCreateMenu);
+    }
 
 }

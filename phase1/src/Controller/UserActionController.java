@@ -1,6 +1,7 @@
 package Controller;
 
 import Interface.Presenter;
+import UseCase.PlannerManager;
 
 import java.util.List;
 import java.util.Arrays;
@@ -16,6 +17,7 @@ public class UserActionController {
     AccessController ac;
     TemplateController tc;
     PlannerController pc;
+    PlannerManager pm;
     Presenter p;
 
     Scanner scanner;
@@ -31,9 +33,10 @@ public class UserActionController {
         tc = new TemplateController();
         tc.load();
         // pc = new PlannerController();
+        pm = new PlannerManager();
         // TODO: pc.load();
 
-        p = new Presenter(tc);
+        p = new Presenter(tc, pm);
         scanner = new Scanner(System.in);
     }
 
@@ -214,30 +217,118 @@ public class UserActionController {
         String userInput;
         do {
             // TODO: for people who worked on planner!!! - can be done on Sunday
-            p.showPlannerMenu();// display planner menu (e.g., view, edit, create, quit)
-            String[] plannerOptions = {"A", "edit", "create", MAIN_MENU};  // options user can choose from
+            p.showPlannerMenu(); // display planner menu (e.g., view, edit, create, quit)
+            String[] plannerOptions = {"A", "B", "C", MAIN_MENU};  // options user can choose from
             userInput = validInput(plannerOptions);
 
             switch (userInput) {
-                case "view":
+                case "A": // view planners
                     plannerViewOptions();
                     break;
-                case "edit":
-                    // First, a user must select a planner they would like to edit.
-                    // TODO: presenter -  present all existing personal planners and their ids
-                    // TODO: presenter -  ask for ID of template to edit
-                    // TODO: update planner entity and change planner ID into int (OR change template ID into String)
-                    System.out.println("Please enter the ID of the planner you wish to edit."); // TODO: delete
-                    String plannerID = scanner.nextLine();  // Unique ID of the template they wish to edit
-                    // Then, a user can proceed with selecting editing actions they can perform on the selected planner.
-                    aPlannerEditOptions(plannerID);
-                    break;
-                case "create":
+                case "B": // edit an existing planner
+                    p.showAllPlanners();
+                    // TODO: Harry & Raymond to implement this method in presenter
+                    //  (present all existing personal planners and their ids)
+                    plannerEditOptions();
+//                    p.showIDForEditQuestion("planner"); // ask for ID of planner to edit
+//                    // update planner entity and change planner ID into int??????
+//                    String plannerID = scanner.nextLine();  // Unique ID of the template they wish to edit
+//                    // Then, a user can proceed with selecting editing actions they can perform on the selected planner.
+//                    aPlannerEditOptions(plannerID);
+//                    break;
+                case "C": // create a new planner
                     plannerCreateOptions();
                     break;
             }
             // We know that: either the requested action is completed or user requested to "quit".
         } while (!userInput.equals(MAIN_MENU));
+    }
+
+    /**
+     * Shows planner edit options: edit personal planners, edit other public planners, return to planner menu.
+     */
+    private void plannerEditOptions(){//TODO: add do while
+        String userInput;
+        p.showEditPlannerMenu(); // display planner edit menu
+        String[] plannerEditOptions = {"A", "B", "C"}; // options user can choose from
+        userInput = validInput(plannerEditOptions);
+
+        switch(userInput){
+            case "A": //edit personal planners
+                p.showAllPersonalPlanners(); // display all personal planners
+                p.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
+                String plannerID = scanner.nextLine(); // gets ID of planner user wants to edit
+                personalPlannerEditOptions(plannerID);
+                break;
+            case "B":  //edit other public planners
+                p.showAllPublicPlanners(); // display all public planners
+                p.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
+                plannerID = scanner.nextLine(); // gets ID of planner user wants to edit
+                publicPlannerEditOptions(plannerID);
+                break;
+            case "C":
+                //TODO: implement this: return to planner menu
+                break;
+        }
+    }
+
+    private void personalPlannerEditOptions(String plannerID){
+        // p.showObjIntroMessage("planner", plannerID); //TODO: H&R change plannerID to int then uncomment this method
+        p.showDetailViewPlanner(plannerID);
+        p.showEditPersonalPlannerMenu(); // display personal planner edit menu
+        String[] plannerEditOptions = {"A", "B", "C", "D"}; //options user can choose from
+        String userInput = validInput(plannerEditOptions);
+
+        switch (userInput){
+            case "A": // edit planner agenda
+                //editPlannerAgendaOptions(plannerID); //TODO: uncomment after implementing this method
+                break;
+            case "B": // change privacy setting
+                break; //TODO: implement this
+            case "C": // delete planner
+                p.showFeatureUnavailableScreen(); // display message showing feature not yet available
+                //TODO: (phase 2) implement delete planner --- I think we can save it for phase 2???
+                break;
+            case "D": //return to edit planner menu
+                break; //TODO: implement this
+        }
+    }
+
+    private void publicPlannerEditOptions(String plannerID){
+        //p.showObjIntroMessage("planner", plannerID); // TODO: H&R change plannerID to int then uncomment this method
+        p.showDetailViewPlanner(plannerID);
+        p.showEditPublicPlannerMenu(); // display public planner edit menu
+        String[] plannerEditOptions = {"A", "B"}; //options user can choose from
+        String userInput = validInput(plannerEditOptions);
+
+        switch (userInput){
+            case "A": // edit planner agenda
+                //editPlannerAgendaOptions(plannerID); //TODO: uncomment after implementing this method
+                break;
+            case "B": // return to edit planner menu
+                break; //TODO: implement this
+        }
+    }
+
+    private void editPlannerAgendaOptions(String plannerID){
+        //String type = pc.getType(plannerID);
+        // TODO: H&R to implement getType(plannerID): returns type of planner: "daily" or "project"
+        // p.showPlannerType(type);
+        // display type of selected planner: daily or project //TODO: uncomment after previous line fixed
+//        switch (type){
+//            case "daily":
+//                // TODO: Finish implementing
+//                pc.edit(plannerID, "10:00", "good day");
+//                // TODO: Presenter message
+//                System.out.println("Successfully edited"); // TODO: delete
+//                break;
+//            case "project":
+//                // TODO: Finish implementing
+//                pc.edit(plannerID, 2, "good project");
+//                // TODO: Presenter message
+//                System.out.println("Successfully edited"); // TODO: delete
+//                break;
+//        } //TODO: implement switch statements
     }
 
     /**
@@ -348,7 +439,7 @@ public class UserActionController {
         String userInput;
         boolean templateDeleted = false;
         do {
-            p.showTemplateIntroMessage(templateID); // intro message for showing what a template currently looks like
+            p.showObjIntroMessage("template", templateID); // intro message for showing what a template currently looks like
             p.showDetailViewTemplate(templateID);
             p.showEditTemplateMenu();// display edit options for user to choose from
             String[] editOptions = {"A", "B", "C", "D"};  // options user can choose from
@@ -428,85 +519,91 @@ public class UserActionController {
      * Planner options helper method. Allows different options for template viewing.
      */
     private void plannerViewOptions() {
-        // TODO: planner controller view options ("personal", "public")
-        System.out.println("Please enter from the following: my planners, public planners, q");
-        String[] viewOptions = {"my planners", "public planners", QUIT};  // options user can choose from
+        p.showPlannerViewMenu(); // display planner view options: personal, public, exit to planner menu
+        String[] viewOptions = {"A", "B", "C"};  // options user can choose from
         String userInput = validInput(viewOptions);
 
         switch (userInput) {
-            case "my planners":
+            case "A": // personal planners
                 // TODO: remains to be implemented
                 System.out.println("view my planners executed"); // TODO: delete
                 break;
-            case "public planners":
+            case "B": // public planners created by others
                 // TODO: remains to be implemented (use AccessController method???)
                 System.out.println("view public planners executed"); // TODO: delete
                 break;
-        }
-        // We know that: either the requested action is completed or user requested to "quit".
-    }
-
-    /**
-     * Planner options helper method. Allows different options for editing this planner.
-     * @param plannerID is the unique id of the planner to be edited.
-     */
-    private void aPlannerEditOptions(String plannerID) { // TODO: change planner ID to int???
-        // TODO: Presenter - similarly to aTemplateEditOptions first 3 lines
-        System.out.println("Please enter from the following: daily, project, delete, q"); // TODO: delete
-        String[] editOptions = {"daily", "project", "delete", QUIT};  // options user can choose from
-        String userInput = validInput(editOptions);
-
-        switch (userInput) {
-            case "daily": // edit template name
-                // TODO: Finish implementing
-                pc.edit(plannerID, "10:00", "good day");
-                // TODO: Presenter message
-                System.out.println("Successfully edited"); // TODO: delete
-                break;
-            case "project": // edit template prompts
-                // TODO: Finish implementing
-                pc.edit(plannerID, 2, "good project");
-                // TODO: Presenter message
-                System.out.println("Successfully edited"); // TODO: delete
-                break;
-            case "delete": // delete planner
-                // TODO: confirm if user wants to delete this planner
-                // TODO: visualize the planner
-                if (validInput(USER_DECISION).equals("yes")) {
-                    if (pc.deletePlanner(plannerID)) {
-                        // TODO: presenter
-                        System.out.println("Successfully delete."); // TODO: delete
-                    }
-                    else {
-                        // TODO: presenter
-                        System.out.println("There is no such planner."); // TODO: delete
-                    }
-                }
+            case "C": // exit to planner menu
+                //TODO: implement this
                 break;
         }
         // We know that: either the requested action is completed or user requested to "quit".
     }
 
+//    /**
+//     * Planner options helper method. Allows different options for editing this planner.
+//     * @param plannerID is the unique id of the planner to be edited.
+//     */
+//    private void aPlannerEditOptions(String plannerID) {
+//        // TODO: Presenter - similarly to aTemplateEditOptions first 3 lines
+//        // p.showObjIntroMessage("planner", plannerID); //TODO: H&R change plannerID to int then uncomment this method
+//        p.showDetailViewPlanner(plannerID); // show what the planner currently looks like
+//        //TODO: H&R to implement getType() method in Planner - returns if its "daily" or "project" planner
+//        System.out.println("Please enter from the following: daily, project, delete, q"); // TODO: delete
+//        String[] editOptions = {"daily", "project", "delete", QUIT};  // options user can choose from
+//        String userInput = validInput(editOptions);
+//
+//        switch (userInput) {
+//            case "daily": // edit template name
+//                // TODO: Finish implementing
+//                pc.edit(plannerID, "10:00", "good day");
+//                // TODO: Presenter message
+//                System.out.println("Successfully edited"); // TODO: delete
+//                break;
+//            case "project": // edit template prompts
+//                // TODO: Finish implementing
+//                pc.edit(plannerID, 2, "good project");
+//                // TODO: Presenter message
+//                System.out.println("Successfully edited"); // TODO: delete
+//                break;
+//            case "delete": // delete planner
+//                // TODO: confirm if user wants to delete this planner
+//                // TODO: visualize the planner
+//                if (validInput(USER_DECISION).equals("yes")) {
+//                    if (pc.deletePlanner(plannerID)) {
+//                        // TODO: presenter
+//                        System.out.println("Successfully delete."); // TODO: delete
+//                    }
+//                    else {
+//                        // TODO: presenter
+//                        System.out.println("There is no such planner."); // TODO: delete
+//                    }
+//                }
+//                break;
+//        }
+//        // We know that: either the requested action is completed or user requested to "quit".
+//    }
+
     /**
-     * Planner options helper method. Allows different options for template viewing.
+     * Planner options helper method. Allows different options for planner creation.
      */
     private void plannerCreateOptions() {
-        // TODO: presenter - planner view options ("daily", "project")
-        System.out.println("Please choose from the following: daily. project, q"); //TODO: delete
-        String[] createOptions = {"daily", "project", "q"};  // options user can choose from
+        p.showPlannerCreateMenu(); // display planner creation options: daily, project, exit to planner menu
+        String[] createOptions = {"A", "B", "C"};  // options user can choose from
         String userInput = validInput(createOptions);
 
         switch (userInput) {
-            case "daily":
+            case "A": // daily
                 // TODO: to be separated into presenter and USA
                 System.out.println("Successfully created Daily Planner, " +
                         "these are the information: \n" + pc.createNewDailyPlanner());
                 break;
-            case "project":
+            case "B": // project
                 // TODO: to be separated into presenter and USA
                 System.out.println("Successfully created Project Planner, " +
                         "these are the information: \n" + pc.createNewProjectPlanner());
                 break;
+            case "C": // exit to planner menu
+                break; //TODO: implement this
         }
         // We know that: either the requested action is completed or user requested to "quit".
     }
