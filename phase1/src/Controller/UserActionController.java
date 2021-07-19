@@ -6,7 +6,6 @@ import UseCase.PlannerManager;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 /**
  * UserActionController manages user actions.
@@ -25,7 +24,7 @@ public class UserActionController {
     private final String[] USER_DECISION = {"yes", "no"};
     private final String QUIT = "q";
     private final String MAIN_MENU = "m";
-    private String currentRetriever = "guest";  // default
+    private String currentRetriever;
 
     public UserActionController() {
         ac = new AccessController();
@@ -45,7 +44,7 @@ public class UserActionController {
      * This method will be deleted once the implementation is completed.
      */
     public void test() {
-        runningProgram();
+        runProgram();
     }
 
     /**
@@ -54,18 +53,19 @@ public class UserActionController {
      */
     public void runProgram() {
         p.showWelcomeScreen();
-        initiatingProgram();  // starting up the program, includes closing program.
+        if (startProgram()) { // This user can proceed with using the program.
+            useProgram();
+        }
         p.showClosingScreen();
     }
 
     /**
-     * Initiate and runs the program. Provides options user can take in order to start using the features in the program.
-     * TODO: I think this can be combined with runProgram() into one method - can be done later!!
+     * Returns true if the user can proceed with using the features of the program; otherwise, return false.
+     * @return boolean indicating whether a program should run or not.
      */
-    private void initiatingProgram() {
+    private boolean startProgram() {
         p.showLoginMenu();
-        // Re-prompts the user until the user enters the valid input.
-        String[] userOptions = {"A", "B", "C", "q"};  // options user can choose from
+        String[] userOptions = {"A", "B", "C", QUIT};  // Options this user can choose from.
         String userInput = validInput(userOptions);
 
         switch (userInput) {
@@ -76,26 +76,28 @@ public class UserActionController {
                 logIn();
                 break;
             case "C": // guest
-                // TODO: determine what should be done here...do we have to even do something?
-                // TODO: do we need createGuestAccount in account controller?
+                currentRetriever = "guest";
+                break;
+            case QUIT:
+                // User wants to close the program.
+                saveProgram();
+                return false;
         }
-        // We know that the userInput is one of the options suggested by our program.
-        if (!userInput.equals(QUIT)) {
-            runningProgram();  // run the actual program (i.e., display and allow users to use features of the program)
-        }
-        closingProgram(); // The user either selected "quit" or finished using the program.
-        // The program is closed.
+        // We know that the user can start using the program.
+        return true;
     }
 
     /**
      * Presents the options and allows actions after the user successfully logged in, including as a guest.
      * Precondition: initiatingProgram()
      */
-    private void runningProgram() {
-        String userInput;
-        do {  // Allows the user to continue to perform different user actions until they select to quit the program.
+    private void useProgram() {
+        String userInput; // Stores selection input from the user
+        String[] mainMenuOptions = {"A", "B", "C", "D"}; // Options this user can choose from
+        // This program allows user to exit the program though logging out of their current account; otherwise, the
+        // program continues to display this <mainMenuOptions> after each task (i.e., option) is completed.
+        do {
             p.showMainMenu();
-            String[] mainMenuOptions = {"A", "B", "C", "D", "q"};  // options user can choose from
             userInput = validInput(mainMenuOptions);
             switch (userInput) {
                 case "A":  // Selected actions on planner
@@ -107,25 +109,26 @@ public class UserActionController {
                 case "C":  // Selected actions on account
                     accountOptions(currentRetriever);
                     break;
-                case "D":  // Log out
-                    ac.logOut(currentRetriever);
-                    // TODO: are we allowing user to log-in to different accounts after they logged out????
+                case "D":  // Log out and exit
+                    if (!currentRetriever.equals("guest")) {
+                    saveProgram();  // Saves all the account, planner, and template information
+                    ac.logOut(currentRetriever);  // logs out of the current user
+                    }
                     break;
             }
-            if (!userInput.equals(QUIT)) {  // Adds in a delay before returning to the main menu.
-                returnToMainTimeDelay();
-            }
-        } while (!userInput.equals(QUIT));
+        } while (!userInput.equals("D"));
+        // We know that the user wants to exit the program (i.e., userInput.equals("D") == true)
+        p.interfaceScreen("Returning to the start page...");
     }
 
     /**
-     * Closing the program after the user completed using it.
+     * Saving the program information, including account, template, and planner information.
      * Precondition: initiatingProgram()
      */
-    private void closingProgram() {
+    private void saveProgram() {
         p.showSavingInfoScreen();
         // TODO: ac.save();
-        tc.save();
+        // tc.save();
         // TODO: pc.save()
         p.showSavingSuccessfulScreen();
     }
@@ -146,17 +149,20 @@ public class UserActionController {
     }
 
     /**
-     * Generates delay for returning to main menu.
-     * TODO: To be used when implementing do-while loops into the program!
+     * Returns true if a user is an admin; otherwise it returns false and prints out a message to the user.
      */
-    private void returnToMainTimeDelay() {
-        p.showReturnToMainScreen();
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    private boolean isAdmin() {
+        if (currentRetriever.equals("guest") || !ac.isAdmin(currentRetriever).equals("admin")) {
+            p.interfaceScreen("Checking your account status...");  // TODO
+            System.out.println("Sorry, this feature requires an admin status.");  // TODO
+            return false;
         }
+        return true;
     }
+
+    //=================================================================================================================
+    // 1. Account Related Methods - all the helper methods mainly involving accounts are listed below.
+    //=================================================================================================================
 
     /**
      * Allows a user to create an account. The same password must be entered consecutively for the program to proceed
@@ -209,6 +215,59 @@ public class UserActionController {
         // We know that the user logged in to their account successfully.
         p.showLoginSuccessfulScreen(); // login successful message
     }
+
+    /**
+     * Account Options. The user will remain in this Account Options menu unless they wish to return to the main menu.
+     */
+    private void accountOptions(String retriever) {
+        String userInput;
+        do {
+            p.showAccountMenu(); // display account options for the user to choose from
+            String[] accountOptions = {"A", "B", MAIN_MENU};  // options user can choose from
+            userInput = validInput(accountOptions);
+
+            switch (userInput) {
+                case "A": // log out
+                    ac.logOut(retriever);
+                    break;
+                case "B": // edit account info
+                    accountSetting(retriever);
+                    break;
+            }
+            // We know that: either the requested action is completed or user requested to "quit".
+            if (!userInput.equals(MAIN_MENU)) {  // We know that user requested to return to the account menu.
+                p.showReturnToPrevMenu();
+            }
+        } while (!userInput.equals(MAIN_MENU));
+    }
+
+    private void accountSetting(String retriever) {
+        p.showEditAccountMenu(); // display options for editing account for user to choose from
+        String[] viewOptions = {"A", "B", "C"};  // options user can choose from
+        String userInput = validInput(viewOptions);
+        switch (userInput) {
+            case "A": // edit username
+                p.showEditAccountPrompts(0); // display message asking user to enter new user name
+                String newName = scanner.nextLine();
+                ac.changeUserName(retriever, newName);
+                break;
+            case "B": // edit password
+                p.showEditAccountPrompts(1); // display message asking user to enter current password
+                String oldPassword = scanner.nextLine();
+                p.showEditAccountPrompts(2);// display message asking user to enter new password
+                String newPassword = scanner.nextLine();
+                ac.changePassword(retriever, oldPassword, newPassword);
+                break;
+            case "C": // return to account menu
+                break;
+        }
+        // We know that: either the requested action is completed or user requested to "quit".
+        p.showReturnToPrevMenu();
+    }
+
+    //=================================================================================================================
+    // 2. Planner Related Methods - all the helper methods mainly involving planners are listed below.
+    //=================================================================================================================
 
     /**
      * Planner Options. The user will remain in this Planner Options menu unless they wish to return to the main menu.
@@ -332,13 +391,43 @@ public class UserActionController {
     }
 
     /**
-     * Template Options. The user will remain in this Template Options menu unless they wish to return to the main menu.
+     * Planner options helper method. Allows different options for planner creation.
+     */
+    private void plannerCreateOptions() {
+        p.showPlannerCreateMenu(); // display planner creation options: daily, project, exit to planner menu
+        String[] createOptions = {"A", "B", "C"};  // options user can choose from
+        String userInput = validInput(createOptions);
+
+        switch (userInput) {
+            case "A": // daily
+                // TODO: to be separated into presenter and USA
+                System.out.println("Successfully created Daily Planner, " +
+                        "these are the information: \n" + pc.createNewDailyPlanner());
+                break;
+            case "B": // project
+                // TODO: to be separated into presenter and USA
+                System.out.println("Successfully created Project Planner, " +
+                        "these are the information: \n" + pc.createNewProjectPlanner());
+                break;
+            case "C": // exit to planner menu
+                break; //TODO: implement this
+        }
+        // We know that: either the requested action is completed or user requested to "quit".
+    }
+
+    //=================================================================================================================
+    // 3. Template Related Methods - all the helper methods mainly involving templates are listed below.
+    //=================================================================================================================
+
+    /**
+     * Template Options.
+     * The user will remain in this Template Options menu unless they wish to return to the main menu.
      */
     private void templateOptions() {
         String userInput;
+        String[] templateOptions = {"A", "B", "C", MAIN_MENU};
         do {
             p.showTemplateMenu();
-            String[] templateOptions = {"A", "B", "C", MAIN_MENU};  // options user can choose from
             userInput = validInput(templateOptions);
 
             switch (userInput) {
@@ -346,65 +435,27 @@ public class UserActionController {
                     templateViewOptions();
                     break;
                 case "B":  // Edit template (admin only)
-                    // TODO: checks admin status
+                    if (!isAdmin()) {
+                        break;
+                    }
                     // First, a user must select a template they would like to edit.
                     p.showDetailViewAllTemplates(); // present all existing templates and their ids
                     p.showIDForEditQuestion("template"); // ask for ID of template to edit
                     int templateID = scanner.nextInt();  // Unique ID of the template they wish to edit
                     // Then, a user can proceed with selecting editing actions they can perform on the selected template.
                     aTemplateEditOptions(templateID);
+                    break;
                 case "C":  // Create a new template (admin only)
+                    if (!isAdmin()) {
+                        break;
+                    }
                     // TODO: (phase 2) implement create template
                     p.showFeatureUnavailableScreen();
                     break;
-            }
-            // We know that: either the requested action is completed or user requested to "quit".
-        } while (!userInput.equals(MAIN_MENU));
-    }
-
-    /**
-     * Account Options. The user will remain in this Account Options menu unless they wish to return to the main menu.
-     */
-    private void accountOptions(String retriever) {
-        String userInput;
-        do {
-            p.showAccountMenu(); // display account options for the user to choose from
-            String[] accountOptions = {"A", "B", MAIN_MENU};  // options user can choose from
-            userInput = validInput(accountOptions);
-
-            switch (userInput) {
-                case "A": // log out
-                    ac.logOut(retriever);
-                    break;
-                case "B": // edit account info
-                    accountSetting(retriever);
+                case MAIN_MENU:
                     break;
             }
-            // We know that: either the requested action is completed or user requested to "quit".
         } while (!userInput.equals(MAIN_MENU));
-    }
-
-    private void accountSetting(String retriever) {
-        p.showEditAccountMenu(); // display options for editing account for user to choose from
-        String[] viewOptions = {"A", "B", "C"};  // options user can choose from
-        String userInput = validInput(viewOptions);
-        switch (userInput) {
-            case "A": // edit username
-                p.showEditAccountPrompts(0); // display message asking user to enter new user name
-                String newName = scanner.nextLine();
-                ac.changeUserName(retriever, newName);
-                break;
-            case "B": // edit password
-                p.showEditAccountPrompts(1); // display message asking user to enter current password
-                String oldPassword = scanner.nextLine();
-                p.showEditAccountPrompts(2);// display message asking user to enter new password
-                String newPassword = scanner.nextLine();
-                ac.changePassword(retriever, oldPassword, newPassword);
-                break;
-            case "C": // return to account menu
-                break;
-        }
-        // We know that: either the requested action is completed or user requested to "quit".
     }
 
     /**
@@ -412,9 +463,9 @@ public class UserActionController {
      */
     private void templateViewOptions() {
         p.showTemplateViewMenu();
-        String[] viewOptions = {"A", "B", "C"};  // options user can choose from
-        String userInput = validInput(viewOptions);
+        String[] viewOptions = {"A", "B", "C"};
 
+        String userInput = validInput(viewOptions);
         switch (userInput) {
             case "A": // summary view (preview)
                 p.showPreviewAllTemplates();
@@ -428,6 +479,7 @@ public class UserActionController {
                 break;
         }
         // We know that: either the requested action is completed or user requested to "quit".
+        p.showReturnToPrevMenu();
     }
 
     /**
@@ -449,15 +501,18 @@ public class UserActionController {
                 case "A": // edit template name
                     p.showEditNewNameQuestion("template"); // display message asking user to enter a new name
                     String newTemplateName = scanner.nextLine();  // new template name user wants to assign
+                    p.interfaceScreen("Please wait while we are updating your template..."); // TODO
                     tc.editTemplateName(templateID, newTemplateName);
                     break;
                 case "B": // edit template prompts
                     // at the end of each edit, allows user to consecutively edit prompts without returning to the previous
                     // menu.
+                    String userDecision;
                     do {
                         editPrompts(templateID);
                         p.showIfContinueEditQuestion();
-                    } while (validInput(USER_DECISION).equals("yes"));
+                        userDecision = validInput(USER_DECISION);
+                    } while (userDecision.equals("yes"));
                     break;
                 case "C": // delete template
                     p.showConfirmDeleteQuestion("template"); // confirm if user wants to delete template
@@ -466,11 +521,15 @@ public class UserActionController {
                         // TODO: (phase 2) implement delete template
                         p.showFeatureUnavailableScreen();
                         // TODO: (phase 2) make sure to update templateDeleted to true once the template is deleted
-                        break;
                     }
+                    break;
+                case "D": // Exit to previous menu
+                    break;
             }
-            // We know that: either the requested action is completed or user requested to "quit".
         } while (!userInput.equals("D") && !templateDeleted);  // TODO: fix this magic letter issue later
+        // We know that: either the requested action is completed or user requested to "quit".
+        // Return to the previous menu (i.e., templateOptions)
+        p.showReturnToPrevMenu();
     }
 
     /**
@@ -493,6 +552,7 @@ public class UserActionController {
                     int promptID = scanner.nextInt();
                     p.showEditNewNameQuestion("prompt"); // display message asking user to enter desired new name
                     String newPromptName = scanner.nextLine();
+                    p.interfaceScreen("Please wait while we are updating your template...");  // TODO
                     tc.renameTemplatePrompt(templateID, promptID, newPromptName);
                     p.showIfContinueEditQuestion(); // ask user if they'd like to make another edit
                 } while (validInput(userOptions).equals("yes"));
@@ -513,6 +573,7 @@ public class UserActionController {
                 break;
         }
         // We know that: either the requested action is completed or user requested to "quit".
+        p.showReturnToPrevMenu();
     }
 
     /**
@@ -535,75 +596,6 @@ public class UserActionController {
             case "C": // exit to planner menu
                 //TODO: implement this
                 break;
-        }
-        // We know that: either the requested action is completed or user requested to "quit".
-    }
-
-//    /**
-//     * Planner options helper method. Allows different options for editing this planner.
-//     * @param plannerID is the unique id of the planner to be edited.
-//     */
-//    private void aPlannerEditOptions(String plannerID) {
-//        // TODO: Presenter - similarly to aTemplateEditOptions first 3 lines
-//        // p.showObjIntroMessage("planner", plannerID); //TODO: H&R change plannerID to int then uncomment this method
-//        p.showDetailViewPlanner(plannerID); // show what the planner currently looks like
-//        //TODO: H&R to implement getType() method in Planner - returns if its "daily" or "project" planner
-//        System.out.println("Please enter from the following: daily, project, delete, q"); // TODO: delete
-//        String[] editOptions = {"daily", "project", "delete", QUIT};  // options user can choose from
-//        String userInput = validInput(editOptions);
-//
-//        switch (userInput) {
-//            case "daily": // edit template name
-//                // TODO: Finish implementing
-//                pc.edit(plannerID, "10:00", "good day");
-//                // TODO: Presenter message
-//                System.out.println("Successfully edited"); // TODO: delete
-//                break;
-//            case "project": // edit template prompts
-//                // TODO: Finish implementing
-//                pc.edit(plannerID, 2, "good project");
-//                // TODO: Presenter message
-//                System.out.println("Successfully edited"); // TODO: delete
-//                break;
-//            case "delete": // delete planner
-//                // TODO: confirm if user wants to delete this planner
-//                // TODO: visualize the planner
-//                if (validInput(USER_DECISION).equals("yes")) {
-//                    if (pc.deletePlanner(plannerID)) {
-//                        // TODO: presenter
-//                        System.out.println("Successfully delete."); // TODO: delete
-//                    }
-//                    else {
-//                        // TODO: presenter
-//                        System.out.println("There is no such planner."); // TODO: delete
-//                    }
-//                }
-//                break;
-//        }
-//        // We know that: either the requested action is completed or user requested to "quit".
-//    }
-
-    /**
-     * Planner options helper method. Allows different options for planner creation.
-     */
-    private void plannerCreateOptions() {
-        p.showPlannerCreateMenu(); // display planner creation options: daily, project, exit to planner menu
-        String[] createOptions = {"A", "B", "C"};  // options user can choose from
-        String userInput = validInput(createOptions);
-
-        switch (userInput) {
-            case "A": // daily
-                // TODO: to be separated into presenter and USA
-                System.out.println("Successfully created Daily Planner, " +
-                        "these are the information: \n" + pc.createNewDailyPlanner());
-                break;
-            case "B": // project
-                // TODO: to be separated into presenter and USA
-                System.out.println("Successfully created Project Planner, " +
-                        "these are the information: \n" + pc.createNewProjectPlanner());
-                break;
-            case "C": // exit to planner menu
-                break; //TODO: implement this
         }
         // We know that: either the requested action is completed or user requested to "quit".
     }

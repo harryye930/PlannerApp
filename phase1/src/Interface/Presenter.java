@@ -3,6 +3,8 @@ package Interface;
 import Controller.TemplateController;
 import UseCase.PlannerManager;
 
+import java.util.concurrent.TimeUnit;
+
 public class Presenter {
 
     private TemplateController tc;
@@ -30,6 +32,19 @@ public class Presenter {
     }
 
     /**
+     * Prints out interface screen with a message.
+     * @param message is the message being printed on the interface screen.
+     */
+    public void interfaceScreen(String message) {
+        System.out.println(message);
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Prints out log in options.
      */
     public void showLoginMenu(){
@@ -39,7 +54,7 @@ public class Presenter {
                 "A. Create a new account\n" +
                 "B. Log in (have an existing account)\n" +
                 "C. Continue as guest (note that any changes made won't be saved)\n" +
-                "\nTo exit the program, enter \"q\".\n" +
+                "\nTo close the program, enter \"q\".\n" +
                 "=========================================================================";
         System.out.println(loginMenu);
     }
@@ -54,8 +69,7 @@ public class Presenter {
                 "A. Planners options\n" +
                 "B. Templates options\n" +
                 "C. Account options\n" +
-                "D. Log out\n" +
-                "\nTo exit the program, enter \"q\".\n" +
+                "D. Log out and exit\n" +
                 "=========================================================================";
         System.out.println(mainMenu);
     }
@@ -89,7 +103,14 @@ public class Presenter {
      */
     public void showReturnToMainScreen(){
         String returnToMainScreen = "Returning to main menu...";
-        System.out.println(returnToMainScreen);
+        interfaceScreen(returnToMainScreen);
+    }
+
+    /**
+     * Prints out message showing that the system is returning back to the previous menu.
+     */
+    public void showReturnToPrevMenu(){
+        interfaceScreen("Returning to previous menu...");
     }
 
     /**
