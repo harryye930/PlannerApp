@@ -1,6 +1,5 @@
 package Gateway;
 
-import Entity.Account;
 import Entity.Template;
 import UseCase.TemplateManager;
 
@@ -8,8 +7,8 @@ import java.util.HashMap;
 
 public class TemplateGateway extends Reader {
 
-    private String filePath = "phase1/src/TemplateData/idToTemplate.ser";
-    private HashMap<String, Template> idToTemplate = new HashMap<String, Template>();
+    private String filePath = "idToTemplate.ser";
+    private HashMap<Integer, Template> idToTemplate = new HashMap<Integer, Template>();
 
     private final TemplateManager tm;
 
@@ -37,7 +36,7 @@ public class TemplateGateway extends Reader {
     //Private methods
     private boolean readMaps() {
         try {
-            this.idToTemplate = (HashMap<String, Template>) super.readSer(this.filePath);
+            this.idToTemplate = (HashMap<Integer, Template>) super.readSer(this.filePath);
 
             for (Template temp: this.idToTemplate.values()) {
                 tm.addTemplate(temp);
@@ -51,7 +50,7 @@ public class TemplateGateway extends Reader {
 
     private boolean writeMaps() {
         for (Template temp: tm.getTemplates().values()) {
-            this.idToTemplate.put(temp.getId() + "", temp);
+            this.idToTemplate.put(temp.getId(), temp);
         }
         return super.writeSer(this.filePath, this.idToTemplate);
     }

@@ -1,6 +1,8 @@
 package Controller;
 
 
+import Entity.Template;
+import Gateway.TemplateGateway;
 import UseCase.TemplateManager;
 
 import java.util.ArrayList;
@@ -10,9 +12,11 @@ import java.util.ArrayList;
  */
 public class TemplateController {
     private TemplateManager tm;
+    private TemplateGateway tg;
 
     public TemplateController() {
         tm = new TemplateManager();
+        tg = new TemplateGateway(tm);
     }
 
     /**
@@ -105,6 +109,30 @@ public class TemplateController {
      */
     public void removeTemplatePrompt(int ID, int promptNumber){
         tm.removeTemplatePrompt(ID, promptNumber);
+    }
+
+    /**
+     * Add Template t into TemplateManager.
+     * @param t Template to be added to TemplateManager.
+     */
+    public void addTemplate(Template t){
+        tm.addTemplate(t);
+    }
+
+    /**
+     * Saves all templates stored in TemplateManager.
+     * @return A boolean value representing whether the saving process is successful.
+     */
+    public boolean save() {
+        return this.tg.save();
+    }
+
+    /**
+     * Loads all templates into TemplateManager.
+     * @return A boolean value representing whether the loading process is successful.
+     */
+    public boolean load() {
+        return this.tg.load();
     }
 
 }
