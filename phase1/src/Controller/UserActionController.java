@@ -27,9 +27,9 @@ public class UserActionController {
 
     public UserActionController() {
         ac = new AccessController();
-        // ac.load();
+        // TODO: ac.load();
         tc = new TemplateController();
-        // TODO: tc.load();
+        tc.load();
         // pc = new PlannerController();
         // TODO: pc.load();
 
@@ -121,8 +121,9 @@ public class UserActionController {
      */
     private void closingProgram() {
         p.showSavingInfoScreen();
-        // ac.save();
-        // TODO: tc.save() and pc.save()
+        // TODO: ac.save();
+        tc.save();
+        // TODO: pc.save()
         p.showSavingSuccessfulScreen();
     }
 
@@ -170,12 +171,12 @@ public class UserActionController {
         do {
             p.showCreateNewAccountScreen(2); // ask user for password
             password = scanner.nextLine();
-            // TODO: Presenter asking to confirm password
+            p.showConfirmPasswordScreen(); // display message asking user to confirm password
             String confirmPassword = scanner.nextLine();
             if (password.equals(confirmPassword)) {
                 passwordConfirmed = true;
             } else {
-                // TODO: Presenter informing that the password doesn't match
+                p.showPasswordUnmatchedScreen(); // display message showing that the password doesn't match
             }
         } while (!passwordConfirmed); // continue if the password is not confirmed
         ac.createAccount(email, username, password);
@@ -189,7 +190,7 @@ public class UserActionController {
     private void logIn() {
         String username;
         String password;
-        boolean loginSuccess = false;  // indicates whether the log-in was successful or not.
+        boolean loginSuccess = false;  // indicates whether the log-in was successful or not
         do {
             p.showLoginScreen(0); // ask user for username or email
             username = scanner.nextLine();
@@ -199,8 +200,7 @@ public class UserActionController {
                 currentRetriever = username;
                 loginSuccess = true;
             } else {
-                // TODO: Presenter - Invalid login credentials entered.
-                System.out.println("Invalid username or password entered."); // TODO: delete
+                p.showLoginFailedScreen(); // display message showing invalid login credentials entered
             }
         } while (!loginSuccess);
         // We know that the user logged in to their account successfully.
@@ -214,9 +214,8 @@ public class UserActionController {
         String userInput;
         do {
             // TODO: for people who worked on planner!!! - can be done on Sunday
-            // TODO: Presenter - planner menu (e.g., view, edit, create, quit)
-            System.out.println("Select from: view, edit, create, m"); // TODO: delete
-            String[] plannerOptions = {"view", "edit", "create", MAIN_MENU};  // options user can choose from
+            p.showPlannerMenu();// display planner menu (e.g., view, edit, create, quit)
+            String[] plannerOptions = {"A", "edit", "create", MAIN_MENU};  // options user can choose from
             userInput = validInput(plannerOptions);
 
             switch (userInput) {
@@ -259,7 +258,7 @@ public class UserActionController {
                     // TODO: checks admin status
                     // First, a user must select a template they would like to edit.
                     tc.detailViewAllTemplates(); // present all existing templates and their ids
-                    p.showTemplateIDForEditQuestion(); // ask for ID of template to edit
+                    p.showIDForEditQuestion("template"); // ask for ID of template to edit
                     int templateID = scanner.nextInt();  // Unique ID of the template they wish to edit
                     // Then, a user can proceed with selecting editing actions they can perform on the selected template.
                     aTemplateEditOptions(templateID);
@@ -327,11 +326,11 @@ public class UserActionController {
 
         switch (userInput) {
             case "A": // summary view (preview)
-                tc.previewAllTemplates();
+                System.out.println(tc.previewAllTemplates());
                 System.out.println("preview template executed"); // TODO: delete
                 break;
             case "B": // detailed view
-                tc.detailViewAllTemplates();
+                System.out.println(tc.detailViewAllTemplates());
                 System.out.println("detailed template view executed"); // TODO: delete
                 break;
             case "C": // exit to template menu
@@ -429,7 +428,7 @@ public class UserActionController {
      * Planner options helper method. Allows different options for template viewing.
      */
     private void plannerViewOptions() {
-        // TODO: presenter - planner view options ("personal", "public")
+        // TODO: planner controller view options ("personal", "public")
         System.out.println("Please enter from the following: my planners, public planners, q");
         String[] viewOptions = {"my planners", "public planners", QUIT};  // options user can choose from
         String userInput = validInput(viewOptions);
