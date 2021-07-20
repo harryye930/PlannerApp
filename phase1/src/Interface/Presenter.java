@@ -7,12 +7,12 @@ import java.util.concurrent.TimeUnit;
 
 public class Presenter {
 
-    private TemplateController tc;
-    private PlannerManager pm;
+    private TemplateController templateController;
+    private PlannerManager plannerManager;
 
-    public Presenter(TemplateController tc, PlannerManager pm){
-        this.tc = tc;
-        this.pm = pm;
+    public Presenter(TemplateController templateController, PlannerManager plannerManager){
+        this.templateController = templateController;
+        this.plannerManager = plannerManager;
     }
 
     /**
@@ -216,14 +216,14 @@ public class Presenter {
      * Prints out detail view of all existing templates.
      */
     public void showDetailViewAllTemplates(){
-        System.out.println(tc.detailViewAllTemplates());
+        System.out.println(templateController.detailViewAllTemplates());
     }
 
     /**
      * Prints out preview of all existing templates.
      */
     public void showPreviewAllTemplates(){
-        System.out.println(tc.previewAllTemplates());
+        System.out.println(templateController.previewAllTemplates());
     }
 
     /**
@@ -231,7 +231,7 @@ public class Presenter {
      * @param templateID ID of template to get detail view for.
      */
     public void showDetailViewTemplate(int templateID){
-        System.out.println(tc.detailViewTemplate(templateID));
+        System.out.println(templateController.detailViewTemplate(templateID));
     }
 
     /**
@@ -446,9 +446,7 @@ public class Presenter {
      * Prints out details of all existing personal planners and planners of others that have been made public.
      */
     public void showAllPlanners(){
-        // System.out.println(tc.detailViewAllTemplates());
-        // TODO: H&R to implement method in PlannerManager / PlannerController:
-        //  print out all planners stored in PlannerManager by type (personal / public, daily / project)
+        System.out.println(plannerManager.showAllPlanners());
     }
 
     /**
@@ -472,7 +470,7 @@ public class Presenter {
      * @param plannerID ID of planner to get detail view for.
      */
     public void showDetailViewPlanner(String plannerID){
-        System.out.println(pm.toString(plannerID));
+        System.out.println(plannerManager.toString(plannerID));
     } //TODO: H&R to change plannerID to int then change this method
 
     /**

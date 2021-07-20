@@ -13,26 +13,7 @@ public class PlannerManager {
         this.idToPlanner = new HashMap<>();
     }
 
-//    /** Create new DailyPlanner -- default start at 09:00, end at 17:00, interval 60 mins
-//     *
-//     * @param plannerName: name of the planner
-//     * @return true iff a new DailyPlanner is created
-//     */
-//    public String NewDailyPlanner(String plannerName){
-////        this.planner = new DailyPlanner("09:00", "17:00", 60);
-////        return true;
-//        DailyPlanner nd = new DailyPlanner(plannerName, "09:00", "17:00", 60);
-//        this.idToPlanner.put(nd.getID(), nd);
-//        return nd.getID();
-//
-//    }
-//
-//    public String NewDailyPlanner(){
-//        DailyPlanner nd = new DailyPlanner();
-//        nd.setPlannerInfo("Unititled", "09:00", "17:00", 60);
-//        this.idToPlanner.put(nd.getID(), nd);
-//        return nd.getID();
-//    }
+
 
     /** Create new DailyPlanner -- default interval 60 mins
      *
@@ -42,27 +23,12 @@ public class PlannerManager {
      * @return true iff a new DailyPlanner is created
      */
     public String NewDailyPlanner(String plannerName, String startTime, String endTime){
-//        this.planner = new DailyPlanner(startTime, endTime, 60);
-//        return true;
-        DailyPlanner nd = new DailyPlanner(plannerName, startTime, endTime, 60);
-        this.idToPlanner.put(nd.getID(), nd);
-        return nd.getID();
+
+        DailyPlanner dailyPlanner = new DailyPlanner(plannerName, startTime, endTime, 60);
+        this.idToPlanner.put(dailyPlanner.getID(), dailyPlanner);
+        return dailyPlanner.getID();
     }
 
-//    /** Create new DailyPlanner
-//     *
-//     * @param startTime start time of planner
-//     * @param endTime end time of planner
-//     * @param Interval interval
-//     * @return true
-//     */
-//    public String NewDailyPlanner(String plannerName, String startTime, String endTime, int Interval){
-////        this.planner = new DailyPlanner(startTime, endTime, Interval);
-////        return true;
-//        DailyPlanner nd = new DailyPlanner(plannerName, startTime, endTime, Interval=60);
-//        this.idToPlanner.put(nd.getID(), nd);
-//        return nd.getID();
-//    }
 
     /** Create an empty Project Planner
      *
@@ -70,31 +36,12 @@ public class PlannerManager {
      * @return true iff a new ProjectPlanner is correctly created
      */
     public String NewProjectPlanner(String plannerName){
-//        this.planner = new ProjectPlanner();
-//        return true;
-        ProjectPlanner pp = new ProjectPlanner(plannerName);
-        this.idToPlanner.put(pp.getID(), pp);
-        return pp.getID();
+
+        ProjectPlanner projectPlanner = new ProjectPlanner(plannerName);
+        this.idToPlanner.put(projectPlanner.getID(), projectPlanner);
+        return projectPlanner.getID();
     }
 
-//    /** Create a Project Planner with Agendas
-//     *
-//     * @param plannerName name of planner
-//     * @param Agendas: agendas for this agenda
-//     * @return true iff a new ProjectPlanner is correctly created and agendas are added
-//     */
-//    public String  NewProjectPlanner(String plannerName, ArrayList<String> Agendas){
-////        this.planner = new ProjectPlanner();
-////        for (String Agenda: Agendas){
-////            this.planner.Add(Agenda);
-////        }
-////        return true;
-//        ProjectPlanner pp = new ProjectPlanner(plannerName);
-//        for (String Agenda: Agendas){
-//            pp.Add(Agenda);
-//        }
-//        return pp.getID();
-//    }
 
 
     /** Create a string representation of planner tasks
@@ -143,13 +90,7 @@ public class PlannerManager {
      * @return true iff is correctly edited
      */
     public boolean Edit(String id, String time, String newAgenda){
-//        if (this.planner.getClass() == DailyPlanner.class){
-//            ((DailyPlanner)this.planner).Edit(time, newAgenda);
-//            return true;
-//        }
-//        else{
-//            return false;
-//        }
+
         if (this.findPlanner(id).getClass() == DailyPlanner.class){
             ((DailyPlanner) this.findPlanner(id)).edit(time, newAgenda);
             return true;
@@ -186,6 +127,17 @@ public class PlannerManager {
      */
     public ArrayList<Planner> getAllPlanner() {
         return new ArrayList<>(this.idToPlanner.values());
+    }
+
+    public String showAllPlanners (){
+        ArrayList<Planner> allPlanners = getAllPlanner();
+        StringBuilder allPlannersStringBuilder= new StringBuilder();
+        for (Planner planner : allPlanners){
+            allPlannersStringBuilder.append(toString(planner.getID()));
+            allPlannersStringBuilder.append("\n");
+        }
+        return allPlannersStringBuilder.toString();
+
     }
 
     public Boolean DeletePlanner(String id) {

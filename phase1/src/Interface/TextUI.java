@@ -13,6 +13,7 @@ public class TextUI {
 
     private TemplateController tc = new TemplateController();
     private PlannerController pc = new PlannerController();
+
     // three boolean indicate whether user have successfully logged in/created a new account/login as guest
     private boolean loginStatus = false;
     private boolean asGuest = false;

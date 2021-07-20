@@ -5,18 +5,16 @@ import Entity.Template;
 import Gateway.TemplateGateway;
 import UseCase.TemplateManager;
 
-import java.util.ArrayList;
-
 /**
  * Controller for Templates.
  */
 public class TemplateController {
-    private TemplateManager tm;
-    private TemplateGateway tg;
+    private TemplateManager templateManager;
+    private TemplateGateway templateGateway;
 
     public TemplateController() {
-        tm = new TemplateManager();
-        tg = new TemplateGateway(tm);
+        templateManager = new TemplateManager();
+        templateGateway = new TemplateGateway(templateManager);
     }
 
     /**
@@ -26,7 +24,7 @@ public class TemplateController {
      * @return String that contains preview of all Template objects stored in the system.
      */
     public String previewAllTemplates(){
-        return tm.viewTemplateManager("Summary");
+        return templateManager.viewTemplateManager("Summary");
     }
 
     /**
@@ -35,7 +33,7 @@ public class TemplateController {
      * @return String that contains detailed representation of all Template objects stored in the system.
      */
     public String detailViewAllTemplates(){
-        return tm.viewTemplateManager("Detail");
+        return templateManager.viewTemplateManager("Detail");
     }
 
     //TODO: Are the methods below redundant? We need user input to better decide which methods to call
@@ -47,7 +45,7 @@ public class TemplateController {
      * @return String preview of Template corresponding to ID that includes basic information.
      */
     public String previewTemplate(int ID){
-        return tm.previewTemplate(ID);
+        return templateManager.previewTemplate(ID);
     }
 
     /**
@@ -58,7 +56,7 @@ public class TemplateController {
      * @return String representation of the Template object corresponding to the ID.
      */
     public String detailViewTemplate(int ID){
-        return tm.detailViewTemplate(ID);
+        return templateManager.detailViewTemplate(ID);
     }
 
     /**
@@ -67,7 +65,7 @@ public class TemplateController {
      * @param newName New value to set the name of the Template to.
      */
     public void editTemplateName(int ID, String newName){
-        tm.editTemplateName(ID, newName);
+        templateManager.editTemplateName(ID, newName);
     }
 
     /**
@@ -77,7 +75,7 @@ public class TemplateController {
      * @param newName The new name to give to the prompt.
      */
     public void renameTemplatePrompt(int ID, int promptNumber, String newName){
-        tm.renameTemplatePrompt(ID, promptNumber, newName);
+        templateManager.renameTemplatePrompt(ID, promptNumber, newName);
     }
 
     /**
@@ -90,7 +88,7 @@ public class TemplateController {
      * @param promptName The name to give to the new prompt.
      */
     public void addTemplatePrompt(int ID, int promptNumber, String promptName){
-        tm.addTemplatePrompt(ID, promptNumber, promptName);
+        templateManager.addTemplatePrompt(ID, promptNumber, promptName);
     }
 
     /**
@@ -99,7 +97,7 @@ public class TemplateController {
      * @param promptName The name to give to the new prompt.
      */
     public void addTemplatePrompt(int ID, String promptName){
-        tm.addTemplatePrompt(ID, promptName);
+        templateManager.addTemplatePrompt(ID, promptName);
     }
 
     /**
@@ -108,7 +106,7 @@ public class TemplateController {
      * @param promptNumber The number that corresponds to the prompt to remove.
      */
     public void removeTemplatePrompt(int ID, int promptNumber){
-        tm.removeTemplatePrompt(ID, promptNumber);
+        templateManager.removeTemplatePrompt(ID, promptNumber);
     }
 
     /**
@@ -116,7 +114,7 @@ public class TemplateController {
      * @param t Template to be added to TemplateManager.
      */
     public void addTemplate(Template t){
-        tm.addTemplate(t);
+        templateManager.addTemplate(t);
     }
 
     /**
@@ -124,7 +122,7 @@ public class TemplateController {
      * @return A boolean value representing whether the saving process is successful.
      */
     public boolean save() {
-        return this.tg.save();
+        return this.templateGateway.save();
     }
 
     /**
@@ -132,7 +130,7 @@ public class TemplateController {
      * @return A boolean value representing whether the loading process is successful.
      */
     public boolean load() {
-        return this.tg.load();
+        return this.templateGateway.load();
     }
 
 }

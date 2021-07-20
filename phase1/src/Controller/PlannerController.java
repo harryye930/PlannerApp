@@ -12,13 +12,11 @@ import java.util.ArrayList;
  */
 public class PlannerController {
     private PlannerManager plannerManager;
-//    private String dailyPlanner;
-//    private String projectPlanner;
+
 
     public PlannerController(){
         this.plannerManager = new PlannerManager();
-//        this.dailyPlanner = this.plannerManager.NewDailyPlanner("daily planner", "9:00", "18:00");
-//        this.projectPlanner = this.plannerManager.NewProjectPlanner("project planner");
+
 
     }
 
@@ -84,5 +82,9 @@ public class PlannerController {
 
     public boolean deletePlanner(String id){
         return this.plannerManager.DeletePlanner(id);
+    }
+
+    public String showAllPlanners (){
+        return plannerManager.showAllPlanners();
     }
 }
