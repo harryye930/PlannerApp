@@ -149,5 +149,28 @@ public class PlannerManager {
             return false;
         }
     }
+    public void setPlannerAuthor(String plannerID, String author){
+        findPlanner(plannerID).setAuthor(author);
+    }
+
+    public ArrayList<String> getPlannersByAuthor(String author){
+        ArrayList<String> plannersByAuthor = new ArrayList<String>();
+        for (Planner planner : this.idToPlanner.values()) {
+            if (planner.getAuthor().equals(author)){
+                plannersByAuthor.add(planner.getID());
+            }
+        }
+        return plannersByAuthor;
+    }
+
+    public ArrayList<String> getPublicPlanners(){
+        ArrayList<String> publicPlanners = new ArrayList<String>();
+        for (Planner planner : this.idToPlanner.values()) {
+            if (planner.getPrivacyStatus().equals("public")){
+                publicPlanners.add(planner.getID());
+            }
+        }
+        return publicPlanners;
+    }
 
 }

@@ -5,25 +5,28 @@ import java.util.UUID;
 
 /** the planner entity
  * @author Runlong, Zifan
- * @version 1.0
  */
 
 public abstract class Planner implements Serializable {
     protected String plannerName;
     protected String ID;
     protected String privacyStatus;
+    protected String author;
+
 
 
     public Planner(){
         this.plannerName = "New Planner";
         this.ID = UUID.randomUUID().toString();
         this.privacyStatus = "private";
+        this.author = "TODO";
 
     }
     public Planner(String plannerName){
         this.plannerName = plannerName;
         this.ID = UUID.randomUUID().toString();
         this.privacyStatus = "private";
+        this.author = "TODO";
 
     }
 
@@ -41,7 +44,15 @@ public abstract class Planner implements Serializable {
      /** @return a String representing of the planner status.
      */
     public String getPrivacyStatus() {
-        return privacyStatus;
+        return this.privacyStatus;
+    }
+
+    public String getAuthor() {
+        return this.author;
+    }
+
+    public void setAuthor(String author){
+        this.author = author;
     }
 
     /** Add agenda to current planner

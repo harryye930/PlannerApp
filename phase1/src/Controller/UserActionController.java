@@ -3,6 +3,7 @@ package Controller;
 import Interface.Presenter;
 import UseCase.PlannerManager;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -13,11 +14,11 @@ import java.util.Scanner;
  */
 public class UserActionController {
 
-    AccessController ac;
-    TemplateController tc;
-    PlannerController pc;
-    PlannerManager pm;
-    Presenter p;
+    AccessController accessController;
+    TemplateController templateController;
+    PlannerController plannerController;
+    PlannerManager plannerManager;
+    Presenter presenter;
 
     Scanner scanner;
 
@@ -27,15 +28,15 @@ public class UserActionController {
     private String currentRetriever;
 
     public UserActionController() {
-        ac = new AccessController();
+        accessController = new AccessController();
         // ac.load();
-        tc = new TemplateController();
-        tc.load();
+        templateController = new TemplateController();
+        templateController.load();
         // pc = new PlannerController();
-        pm = new PlannerManager();
+        plannerManager = new PlannerManager();
         // TODO: pc.load();
 
-        p = new Presenter(tc, pm);
+        presenter = new Presenter(templateController, plannerManager);
         scanner = new Scanner(System.in);
     }
 
@@ -52,14 +53,14 @@ public class UserActionController {
      * creating an instance of this UserActionController in the main.
      */
     public void runProgram() {
-        p.showWelcomeScreen();
+        presenter.showWelcomeScreen();
         while (startProgram()) { // This user can proceed with using the program.
             while (useProgram()) {
-                p.showReturnToMainScreen();
+                presenter.showReturnToMainScreen();
             }
-            p.interfaceScreen("Returning to the start page...");
+            presenter.interfaceScreen("Returning to the start page...");
         }
-        p.showClosingScreen();
+        presenter.showClosingScreen();
     }
 
     /**
@@ -67,7 +68,7 @@ public class UserActionController {
      * @return boolean indicating whether a program should run or not.
      */
     private boolean startProgram() {
-        p.showLoginMenu();
+        presenter.showLoginMenu();
         String[] userOptions = {"A", "B", "C", QUIT};  // Options this user can choose from.
         String userInput = validInput(userOptions);
 
@@ -98,28 +99,28 @@ public class UserActionController {
         String userInput; // Stores selection input from the user
         String[] mainMenuOptions = {"A", "B", "C", "D"}; // Options this user can choose from
 
-        p.showMainMenu();
+        presenter.showMainMenu();
         userInput = validInput(mainMenuOptions);
         switch (userInput) {
             case "A":  // Selected actions on planner
                 while (plannerOptions()) {
-                    p.interfaceScreen("Returning to planner options menu...");
+                    presenter.interfaceScreen("Returning to planner options menu...");
                 }
                 break;
             case "B":  // Selected actions on template
                 while (templateOptions()) {
-                    p.interfaceScreen("Returning to template options menu...");
+                    presenter.interfaceScreen("Returning to template options menu...");
                 };
                 break;
             case "C":  // Selected actions on account
                 while (accountOptions(currentRetriever)) {
-                    p.interfaceScreen("Returning to account options menu...");
+                    presenter.interfaceScreen("Returning to account options menu...");
                 }
                 break;
             case "D":  // Log out and exit
                 if (!currentRetriever.equals("guest")) {
                 saveProgram();  // Saves all the account, planner, and template information
-                ac.logOut(currentRetriever);  // logs out of the current user
+                accessController.logOut(currentRetriever);  // logs out of the current user
                 }
                 return false;
         }
@@ -131,11 +132,11 @@ public class UserActionController {
      * Precondition: startProgram()
      */
     private void saveProgram() {
-        p.showSavingInfoScreen();
+        presenter.showSavingInfoScreen();
         // TODO: ac.save();
         // tc.save();
         // TODO: pc.save()
-        p.showSavingSuccessfulScreen();
+        presenter.showSavingSuccessfulScreen();
     }
 
     /**
@@ -147,7 +148,7 @@ public class UserActionController {
         String input = scanner.nextLine();
         List<String> options = Arrays.asList(valid_options);
         while (!options.contains(input.trim())) {
-            p.showInvalidInputScreen();
+            presenter.showInvalidInputScreen();
             input = scanner.nextLine();
         }
         return input;
@@ -175,29 +176,29 @@ public class UserActionController {
      * with creating a new account for this user.
      */
     private void createNewAccount() {
-        p.showCreateNewAccountScreen(0); // ask user for email
+        presenter.showCreateNewAccountScreen(0); // ask user for email
         String email = scanner.nextLine();
-        p.showCreateNewAccountScreen(1); // ask user for username
+        presenter.showCreateNewAccountScreen(1); // ask user for username
         String username = scanner.nextLine();
         // Allows user to create and confirm their password. The user must confirm their password before proceeding
         // with their account creation.
         boolean passwordConfirmed = false;
         String password;
         do {
-            p.showCreateNewAccountScreen(2); // ask user for password
+            presenter.showCreateNewAccountScreen(2); // ask user for password
             password = scanner.nextLine();
-            p.showConfirmPasswordScreen(); // display message asking user to confirm password
+            presenter.showConfirmPasswordScreen(); // display message asking user to confirm password
             String confirmPassword = scanner.nextLine();
             if (password.equals(confirmPassword)) {
                 passwordConfirmed = true;
             } else {
-                p.showPasswordUnmatchedScreen(); // display message showing that the password doesn't match
+                presenter.showPasswordUnmatchedScreen(); // display message showing that the password doesn't match
             }
         } while (!passwordConfirmed); // continue if the password is not confirmed
-        ac.createAccount(email, username, password);  // TODO: can this USERID being returned be used as currentRetriever
+        accessController.createAccount(email, username, password);  // TODO: can this USERID being returned be used as currentRetriever
         currentRetriever = username;
         // ac.save(); // TODO: I think account information should be saved after account creation
-        p.showAccountCreatedScreen(username); // display message showing that new account with username has been created
+        presenter.showAccountCreatedScreen(username); // display message showing that new account with username has been created
     }
 
     /**
@@ -208,19 +209,19 @@ public class UserActionController {
         String password;
         boolean loginSuccess = false;  // indicates whether the log-in was successful or not
         do {
-            p.showLoginScreen(0); // ask user for username or email
+            presenter.showLoginScreen(0); // ask user for username or email
             username = scanner.nextLine();
-            p.showLoginScreen(1); // ask user for password
+            presenter.showLoginScreen(1); // ask user for password
             password = scanner.nextLine();
-            if (ac.logIn(username, password)) {
+            if (accessController.logIn(username, password)) {
                 currentRetriever = username;
                 loginSuccess = true;
             } else {
-                p.showLoginFailedScreen(); // display message showing invalid login credentials entered
+                presenter.showLoginFailedScreen(); // display message showing invalid login credentials entered
             }
         } while (!loginSuccess);
         // We know that the user logged in to their account successfully.
-        p.showLoginSuccessfulScreen(); // login successful message
+        presenter.showLoginSuccessfulScreen(); // login successful message
     }
 
     /**
@@ -231,12 +232,12 @@ public class UserActionController {
         String userInput;
         String[] accountOptions = {"A", "B", MAIN_MENU};
 
-        p.showAccountMenu(); // display account options for the user to choose from
+        presenter.showAccountMenu(); // display account options for the user to choose from
         userInput = validInput(accountOptions);
 
         switch (userInput) {
             case "A": // log out
-                ac.logOut(retriever);
+                accessController.logOut(retriever);
                 return false;
             case "B": // edit account info
                 accountSetting(retriever);
@@ -251,20 +252,20 @@ public class UserActionController {
         String userInput;
         String[] viewOptions = {"A", "B", "C"};
 
-        p.showEditAccountMenu(); // display options for editing account for user to choose from
+        presenter.showEditAccountMenu(); // display options for editing account for user to choose from
         userInput = validInput(viewOptions);
         switch (userInput) {
             case "A": // edit username
-                p.showEditAccountPrompts(0); // display message asking user to enter new user name
+                presenter.showEditAccountPrompts(0); // display message asking user to enter new user name
                 String newName = scanner.nextLine();
-                ac.changeUserName(retriever, newName);
+                accessController.changeUserName(retriever, newName);
                 break;
             case "B": // edit password
-                p.showEditAccountPrompts(1); // display message asking user to enter current password
+                presenter.showEditAccountPrompts(1); // display message asking user to enter current password
                 String oldPassword = scanner.nextLine();
-                p.showEditAccountPrompts(2);// display message asking user to enter new password
+                presenter.showEditAccountPrompts(2);// display message asking user to enter new password
                 String newPassword = scanner.nextLine();
-                ac.changePassword(retriever, oldPassword, newPassword);
+                accessController.changePassword(retriever, oldPassword, newPassword);
                 break;
             case "C": // return to account menu
                 break;
@@ -285,7 +286,7 @@ public class UserActionController {
         String userInput;
         String[] plannerOptions = {"A", "B", "C", MAIN_MENU};
 
-        p.showPlannerMenu(); // display planner menu (e.g., view, edit, create, quit)
+        presenter.showPlannerMenu(); // display planner menu (e.g., view, edit, create, quit)
         userInput = validInput(plannerOptions);
 
         switch (userInput) {
@@ -293,11 +294,11 @@ public class UserActionController {
                 plannerViewOptions();
                 break;
             case "B": // edit an existing planner
-                p.showAllPlanners();
+                presenter.showAllPlanners();
                 // TODO: H&R to implement this method in presenter
                 //  (present all existing personal planners and their ids)
                 while (plannerEditOptions()) {
-                    p.interfaceScreen("Returning to planner edit options...");
+                    presenter.interfaceScreen("Returning to planner edit options...");
                 }
             case "C": // create a new planner
                 plannerCreateOptions();
@@ -318,19 +319,19 @@ public class UserActionController {
         String userInput;
         String[] plannerEditOptions = {"A", "B", "C"};
 
-        p.showEditPlannerMenu(); // display planner edit menu
+        presenter.showEditPlannerMenu(); // display planner edit menu
         userInput = validInput(plannerEditOptions);
 
         switch(userInput){
             case "A": //edit personal planners
-                p.showAllPersonalPlanners(); // display all personal planners
-                p.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
+                presenter.showAllPersonalPlanners(); // display all personal planners // TODO need author
+                presenter.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
                 String plannerID = scanner.nextLine(); // gets ID of planner user wants to edit
                 personalPlannerEditOptions(plannerID);
                 break;
             case "B":  //edit other public planners
-                p.showAllPublicPlanners(); // display all public planners
-                p.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
+                presenter.showAllPublicPlanners(); // display all public planners
+                presenter.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
                 plannerID = scanner.nextLine(); // gets ID of planner user wants to edit
                 publicPlannerEditOptions(plannerID);
                 break;
@@ -345,8 +346,8 @@ public class UserActionController {
         String[] plannerEditOptions = {"A", "B", "C", "D"}; //options user can choose from
 
         // p.showObjIntroMessage("planner", plannerID); //TODO: H&R change plannerID to int then uncomment this method
-        p.showDetailViewPlanner(plannerID);
-        p.showEditPersonalPlannerMenu(); // display personal planner edit menu
+        presenter.showDetailViewPlanner(plannerID);
+        presenter.showEditPersonalPlannerMenu(); // display personal planner edit menu
         userInput = validInput(plannerEditOptions);
 
         switch (userInput) {
@@ -356,7 +357,7 @@ public class UserActionController {
             case "B": // change privacy setting
                 break; //TODO: implement this
             case "C": // delete planner
-                p.showFeatureUnavailableScreen(); // display message showing feature not yet available
+                presenter.showFeatureUnavailableScreen(); // display message showing feature not yet available
                 //TODO: (phase 2) implement delete planner --- I think we can save it for phase 2???
                 break;
             case "D": //return to edit planner menu
@@ -369,8 +370,8 @@ public class UserActionController {
         String[] plannerEditOptions = {"A", "B"};
 
         //p.showObjIntroMessage("planner", plannerID); // TODO: H&R change plannerID to int then uncomment this method
-        p.showDetailViewPlanner(plannerID);
-        p.showEditPublicPlannerMenu(); // display public planner edit menu
+        presenter.showDetailViewPlanner(plannerID);
+        presenter.showEditPublicPlannerMenu(); // display public planner edit menu
         userInput = validInput(plannerEditOptions);
 
         switch (userInput){
@@ -410,18 +411,28 @@ public class UserActionController {
         String userInput;
         String[] createOptions = {"A", "B", "C"};
 
-        p.showPlannerCreateMenu(); // display planner creation options: daily, project, exit to planner menu
+        presenter.showPlannerCreateMenu(); // display planner creation options: daily, project, exit to planner menu
         userInput = validInput(createOptions);
+        //TODO get user input on name of planner
+        String plannerName =  "TODO PlannerName";
         switch (userInput) {
             case "A": // daily
                 // TODO: to be separated into presenter and USA
-                System.out.println("Successfully created Daily Planner, " +
-                        "these are the information: \n" + pc.createNewDailyPlanner());
+                ArrayList<String> dailyPlannerInfo = plannerController.createNewDailyPlanner();
+                String dailyPlannerID = dailyPlannerInfo.get(0);
+                String dailyPlannerString = dailyPlannerInfo.get(1);
+                plannerController.setPlannerAuthor(dailyPlannerID, "TODO username");
+                System.out.println("these are the information: \n" + dailyPlannerString);
                 break;
             case "B": // project
                 // TODO: to be separated into presenter and USA
+                ArrayList<String> projectPlannerInfo = plannerController.createNewProjectPlanner();
+                String projectPlannerID = projectPlannerInfo.get(0);
+                String projectPlannerString = projectPlannerInfo.get(1);
+                plannerController.setPlannerAuthor(projectPlannerID, "TODO username");
                 System.out.println("Successfully created Project Planner, " +
-                        "these are the information: \n" + pc.createNewProjectPlanner());
+                        "these are the information: \n" + projectPlannerString);
+
                 break;
             case "C": // exit to planner menu
                 break; //TODO: implement this
@@ -436,7 +447,7 @@ public class UserActionController {
         String userInput;
         String[] viewOptions = {"A", "B", "C"};
 
-        p.showPlannerViewMenu(); // display planner view options: personal, public, exit to planner menu
+        presenter.showPlannerViewMenu(); // display planner view options: personal, public, exit to planner menu
         userInput = validInput(viewOptions);
         switch (userInput) {
             case "A": // personal planners
@@ -465,7 +476,7 @@ public class UserActionController {
         String userInput;
         String[] templateOptions = {"A", "B", "C", MAIN_MENU};
 
-        p.showTemplateMenu();
+        presenter.showTemplateMenu();
         userInput = validInput(templateOptions);
 
         switch (userInput) {
@@ -476,14 +487,14 @@ public class UserActionController {
                 if (isAdmin()) {
                     // First, a user must select a template they would like to edit.
                     // Then, a user can proceed with selecting editing actions they can perform on the selected template.
-                    p.showDetailViewAllTemplates();
-                    p.showIDForEditQuestion("template");
+                    presenter.showDetailViewAllTemplates();
+                    presenter.showIDForEditQuestion("template");
                     int templateID = scanner.nextInt();
                     scanner.nextLine(); // Note: required as nextInt() does not read the new line created by enter
                     // Note that a user will remain in editing a given template options until they explicitly wish to
                     // exit from that menu.
                     while (aTemplateEditOptions(templateID)) {
-                        p.interfaceScreen("Returning to template edit options...");
+                        presenter.interfaceScreen("Returning to template edit options...");
                     }
                 }
                 break;
@@ -492,7 +503,7 @@ public class UserActionController {
                     break;
                 }
                 // TODO: (phase 2) implement create template
-                p.showFeatureUnavailableScreen();
+                presenter.showFeatureUnavailableScreen();
                 break;
             case MAIN_MENU:
                 return false;
@@ -510,17 +521,17 @@ public class UserActionController {
      * TODO: return not necessary as we do not want to return to view options - fix later
      */
     private boolean templateViewOptions() {
-        p.showTemplateViewMenu();
+        presenter.showTemplateViewMenu();
         String[] viewOptions = {"A", "B", "C"};
 
         String userInput = validInput(viewOptions);
         switch (userInput) {
             case "A": // summary view (preview)
-                p.showPreviewAllTemplates();
+                presenter.showPreviewAllTemplates();
                 System.out.println("preview template executed"); // TODO: delete
                 break;
             case "B": // detailed view
-                p.showDetailViewAllTemplates();
+                presenter.showDetailViewAllTemplates();
                 System.out.println("detailed template view executed"); // TODO: delete
                 break;
             case "C": // exit to template menu
@@ -542,31 +553,31 @@ public class UserActionController {
         String userInput;
         String[] editOptions = {"A", "B", "C", "D"};
 
-        p.showObjIntroMessage("template", templateID); // intro message for showing what a template currently looks like
-        p.showDetailViewTemplate(templateID);
-        p.showEditTemplateMenu();// display edit options for user to choose from
+        presenter.showObjIntroMessage("template", templateID); // intro message for showing what a template currently looks like
+        presenter.showDetailViewTemplate(templateID);
+        presenter.showEditTemplateMenu();// display edit options for user to choose from
         userInput = validInput(editOptions);
 
         switch (userInput) {
             case "A": // edit template name
-                p.showEditNewNameQuestion("template"); // display message asking user to enter a new name
+                presenter.showEditNewNameQuestion("template"); // display message asking user to enter a new name
                 String newTemplateName = scanner.nextLine();  // new template name user wants to assign
-                p.interfaceScreen("Please wait while we are updating your template..."); // TODO
-                tc.editTemplateName(templateID, newTemplateName);
+                presenter.interfaceScreen("Please wait while we are updating your template..."); // TODO
+                templateController.editTemplateName(templateID, newTemplateName);
                 System.out.println("Update is completed: "); // TODO: added
-                System.out.println(tc.detailViewTemplate(templateID));;  // TODO: added
+                System.out.println(templateController.detailViewTemplate(templateID));;  // TODO: added
                 break;
             case "B": // edit template prompts
                 while (editPrompts(templateID)) {
-                    p.interfaceScreen("Returning to the edit prompts menu...");
+                    presenter.interfaceScreen("Returning to the edit prompts menu...");
                 }
                 break;
             case "C": // delete template
-                p.showConfirmDeleteQuestion("template"); // confirm if user wants to delete template
-                p.showDetailViewTemplate(templateID);// visualize the template
+                presenter.showConfirmDeleteQuestion("template"); // confirm if user wants to delete template
+                presenter.showDetailViewTemplate(templateID);// visualize the template
                 if (validInput(USER_DECISION).equals("yes")) {
                     // TODO: (phase 2) implement delete template
-                    p.showFeatureUnavailableScreen();
+                    presenter.showFeatureUnavailableScreen();
                 }
                 return false;
             case "D": // Exit to previous menu
@@ -587,7 +598,7 @@ public class UserActionController {
         String userInput;
         String[] editOptions = {"A", "B", "C", "D"};  // options user can choose from
 
-        p.showEditTemplatePromptsMenu(); //display options for the user to choose from
+        presenter.showEditTemplatePromptsMenu(); //display options for the user to choose from
         userInput = validInput(editOptions);
         switch (userInput) {
             case "A": // rename prompt
@@ -599,37 +610,37 @@ public class UserActionController {
                 String[] userOptions = {"yes", "no"};
 
                 while (userDecision.equals("yes")) {
-                    p.showTemplatePromptsIntroScreen(); // display intro message for showing current template prompts
-                    p.showDetailViewTemplate(templateID); // display detailed view of template including current prompts
-                    p.showIDForEditPromptQuestion("rename"); // display message asking user for prompt ID
+                    presenter.showTemplatePromptsIntroScreen(); // display intro message for showing current template prompts
+                    presenter.showDetailViewTemplate(templateID); // display detailed view of template including current prompts
+                    presenter.showIDForEditPromptQuestion("rename"); // display message asking user for prompt ID
                     int promptID = scanner.nextInt();
                     scanner.nextLine(); // Note: required as nextInt() does not read the new line created by enter
-                    p.showEditNewNameQuestion("prompt"); // display message asking user to enter desired new name
+                    presenter.showEditNewNameQuestion("prompt"); // display message asking user to enter desired new name
                     String newPromptName = scanner.nextLine();
 
-                    p.interfaceScreen("Please wait while we are updating your template...");  // TODO
-                    tc.renameTemplatePrompt(templateID, promptID, newPromptName);
+                    presenter.interfaceScreen("Please wait while we are updating your template...");  // TODO
+                    templateController.renameTemplatePrompt(templateID, promptID, newPromptName);
                     System.out.println("Update is completed: "); // TODO: added
-                    System.out.println(tc.detailViewTemplate(templateID));;  // TODO: added
+                    System.out.println(templateController.detailViewTemplate(templateID));;  // TODO: added
 
                     // Ask user if they wish to continue editing other prompts.
-                    p.showIfContinueEditQuestion();
+                    presenter.showIfContinueEditQuestion();
                     userDecision = validInput(userOptions);
                 }
                 break;
             case "B": // add prompt
-                p.showIDForEditPromptQuestion("add");
+                presenter.showIDForEditPromptQuestion("add");
                 // display message asking user for ID of prompt they want to add
                 int idForNewPrompt = scanner.nextInt();
-                p.showEditNewNameQuestion("prompt"); // display message asking user to enter name for the new prompt
+                presenter.showEditNewNameQuestion("prompt"); // display message asking user to enter name for the new prompt
                 String nameForNewPrompt = scanner.nextLine();
-                tc.addTemplatePrompt(templateID, idForNewPrompt, nameForNewPrompt);
+                templateController.addTemplatePrompt(templateID, idForNewPrompt, nameForNewPrompt);
                 break;
             case "C": // delete prompt
-                p.showIDForEditPromptQuestion("delete");
+                presenter.showIDForEditPromptQuestion("delete");
                 // display message asking user for ID of prompt they want to delete
                 int promptIDToDelete = scanner.nextInt();
-                tc.removeTemplatePrompt(templateID, promptIDToDelete);
+                templateController.removeTemplatePrompt(templateID, promptIDToDelete);
                 break;
             case "D":
                 return false;

@@ -1,8 +1,10 @@
 package Interface;
 
 import Controller.TemplateController;
+import Entity.Planner;
 import UseCase.PlannerManager;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class Presenter {
@@ -452,9 +454,15 @@ public class Presenter {
     /**
      * Prints out details of all existing personal planners.
      */
-    public void showAllPersonalPlanners(){
-        //TODO: H&R to implement method in PlannerManager / PlannerController:
-        // prints out all personal planners
+    //TODO need author
+    public void showAllPersonalPlanners(String author){
+        ArrayList<String> plannerIDs =  plannerManager.getPlannersByAuthor(author);
+        StringBuilder personalPlanners = new StringBuilder();
+        for (String plannerID: plannerIDs){
+            personalPlanners.append(plannerManager.findPlanner(plannerID).toString());
+            personalPlanners.append("\n");
+        }
+        System.out.println(personalPlanners);
     }
 
     /**
@@ -462,7 +470,7 @@ public class Presenter {
      */
     public void showAllPublicPlanners(){
         //TODO: H&R to implement method in PlannerManager / PlannerController:
-        // prints out all public planners
+        plannerManager.getPublicPlanners();
     }
 
     /**

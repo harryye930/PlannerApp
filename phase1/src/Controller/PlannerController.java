@@ -20,18 +20,26 @@ public class PlannerController {
 
     }
 
-    public String createNewDailyPlanner(){
-        String DailyPlannerID = plannerManager.NewDailyPlanner("daily planner", "09:00", "18:00");
-        return this.plannerManager.toString(DailyPlannerID);
+    public ArrayList<String> createNewDailyPlanner(){
+        String dailyPlannerID = plannerManager.NewDailyPlanner("daily planner", "09:00", "18:00");
+        ArrayList<String> dailyPlannerInfo = new ArrayList<String>();
+        dailyPlannerInfo.add(dailyPlannerID);
+        dailyPlannerInfo.add(this.plannerManager.toString(dailyPlannerID));
+        return dailyPlannerInfo;
     }
 
 
-    public String createNewProjectPlanner(){
+    public ArrayList<String> createNewProjectPlanner(){
         plannerManager.NewProjectPlanner("project planner");
-        String ProjectPlannerID = plannerManager.NewProjectPlanner("project planner");
-        return this.plannerManager.toString(ProjectPlannerID);
+        ArrayList<String> projectPlannerInfo = new ArrayList<String>();
+        String projectPlannerID = plannerManager.NewProjectPlanner("project planner");
+        projectPlannerInfo.add(projectPlannerID);
+        projectPlannerInfo.add(this.plannerManager.toString(projectPlannerID));
+        return projectPlannerInfo;
     }
-
+    public void setPlannerAuthor(String plannerID, String author){
+        plannerManager.setPlannerAuthor(plannerID, author);
+    }
 
     /** Pass on request to get a string representation of a planner
      *
@@ -86,5 +94,13 @@ public class PlannerController {
 
     public String showAllPlanners (){
         return plannerManager.showAllPlanners();
+    }
+
+    public ArrayList<String> getPlannerByAuthor(String author){
+        return plannerManager.getPlannersByAuthor(author);
+    }
+
+    public ArrayList<String> getPublicPlanners(){
+        return plannerManager.getPublicPlanners();
     }
 }
