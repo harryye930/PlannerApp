@@ -102,7 +102,9 @@ public class UserActionController {
         userInput = validInput(mainMenuOptions);
         switch (userInput) {
             case "A":  // Selected actions on planner
-                plannerOptions();
+                while (plannerOptions()) {
+                    p.interfaceScreen("Returning to planner options menu...");
+                }
                 break;
             case "B":  // Selected actions on template
                 while (templateOptions()) {
@@ -275,44 +277,45 @@ public class UserActionController {
     //=================================================================================================================
 
     /**
-     * Planner Options. The user will remain in this Planner Options menu unless they wish to return to the main menu.
+     * Planner Options.
+     * TODO: I am too tired to update javadoc rn, but basically it returns true when you want to remain in this
+     * TODO: menu and false when you want to return to the previous menu.
+     * TODO: just think of return as "DO YOU WANT TO STAY IN THIS MENU? YES/NO".
      */
-    private void plannerOptions() {
+    private boolean plannerOptions() {
         String userInput;
         String[] plannerOptions = {"A", "B", "C", MAIN_MENU};
 
-        do {
-            // TODO: for people who worked on planner!!! - can be done on Sunday
-            p.showPlannerMenu(); // display planner menu (e.g., view, edit, create, quit)
-            userInput = validInput(plannerOptions);
+        p.showPlannerMenu(); // display planner menu (e.g., view, edit, create, quit)
+        userInput = validInput(plannerOptions);
 
-            switch (userInput) {
-                case "A": // view planners
-                    plannerViewOptions();
-                    break;
-                case "B": // edit an existing planner
-                    p.showAllPlanners();
-                    // TODO: H&R to implement this method in presenter
-                    //  (present all existing personal planners and their ids)
-                    plannerEditOptions();
-//                    p.showIDForEditQuestion("planner"); // ask for ID of planner to edit
-//                    // update planner entity and change planner ID into int??????
-//                    String plannerID = scanner.nextLine();  // Unique ID of the template they wish to edit
-//                    // Then, a user can proceed with selecting editing actions they can perform on the selected planner.
-//                    aPlannerEditOptions(plannerID);
-//                    break;
-                case "C": // create a new planner
-                    plannerCreateOptions();
-                    break;
-            }
-            // We know that: either the requested action is completed or user requested to "quit".
-        } while (!userInput.equals(MAIN_MENU));
+        switch (userInput) {
+            case "A": // view planners
+                plannerViewOptions();
+                break;
+            case "B": // edit an existing planner
+                p.showAllPlanners();
+                // TODO: H&R to implement this method in presenter
+                //  (present all existing personal planners and their ids)
+                while (plannerEditOptions()) {
+                    p.interfaceScreen("Returning to planner edit options...");
+                }
+            case "C": // create a new planner
+                plannerCreateOptions();
+                break;
+            case "D": // exit
+                return false;
+        }
+        return true;
     }
 
     /**
      * Shows planner edit options: edit personal planners, edit other public planners, return to planner menu.
+     * TODO: I am too tired to update javadoc rn, but basically it returns true when you want to remain in this
+     * TODO: menu and false when you want to return to the previous menu.
+     * TODO: just think of return as "DO YOU WANT TO STAY IN THIS MENU? YES/NO".
      */
-    private void plannerEditOptions(){//TODO: add do while
+    private boolean plannerEditOptions() {
         String userInput;
         String[] plannerEditOptions = {"A", "B", "C"};
 
@@ -333,9 +336,9 @@ public class UserActionController {
                 publicPlannerEditOptions(plannerID);
                 break;
             case "C":
-                //TODO: implement this: return to planner menu
-                break;
+                return false;
         }
+        return true;
     }
 
     private void personalPlannerEditOptions(String plannerID){
@@ -431,10 +434,11 @@ public class UserActionController {
      * Planner options helper method. Allows different options for template viewing.
      */
     private void plannerViewOptions() {
-        p.showPlannerViewMenu(); // display planner view options: personal, public, exit to planner menu
-        String[] viewOptions = {"A", "B", "C"};  // options user can choose from
-        String userInput = validInput(viewOptions);
+        String userInput;
+        String[] viewOptions = {"A", "B", "C"};
 
+        p.showPlannerViewMenu(); // display planner view options: personal, public, exit to planner menu
+        userInput = validInput(viewOptions);
         switch (userInput) {
             case "A": // personal planners
                 // TODO: remains to be implemented
@@ -445,10 +449,8 @@ public class UserActionController {
                 System.out.println("view public planners executed"); // TODO: delete
                 break;
             case "C": // exit to planner menu
-                //TODO: implement this
-                break;
+                break;  // TODO: this is all this is required here for case C - don't worry!
         }
-        // We know that: either the requested action is completed or user requested to "quit".
     }
 
     //=================================================================================================================
