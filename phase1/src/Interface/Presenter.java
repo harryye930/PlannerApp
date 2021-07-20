@@ -284,7 +284,7 @@ public class Presenter {
      */
     public void showIfContinueEditQuestion(){
         String ifContinueEditQuestion = "Would you like to make another edit? Enter \"yes\" or \"no\".\n";
-        System.out.println();
+        System.out.println(ifContinueEditQuestion);
     }
 
     //TODO: add new things that can be deleted

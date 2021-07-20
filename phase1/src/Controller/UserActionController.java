@@ -28,7 +28,7 @@ public class UserActionController {
 
     public UserActionController() {
         ac = new AccessController();
-        // TODO: ac.load();
+        // ac.load();
         tc = new TemplateController();
         tc.load();
         // pc = new PlannerController();
@@ -53,8 +53,11 @@ public class UserActionController {
      */
     public void runProgram() {
         p.showWelcomeScreen();
-        if (startProgram()) { // This user can proceed with using the program.
-            useProgram();
+        while (startProgram()) { // This user can proceed with using the program.
+            while (useProgram()) {
+                p.showReturnToMainScreen();
+            }
+            p.interfaceScreen("Returning to the start page...");
         }
         p.showClosingScreen();
     }
@@ -89,41 +92,39 @@ public class UserActionController {
 
     /**
      * Presents the options and allows actions after the user successfully logged in, including as a guest.
-     * Precondition: initiatingProgram()
+     * TODO: update java doc.
      */
-    private void useProgram() {
+    private boolean useProgram() {
         String userInput; // Stores selection input from the user
         String[] mainMenuOptions = {"A", "B", "C", "D"}; // Options this user can choose from
-        // This program allows user to exit the program though logging out of their current account; otherwise, the
-        // program continues to display this <mainMenuOptions> after each task (i.e., option) is completed.
-        do {
-            p.showMainMenu();
-            userInput = validInput(mainMenuOptions);
-            switch (userInput) {
-                case "A":  // Selected actions on planner
-                    plannerOptions();
-                    break;
-                case "B":  // Selected actions on template
-                    templateOptions();
-                    break;
-                case "C":  // Selected actions on account
-                    accountOptions(currentRetriever);
-                    break;
-                case "D":  // Log out and exit
-                    if (!currentRetriever.equals("guest")) {
-                    saveProgram();  // Saves all the account, planner, and template information
-                    ac.logOut(currentRetriever);  // logs out of the current user
-                    }
-                    break;
-            }
-        } while (!userInput.equals("D"));
-        // We know that the user wants to exit the program (i.e., userInput.equals("D") == true)
-        p.interfaceScreen("Returning to the start page...");
+
+        p.showMainMenu();
+        userInput = validInput(mainMenuOptions);
+        switch (userInput) {
+            case "A":  // Selected actions on planner
+                plannerOptions();
+                break;
+            case "B":  // Selected actions on template
+                while (templateOptions()) {
+                    p.interfaceScreen("Returning to template options menu...");
+                };
+                break;
+            case "C":  // Selected actions on account
+                accountOptions(currentRetriever);
+                break;
+            case "D":  // Log out and exit
+                if (!currentRetriever.equals("guest")) {
+                saveProgram();  // Saves all the account, planner, and template information
+                ac.logOut(currentRetriever);  // logs out of the current user
+                }
+                return false;
+        }
+        return true;
     }
 
     /**
      * Saving the program information, including account, template, and planner information.
-     * Precondition: initiatingProgram()
+     * Precondition: startProgram()
      */
     private void saveProgram() {
         p.showSavingInfoScreen();
@@ -152,11 +153,12 @@ public class UserActionController {
      * Returns true if a user is an admin; otherwise it returns false and prints out a message to the user.
      */
     private boolean isAdmin() {
-        if (currentRetriever.equals("guest") || !ac.isAdmin(currentRetriever).equals("admin")) {
-            p.interfaceScreen("Checking your account status...");  // TODO
-            System.out.println("Sorry, this feature requires an admin status.");  // TODO
-            return false;
-        }
+        // TODO: below is commented for testing purpose with guest account - uncomment it when done
+//        if (currentRetriever.equals("guest") || !ac.isAdmin(currentRetriever).equals("admin")) {
+//            p.interfaceScreen("Checking your account status...");  // TODO
+//            System.out.println("Sorry, this feature requires an admin status.");  // TODO
+//            return false;
+//        }
         return true;
     }
 
@@ -188,8 +190,8 @@ public class UserActionController {
                 p.showPasswordUnmatchedScreen(); // display message showing that the password doesn't match
             }
         } while (!passwordConfirmed); // continue if the password is not confirmed
-        ac.createAccount(email, username, password);
-        currentRetriever = username;  // TODO: ask if there is a different way to retrieve retriever
+        ac.createAccount(email, username, password);  // TODO: can this USERID being returned be used as currentRetriever
+        currentRetriever = username;
         p.showAccountCreatedScreen(username); // display message showing that new account with username has been created
     }
 
@@ -221,9 +223,10 @@ public class UserActionController {
      */
     private void accountOptions(String retriever) {
         String userInput;
+        String[] accountOptions = {"A", "B", MAIN_MENU};
+
         do {
             p.showAccountMenu(); // display account options for the user to choose from
-            String[] accountOptions = {"A", "B", MAIN_MENU};  // options user can choose from
             userInput = validInput(accountOptions);
 
             switch (userInput) {
@@ -242,9 +245,11 @@ public class UserActionController {
     }
 
     private void accountSetting(String retriever) {
+        String userInput;
+        String[] viewOptions = {"A", "B", "C"};
+
         p.showEditAccountMenu(); // display options for editing account for user to choose from
-        String[] viewOptions = {"A", "B", "C"};  // options user can choose from
-        String userInput = validInput(viewOptions);
+        userInput = validInput(viewOptions);
         switch (userInput) {
             case "A": // edit username
                 p.showEditAccountPrompts(0); // display message asking user to enter new user name
@@ -274,10 +279,11 @@ public class UserActionController {
      */
     private void plannerOptions() {
         String userInput;
+        String[] plannerOptions = {"A", "B", "C", MAIN_MENU};
+
         do {
             // TODO: for people who worked on planner!!! - can be done on Sunday
             p.showPlannerMenu(); // display planner menu (e.g., view, edit, create, quit)
-            String[] plannerOptions = {"A", "B", "C", MAIN_MENU};  // options user can choose from
             userInput = validInput(plannerOptions);
 
             switch (userInput) {
@@ -308,8 +314,9 @@ public class UserActionController {
      */
     private void plannerEditOptions(){//TODO: add do while
         String userInput;
+        String[] plannerEditOptions = {"A", "B", "C"};
+
         p.showEditPlannerMenu(); // display planner edit menu
-        String[] plannerEditOptions = {"A", "B", "C"}; // options user can choose from
         userInput = validInput(plannerEditOptions);
 
         switch(userInput){
@@ -332,13 +339,15 @@ public class UserActionController {
     }
 
     private void personalPlannerEditOptions(String plannerID){
+        String userInput;
+        String[] plannerEditOptions = {"A", "B", "C", "D"}; //options user can choose from
+
         // p.showObjIntroMessage("planner", plannerID); //TODO: H&R change plannerID to int then uncomment this method
         p.showDetailViewPlanner(plannerID);
         p.showEditPersonalPlannerMenu(); // display personal planner edit menu
-        String[] plannerEditOptions = {"A", "B", "C", "D"}; //options user can choose from
-        String userInput = validInput(plannerEditOptions);
+        userInput = validInput(plannerEditOptions);
 
-        switch (userInput){
+        switch (userInput) {
             case "A": // edit planner agenda
                 //editPlannerAgendaOptions(plannerID); //TODO: uncomment after implementing this method
                 break;
@@ -354,11 +363,13 @@ public class UserActionController {
     }
 
     private void publicPlannerEditOptions(String plannerID){
+        String userInput;
+        String[] plannerEditOptions = {"A", "B"};
+
         //p.showObjIntroMessage("planner", plannerID); // TODO: H&R change plannerID to int then uncomment this method
         p.showDetailViewPlanner(plannerID);
         p.showEditPublicPlannerMenu(); // display public planner edit menu
-        String[] plannerEditOptions = {"A", "B"}; //options user can choose from
-        String userInput = validInput(plannerEditOptions);
+        userInput = validInput(plannerEditOptions);
 
         switch (userInput){
             case "A": // edit planner agenda
@@ -394,10 +405,11 @@ public class UserActionController {
      * Planner options helper method. Allows different options for planner creation.
      */
     private void plannerCreateOptions() {
-        p.showPlannerCreateMenu(); // display planner creation options: daily, project, exit to planner menu
-        String[] createOptions = {"A", "B", "C"};  // options user can choose from
-        String userInput = validInput(createOptions);
+        String userInput;
+        String[] createOptions = {"A", "B", "C"};
 
+        p.showPlannerCreateMenu(); // display planner creation options: daily, project, exit to planner menu
+        userInput = validInput(createOptions);
         switch (userInput) {
             case "A": // daily
                 // TODO: to be separated into presenter and USA
@@ -413,167 +425,6 @@ public class UserActionController {
                 break; //TODO: implement this
         }
         // We know that: either the requested action is completed or user requested to "quit".
-    }
-
-    //=================================================================================================================
-    // 3. Template Related Methods - all the helper methods mainly involving templates are listed below.
-    //=================================================================================================================
-
-    /**
-     * Template Options.
-     * The user will remain in this Template Options menu unless they wish to return to the main menu.
-     */
-    private void templateOptions() {
-        String userInput;
-        String[] templateOptions = {"A", "B", "C", MAIN_MENU};
-        do {
-            p.showTemplateMenu();
-            userInput = validInput(templateOptions);
-
-            switch (userInput) {
-                case "A":  // View all templates
-                    templateViewOptions();
-                    break;
-                case "B":  // Edit template (admin only)
-                    if (!isAdmin()) {
-                        break;
-                    }
-                    // First, a user must select a template they would like to edit.
-                    p.showDetailViewAllTemplates(); // present all existing templates and their ids
-                    p.showIDForEditQuestion("template"); // ask for ID of template to edit
-                    int templateID = scanner.nextInt();  // Unique ID of the template they wish to edit
-                    // Then, a user can proceed with selecting editing actions they can perform on the selected template.
-                    aTemplateEditOptions(templateID);
-                    break;
-                case "C":  // Create a new template (admin only)
-                    if (!isAdmin()) {
-                        break;
-                    }
-                    // TODO: (phase 2) implement create template
-                    p.showFeatureUnavailableScreen();
-                    break;
-                case MAIN_MENU:
-                    break;
-            }
-        } while (!userInput.equals(MAIN_MENU));
-    }
-
-    /**
-     * Template options helper method. Allows different options for template viewing.
-     */
-    private void templateViewOptions() {
-        p.showTemplateViewMenu();
-        String[] viewOptions = {"A", "B", "C"};
-
-        String userInput = validInput(viewOptions);
-        switch (userInput) {
-            case "A": // summary view (preview)
-                p.showPreviewAllTemplates();
-                System.out.println("preview template executed"); // TODO: delete
-                break;
-            case "B": // detailed view
-                p.showDetailViewAllTemplates();
-                System.out.println("detailed template view executed"); // TODO: delete
-                break;
-            case "C": // exit to template menu
-                break;
-        }
-        // We know that: either the requested action is completed or user requested to "quit".
-        p.showReturnToPrevMenu();
-    }
-
-    /**
-     * Template options helper method. Allows different options for editing this template. The user remains in the edit
-     * menu until they wish to return back to the previous menu.
-     * @param templateID is the unique id of the template to be edited.
-     */
-    private void aTemplateEditOptions(int templateID) {
-        String userInput;
-        boolean templateDeleted = false;
-        do {
-            p.showObjIntroMessage("template", templateID); // intro message for showing what a template currently looks like
-            p.showDetailViewTemplate(templateID);
-            p.showEditTemplateMenu();// display edit options for user to choose from
-            String[] editOptions = {"A", "B", "C", "D"};  // options user can choose from
-            userInput = validInput(editOptions);
-
-            switch (userInput) {
-                case "A": // edit template name
-                    p.showEditNewNameQuestion("template"); // display message asking user to enter a new name
-                    String newTemplateName = scanner.nextLine();  // new template name user wants to assign
-                    p.interfaceScreen("Please wait while we are updating your template..."); // TODO
-                    tc.editTemplateName(templateID, newTemplateName);
-                    break;
-                case "B": // edit template prompts
-                    // at the end of each edit, allows user to consecutively edit prompts without returning to the previous
-                    // menu.
-                    String userDecision;
-                    do {
-                        editPrompts(templateID);
-                        p.showIfContinueEditQuestion();
-                        userDecision = validInput(USER_DECISION);
-                    } while (userDecision.equals("yes"));
-                    break;
-                case "C": // delete template
-                    p.showConfirmDeleteQuestion("template"); // confirm if user wants to delete template
-                    p.showDetailViewTemplate(templateID);// visualize the template
-                    if (validInput(USER_DECISION).equals("yes")) {
-                        // TODO: (phase 2) implement delete template
-                        p.showFeatureUnavailableScreen();
-                        // TODO: (phase 2) make sure to update templateDeleted to true once the template is deleted
-                    }
-                    break;
-                case "D": // Exit to previous menu
-                    break;
-            }
-        } while (!userInput.equals("D") && !templateDeleted);  // TODO: fix this magic letter issue later
-        // We know that: either the requested action is completed or user requested to "quit".
-        // Return to the previous menu (i.e., templateOptions)
-        p.showReturnToPrevMenu();
-    }
-
-    /**
-     * Provides different edit options for editing prompts of this template.
-     */
-    private void editPrompts (int templateID) {
-        p.showEditTemplatePromptsMenu(); //display options for the user to choose from
-        String[] editOptions = {"A", "B", "C", "D"};  // options user can choose from
-        String userInput = validInput(editOptions);
-        switch (userInput) {
-            case "A": // rename prompt
-                // At the end of each edit, allows user to consecutively edit prompts without returning to the previous
-                // menu.
-                String[] userOptions = {"yes", "no"};
-                do {
-                    p.showTemplatePromptsIntroScreen(); // display intro message for showing current template prompts
-                    p.showDetailViewTemplate(templateID); // display detailed view of template including current prompts
-                    p.showIDForEditPromptQuestion("rename");
-                    // display message asking user for ID of prompt they want to rename
-                    int promptID = scanner.nextInt();
-                    p.showEditNewNameQuestion("prompt"); // display message asking user to enter desired new name
-                    String newPromptName = scanner.nextLine();
-                    p.interfaceScreen("Please wait while we are updating your template...");  // TODO
-                    tc.renameTemplatePrompt(templateID, promptID, newPromptName);
-                    p.showIfContinueEditQuestion(); // ask user if they'd like to make another edit
-                } while (validInput(userOptions).equals("yes"));
-                break;
-            case "B": // add prompt
-                p.showIDForEditPromptQuestion("add");
-                // display message asking user for ID of prompt they want to add
-                int idForNewPrompt = scanner.nextInt();
-                p.showEditNewNameQuestion("prompt"); // display message asking user to enter name for the new prompt
-                String nameForNewPrompt = scanner.nextLine();
-                tc.addTemplatePrompt(templateID, idForNewPrompt, nameForNewPrompt);
-                break;
-            case "C": // delete prompt
-                p.showIDForEditPromptQuestion("delete");
-                // display message asking user for ID of prompt they want to delete
-                int promptIDToDelete = scanner.nextInt();
-                tc.removeTemplatePrompt(templateID, promptIDToDelete);
-                break;
-        }
-        // We know that: either the requested action is completed or user requested to "quit".
-        p.showReturnToPrevMenu();
     }
 
     /**
@@ -598,5 +449,190 @@ public class UserActionController {
                 break;
         }
         // We know that: either the requested action is completed or user requested to "quit".
+    }
+
+    //=================================================================================================================
+    // 3. Template Related Methods - all the helper methods mainly involving templates are listed below.
+    //=================================================================================================================
+
+    /**
+     * Template Options. The user will remain in this Template Options menu unless they wish to return to the main menu.
+     * Returns true if the user wants to stay in this menu; otherwise, returns false.
+     * @return a boolean value indicating their interest to remain in the current menu.
+     */
+    private boolean templateOptions() {
+        String userInput;
+        String[] templateOptions = {"A", "B", "C", MAIN_MENU};
+
+        p.showTemplateMenu();
+        userInput = validInput(templateOptions);
+
+        switch (userInput) {
+            case "A":  // View all templates
+                templateViewOptions();
+                break;
+            case "B":  // Edit template (admin only)
+                if (isAdmin()) {
+                    // First, a user must select a template they would like to edit.
+                    // Then, a user can proceed with selecting editing actions they can perform on the selected template.
+                    p.showDetailViewAllTemplates();
+                    p.showIDForEditQuestion("template");
+                    int templateID = scanner.nextInt();
+                    scanner.nextLine(); // Note: required as nextInt() does not read the new line created by enter
+                    // Note that a user will remain in editing a given template options until they explicitly wish to
+                    // exit from that menu.
+                    while (aTemplateEditOptions(templateID)) {
+                        p.interfaceScreen("Returning to template edit options...");
+                    }
+                }
+                break;
+            case "C":  // Create a new template (admin only)
+                if (!isAdmin()) {
+                    break;
+                }
+                // TODO: (phase 2) implement create template
+                p.showFeatureUnavailableScreen();
+                break;
+            case MAIN_MENU:
+                return false;
+        }
+        // We know that the user didn't select return to main menu and that the requested action by the user is completed.
+        // The user will wants to remain in the <templateOptions> menu until they explicitly indicate their interest to
+        // return to the main menu.
+        return true;
+    }
+
+    /**
+     * Template options helper method. Allows different options for template viewing.
+     * Returns true if the user wants to stay in this menu; otherwise, returns false.
+     * @return a boolean value indicating their interest to remain in the current menu.
+     * TODO: return not necessary as we do not want to return to view options - fix later
+     */
+    private boolean templateViewOptions() {
+        p.showTemplateViewMenu();
+        String[] viewOptions = {"A", "B", "C"};
+
+        String userInput = validInput(viewOptions);
+        switch (userInput) {
+            case "A": // summary view (preview)
+                p.showPreviewAllTemplates();
+                System.out.println("preview template executed"); // TODO: delete
+                break;
+            case "B": // detailed view
+                p.showDetailViewAllTemplates();
+                System.out.println("detailed template view executed"); // TODO: delete
+                break;
+            case "C": // exit to template menu
+                return false;
+        }
+        // We know that the user didn't select return to main menu and that the requested action by the user is completed.
+        // The user will wants to remain in the <viewOptions> menu until they explicitly indicate their interest to
+        // return to the previous menu.
+        return true;
+    }
+
+    /**
+     * Template options helper method. Allows different options for editing this template.
+     * Returns true if the template exists and the user wants to stay in this menu; otherwise, returns false.
+     * @param templateID is the unique id of the template to be edited.
+     * @return a boolean value indicating their interest to remain in the current menu.
+     */
+    private boolean aTemplateEditOptions(int templateID) {
+        String userInput;
+        String[] editOptions = {"A", "B", "C", "D"};
+
+        p.showObjIntroMessage("template", templateID); // intro message for showing what a template currently looks like
+        p.showDetailViewTemplate(templateID);
+        p.showEditTemplateMenu();// display edit options for user to choose from
+        userInput = validInput(editOptions);
+
+        switch (userInput) {
+            case "A": // edit template name
+                p.showEditNewNameQuestion("template"); // display message asking user to enter a new name
+                String newTemplateName = scanner.nextLine();  // new template name user wants to assign
+                p.interfaceScreen("Please wait while we are updating your template..."); // TODO
+                tc.editTemplateName(templateID, newTemplateName);
+                System.out.println("Update is completed: "); // TODO: added
+                tc.detailViewTemplate(templateID);  // TODO: added
+                break;
+            case "B": // edit template prompts
+                while (editPrompts(templateID)) {
+                    p.interfaceScreen("Returning to the edit prompts menu...");
+                }
+                break;
+            case "C": // delete template
+                p.showConfirmDeleteQuestion("template"); // confirm if user wants to delete template
+                p.showDetailViewTemplate(templateID);// visualize the template
+                if (validInput(USER_DECISION).equals("yes")) {
+                    // TODO: (phase 2) implement delete template
+                    p.showFeatureUnavailableScreen();
+                }
+                return false;
+            case "D": // Exit to previous menu
+                return false;
+            }
+        // We know that (1) the user didn't select return to previous menu, (2) the template is not deleted,
+        // (3) and the requested action by the user is completed.
+        // The user will wants to remain in the <editOptions> menu until they explicitly indicate their interest to
+        // return to the previous menu.
+        return true;
+    }
+
+    /**
+     * Provides different edit options for editing prompts of this template.
+     * TODO: update java doc
+     */
+    private boolean editPrompts (int templateID) {
+        String userInput;
+        String[] editOptions = {"A", "B", "C", "D"};  // options user can choose from
+
+        p.showEditTemplatePromptsMenu(); //display options for the user to choose from
+        userInput = validInput(editOptions);
+        switch (userInput) {
+            case "A": // rename prompt
+                // It is logical that users are allowed to edit prompts consecutively without exiting this menu.
+                // At the end of editing each prompt, a user will be asked if they wish to continue editing other prompts.
+                // editPrompts feature will only be exited when a user explicitly indicates its interest to stop editing
+                // any further prompts.
+                String userDecision = "yes";  // Since a user indicated its interest to edit prompt, the default is "yes"
+                String[] userOptions = {"yes", "no"};
+
+                while (userDecision.equals("yes")) {
+                    p.showTemplatePromptsIntroScreen(); // display intro message for showing current template prompts
+                    p.showDetailViewTemplate(templateID); // display detailed view of template including current prompts
+                    p.showIDForEditPromptQuestion("rename"); // display message asking user for prompt ID
+                    int promptID = scanner.nextInt();
+                    scanner.nextLine(); // Note: required as nextInt() does not read the new line created by enter
+                    p.showEditNewNameQuestion("prompt"); // display message asking user to enter desired new name
+                    String newPromptName = scanner.nextLine();
+
+                    p.interfaceScreen("Please wait while we are updating your template...");  // TODO
+                    tc.renameTemplatePrompt(templateID, promptID, newPromptName);
+                    System.out.println("Update is completed: "); // TODO: added
+                    tc.detailViewTemplate(templateID);  // TODO: added
+
+                    // Ask user if they wish to continue editing other prompts.
+                    p.showIfContinueEditQuestion();
+                    userDecision = validInput(userOptions);
+                }
+                break;
+            case "B": // add prompt
+                p.showIDForEditPromptQuestion("add");
+                // display message asking user for ID of prompt they want to add
+                int idForNewPrompt = scanner.nextInt();
+                p.showEditNewNameQuestion("prompt"); // display message asking user to enter name for the new prompt
+                String nameForNewPrompt = scanner.nextLine();
+                tc.addTemplatePrompt(templateID, idForNewPrompt, nameForNewPrompt);
+                break;
+            case "C": // delete prompt
+                p.showIDForEditPromptQuestion("delete");
+                // display message asking user for ID of prompt they want to delete
+                int promptIDToDelete = scanner.nextInt();
+                tc.removeTemplatePrompt(templateID, promptIDToDelete);
+                break;
+            case "D":
+                return false;
+        }
+        return true;
     }
 }
