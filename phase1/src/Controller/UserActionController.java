@@ -553,7 +553,7 @@ public class UserActionController {
                 p.interfaceScreen("Please wait while we are updating your template..."); // TODO
                 tc.editTemplateName(templateID, newTemplateName);
                 System.out.println("Update is completed: "); // TODO: added
-                tc.detailViewTemplate(templateID);  // TODO: added
+                System.out.println(tc.detailViewTemplate(templateID));;  // TODO: added
                 break;
             case "B": // edit template prompts
                 while (editPrompts(templateID)) {
@@ -609,7 +609,7 @@ public class UserActionController {
                     p.interfaceScreen("Please wait while we are updating your template...");  // TODO
                     tc.renameTemplatePrompt(templateID, promptID, newPromptName);
                     System.out.println("Update is completed: "); // TODO: added
-                    tc.detailViewTemplate(templateID);  // TODO: added
+                    System.out.println(tc.detailViewTemplate(templateID));;  // TODO: added
 
                     // Ask user if they wish to continue editing other prompts.
                     p.showIfContinueEditQuestion();
