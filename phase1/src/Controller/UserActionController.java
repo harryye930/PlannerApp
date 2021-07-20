@@ -112,7 +112,9 @@ public class UserActionController {
                 };
                 break;
             case "C":  // Selected actions on account
-                accountOptions(currentRetriever);
+                while (accountOptions(currentRetriever)) {
+                    p.interfaceScreen("Returning to account options menu...");
+                }
                 break;
             case "D":  // Log out and exit
                 if (!currentRetriever.equals("guest")) {
@@ -194,6 +196,7 @@ public class UserActionController {
         } while (!passwordConfirmed); // continue if the password is not confirmed
         ac.createAccount(email, username, password);  // TODO: can this USERID being returned be used as currentRetriever
         currentRetriever = username;
+        // ac.save(); // TODO: I think account information should be saved after account creation
         p.showAccountCreatedScreen(username); // display message showing that new account with username has been created
     }
 
@@ -222,28 +225,26 @@ public class UserActionController {
 
     /**
      * Account Options. The user will remain in this Account Options menu unless they wish to return to the main menu.
+     * TODO: update java doc
      */
-    private void accountOptions(String retriever) {
+    private boolean accountOptions(String retriever) {
         String userInput;
         String[] accountOptions = {"A", "B", MAIN_MENU};
 
-        do {
-            p.showAccountMenu(); // display account options for the user to choose from
-            userInput = validInput(accountOptions);
+        p.showAccountMenu(); // display account options for the user to choose from
+        userInput = validInput(accountOptions);
 
-            switch (userInput) {
-                case "A": // log out
-                    ac.logOut(retriever);
-                    break;
-                case "B": // edit account info
-                    accountSetting(retriever);
-                    break;
-            }
-            // We know that: either the requested action is completed or user requested to "quit".
-            if (!userInput.equals(MAIN_MENU)) {  // We know that user requested to return to the account menu.
-                p.showReturnToPrevMenu();
-            }
-        } while (!userInput.equals(MAIN_MENU));
+        switch (userInput) {
+            case "A": // log out
+                ac.logOut(retriever);
+                return false;
+            case "B": // edit account info
+                accountSetting(retriever);
+                break;
+            case "C":
+                return false;
+        }
+        return true;
     }
 
     private void accountSetting(String retriever) {
@@ -268,8 +269,6 @@ public class UserActionController {
             case "C": // return to account menu
                 break;
         }
-        // We know that: either the requested action is completed or user requested to "quit".
-        p.showReturnToPrevMenu();
     }
 
     //=================================================================================================================
