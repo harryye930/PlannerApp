@@ -384,6 +384,7 @@ public class UserActionController {
     }
 
     private void editPlannerAgendaOptions(String plannerID){
+        // TODO RAYMOND
         //String type = pc.getType(plannerID);
         // TODO: H&R to implement getType(plannerID): returns type of planner: "daily" or "project"
         // p.showPlannerType(type);
