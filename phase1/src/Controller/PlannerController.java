@@ -20,24 +20,24 @@ public class PlannerController {
 
     }
 
-    public String createNewDailyPlanner(){
+    public int createNewDailyPlanner(){
         return plannerManager.NewDailyPlanner("daily planner", "09:00", "18:00");
     }
 
 
-    public String createNewProjectPlanner(){
+    public int createNewProjectPlanner(){
         return plannerManager.NewProjectPlanner("project planner");
     }
 
-    public void setPlannerAuthor(String plannerID, String userRetriever){
-        plannerManager.setPlannerAuthor(plannerID, userRetriever);
+    public void setPlannerAuthor(int id, String userRetriever){
+        plannerManager.setPlannerAuthor(id, userRetriever);
     }
 
     /** Pass on request to get a string representation of a planner
      *
      * @return a string of the planner tasks
      */
-    public String toString(String id){
+    public String toString(int id){
         return plannerManager.findPlanner(id).toString();
     }
 
@@ -46,7 +46,7 @@ public class PlannerController {
      *
      * @return a string of the daily planner remain tasks.
      */
-    public String DailyPlannerRemainTasks(String id){
+    public String DailyPlannerRemainTasks(int id){
         return plannerManager.DailyPlannerRemainTasks(id);
     }
 
@@ -56,7 +56,7 @@ public class PlannerController {
      * @param agenda content of the agenda user wish to edit
      * @return true iff the agenda is correctly requested to change based on current planner
      */
-    public boolean edit(String id, int i, String agenda){
+    public boolean edit(int id, int i, String agenda){
         return plannerManager.Edit(id, i, agenda);
     }
 
@@ -66,7 +66,7 @@ public class PlannerController {
      * @param newAgenda: new agenda item
      * @return true iff is correctly request to change.
      */
-    public boolean edit(String id, String time, String newAgenda){
+    public boolean edit(int id, String time, String newAgenda){
         return plannerManager.Edit(id, time, newAgenda);
     }
 
@@ -76,11 +76,11 @@ public class PlannerController {
      * @param status "private" or "public"
      * @return true iff the status is correctly requested to change. (from "public to "private or vise versa)
      */
-    public boolean changePrivacyStatus(String id, String status){
+    public boolean changePrivacyStatus(int id, String status){
         return plannerManager.ChangePrivacyStatus(id, status);
     }
 
-    public boolean deletePlanner(String id){
+    public boolean deletePlanner(int id){
         return this.plannerManager.DeletePlanner(id);
     }
 
@@ -88,11 +88,11 @@ public class PlannerController {
         return plannerManager.showAllPlanners();
     }
 
-    public ArrayList<String> getPlannerByAuthor(String author){
+    public ArrayList<Integer> getPlannerByAuthor(String author){
         return plannerManager.getPlannersByAuthor(author);
     }
 
-    public ArrayList<String> getPublicPlanners(){
+    public ArrayList<Integer> getPublicPlanners(){
         return plannerManager.getPublicPlanners();
     }
 }

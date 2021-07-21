@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public abstract class Planner implements Serializable {
     protected String plannerName;
-    protected String ID;
+    private static int ID;
     protected String privacyStatus;
     protected String author;
 
@@ -17,14 +17,14 @@ public abstract class Planner implements Serializable {
 
     public Planner(){
         this.plannerName = "New Planner";
-        this.ID = UUID.randomUUID().toString();
+        ID++;
         this.privacyStatus = "private";
         this.author = "TODO";
 
     }
     public Planner(String plannerName){
         this.plannerName = plannerName;
-        this.ID = UUID.randomUUID().toString();
+        ID++;
         this.privacyStatus = "private";
         this.author = "TODO";
 
@@ -37,8 +37,8 @@ public abstract class Planner implements Serializable {
      */
     public abstract String toString();
 
-    public String getID(){
-        return this.ID;
+    public int getID(){
+        return ID;
     }
 
      /** @return a String representing of the planner status.

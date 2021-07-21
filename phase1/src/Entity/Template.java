@@ -14,6 +14,7 @@ public abstract class Template implements Serializable {
     private ArrayList<String> prompts; // prompts of this template
     private static int id; // id of this template
 
+
     public Template(String name, ArrayList<String> prompts) {
         this.name = name;
         this.prompts = prompts;

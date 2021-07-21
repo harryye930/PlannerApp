@@ -206,13 +206,13 @@ public class TextUI {
                                 String PlannerType = scanner.nextLine();
                                 if (PlannerType.equals("Daily")){
                                     System.out.println("Please enter the Planner ID you want to edit.");
-                                    String PlannerID = scanner.nextLine();
+                                    int PlannerID = Integer.parseInt(scanner.nextLine());
                                     pc.edit(PlannerID, "10:00", "good day");
                                     System.out.println("Successfully edited");
                                 }
                                 else if(PlannerType.equals("Project")){
                                     System.out.println("Please enter the Planner ID you want to change.");
-                                    String PlannerID = scanner.nextLine();
+                                    int PlannerID = Integer.parseInt(scanner.nextLine());
                                     pc.edit(PlannerID, 2, "good project");
                                     System.out.println("Successfully edited");
                                 }
@@ -224,8 +224,8 @@ public class TextUI {
                                 break;
                             case 'E':
                                 System.out.println("Please enter the Planner ID you want to delete.");
-                                String DeleteID = scanner.nextLine();
-                                if (pc.deletePlanner(DeleteID)){
+                                int PlannerID = Integer.parseInt(scanner.nextLine());
+                                if (pc.deletePlanner(PlannerID)){
                                     System.out.println("Successfully deleted.");
                                 }
                                 else{

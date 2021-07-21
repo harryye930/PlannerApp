@@ -6,10 +6,10 @@ import UseCase.PlannerManager;
 
 import java.util.HashMap;
 
-public class PlannerGateway extends Reader<HashMap<String, Planner>> {
+public class PlannerGateway extends Reader<HashMap<Integer, Planner>> {
 
     private final String filePath = "phase1/src/PlannerData/idMap.ser";
-    private HashMap<String, Planner> idToPlanner = new HashMap<String, Planner>();
+    private HashMap<Integer, Planner> idToPlanner = new HashMap<Integer, Planner>();
 
     private final PlannerManager pm;
 

@@ -9,6 +9,7 @@ import java.util.UUID;
 public class DailyPlanner extends Planner {
     private HashMap<String, String> dailyPlannerTask;
     private ArrayList<String> timesList; // time array
+    private int ID;
     private int interval;  //minutes interval
     private int startHour;
     private int startMins;
@@ -35,6 +36,7 @@ public class DailyPlanner extends Planner {
         this.endMins = Integer.parseInt(endTime.substring(3, 5));
         this.timesList = new ArrayList<>();
         this.dailyPlannerTask = new HashMap<>();
+        this.ID = super.getID();
         String timeFormat;
         for (int h = this.startHour; h < this.endHour; h++) {
             for (int m = this.startMins; m < 60; ) {

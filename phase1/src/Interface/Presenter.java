@@ -463,9 +463,9 @@ public class Presenter {
      */
     //TODO need author
     public void showAllPersonalPlanners(String author){
-        ArrayList<String> plannerIDs =  plannerManager.getPlannersByAuthor(author);
+        ArrayList<Integer> plannerIDs =  plannerManager.getPlannersByAuthor(author);
         StringBuilder personalPlanners = new StringBuilder();
-        for (String plannerID: plannerIDs){
+        for (int plannerID: plannerIDs){
             personalPlanners.append(plannerManager.findPlanner(plannerID).toString());
             personalPlanners.append("\n");
         }
@@ -484,7 +484,7 @@ public class Presenter {
      * Prints out detail view of planner with plannerID.
      * @param plannerID ID of planner to get detail view for.
      */
-    public void showDetailViewPlanner(String plannerID){
+    public void showDetailViewPlanner(int plannerID){
         System.out.println(plannerManager.toString(plannerID));
     } //TODO: H&R to change plannerID to int then change this method
 

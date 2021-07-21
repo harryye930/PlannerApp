@@ -4,11 +4,14 @@ import java.util.ArrayList;
 public class ProjectPlanner extends Planner {
     private ArrayList<String> tasks;
     private ArrayList<String> taskStatus;
+    private int ID;
 
     public ProjectPlanner(String plannerName) {
         super(plannerName);
         this.tasks = new ArrayList<>();
         this.taskStatus = new ArrayList<>();
+        this.ID = super.getID();
+
 
     }
 
@@ -18,7 +21,7 @@ public class ProjectPlanner extends Planner {
      */
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        String plannerInfo = this.plannerName + "\n" + "ID: " + this.ID + "\n" + "\nTasks: \n";
+        String plannerInfo = this.plannerName + "\n" + "ID: " + ID + "\n" + "\nTasks: \n";
         sb.append(plannerInfo);
         if (this.tasks.isEmpty()){
             sb.append("N/A");

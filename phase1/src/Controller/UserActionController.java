@@ -341,7 +341,7 @@ public class UserActionController {
         return true;
     }
 
-    private void personalPlannerEditOptions(String plannerID){
+    private void personalPlannerEditOptions(int plannerID){
         String userInput;
         String[] plannerEditOptions = {"A", "B", "C", "D"}; //options user can choose from
 
