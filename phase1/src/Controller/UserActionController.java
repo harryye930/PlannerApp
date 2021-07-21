@@ -326,13 +326,13 @@ public class UserActionController {
             case "A": //edit personal planners
                 presenter.showAllPersonalPlanners(); // display all personal planners // TODO need author
                 presenter.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
-                String plannerID = scanner.nextLine(); // gets ID of planner user wants to edit
+                int PlannerID = Integer.parseInt(scanner.nextLine()); // gets ID of planner user wants to edit
                 personalPlannerEditOptions(plannerID);
                 break;
             case "B":  //edit other public planners
                 presenter.showAllPublicPlanners(); // display all public planners
                 presenter.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
-                plannerID = scanner.nextLine(); // gets ID of planner user wants to edit
+                int PlannerID = Integer.parseInt(scanner.nextLine()); // gets ID of planner user wants to edit
                 publicPlannerEditOptions(plannerID);
                 break;
             case "C":
@@ -365,7 +365,7 @@ public class UserActionController {
         }
     }
 
-    private void publicPlannerEditOptions(String plannerID){
+    private void publicPlannerEditOptions(int plannerID){
         String userInput;
         String[] plannerEditOptions = {"A", "B"};
 
@@ -419,13 +419,13 @@ public class UserActionController {
         switch (userInput) {
             case "A": // daily
                 // TODO: to be separated into presenter and USA
-                String dailyPlannerId = plannerController.createNewDailyPlanner();
+                int dailyPlannerId = plannerController.createNewDailyPlanner();
                 plannerController.setPlannerAuthor(dailyPlannerId, userId);
                 System.out.println("these are the information: \n" + plannerController.toString(dailyPlannerId));
                 break;
             case "B": // project
                 // TODO: to be separated into presenter and USA
-                String projectPlannerId = plannerController.createNewProjectPlanner();
+                int projectPlannerId = plannerController.createNewProjectPlanner();
                 plannerController.setPlannerAuthor(projectPlannerId, userId);
                 System.out.println("Successfully created Project Planner, " +
                         "these are the information: \n" + plannerController.toString(projectPlannerId));
