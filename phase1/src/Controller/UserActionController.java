@@ -408,7 +408,7 @@ public class UserActionController {
     /**
      * Planner options helper method. Allows different options for planner creation.
      */
-    private void plannerCreateOptions() {
+    private void plannerCreateOptions(String userId) {
         String userInput;
         String[] createOptions = {"A", "B", "C"};
 
@@ -419,20 +419,16 @@ public class UserActionController {
         switch (userInput) {
             case "A": // daily
                 // TODO: to be separated into presenter and USA
-                ArrayList<String> dailyPlannerInfo = plannerController.createNewDailyPlanner();
-                String dailyPlannerID = dailyPlannerInfo.get(0);
-                String dailyPlannerString = dailyPlannerInfo.get(1);
-                plannerController.setPlannerAuthor(dailyPlannerID, "TODO username");
-                System.out.println("these are the information: \n" + dailyPlannerString);
+                String dailyPlannerId = plannerController.createNewDailyPlanner();
+                plannerController.setPlannerAuthor(dailyPlannerId, userId);
+                System.out.println("these are the information: \n" + plannerController.toString(dailyPlannerId));
                 break;
             case "B": // project
                 // TODO: to be separated into presenter and USA
-                ArrayList<String> projectPlannerInfo = plannerController.createNewProjectPlanner();
-                String projectPlannerID = projectPlannerInfo.get(0);
-                String projectPlannerString = projectPlannerInfo.get(1);
-                plannerController.setPlannerAuthor(projectPlannerID, "TODO username");
+                String projectPlannerId = plannerController.createNewProjectPlanner();
+                plannerController.setPlannerAuthor(projectPlannerId, userId);
                 System.out.println("Successfully created Project Planner, " +
-                        "these are the information: \n" + projectPlannerString);
+                        "these are the information: \n" + plannerController.toString(projectPlannerId));
 
                 break;
             case "C": // exit to planner menu

@@ -7,6 +7,8 @@ import UseCase.PlannerManager;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import java.util.Scanner;
+
 public class Presenter {
 
     private TemplateController templateController;
@@ -126,6 +128,11 @@ public class Presenter {
         String[] createNewAccountPrompts = {String.format(createNewAccountIntro + createNewAccountInfo, "Email"),
                                             String.format(createNewAccountInfo, "Username"),
                                             String.format(createNewAccountInfo, "Password")};
+        for (String s: createNewAccountPrompts) {
+            System.out.println(s);
+            Scanner scanner = new Scanner(System.in);
+
+        }
         System.out.println(createNewAccountPrompts[index]);
     }
 

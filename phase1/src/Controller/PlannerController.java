@@ -20,25 +20,17 @@ public class PlannerController {
 
     }
 
-    public ArrayList<String> createNewDailyPlanner(){
-        String dailyPlannerID = plannerManager.NewDailyPlanner("daily planner", "09:00", "18:00");
-        ArrayList<String> dailyPlannerInfo = new ArrayList<String>();
-        dailyPlannerInfo.add(dailyPlannerID);
-        dailyPlannerInfo.add(this.plannerManager.toString(dailyPlannerID));
-        return dailyPlannerInfo;
+    public String createNewDailyPlanner(){
+        return plannerManager.NewDailyPlanner("daily planner", "09:00", "18:00");
     }
 
 
-    public ArrayList<String> createNewProjectPlanner(){
-        plannerManager.NewProjectPlanner("project planner");
-        ArrayList<String> projectPlannerInfo = new ArrayList<String>();
-        String projectPlannerID = plannerManager.NewProjectPlanner("project planner");
-        projectPlannerInfo.add(projectPlannerID);
-        projectPlannerInfo.add(this.plannerManager.toString(projectPlannerID));
-        return projectPlannerInfo;
+    public String createNewProjectPlanner(){
+        return plannerManager.NewProjectPlanner("project planner");
     }
-    public void setPlannerAuthor(String plannerID, String author){
-        plannerManager.setPlannerAuthor(plannerID, author);
+
+    public void setPlannerAuthor(String plannerID, String userRetriever){
+        plannerManager.setPlannerAuthor(plannerID, userRetriever);
     }
 
     /** Pass on request to get a string representation of a planner
