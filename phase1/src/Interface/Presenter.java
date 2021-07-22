@@ -476,7 +476,6 @@ public class Presenter {
      * Prints out details of all existing public planners.
      */
     public void showAllPublicPlanners(){
-        //TODO: H&R to implement method in PlannerManager / PlannerController:
         plannerManager.getPublicPlanners();
     }
 
@@ -486,7 +485,7 @@ public class Presenter {
      */
     public void showDetailViewPlanner(int plannerID){
         System.out.println(plannerManager.toString(plannerID));
-    } //TODO: H&R to change plannerID to int then change this method
+    }
 
     /**
      * Prints out message showing the type of the planner with plannerID

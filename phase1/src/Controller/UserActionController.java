@@ -321,18 +321,19 @@ public class UserActionController {
 
         presenter.showEditPlannerMenu(); // display planner edit menu
         userInput = validInput(plannerEditOptions);
+        int plannerID;
 
         switch(userInput){
             case "A": //edit personal planners
                 presenter.showAllPersonalPlanners(); // display all personal planners // TODO need author
                 presenter.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
-                int PlannerID = Integer.parseInt(scanner.nextLine()); // gets ID of planner user wants to edit
+                plannerID = Integer.parseInt(scanner.nextLine()); // gets ID of planner user wants to edit
                 personalPlannerEditOptions(plannerID);
                 break;
             case "B":  //edit other public planners
                 presenter.showAllPublicPlanners(); // display all public planners
                 presenter.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
-                int PlannerID = Integer.parseInt(scanner.nextLine()); // gets ID of planner user wants to edit
+                plannerID = Integer.parseInt(scanner.nextLine()); // gets ID of planner user wants to edit
                 publicPlannerEditOptions(plannerID);
                 break;
             case "C":
@@ -345,17 +346,20 @@ public class UserActionController {
         String userInput;
         String[] plannerEditOptions = {"A", "B", "C", "D"}; //options user can choose from
 
-        // p.showObjIntroMessage("planner", plannerID); //TODO: H&R change plannerID to int then uncomment this method
+        presenter.showObjIntroMessage("planner", plannerID);
         presenter.showDetailViewPlanner(plannerID);
         presenter.showEditPersonalPlannerMenu(); // display personal planner edit menu
         userInput = validInput(plannerEditOptions);
 
         switch (userInput) {
             case "A": // edit planner agenda
-                //editPlannerAgendaOptions(plannerID); //TODO: uncomment after implementing this method
+                editPlannerAgendaOptions(plannerID); //TODO: uncomment after implementing this method
                 break;
             case "B": // change privacy setting
-                break; //TODO: implement this
+                System.out.println("select private/public");
+                String privacyState = scanner.nextLine();
+                plannerManager.ChangePrivacyStatus(plannerID, privacyState);
+                break;
             case "C": // delete planner
                 presenter.showFeatureUnavailableScreen(); // display message showing feature not yet available
                 //TODO: (phase 2) implement delete planner --- I think we can save it for phase 2???
@@ -369,21 +373,21 @@ public class UserActionController {
         String userInput;
         String[] plannerEditOptions = {"A", "B"};
 
-        //p.showObjIntroMessage("planner", plannerID); // TODO: H&R change plannerID to int then uncomment this method
+        presenter.showObjIntroMessage("planner", plannerID);
         presenter.showDetailViewPlanner(plannerID);
         presenter.showEditPublicPlannerMenu(); // display public planner edit menu
         userInput = validInput(plannerEditOptions);
 
         switch (userInput){
             case "A": // edit planner agenda
-                //editPlannerAgendaOptions(plannerID); //TODO: uncomment after implementing this method
+                editPlannerAgendaOptions(plannerID); //TODO: uncomment after implementing this method
                 break;
             case "B": // return to edit planner menu
                 break; //TODO: implement this
         }
     }
 
-    private void editPlannerAgendaOptions(String plannerID){
+    private void editPlannerAgendaOptions(int plannerID){
         // TODO RAYMOND
         //String type = pc.getType(plannerID);
         // TODO: H&R to implement getType(plannerID): returns type of planner: "daily" or "project"
