@@ -34,7 +34,7 @@ public class UserActionController {
         templateController.load();
         plannerController = new PlannerController();
         plannerManager = new PlannerManager();
-        // TODO: pc.load();
+        // pc.load();
 
         presenter = new Presenter(templateController, plannerManager, accessController);
         scanner = new Scanner(System.in);
@@ -92,8 +92,9 @@ public class UserActionController {
     }
 
     /**
-     * Presents the options and allows actions after the user successfully logged in, including as a guest.
-     * TODO: update java doc.
+     * Enables a successfully logged in user or a guest account user to use the features of the template.
+     * Returns true if the user wants to continue to stay in the main menu; otherwise, returns false.
+     * @return a boolean value indicating their interest for using the program (i.e., stay in the main menu).
      */
     private boolean useProgram() {
         String userInput; // Stores selection input from the user
@@ -118,12 +119,15 @@ public class UserActionController {
                 }
                 break;
             case "D":  // Log out and exit
+                // Except for the guest account, save all the files (i.e., account, planner, template) and log out user
+                // from their account.
                 if (!currentRetriever.equals("guest")) {
-                saveProgram();  // Saves all the account, planner, and template information
-                accessController.logOut(currentRetriever);  // logs out of the current user
+                saveProgram();
+                accessController.logOut(currentRetriever);
                 }
                 return false;
         }
+        // A user wants to continue using the features available in the main menu.
         return true;
     }
 
@@ -133,14 +137,15 @@ public class UserActionController {
      */
     private void saveProgram() {
         presenter.showSavingInfoScreen();
-        // TODO: ac.save();
+        // ac.save();
         // tc.save();
-        // TODO: pc.save()
+        // pc.save()
         presenter.showSavingSuccessfulScreen();
     }
 
     /**
-     * Takes in user input and checks if the entered user option is valid.
+     * Takes in user input and checks if the entered user option is valid. The whitespace before and after the entered
+     * user input are removed.
      * @param valid_options are valid options presented to the user by the program to choose from.
      * @return the valid option user has entered.
      */
@@ -195,8 +200,8 @@ public class UserActionController {
                 presenter.showPasswordUnmatchedScreen(); // display message showing that the password doesn't match
             }
         } while (!passwordConfirmed); // continue if the password is not confirmed
-        currentRetriever = accessController.createAccount(email, username, password);  // TODO: can this USERID being returned be used as currentRetriever
-        // ac.save(); // TODO: I think account information should be saved after account creation
+        currentRetriever = accessController.createAccount(email, username, password);
+        // ac.save();
         presenter.showAccountCreatedScreen(username); // display message showing that new account with username has been created
     }
 
@@ -225,7 +230,9 @@ public class UserActionController {
 
     /**
      * Account Options. The user will remain in this Account Options menu unless they wish to return to the main menu.
-     * TODO: update java doc
+     * Returns true if the user wants to stay in this menu; otherwise, returns false.
+     * @param retriever is userID or email of the user that is unique and can be used to identify the account holder.
+     * @return a boolean value indicating their interest to remain in the current menu.
      */
     private boolean accountOptions(String retriever) {
         String userInput;
@@ -236,10 +243,12 @@ public class UserActionController {
 
         switch (userInput) {
             case "A": // log out
-                accessController.logOut(retriever);
+                accessController.logOut(retriever);  // TODO: Should we change this to delete account
                 return false;
             case "B": // edit account info
-                accountSetting(retriever);
+                while (accountSetting(retriever)) {
+                    presenter.interfaceScreen("Returning to account setting options...");
+                }
                 break;
             case "C":
                 return false;
@@ -247,12 +256,19 @@ public class UserActionController {
         return true;
     }
 
-    private void accountSetting(String retriever) {
+    /**
+     * Enables a user to change either edit their username or password.
+     * Returns true if the user wants to stay in this menu; otherwise, returns false.
+     * @param retriever is userID or email of the user that is unique and can be used to identify the account holder.
+     * @return a boolean value indicating their interest to remain in the current menu.
+     */
+    private boolean accountSetting(String retriever) {
         String userInput;
         String[] viewOptions = {"A", "B", "C"};
 
         presenter.showEditAccountMenu(); // display options for editing account for user to choose from
         userInput = validInput(viewOptions);
+
         switch (userInput) {
             case "A": // edit username
                 presenter.showEditAccountPrompts(0); // display message asking user to enter new user name
@@ -267,8 +283,9 @@ public class UserActionController {
                 accessController.changePassword(retriever, oldPassword, newPassword);
                 break;
             case "C": // return to account menu
-                break;
+                return false;
         }
+        return true;
     }
 
     //=================================================================================================================
@@ -276,10 +293,9 @@ public class UserActionController {
     //=================================================================================================================
 
     /**
-     * Planner Options.
-     * TODO: I am too tired to update javadoc rn, but basically it returns true when you want to remain in this
-     * TODO: menu and false when you want to return to the previous menu.
-     * TODO: just think of return as "DO YOU WANT TO STAY IN THIS MENU? YES/NO".
+     * Planner Options. The user will remain in this Planner Options menu unless they wish to return to the main menu.
+     * Returns true if the user wants to stay in this menu; otherwise, returns false.
+     * @return a boolean value indicating their interest to remain in the current menu.
      */
     private boolean plannerOptions() {
         String userInput;
@@ -305,14 +321,17 @@ public class UserActionController {
             case "D": // exit
                 return false;
         }
+        // We know that the user didn't select return to main menu and that the requested action by the user is completed.
+        // The user will wants to remain in the <plannerOptions> menu until they explicitly indicate their interest to
+        // return to the main menu.
         return true;
     }
 
     /**
-     * Shows planner edit options: edit personal planners, edit other public planners, return to planner menu.
-     * TODO: I am too tired to update javadoc rn, but basically it returns true when you want to remain in this
-     * TODO: menu and false when you want to return to the previous menu.
-     * TODO: just think of return as "DO YOU WANT TO STAY IN THIS MENU? YES/NO".
+     * Planner options helper method. Enables several options for editing planners.
+     * Planner edit options includes edit personal planners, edit other public planners, return to planner menu.
+     * Returns true if the user wants to stay in this menu; otherwise, returns false.
+     * @return a boolean value indicating their interest to remain in the current menu.
      */
     private boolean plannerEditOptions() {
         String userInput;
@@ -338,9 +357,16 @@ public class UserActionController {
             case "C":
                 return false;
         }
+        // We know that the user didn't select return to prev. menu and that the requested action by the user is completed.
+        // The user will wants to remain in the <plannerEditOptions> menu until they explicitly indicate their interest to
+        // return to the previous menu.
         return true;
     }
 
+    /**
+     * Provides different edit options for editing a personal planner.
+     * @param plannerID is the unique id of the planner being edited.
+     */
     private void personalPlannerEditOptions(int plannerID){
         String userInput;
         String[] plannerEditOptions = {"A", "B", "C", "D"}; //options user can choose from
@@ -368,6 +394,10 @@ public class UserActionController {
         }
     }
 
+    /**
+     * Provides different edit options for editing a public planner.
+     * @param plannerID is the unique id of the planner being edited.
+     */
     private void publicPlannerEditOptions(int plannerID){
         String userInput;
         String[] plannerEditOptions = {"A", "B"};
@@ -386,6 +416,10 @@ public class UserActionController {
         }
     }
 
+    /**
+     * Provides different edit options for editing a planner agenda.
+     * @param plannerID is the unique id of the planner being edited.
+     */
     private void editPlannerAgendaOptions(int plannerID){
 //         TODO RAYMOND
         String type = plannerController.getType(plannerID);
@@ -449,11 +483,10 @@ public class UserActionController {
             case "C": // exit to planner menu
                 break; //TODO: implement this
         }
-        // We know that: either the requested action is completed or user requested to "quit".
     }
 
     /**
-     * Planner options helper method. Allows different options for template viewing.
+     * Planner options helper method. Allows different options for planner viewing.
      */
     private void plannerViewOptions() {
         String userInput;
@@ -528,11 +561,8 @@ public class UserActionController {
 
     /**
      * Template options helper method. Allows different options for template viewing.
-     * Returns true if the user wants to stay in this menu; otherwise, returns false.
-     * @return a boolean value indicating their interest to remain in the current menu.
-     * TODO: return not necessary as we do not want to return to view options - fix later
      */
-    private boolean templateViewOptions() {
+    private void templateViewOptions() {
         presenter.showTemplateViewMenu();
         String[] viewOptions = {"A", "B", "C"};
 
@@ -547,18 +577,14 @@ public class UserActionController {
                 System.out.println("detailed template view executed"); // TODO: delete
                 break;
             case "C": // exit to template menu
-                return false;
+                break;
         }
-        // We know that the user didn't select return to main menu and that the requested action by the user is completed.
-        // The user will wants to remain in the <viewOptions> menu until they explicitly indicate their interest to
-        // return to the previous menu.
-        return true;
     }
 
     /**
      * Template options helper method. Allows different options for editing this template.
      * Returns true if the template exists and the user wants to stay in this menu; otherwise, returns false.
-     * @param templateID is the unique id of the template to be edited.
+     * @param templateID is the unique id of the template being edited.
      * @return a boolean value indicating their interest to remain in the current menu.
      */
     private boolean aTemplateEditOptions(int templateID) {
@@ -604,7 +630,9 @@ public class UserActionController {
 
     /**
      * Provides different edit options for editing prompts of this template.
-     * TODO: update java doc
+     * Returns true if the user wants to stay in this menu; otherwise, returns false.
+     * @param templateID ID of the template containing the prompts to be edited.
+     * @return a boolean value indicating their interest to remain in the current menu.
      */
     private boolean editPrompts (int templateID) {
         String userInput;
@@ -657,6 +685,9 @@ public class UserActionController {
             case "D":
                 return false;
         }
+        // We know that the user didn't select return to prev. menu and that the requested action by the user is completed.
+        // The user will wants to remain in the <editOptions> menu until they explicitly indicate their interest to
+        // return to the previous menu.
         return true;
     }
 }
