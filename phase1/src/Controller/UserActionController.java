@@ -36,7 +36,7 @@ public class UserActionController {
         plannerManager = new PlannerManager();
         // TODO: pc.load();
 
-        presenter = new Presenter(templateController, plannerManager, accessController);
+        presenter = new Presenter(templateController, plannerManager);
         scanner = new Scanner(System.in);
     }
 
@@ -195,7 +195,8 @@ public class UserActionController {
                 presenter.showPasswordUnmatchedScreen(); // display message showing that the password doesn't match
             }
         } while (!passwordConfirmed); // continue if the password is not confirmed
-        currentRetriever = accessController.createAccount(email, username, password);  // TODO: can this USERID being returned be used as currentRetriever
+        accessController.createAccount(email, username, password);  // TODO: can this USERID being returned be used as currentRetriever
+        currentRetriever = username;
         // ac.save(); // TODO: I think account information should be saved after account creation
         presenter.showAccountCreatedScreen(username); // display message showing that new account with username has been created
     }
@@ -204,16 +205,16 @@ public class UserActionController {
      * Allows a user to log-in to their account.
      */
     private void logIn() {
-        String userRetriever;
+        String username;
         String password;
         boolean loginSuccess = false;  // indicates whether the log-in was successful or not
         do {
-            presenter.showLoginScreen(0); // ask user for userRetriever or email
-            userRetriever = scanner.nextLine();
+            presenter.showLoginScreen(0); // ask user for username or email
+            username = scanner.nextLine();
             presenter.showLoginScreen(1); // ask user for password
             password = scanner.nextLine();
-            if (accessController.logIn(userRetriever, password)) {
-                currentRetriever = userRetriever;
+            if (accessController.logIn(username, password)) {
+                currentRetriever = username;
                 loginSuccess = true;
             } else {
                 presenter.showLoginFailedScreen(); // display message showing invalid login credentials entered
@@ -324,7 +325,7 @@ public class UserActionController {
 
         switch(userInput){
             case "A": //edit personal planners
-                presenter.showAllPersonalPlanners(currentRetriever); // display all personal planners
+//                presenter.showAllPersonalPlanners(); // display all personal planners // TODO need author
                 presenter.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
                 plannerID = Integer.parseInt(scanner.nextLine()); // gets ID of planner user wants to edit
                 personalPlannerEditOptions(plannerID);
@@ -352,7 +353,7 @@ public class UserActionController {
 
         switch (userInput) {
             case "A": // edit planner agenda
-                editPlannerAgendaOptions(plannerID); //TODO: uncomment after implementing this method
+                editPlannerAgendaOptions(plannerID);
                 break;
             case "B": // change privacy setting
                 System.out.println("select private/public");
@@ -379,7 +380,7 @@ public class UserActionController {
 
         switch (userInput){
             case "A": // edit planner agenda
-                editPlannerAgendaOptions(plannerID); //TODO: uncomment after implementing this method
+                editPlannerAgendaOptions(plannerID);
                 break;
             case "B": // return to edit planner menu
                 break; //TODO: implement this
@@ -389,12 +390,10 @@ public class UserActionController {
     private void editPlannerAgendaOptions(int plannerID){
 //         TODO RAYMOND
         String type = plannerController.getType(plannerID);
-//         TODO: H&R to implement getType(plannerID): returns type of planner: "daily" or "project"
 //         plannerController.showPlannerType(type);
-//         display type of selected planner: daily or project //TODO: uncomment after previous line fixed
+//         display type of selected planner: daily or project
         switch (type){
             case "daily":
-                // TODO: Finish implementing
                 presenter.interfaceScreen("Here is the planner information: \n" + plannerController.toString(plannerID)
                 + "\n" + "Please give the time you wish to edit. If the given time is not shown in planner, the " +
                         "closet time agenda will be edited.");
@@ -428,20 +427,18 @@ public class UserActionController {
         presenter.showPlannerCreateMenu(); // display planner creation options: daily, project, exit to planner menu
         userInput = validInput(createOptions);
         //TODO get user input on name of planner
-        String plannerName =  "TODO PlannerName";
+//        String plannerName =  "TODO PlannerName";
         switch (userInput) {
             case "A": // daily
                 // TODO: to be separated into presenter and USA
                 int dailyPlannerId = plannerController.createNewDailyPlanner();
                 plannerController.setPlannerAuthor(dailyPlannerId, userId);
-                accessController.setPlanner(currentRetriever, ((Integer) dailyPlannerId).toString());
                 System.out.println("these are the information: \n" + plannerController.toString(dailyPlannerId));
                 break;
             case "B": // project
                 // TODO: to be separated into presenter and USA
                 int projectPlannerId = plannerController.createNewProjectPlanner();
                 plannerController.setPlannerAuthor(projectPlannerId, userId);
-                accessController.setPlanner(currentRetriever, ((Integer) projectPlannerId).toString());
                 System.out.println("Successfully created Project Planner, " +
                         "these are the information: \n" + plannerController.toString(projectPlannerId));
 
