@@ -15,6 +15,10 @@ public class ProjectPlanner extends Planner {
 
     }
 
+    public String getType(){
+        return "project";
+    }
+
     /** Show the current planner
      *
      * @return a string representation of this planner's content

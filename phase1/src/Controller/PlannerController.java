@@ -95,4 +95,9 @@ public class PlannerController {
     public ArrayList<Integer> getPublicPlanners(){
         return plannerManager.getPublicPlanners();
     }
+
+    public String getType(int id){
+        return plannerManager.plannerType(id);
+    }
+
 }

@@ -52,6 +52,10 @@ public class DailyPlanner extends Planner {
         }
     }
 
+    public String getType(){
+        return "daily";
+    }
+
     public DailyPlanner(){
         super();
         timesList = new ArrayList<>();

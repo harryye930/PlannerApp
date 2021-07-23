@@ -32,7 +32,7 @@ public class UserActionController {
         // ac.load();
         templateController = new TemplateController();
         templateController.load();
-        // pc = new PlannerController();
+        plannerController = new PlannerController();
         plannerManager = new PlannerManager();
         // TODO: pc.load();
 
@@ -301,7 +301,7 @@ public class UserActionController {
                     presenter.interfaceScreen("Returning to planner edit options...");
                 }
             case "C": // create a new planner
-                plannerCreateOptions();
+//                plannerCreateOptions(); TODO: error
                 break;
             case "D": // exit
                 return false;
@@ -325,7 +325,7 @@ public class UserActionController {
 
         switch(userInput){
             case "A": //edit personal planners
-                presenter.showAllPersonalPlanners(); // display all personal planners // TODO need author
+//                presenter.showAllPersonalPlanners(); // display all personal planners // TODO need author
                 presenter.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
                 plannerID = Integer.parseInt(scanner.nextLine()); // gets ID of planner user wants to edit
                 personalPlannerEditOptions(plannerID);
@@ -388,25 +388,35 @@ public class UserActionController {
     }
 
     private void editPlannerAgendaOptions(int plannerID){
-        // TODO RAYMOND
-        //String type = pc.getType(plannerID);
-        // TODO: H&R to implement getType(plannerID): returns type of planner: "daily" or "project"
-        // p.showPlannerType(type);
-        // display type of selected planner: daily or project //TODO: uncomment after previous line fixed
-//        switch (type){
-//            case "daily":
-//                // TODO: Finish implementing
-//                pc.edit(plannerID, "10:00", "good day");
-//                // TODO: Presenter message
-//                System.out.println("Successfully edited"); // TODO: delete
-//                break;
-//            case "project":
-//                // TODO: Finish implementing
-//                pc.edit(plannerID, 2, "good project");
-//                // TODO: Presenter message
-//                System.out.println("Successfully edited"); // TODO: delete
-//                break;
-//        } //TODO: implement switch statements
+//         TODO RAYMOND
+        String type = plannerController.getType(plannerID);
+//         TODO: H&R to implement getType(plannerID): returns type of planner: "daily" or "project"
+//         plannerController.showPlannerType(type);
+//         display type of selected planner: daily or project //TODO: uncomment after previous line fixed
+        switch (type){
+            case "daily":
+                // TODO: Finish implementing
+                presenter.interfaceScreen("Here is the planner information: \n" + plannerController.toString(plannerID)
+                + "\n" + "Please give the time you wish to edit. If the given time is not shown in planner, the " +
+                        "closet time agenda will be edited.");
+                String time = scanner.nextLine();
+                presenter.interfaceScreen(("Please enter the content you wish to edit."));
+                String agenda = scanner.nextLine();
+                plannerController.edit(plannerID, time, agenda);
+                presenter.interfaceScreen("Successfully edited.");
+                break;
+            case "project":
+                // TODO test whether the index is out of range.
+                presenter.interfaceScreen("Here is the planner information: \n" + plannerController.toString(plannerID)
+                        + "\n" + "Please give the index of agenda you wish to edit. " +
+                        "If the given time is not shown in planner, the closet time agenda will be edited.");
+                int i = scanner.nextInt();
+                presenter.interfaceScreen(("Please enter the content you wish to edit."));
+                String projectAgenda = scanner.nextLine();
+                plannerController.edit(plannerID, i, projectAgenda);
+                presenter.interfaceScreen("Successfully edited.");
+                break;
+        }
     }
 
     /**

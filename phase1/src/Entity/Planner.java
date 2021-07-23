@@ -62,6 +62,8 @@ public abstract class Planner implements Serializable {
      */
     public abstract Boolean add(String s);
 
+    public abstract String getType();
+
 
     /** Edit agenda to current planner
      *

@@ -194,11 +194,11 @@ public class TextUI {
                                 break;
                             case 'B':
                                 System.out.println("Successfully created a Daily Planner, " +
-                                        "these are the information: \n" + pc.createNewDailyPlanner());
+                                        "these are the information: \n" + pc.toString(pc.createNewDailyPlanner()));
                                 break;
                             case 'C':
                                 System.out.println("Successfully created a Project Planner, " +
-                                        "these are the information: \n" + pc.createNewProjectPlanner());
+                                        "these are the information: \n" + pc.toString(pc.createNewProjectPlanner()));
                                 break;
                             case 'D':
                                 System.out.println("Please enter the Planner type you want to edit, " +

@@ -174,4 +174,13 @@ public class PlannerManager {
         return publicPlanners;
     }
 
+    public String plannerType(int id){
+        if (this.idToPlanner.get(id).getType().equals("daily")){
+            return "daily";
+        }
+        else {
+            return "project";
+        }
+    }
+
 }
