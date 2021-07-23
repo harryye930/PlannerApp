@@ -1,7 +1,9 @@
 package Interface;
 
+import Controller.AccessController;
 import Controller.TemplateController;
 import Entity.Planner;
+import UseCase.AccountManager;
 import UseCase.PlannerManager;
 
 import java.util.ArrayList;
@@ -13,10 +15,13 @@ public class Presenter {
 
     private TemplateController templateController;
     private PlannerManager plannerManager;
+    private AccessController accessController;
 
-    public Presenter(TemplateController templateController, PlannerManager plannerManager){
+    public Presenter(TemplateController templateController, PlannerManager plannerManager,
+                     AccessController accessController){
         this.templateController = templateController;
         this.plannerManager = plannerManager;
+        this.accessController = accessController;
     }
 
     /**
@@ -461,12 +466,11 @@ public class Presenter {
     /**
      * Prints out details of all existing personal planners.
      */
-    //TODO need author
-    public void showAllPersonalPlanners(String author){
-        ArrayList<Integer> plannerIDs =  plannerManager.getPlannersByAuthor(author);
+    public void showAllPersonalPlanners(String retriever){
+        ArrayList<String> plannerIDs =  this.accessController.getPlanners(retriever);
         StringBuilder personalPlanners = new StringBuilder();
-        for (int plannerID: plannerIDs){
-            personalPlanners.append(plannerManager.findPlanner(plannerID).toString());
+        for (String plannerID: plannerIDs){
+            personalPlanners.append(plannerManager.findPlanner(Integer.parseInt(plannerID)).toString());
             personalPlanners.append("\n");
         }
         System.out.println(personalPlanners);

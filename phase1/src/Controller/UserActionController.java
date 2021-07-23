@@ -36,7 +36,7 @@ public class UserActionController {
         plannerManager = new PlannerManager();
         // TODO: pc.load();
 
-        presenter = new Presenter(templateController, plannerManager);
+        presenter = new Presenter(templateController, plannerManager, accessController);
         scanner = new Scanner(System.in);
     }
 
@@ -195,8 +195,7 @@ public class UserActionController {
                 presenter.showPasswordUnmatchedScreen(); // display message showing that the password doesn't match
             }
         } while (!passwordConfirmed); // continue if the password is not confirmed
-        accessController.createAccount(email, username, password);  // TODO: can this USERID being returned be used as currentRetriever
-        currentRetriever = username;
+        currentRetriever = accessController.createAccount(email, username, password);  // TODO: can this USERID being returned be used as currentRetriever
         // ac.save(); // TODO: I think account information should be saved after account creation
         presenter.showAccountCreatedScreen(username); // display message showing that new account with username has been created
     }
@@ -205,16 +204,16 @@ public class UserActionController {
      * Allows a user to log-in to their account.
      */
     private void logIn() {
-        String username;
+        String userRetriever;
         String password;
         boolean loginSuccess = false;  // indicates whether the log-in was successful or not
         do {
-            presenter.showLoginScreen(0); // ask user for username or email
-            username = scanner.nextLine();
+            presenter.showLoginScreen(0); // ask user for userRetriever or email
+            userRetriever = scanner.nextLine();
             presenter.showLoginScreen(1); // ask user for password
             password = scanner.nextLine();
-            if (accessController.logIn(username, password)) {
-                currentRetriever = username;
+            if (accessController.logIn(userRetriever, password)) {
+                currentRetriever = userRetriever;
                 loginSuccess = true;
             } else {
                 presenter.showLoginFailedScreen(); // display message showing invalid login credentials entered
@@ -325,7 +324,7 @@ public class UserActionController {
 
         switch(userInput){
             case "A": //edit personal planners
-//                presenter.showAllPersonalPlanners(); // display all personal planners // TODO need author
+                presenter.showAllPersonalPlanners(currentRetriever); // display all personal planners
                 presenter.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
                 plannerID = Integer.parseInt(scanner.nextLine()); // gets ID of planner user wants to edit
                 personalPlannerEditOptions(plannerID);
@@ -435,12 +434,14 @@ public class UserActionController {
                 // TODO: to be separated into presenter and USA
                 int dailyPlannerId = plannerController.createNewDailyPlanner();
                 plannerController.setPlannerAuthor(dailyPlannerId, userId);
+                accessController.setPlanner(currentRetriever, ((Integer) dailyPlannerId).toString());
                 System.out.println("these are the information: \n" + plannerController.toString(dailyPlannerId));
                 break;
             case "B": // project
                 // TODO: to be separated into presenter and USA
                 int projectPlannerId = plannerController.createNewProjectPlanner();
                 plannerController.setPlannerAuthor(projectPlannerId, userId);
+                accessController.setPlanner(currentRetriever, ((Integer) projectPlannerId).toString());
                 System.out.println("Successfully created Project Planner, " +
                         "these are the information: \n" + plannerController.toString(projectPlannerId));
 
