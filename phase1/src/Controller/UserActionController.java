@@ -424,12 +424,9 @@ public class UserActionController {
     private void editPlannerAgendaOptions(int plannerID){
 //         TODO RAYMOND
         String type = plannerController.getType(plannerID);
-//         TODO: H&R to implement getType(plannerID): returns type of planner: "daily" or "project"
-//         plannerController.showPlannerType(type);
-//         display type of selected planner: daily or project //TODO: uncomment after previous line fixed
+
         switch (type){
             case "daily":
-                // TODO: Finish implementing
                 presenter.interfaceScreen("Here is the planner information: \n" + plannerController.toString(plannerID)
                 + "\n" + "Please give the time you wish to edit. If the given time is not shown in planner, the " +
                         "closet time agenda will be edited.");
