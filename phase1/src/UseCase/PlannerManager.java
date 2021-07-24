@@ -22,7 +22,7 @@ public class PlannerManager {
      * @param endTime end time of planner
      * @return true iff a new DailyPlanner is created
      */
-    public int NewDailyPlanner(String plannerName, String startTime, String endTime){
+    public int newDailyPlanner(String plannerName, String startTime, String endTime){
 
         DailyPlanner dailyPlanner = new DailyPlanner(plannerName, startTime, endTime, 60);
         this.idToPlanner.put(dailyPlanner.getID(), dailyPlanner);
@@ -35,7 +35,7 @@ public class PlannerManager {
      * @param plannerName name of planner
      * @return true iff a new ProjectPlanner is correctly created
      */
-    public int NewProjectPlanner(String plannerName){
+    public int newProjectPlanner(String plannerName){
 
         ProjectPlanner projectPlanner = new ProjectPlanner(plannerName);
         this.idToPlanner.put(projectPlanner.getID(), projectPlanner);
@@ -56,7 +56,7 @@ public class PlannerManager {
      *
      * @return a string representation of the remain tasks for the daily planners.
      */
-    public String DailyPlannerRemainTasks(int id){
+    public String dailyPlannerRemainTasks(int id){
         if (this.findPlanner(id).getClass() == DailyPlanner.class) {
             return ((DailyPlanner) this.findPlanner(id)).remainTasks();
         }
@@ -78,7 +78,7 @@ public class PlannerManager {
      * @param agenda content of the agenda user wish to edit
      * @return true iff the agenda is correctly edited on current planner
      */
-    public boolean Edit(int id, int i, String agenda){
+    public boolean edit(int id, int i, String agenda){
         this.findPlanner(id).edit(i, agenda);
         return true;
     }
@@ -89,7 +89,7 @@ public class PlannerManager {
      * @param newAgenda: new agenda item
      * @return true iff is correctly edited
      */
-    public boolean Edit(int id, String time, String newAgenda){
+    public boolean edit(int id, String time, String newAgenda){
 
         if (this.findPlanner(id).getClass() == DailyPlanner.class){
             ((DailyPlanner) this.findPlanner(id)).edit(time, newAgenda);
@@ -116,7 +116,7 @@ public class PlannerManager {
      * @param status "private" or "public"
      * @return true iff the status is correctly changed (from "public to "private or vise versa)
      */
-    public boolean ChangePrivacyStatus(int id, String status){
+    public boolean changePrivacyStatus(int id, String status){
         return this.findPlanner(id).ChangePrivacyStatus(status);
     }
 
@@ -140,7 +140,7 @@ public class PlannerManager {
 
     }
 
-    public Boolean DeletePlanner(int id) {
+    public Boolean deletePlanner(int id) {
         if (this.idToPlanner.containsKey(id)){
             this.idToPlanner.remove(id);
             return true;

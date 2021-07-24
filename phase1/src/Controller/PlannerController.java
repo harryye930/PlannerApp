@@ -21,12 +21,12 @@ public class PlannerController {
     }
 
     public int createNewDailyPlanner(){
-        return plannerManager.NewDailyPlanner("daily planner", "09:00", "18:00");
+        return plannerManager.newDailyPlanner("daily planner", "09:00", "18:00");
     }
 
 
     public int createNewProjectPlanner(){
-        return plannerManager.NewProjectPlanner("project planner");
+        return plannerManager.newProjectPlanner("project planner");
     }
 
     public void setPlannerAuthor(int id, String userRetriever){
@@ -47,7 +47,7 @@ public class PlannerController {
      * @return a string of the daily planner remain tasks.
      */
     public String DailyPlannerRemainTasks(int id){
-        return plannerManager.DailyPlannerRemainTasks(id);
+        return plannerManager.dailyPlannerRemainTasks(id);
     }
 
     /** Pass on request to edit planner
@@ -57,7 +57,7 @@ public class PlannerController {
      * @return true iff the agenda is correctly requested to change based on current planner
      */
     public boolean edit(int id, int i, String agenda){
-        return plannerManager.Edit(id, i, agenda);
+        return plannerManager.edit(id, i, agenda);
     }
 
     /** Pass on request to edit daily planner.
@@ -67,7 +67,7 @@ public class PlannerController {
      * @return true iff is correctly request to change.
      */
     public boolean edit(int id, String time, String newAgenda){
-        return plannerManager.Edit(id, time, newAgenda);
+        return plannerManager.edit(id, time, newAgenda);
     }
 
 
@@ -77,11 +77,11 @@ public class PlannerController {
      * @return true iff the status is correctly requested to change. (from "public to "private or vise versa)
      */
     public boolean changePrivacyStatus(int id, String status){
-        return plannerManager.ChangePrivacyStatus(id, status);
+        return plannerManager.changePrivacyStatus(id, status);
     }
 
     public boolean deletePlanner(int id){
-        return this.plannerManager.DeletePlanner(id);
+        return this.plannerManager.deletePlanner(id);
     }
 
     public String showAllPlanners (){

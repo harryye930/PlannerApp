@@ -383,7 +383,7 @@ public class UserActionController {
             case "B": // change privacy setting
                 System.out.println("select private/public");
                 String privacyState = scanner.nextLine();
-                plannerManager.ChangePrivacyStatus(plannerID, privacyState);
+                plannerManager.changePrivacyStatus(plannerID, privacyState);
                 break;
             case "C": // delete planner
                 presenter.showFeatureUnavailableScreen(); // display message showing feature not yet available
