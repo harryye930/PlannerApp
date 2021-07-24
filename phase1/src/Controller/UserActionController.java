@@ -309,7 +309,7 @@ public class UserActionController {
                 plannerViewOptions(); // TODO Charlie need userid -_-
                 break;
             case "B": // edit an existing planner
-                presenter.showAllPersonalPlanners(); // TODO Harry don't understand
+                plannerManager.getPlannersByAuthor(); // TODO Charlie need author name/userid they entered when they create planner, line 459
 
                 // TODO: Raymond to implement this method in presenter
                 //  (present all existing personal planners and their ids)
