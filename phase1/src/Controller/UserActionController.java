@@ -306,17 +306,18 @@ public class UserActionController {
 
         switch (userInput) {
             case "A": // view planners
-                plannerViewOptions();
+                plannerViewOptions(); // TODO Charlie need userid -_-
                 break;
             case "B": // edit an existing planner
-                presenter.showAllPlanners();
-                // TODO: H&R to implement this method in presenter
+                presenter.showAllPersonalPlanners(); // TODO Harry don't understand
+
+                // TODO: Raymond to implement this method in presenter
                 //  (present all existing personal planners and their ids)
                 while (plannerEditOptions()) {
                     presenter.interfaceScreen("Returning to planner edit options...");
                 }
             case "C": // create a new planner
-//                plannerCreateOptions(); TODO: error
+                plannerCreateOptions(); // TODO Charlie need userid -_-
                 break;
             case "D": // exit
                 return false;
@@ -378,7 +379,7 @@ public class UserActionController {
 
         switch (userInput) {
             case "A": // edit planner agenda
-                editPlannerAgendaOptions(plannerID); //TODO: uncomment after implementing this method
+                editPlannerAgendaOptions(plannerID);
                 break;
             case "B": // change privacy setting
                 System.out.println("select private/public");
@@ -390,7 +391,7 @@ public class UserActionController {
                 //TODO: (phase 2) implement delete planner --- I think we can save it for phase 2???
                 break;
             case "D": //return to edit planner menu
-                break; //TODO: implement this
+                break;
         }
     }
 
@@ -409,10 +410,10 @@ public class UserActionController {
 
         switch (userInput){
             case "A": // edit planner agenda
-                editPlannerAgendaOptions(plannerID); //TODO: uncomment after implementing this method
+                editPlannerAgendaOptions(plannerID);
                 break;
             case "B": // return to edit planner menu
-                break; //TODO: implement this
+                break;
         }
     }
 
@@ -461,8 +462,6 @@ public class UserActionController {
 
         presenter.showPlannerCreateMenu(); // display planner creation options: daily, project, exit to planner menu
         userInput = validInput(createOptions);
-        //TODO get user input on name of planner
-        String plannerName =  "TODO PlannerName";
         switch (userInput) {
             case "A": // daily
                 // TODO: to be separated into presenter and USA
@@ -481,14 +480,14 @@ public class UserActionController {
 
                 break;
             case "C": // exit to planner menu
-                break; //TODO: implement this
+                break;
         }
     }
 
     /**
      * Planner options helper method. Allows different options for planner viewing.
      */
-    private void plannerViewOptions() {
+    private void plannerViewOptions(String userId) {
         String userInput;
         String[] viewOptions = {"A", "B", "C"};
 
@@ -496,15 +495,13 @@ public class UserActionController {
         userInput = validInput(viewOptions);
         switch (userInput) {
             case "A": // personal planners
-                // TODO: remains to be implemented
-                System.out.println("view my planners executed"); // TODO: delete
+                plannerController.getPlannerByAuthor(userId);
                 break;
             case "B": // public planners created by others
-                // TODO: remains to be implemented (use AccessController method???)
-                System.out.println("view public planners executed"); // TODO: delete
+                plannerController.getPublicPlanners();
                 break;
             case "C": // exit to planner menu
-                break;  // TODO: this is all this is required here for case C - don't worry!
+                break;  // this is all this is required here for case C - don't worry!
         }
     }
 
