@@ -164,9 +164,9 @@ public class UserActionController {
      */
     private boolean isAdmin() {
         // TODO: below is commented for testing purpose with guest account - uncomment it when done
-//        if (currentRetriever.equals("guest") || !ac.isAdmin(currentRetriever).equals("admin")) {
-//            p.interfaceScreen("Checking your account status...");  // TODO
-//            System.out.println("Sorry, this feature requires an admin status.");  // TODO
+//        if (currentRetriever.equals("guest") || !accessController.isAdmin(currentRetriever).equals("admin")) {
+//            presenter.showCheckAccountPermMessage(); // show message saying "checking account type and permissions"
+//            presenter.showRequiresAdminMessage(); // show message saying "feature requires an admin account"
 //            return false;
 //        }
         return true;

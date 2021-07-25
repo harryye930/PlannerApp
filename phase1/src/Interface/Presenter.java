@@ -29,6 +29,8 @@ public class Presenter {
     private String accountCreatedMessage = "A new account has been created.%nPlease remember your username: %s.%n";
     private String loginFailedMessage = "Invalid username or password. Please try again.\n";
     private String loginSuccessfulMessage = "Login successful.";
+    private String checkAccountPermMessage = "Checking your account type and its permissions...";
+    private String requiresAdminMessage = "Sorry, this feature requires an admin account.";
     private String returnToAccountSettingsMessage = "Returning to account setting options...";
     private String returnToAccountMenuMessage = "Returning to Account Menu...";
 
@@ -338,6 +340,20 @@ public class Presenter {
     }
 
     /**
+     * Prints out message showing that user account type and permissions are being checked, with delay.
+     */
+    public void showCheckAccountPermMessage(){
+        interfaceScreen(checkAccountPermMessage);
+    }
+
+    /**
+     * Prints out message showing that feature requires an admin account.
+     */
+    public void showRequiresAdminMessage(){
+        System.out.println(requiresAdminMessage);
+    }
+
+    /**
      * Prints out Template Menu.
      */
     public void showTemplateMenu(){
@@ -412,7 +428,6 @@ public class Presenter {
         System.out.println(ifContinueEditQuestion);
     }
 
-    //TODO: add new things that can be deleted
     /**
      * Prints out message asking user to confirm if they want to delete obj (obj can be "template", "account", etc.
      * @param obj Object that user wants to delete.
