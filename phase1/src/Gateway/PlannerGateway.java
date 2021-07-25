@@ -44,7 +44,10 @@ public class PlannerGateway extends Reader<HashMap<Integer, Planner>> {
 
     private boolean readMaps() {
         try {
-            this.idToPlanner = super.readSer(this.filePath);
+            HashMap<Integer, Planner> hm = super.readSer(this.filePath);
+            if (hm == null) {return true;} else{
+                this.idToPlanner = hm;
+            }
             pm.setIdToPlanner(this.idToPlanner);
 
             return true;

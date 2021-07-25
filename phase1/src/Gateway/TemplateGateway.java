@@ -5,7 +5,7 @@ import UseCase.TemplateManager;
 
 import java.util.HashMap;
 
-public class TemplateGateway extends Reader {
+public class TemplateGateway extends Reader<HashMap<Integer, Template>> {
 
     private String filePath = "idToTemplate.ser";
     private HashMap<Integer, Template> idToTemplate = new HashMap<Integer, Template>();
@@ -36,7 +36,7 @@ public class TemplateGateway extends Reader {
     //Private methods
     private boolean readMaps() {
         try {
-            HashMap<Integer, Template> hm = (HashMap<Integer, Template>) super.readSer(this.filePath);
+            HashMap<Integer, Template> hm = super.readSer(this.filePath);
             if (hm == null) {return true;} else {
                 this.idToTemplate = hm;
             }
