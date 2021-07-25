@@ -15,6 +15,7 @@ public class DailyPlanner extends Planner {
     private int startMins;
     private int endHour;
     private int endMins;
+    private int NumAgendas;
 
     /**
      * initialize DailyPlanner
@@ -37,6 +38,7 @@ public class DailyPlanner extends Planner {
         this.timesList = new ArrayList<>();
         this.dailyPlannerTask = new HashMap<>();
         this.ID = super.getID();
+        this.NumAgendas = 0;
         String timeFormat;
         for (int h = this.startHour; h < this.endHour; h++) {
             for (int m = this.startMins; m < 60; ) {
@@ -149,6 +151,7 @@ public class DailyPlanner extends Planner {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
         LocalDateTime now = LocalDateTime.now();
         String time = dtf.format(now);
+        this.NumAgendas ++;
         return this.add(time, s);
     }
 
@@ -192,8 +195,13 @@ public class DailyPlanner extends Planner {
                 String updatedTasks = this.dailyPlannerTask.get(newTime) + ", " + agenda;
                 this.dailyPlannerTask.put(newTime, updatedTasks);
             }
+            this.NumAgendas ++;
             return true;
         }
+    }
+
+    public int getNumAgendas(){
+        return this.NumAgendas;
     }
 
 
