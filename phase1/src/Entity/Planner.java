@@ -55,6 +55,7 @@ public abstract class Planner implements Serializable {
         this.author = author;
     }
 
+
     /** Add agenda to current planner
      *
      * @param s agenda of the agenda user wish to add
@@ -63,6 +64,8 @@ public abstract class Planner implements Serializable {
     public abstract Boolean add(String s);
 
     public abstract String getType();
+
+    public abstract int getNumAgendas();
 
 
     /** Edit agenda to current planner
@@ -97,5 +100,6 @@ public abstract class Planner implements Serializable {
         }
         return false; // the current status is the same as input status
     }
+
 
 }

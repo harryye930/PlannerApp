@@ -442,11 +442,18 @@ public class UserActionController {
                         + "\n" + "Please give the index of agenda you wish to edit. " +
                         "If the given time is not shown in planner, the closet time agenda will be edited.");
                 int i = scanner.nextInt();
-                presenter.interfaceScreen(("Please enter the content you wish to edit."));
-                String projectAgenda = scanner.nextLine();
-                plannerController.edit(plannerID, i, projectAgenda);
-                presenter.interfaceScreen("Successfully edited.");
+                if (i <= plannerController.getNumAgendas(plannerID)){
+                    presenter.interfaceScreen(("Please enter the content you wish to edit."));
+                    String projectAgenda = scanner.nextLine();
+                    plannerController.edit(plannerID, i, projectAgenda);
+                    presenter.interfaceScreen("Successfully edited.");
+                }
+                else{
+                    presenter.interfaceScreen("The number you enter is over the number of agendas provided, please" +
+                            "enter again.");
+                }
                 break;
+
         }
     }
 
