@@ -105,17 +105,17 @@ public class UserActionController {
         switch (userInput) {
             case "A":  // Selected actions on planner
                 while (plannerOptions()) {
-                    presenter.interfaceScreen("Returning to planner options menu...");
+                    presenter.showReturnToPlannerMenuMessage();
                 }
                 break;
             case "B":  // Selected actions on template
                 while (templateOptions()) {
-                    presenter.interfaceScreen("Returning to template options menu...");
+                    presenter.showReturnToTemplateMenuMessage();
                 }
                 break;
             case "C":  // Selected actions on account
                 while (accountOptions(currentRetriever)) {
-                    presenter.interfaceScreen("Returning to account options menu...");
+                    presenter.showReturnToAccountMenuMessage();
                 }
                 break;
             case "D":  // Log out and exit
@@ -247,7 +247,7 @@ public class UserActionController {
                 return false;
             case "B": // edit account info
                 while (accountSetting(retriever)) {
-                    presenter.interfaceScreen("Returning to account setting options...");
+                    presenter.showReturnToAccountSettingsMessage();
                 }
                 break;
             case "C":
@@ -314,7 +314,7 @@ public class UserActionController {
                 // TODO: Raymond to implement this method in presenter
                 //  (present all existing personal planners and their ids)
                 while (plannerEditOptions()) {
-                    presenter.interfaceScreen("Returning to planner edit options...");
+                    presenter.showReturnToPlannerEditMenuMessage();
                 }
             case "C": // create a new planner
                 plannerCreateOptions(currentRetriever);
@@ -424,31 +424,34 @@ public class UserActionController {
     private void editPlannerAgendaOptions(int plannerID){
         String type = plannerController.getType(plannerID);
 
+        presenter.showObjIntroMessage("planner", plannerID); // intro message showing what planner looks like now
+        presenter.showDetailViewPlanner(plannerID);
         switch (type){
             case "daily":
-                presenter.interfaceScreen("Here is the planner information: \n" + plannerController.toString(plannerID)
-                        + "\n" + "Please give the time you wish to edit. If the given time is not shown in planner, the " +
-                        "closet time agenda will be edited.");
+                presenter.showPlannerEditTimeQuestion(); // TODO: Question: how does editing the closest time work?
                 String time = scanner.nextLine();
-                presenter.interfaceScreen(("Please enter the content you wish to edit."));
+                presenter.showPlannerEditAgendaQuestion(); // show message asking user to edit the new agenda for the
+                                                            // time chosen
                 String agenda = scanner.nextLine();
                 plannerController.edit(plannerID, time, agenda);
-                presenter.interfaceScreen("Successfully edited.");
+                presenter.showUpdateCompletedMessage();
                 break;
             case "project":
-                presenter.interfaceScreen("Here is the planner information: \n" + plannerController.toString(plannerID)
-                        + "\n" + "Please give the index of agenda you wish to edit. " +
-                        "If the given time is not shown in planner, the closet time agenda will be edited.");
+                presenter.showPlannerEditIndexQuestion();
+//                presenter.interfaceScreen("Here is the planner information: \n" + plannerController.toString(plannerID)
+//                        + "\n" + "Please give the index of agenda you wish to edit. " +
+//                        "If the given time is not shown in planner, the closet time agenda will be edited.");
+                //TODO: Question: does the "closest time" still apply here since it's now index?
+                //TODO: I think this should be a (while i > plannerController.getNumAgendas(plannerID)) loop?
                 int i = scanner.nextInt();
                 if (i <= plannerController.getNumAgendas(plannerID)){
-                    presenter.interfaceScreen(("Please enter the content you wish to edit."));
+                    presenter.showPlannerEditAgendaQuestion();
                     String projectAgenda = scanner.nextLine();
                     plannerController.edit(plannerID, i, projectAgenda);
-                    presenter.interfaceScreen("Successfully edited.");
+                    presenter.showUpdateCompletedMessage();
                 }
                 else{
-                    presenter.interfaceScreen("The number you enter is over the number of agendas provided, please" +
-                            "enter again.");
+                    presenter.showPlannerReEnterIndexMessage();
                 }
                 break;
 
@@ -469,15 +472,15 @@ public class UserActionController {
                 int dailyPlannerId = plannerController.createNewDailyPlanner();
                 plannerController.setPlannerAuthor(dailyPlannerId, userId);
                 accessController.setPlanner(currentRetriever, ((Integer) dailyPlannerId).toString());
-                presenter.showPlannerCreatedMessage(StringUtils.capitalize(plannerController.getType(dailyPlannerId)),
-                                                    plannerController.toString(dailyPlannerId));
+                presenter.showPlannerCreatedMessage(StringUtils.capitalize(plannerController.getType(dailyPlannerId)));
+                presenter.showDetailViewPlanner(dailyPlannerId);
                 break;
             case "B": // project
                 int projectPlannerId = plannerController.createNewProjectPlanner();
                 plannerController.setPlannerAuthor(projectPlannerId, userId);
                 accessController.setPlanner(currentRetriever, ((Integer) projectPlannerId).toString());
-                presenter.showPlannerCreatedMessage(StringUtils.capitalize(plannerController.getType(projectPlannerId)),
-                                                    plannerController.toString(projectPlannerId));
+                presenter.showPlannerCreatedMessage(StringUtils.capitalize(plannerController.getType(projectPlannerId)));
+                presenter.showDetailViewPlanner(projectPlannerId);
                 break;
             case "C": // exit to planner menu
                 break;
@@ -536,7 +539,7 @@ public class UserActionController {
                     // Note that a user will remain in editing a given template options until they explicitly wish to
                     // exit from that menu.
                     while (aTemplateEditOptions(templateID)) {
-                        presenter.interfaceScreen("Returning to template edit options...");
+                        presenter.showReturnToTemplateEditMenuMessage();
                     }
                 }
                 break;
@@ -544,7 +547,7 @@ public class UserActionController {
                 if (!isAdmin()) {
                     break;
                 }
-                // TODO: (phase 2) implement create template
+                // (phase 2) implement create template
                 presenter.showFeatureUnavailableScreen();
                 break;
             case MAIN_MENU:
@@ -609,7 +612,7 @@ public class UserActionController {
                 presenter.showConfirmDeleteQuestion("template"); // confirm if user wants to delete template
                 presenter.showDetailViewTemplate(templateID);// visualize the template
                 if (validInput(USER_DECISION).equals("yes")) {
-                    // TODO: (phase 2) implement delete template
+                    // (phase 2) implement delete template
                     presenter.showFeatureUnavailableScreen();
                 }
                 return false;

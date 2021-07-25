@@ -29,9 +29,11 @@ public class Presenter {
     private String accountCreatedMessage = "A new account has been created.%nPlease remember your username: %s.%n";
     private String loginFailedMessage = "Invalid username or password. Please try again.\n";
     private String loginSuccessfulMessage = "Login successful.";
+    private String returnToAccountSettingsMessage = "Returning to account setting options...";
+    private String returnToAccountMenuMessage = "Returning to Account Menu...";
 
     private String idForEditQuestion = "Which %s would you like to edit? Please enter the ID.%n";
-    private String templateIntroMessage = "You have selected %s with ID %d. " +
+    private String objectIntroMessage = "You have selected %s with ID %d. " +
             "This is what the %s currently looks like: %n";
     private String editNewNameQuestion = "Please enter the desired new name of the %s.%n";
     private String ifContinueEditQuestion = "Would you like to make another edit? Enter \"yes\" or \"no\".\n";
@@ -42,9 +44,19 @@ public class Presenter {
     private String updatingTemplateMessage = "Please wait while we are updating your template...";
     private String updateCompletedMessage = "Update is completed: ";
     private String returnToEditPromptsMenuMessage = "Returning to the edit prompts menu...";
+    private String returnToTemplateEditMenuMessage = "Returning to template edit options...";
+    private String returnToTemplateMenuMessage = "Returning to Template Menu...";
 
     private String showPlannerTypeMessage = "You have selected a planner of type: %s.%n";
-    private String plannerCreatedMessage = "%s planner successfully created. This is what it looks like: %n%s";
+    private String plannerCreatedMessage = "%s planner successfully created. This is what it looks like: %n";
+    private String plannerEditTimeQuestion = "Please enter the time slot for which you'd like to edit the agenda. If " +
+            "the time slot entered is not in planner, the agenda of the closest time will be edited.";
+    private String plannerEditAgendaQuestion = "Please enter the new agenda.";
+    private String plannerEditIndexQuestion = "Please enter the index for which you'd like to edit the agenda.";
+    private String plannerReEnterIndexMessage = "The index entered is out of range (exceeds the number of existing " +
+            "agendas). Please try again.";
+    private String returnToPlannerEditMenuMessage = "Returning to planner edit options...";
+    private String returnToPlannerMenuMessage = "Returning to Planner Menu...";
 
     // Menus
     private String loginMenu =
@@ -375,7 +387,7 @@ public class Presenter {
      * @param ID ID of the template or planner selected.
      */
     public void showObjIntroMessage(String obj, int ID){
-        System.out.printf((templateIntroMessage), obj, ID, obj);
+        System.out.printf((objectIntroMessage), obj, ID, obj);
     }
 
     /**
@@ -454,10 +466,24 @@ public class Presenter {
     }
 
     /**
-     * Prints out message showing that the program is returning to the edit prompts menu.
+     * Prints out message showing that the program is returning to the edit prompts menu with delay.
      */
     public void showReturnToEditPromptsMenuMessage(){
         interfaceScreen(returnToEditPromptsMenuMessage);
+    }
+
+    /**
+     * Prints out message showing that the program is returning to the template edit menu with delay.
+     */
+    public void showReturnToTemplateEditMenuMessage(){
+        interfaceScreen(returnToTemplateEditMenuMessage);
+    }
+
+    /**
+     * Prints out message showing that the program is returning to the Template Menu with delay.
+     */
+    public void showReturnToTemplateMenuMessage(){
+        interfaceScreen(returnToTemplateMenuMessage);
     }
 
     /**
@@ -485,6 +511,20 @@ public class Presenter {
                 String.format(editAccountInfo, "current password"),
                 String.format(editAccountInfo, "new password")};
         System.out.println(editAccountPrompts[index]);
+    }
+
+    /**
+     * Prints out message showing that the program is returning to account setting options with delay.
+     */
+    public void showReturnToAccountSettingsMessage(){
+        interfaceScreen(returnToAccountSettingsMessage);
+    }
+
+    /**
+     * Prints out message showing that the program is returning to the Account Menu with delay.
+     */
+    public void showReturnToAccountMenuMessage(){
+        interfaceScreen(returnToAccountMenuMessage);
     }
 
     /**
@@ -573,13 +613,52 @@ public class Presenter {
     }
 
     /**
-     * Prints out message showing that planner of type plannerType has been created successfully, and prints out the
-     * string representation of the created planner.
+     * Prints out message showing that planner of type plannerType has been created successfully.
      * @param plannerType Type of the created planner.
-     * @param strRep String representation of the planner
      */
-    public void showPlannerCreatedMessage(String plannerType, String strRep){
-        System.out.printf(plannerCreatedMessage, plannerType, strRep);
+    public void showPlannerCreatedMessage(String plannerType){
+        System.out.printf(plannerCreatedMessage, plannerType);
     }
 
+    /**
+     * Prints out message asking for the time slot in the planner that the user would like to edit the agenda for.
+     */
+    public void showPlannerEditTimeQuestion(){
+        System.out.println(plannerEditTimeQuestion);
+    }
+
+    /**
+     * Prints out message asking user to enter the new agenda for the planner.
+     */
+    public void showPlannerEditAgendaQuestion(){
+        System.out.println(plannerEditAgendaQuestion);
+    }
+
+    /**
+     * Prints out message asking for the index in the planner that the user would like to edit the agenda for.
+     */
+    public void showPlannerEditIndexQuestion(){
+        System.out.println(plannerEditIndexQuestion);
+    }
+
+    /**
+     * Prints out message showing that the index entered for planner is out of range, and asking user to try again.
+     */
+    public void showPlannerReEnterIndexMessage(){
+        System.out.println(plannerReEnterIndexMessage);
+    }
+
+    /**
+     * Prints out message showing that the program is returning to the planner edit menu with delay.
+     */
+    public void showReturnToPlannerEditMenuMessage(){
+        interfaceScreen(returnToPlannerEditMenuMessage);
+    }
+
+    /**
+     * Prints out message showing that the program is returning to the Planner Menu with delay.
+     */
+    public void showReturnToPlannerMenuMessage(){
+        interfaceScreen(returnToPlannerMenuMessage);
+    }
 }
