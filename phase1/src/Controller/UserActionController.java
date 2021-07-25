@@ -306,10 +306,10 @@ public class UserActionController {
 
         switch (userInput) {
             case "A": // view planners
-                plannerViewOptions(); // TODO Charlie need userid -_-
+                plannerViewOptions(currentRetriever);
                 break;
             case "B": // edit an existing planner
-                plannerManager.getPlannersByAuthor(); // TODO Charlie need author name/userid they entered when they create planner, line 459
+                plannerManager.getPlannersByAuthor(currentRetriever);
 
                 // TODO: Raymond to implement this method in presenter
                 //  (present all existing personal planners and their ids)
@@ -317,7 +317,7 @@ public class UserActionController {
                     presenter.interfaceScreen("Returning to planner edit options...");
                 }
             case "C": // create a new planner
-                plannerCreateOptions(); // TODO Charlie need userid -_-
+                plannerCreateOptions(currentRetriever);
                 break;
             case "D": // exit
                 return false;
