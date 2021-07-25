@@ -422,13 +422,12 @@ public class UserActionController {
      * @param plannerID is the unique id of the planner being edited.
      */
     private void editPlannerAgendaOptions(int plannerID){
-//         TODO RAYMOND
         String type = plannerController.getType(plannerID);
 
         switch (type){
             case "daily":
                 presenter.interfaceScreen("Here is the planner information: \n" + plannerController.toString(plannerID)
-                + "\n" + "Please give the time you wish to edit. If the given time is not shown in planner, the " +
+                        + "\n" + "Please give the time you wish to edit. If the given time is not shown in planner, the " +
                         "closet time agenda will be edited.");
                 String time = scanner.nextLine();
                 presenter.interfaceScreen(("Please enter the content you wish to edit."));
@@ -437,7 +436,6 @@ public class UserActionController {
                 presenter.interfaceScreen("Successfully edited.");
                 break;
             case "project":
-                // TODO test whether the index is out of range.
                 presenter.interfaceScreen("Here is the planner information: \n" + plannerController.toString(plannerID)
                         + "\n" + "Please give the index of agenda you wish to edit. " +
                         "If the given time is not shown in planner, the closet time agenda will be edited.");
