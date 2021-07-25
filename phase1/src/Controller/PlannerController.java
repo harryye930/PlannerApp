@@ -100,4 +100,8 @@ public class PlannerController {
         return plannerManager.plannerType(id);
     }
 
+    public int getNumAgendas(int id) {
+        return plannerManager.getNumAgendas(id);
+    }
+
 }
