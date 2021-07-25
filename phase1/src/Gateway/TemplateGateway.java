@@ -36,8 +36,10 @@ public class TemplateGateway extends Reader {
     //Private methods
     private boolean readMaps() {
         try {
-            this.idToTemplate = (HashMap<Integer, Template>) super.readSer(this.filePath);
-
+            HashMap<Integer, Template> hm = (HashMap<Integer, Template>) super.readSer(this.filePath);
+            if (hm == null) {return true;} else {
+                this.idToTemplate = hm;
+            }
             for (Template temp: this.idToTemplate.values()) {
                 tm.addTemplate(temp);
             }
