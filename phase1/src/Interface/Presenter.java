@@ -39,8 +39,12 @@ public class Presenter {
     private String featureUnavailableMessage = "Feature is not yet available. Please check back later!";
     private String templatePromptsIntroMessage = "Here are the current prompts: \n";
     private String idForEditPromptQuestion = "Please enter the ID of the prompt you'd like to %s.%n";
+    private String updatingTemplateMessage = "Please wait while we are updating your template...";
+    private String updateCompletedMessage = "Update is completed: ";
+    private String returnToEditPromptsMenuMessage = "Returning to the edit prompts menu...";
 
     private String showPlannerTypeMessage = "You have selected a planner of type: %s.%n";
+    private String plannerCreatedMessage = "%s planner successfully created. This is what it looks like: %n%s";
 
     // Menus
     private String loginMenu =
@@ -77,7 +81,7 @@ public class Presenter {
             "B. Edit an existing template (Admin Only) \n" +
             "C. Create a new template (Admin Only) \n" +
             "\nTo return to the MAIN MENU, enter \"m\".\n" +
-            "=========================================================================";;
+            "=========================================================================";
     private String plannerMenu =
             "=========================================================================\n"+
             "This is the Planner Menu. " +
@@ -86,7 +90,7 @@ public class Presenter {
             "B. Edit an existing planner \n" +
             "C. Create a new planner \n" +
             "\nTo return to the MAIN MENU, enter \"m\".\n" +
-            "=========================================================================";;
+            "=========================================================================";
 
     // Sub-menus
     // Account sub-menus
@@ -435,6 +439,28 @@ public class Presenter {
     }
 
     /**
+     * Prints out interface screen with message showing that template is being updated.
+     */
+    public void showUpdatingTemplateMessage(){
+        interfaceScreen(updatingTemplateMessage);
+    }
+
+    /**
+     * Prints out message showing that update is completed. Universal message as it does not specify what update
+     * has been completed.
+     */
+    public void showUpdateCompletedMessage(){
+        System.out.println(updateCompletedMessage);
+    }
+
+    /**
+     * Prints out message showing that the program is returning to the edit prompts menu.
+     */
+    public void showReturnToEditPromptsMenuMessage(){
+        interfaceScreen(returnToEditPromptsMenuMessage);
+    }
+
+    /**
      * Prints out account menu.
      */
     public void showAccountMenu(){
@@ -544,6 +570,16 @@ public class Presenter {
      */
     public void showPlannerCreateMenu(){
         System.out.println(plannerCreateMenu);
+    }
+
+    /**
+     * Prints out message showing that planner of type plannerType has been created successfully, and prints out the
+     * string representation of the created planner.
+     * @param plannerType Type of the created planner.
+     * @param strRep String representation of the planner
+     */
+    public void showPlannerCreatedMessage(String plannerType, String strRep){
+        System.out.printf(plannerCreatedMessage, plannerType, strRep);
     }
 
 }

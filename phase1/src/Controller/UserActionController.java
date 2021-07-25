@@ -2,15 +2,15 @@ package Controller;
 
 import Interface.Presenter;
 import UseCase.PlannerManager;
+import com.sun.xml.internal.ws.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Scanner;
 
 /**
  * UserActionController manages user actions.
- * Allocates specific tasks to controllers that are responsible for.
+ * Allocates specific tasks to controllers that should be responsible for them.
  */
 public class UserActionController {
 
@@ -111,7 +111,7 @@ public class UserActionController {
             case "B":  // Selected actions on template
                 while (templateOptions()) {
                     presenter.interfaceScreen("Returning to template options menu...");
-                };
+                }
                 break;
             case "C":  // Selected actions on account
                 while (accountOptions(currentRetriever)) {
@@ -461,20 +461,18 @@ public class UserActionController {
         userInput = validInput(createOptions);
         switch (userInput) {
             case "A": // daily
-                // TODO: to be separated into presenter and USA
                 int dailyPlannerId = plannerController.createNewDailyPlanner();
                 plannerController.setPlannerAuthor(dailyPlannerId, userId);
                 accessController.setPlanner(currentRetriever, ((Integer) dailyPlannerId).toString());
-                System.out.println("these are the information: \n" + plannerController.toString(dailyPlannerId));
+                presenter.showPlannerCreatedMessage(StringUtils.capitalize(plannerController.getType(dailyPlannerId)),
+                                                    plannerController.toString(dailyPlannerId));
                 break;
             case "B": // project
-                // TODO: to be separated into presenter and USA
                 int projectPlannerId = plannerController.createNewProjectPlanner();
                 plannerController.setPlannerAuthor(projectPlannerId, userId);
                 accessController.setPlanner(currentRetriever, ((Integer) projectPlannerId).toString());
-                System.out.println("Successfully created Project Planner, " +
-                        "these are the information: \n" + plannerController.toString(projectPlannerId));
-
+                presenter.showPlannerCreatedMessage(StringUtils.capitalize(plannerController.getType(projectPlannerId)),
+                                                    plannerController.toString(projectPlannerId));
                 break;
             case "C": // exit to planner menu
                 break;
@@ -564,11 +562,9 @@ public class UserActionController {
         switch (userInput) {
             case "A": // summary view (preview)
                 presenter.showPreviewAllTemplates();
-                System.out.println("preview template executed"); // TODO: delete
                 break;
             case "B": // detailed view
                 presenter.showDetailViewAllTemplates();
-                System.out.println("detailed template view executed"); // TODO: delete
                 break;
             case "C": // exit to template menu
                 break;
@@ -594,14 +590,14 @@ public class UserActionController {
             case "A": // edit template name
                 presenter.showEditNewNameQuestion("template"); // display message asking user to enter a new name
                 String newTemplateName = scanner.nextLine();  // new template name user wants to assign
-                presenter.interfaceScreen("Please wait while we are updating your template..."); // TODO
+                presenter.showUpdatingTemplateMessage(); // show message saying template is being updated please wait
                 templateController.editTemplateName(templateID, newTemplateName);
-                System.out.println("Update is completed: "); // TODO: added
-                System.out.println(templateController.detailViewTemplate(templateID));;  // TODO: added
+                presenter.showUpdateCompletedMessage(); // show message saying that update is completed
+                presenter.showDetailViewTemplate(templateID); // prints out detail view of template
                 break;
             case "B": // edit template prompts
                 while (editPrompts(templateID)) {
-                    presenter.interfaceScreen("Returning to the edit prompts menu...");
+                    presenter.showReturnToEditPromptsMenuMessage(); //show message saying returning to edit prompts menu
                 }
                 break;
             case "C": // delete template
@@ -652,10 +648,11 @@ public class UserActionController {
                     presenter.showEditNewNameQuestion("prompt"); // display message asking user to enter desired new name
                     String newPromptName = scanner.nextLine();
 
-                    presenter.interfaceScreen("Please wait while we are updating your template...");  // TODO
+                    presenter.showUpdatingTemplateMessage(); // show message saying that template is being updated
+                                                             // please wait
                     templateController.renameTemplatePrompt(templateID, promptID, newPromptName);
-                    System.out.println("Update is completed: "); // TODO: added
-                    System.out.println(templateController.detailViewTemplate(templateID));;  // TODO: added
+                    presenter.showUpdateCompletedMessage(); // show message saying that update is completed
+                    presenter.showDetailViewTemplate(templateID); // show detail view of template
 
                     // Ask user if they wish to continue editing other prompts.
                     presenter.showIfContinueEditQuestion();
