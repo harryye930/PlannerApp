@@ -438,10 +438,10 @@ public class UserActionController {
                 //TODO: Raymond to double check if this should be a (while i > plannerController.getNumAgendas(plannerID)) loop?
                 int i = scanner.nextInt();
                 scanner.nextLine();
-                if (i <= plannerController.getNumAgendas(plannerID)){
+                if (i - 1 <= plannerController.getNumAgendas(plannerID) && i > 0){
                     presenter.showPlannerEditAgendaQuestion();
                     String projectAgenda = scanner.nextLine();
-                    plannerController.edit(plannerID, i, projectAgenda);
+                    plannerController.edit(plannerID, i - 1, projectAgenda);
                     presenter.showUpdateCompletedMessage();
                 }
                 else{
