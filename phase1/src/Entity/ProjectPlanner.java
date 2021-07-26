@@ -136,6 +136,11 @@ public class ProjectPlanner extends Planner {
         }
     }
 
+    /**
+     * delete the agenda from the task
+     * @param agenda the String representation of the agenda
+     * @return true if successfully removed agenda from task; false if otherwise.
+     */
     public boolean delete(String agenda) {
         if (!this.tasks.contains(agenda)){ // if agenda is not one of the task
             return false;
@@ -148,6 +153,10 @@ public class ProjectPlanner extends Planner {
         }
     }
 
+    /**
+     * get the number of agendas of this planner
+     * @return int of number of agendas.
+     */
     public int getNumAgendas(){
         return this.NumAgendas;
     }
