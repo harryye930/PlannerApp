@@ -33,7 +33,7 @@ public class UserActionController {
         templateController = new TemplateController();
         templateController.load();
         plannerController = new PlannerController();
-        // pc.load();
+        plannerController.load();
 
         presenter = new Presenter(templateController, plannerController, accessController);
         scanner = new Scanner(System.in);
@@ -137,7 +137,7 @@ public class UserActionController {
         presenter.showSavingInfoScreen();
         accessController.save();
         templateController.save();
-        // pc.save()
+        plannerController.save();
         presenter.showSavingSuccessfulScreen();
     }
 
@@ -281,7 +281,11 @@ public class UserActionController {
                 String oldPassword = scanner.nextLine();
                 presenter.showEditAccountPrompts(2);// display message asking user to enter new password
                 String newPassword = scanner.nextLine();
-                accessController.changePassword(retriever, oldPassword, newPassword);
+                if (accessController.changePassword(retriever, oldPassword, newPassword)) {
+                    System.out.println("Reset success.");
+                } else {
+                    System.out.println("The password you entered is incorrect, please try again or enter q to bo back");
+                }
                 break;
             case "C": // return to account menu
                 return false;
@@ -314,8 +318,10 @@ public class UserActionController {
                 while (plannerEditOptions()) {
                     presenter.showReturnToPlannerEditMenuMessage();
                 }
+                plannerController.save();
             case "C": // create a new planner
                 plannerCreateOptions(currentRetriever);
+                plannerController.save();
                 break;
             case "D": // exit
                 return false;
