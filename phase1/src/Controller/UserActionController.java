@@ -323,7 +323,7 @@ public class UserActionController {
                 plannerCreateOptions(currentRetriever);
                 plannerController.save();
                 break;
-            case "D": // exit
+            case "m": // exit
                 return false;
         }
         // We know that the user didn't select return to main menu and that the requested action by the user is completed.
