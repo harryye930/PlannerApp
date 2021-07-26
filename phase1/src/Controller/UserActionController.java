@@ -80,7 +80,7 @@ public class UserActionController {
                 logIn();
                 break;
             case "C": // guest
-                currentRetriever = "guest";
+                currentRetriever = accessController.createAccount("", "", "");
                 break;
             case QUIT:
                 // User wants to close the program.
@@ -121,10 +121,9 @@ public class UserActionController {
             case "D":  // Log out and exit
                 // Except for the guest account, save all the files (i.e., account, planner, template) and log out user
                 // from their account.
-                if (!currentRetriever.equals("guest")) {
                 saveProgram();
                 accessController.logOut(currentRetriever);
-                }
+
                 return false;
         }
         // A user wants to continue using the features available in the main menu.
