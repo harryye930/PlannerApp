@@ -4,6 +4,7 @@ import Interface.Presenter;
 import UseCase.PlannerManager;
 import com.sun.xml.internal.ws.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -200,7 +201,7 @@ public class UserActionController {
             }
         } while (!passwordConfirmed); // continue if the password is not confirmed
         currentRetriever = accessController.createAccount(email, username, password);
-        // ac.save();
+        accessController.save();
         presenter.showAccountCreatedScreen(currentRetriever); // display message showing that new account with username has been created
     }
 
@@ -491,10 +492,24 @@ public class UserActionController {
         userInput = validInput(viewOptions);
         switch (userInput) {
             case "A": // personal planners
-                plannerController.getPlannerByAuthor(userId);
+                ArrayList<String> arr = accessController.getPlanners(currentRetriever);
+                if (arr.size() == 0) {
+                    System.out.println("No personal planners available yet.");
+                } else {
+                    for (String plannerId : arr) {
+                        plannerController.toString(Integer.parseInt(plannerId));
+                    }
+                }
                 break;
             case "B": // public planners created by others
-                plannerController.getPublicPlanners();
+                ArrayList<Integer> ar = plannerController.getPublicPlanners();
+                if (ar.size() == 0) {
+                    System.out.println("No public planners available yet.");
+                } else {
+                    for (int plannerId : ar) {
+                        plannerController.toString(plannerId);
+                    }
+                }
                 break;
             case "C": // exit to planner menu
                 break;  // this is all this is required here for case C - don't worry!
