@@ -13,8 +13,6 @@ public class PlannerManager {
         this.idToPlanner = new HashMap<>();
     }
 
-
-
     /** Create new DailyPlanner -- default interval 60 mins
      *
      * @param plannerName name of the planner
@@ -185,6 +183,11 @@ public class PlannerManager {
 
     public int getNumAgendas(int id){
         return this.findPlanner(id).getNumAgendas();
+    }
+
+    public String getPrivacyStatus(int id) {
+        Planner planner = this.idToPlanner.get(id);
+        return planner.getPrivacyStatus();
     }
 
 }

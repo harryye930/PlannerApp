@@ -79,10 +79,11 @@ public class AccountManager implements Serializable{
      * @return the account if the account is found, null if otherwise.
      */
     public Account findAccount(String userInput){
-        if (userInput.contains("@")){
-            return emailToAccount.getOrDefault(userInput, null);
-        } else {
+        Account res = emailToAccount.getOrDefault(userInput, null);
+        if (res == null) {
             return idToAccount.getOrDefault(userInput, null);
+        } else {
+            return res;
         }
     }
 
@@ -112,7 +113,8 @@ public class AccountManager implements Serializable{
      */
     private String createTrialAcc(){
         TrialAccount newAccount = new TrialAccount();
-        idToAccount.put(newAccount.getUserId(), newAccount);
+        newAccount.setEmail(newAccount.getUserId());
+        this.addAccount(newAccount);
         return newAccount.getUserId();
     }
 
@@ -214,4 +216,8 @@ public class AccountManager implements Serializable{
         }
     }
 
+    public void removePlanner(String retriever, String plannerId) {
+        UserAccount acc =(UserAccount) this.findAccount(retriever);
+        acc.removePlanner(plannerId);
+    }
 }

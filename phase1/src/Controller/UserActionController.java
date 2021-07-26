@@ -4,6 +4,7 @@ import Interface.Presenter;
 import UseCase.PlannerManager;
 import com.sun.xml.internal.ws.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -17,7 +18,6 @@ public class UserActionController {
     AccessController accessController;
     TemplateController templateController;
     PlannerController plannerController;
-    PlannerManager plannerManager;
     Presenter presenter;
 
     Scanner scanner;
@@ -29,14 +29,13 @@ public class UserActionController {
 
     public UserActionController() {
         accessController = new AccessController();
-        // ac.load();
+        accessController.load();
         templateController = new TemplateController();
         templateController.load();
         plannerController = new PlannerController();
-        plannerManager = new PlannerManager();
-        // pc.load();
+        plannerController.load();
 
-        presenter = new Presenter(templateController, plannerManager, accessController);
+        presenter = new Presenter(templateController, plannerController, accessController);
         scanner = new Scanner(System.in);
     }
 
@@ -136,9 +135,9 @@ public class UserActionController {
      */
     private void saveProgram() {
         presenter.showSavingInfoScreen();
-        // ac.save();
-        // tc.save();
-        // pc.save()
+        accessController.save();
+        templateController.save();
+        plannerController.save();
         presenter.showSavingSuccessfulScreen();
     }
 
@@ -176,7 +175,6 @@ public class UserActionController {
     // 1. Account Related Methods - all the helper methods mainly involving accounts are listed below.
     //=================================================================================================================
 
-    // TODO: Move
     /**
      * Allows a user to create an account. The same password must be entered consecutively for the program to proceed
      * with creating a new account for this user.
@@ -203,11 +201,10 @@ public class UserActionController {
             }
         } while (!passwordConfirmed); // continue if the password is not confirmed
         currentRetriever = accessController.createAccount(email, username, password);
-        // ac.save();
+        accessController.save();
         presenter.showAccountCreatedScreen(currentRetriever); // display message showing that new account with username has been created
     }
 
-    // TODO: Move
     /**
      * Allows a user to log-in to their account.
      */
@@ -260,7 +257,6 @@ public class UserActionController {
         return true;
     }
 
-    // TODO: Move
     /**
      * Enables a user to change either edit their username or password.
      * Returns true if the user wants to stay in this menu; otherwise, returns false.
@@ -285,7 +281,11 @@ public class UserActionController {
                 String oldPassword = scanner.nextLine();
                 presenter.showEditAccountPrompts(2);// display message asking user to enter new password
                 String newPassword = scanner.nextLine();
-                accessController.changePassword(retriever, oldPassword, newPassword);
+                if (accessController.changePassword(retriever, oldPassword, newPassword)) {
+                    System.out.println("Reset success.");
+                } else {
+                    System.out.println("The password you entered is incorrect, please try again or enter q to bo back");
+                }
                 break;
             case "C": // return to account menu
                 return false;
@@ -314,13 +314,16 @@ public class UserActionController {
                 plannerViewOptions(currentRetriever);
                 break;
             case "B": // edit an existing planner
+                // plannerManager.getPlannersByAuthor(currentRetriever); TODO: Harry to double check if we need this
                 while (plannerEditOptions()) {
                     presenter.showReturnToPlannerEditMenuMessage();
                 }
+                plannerController.save();
             case "C": // create a new planner
                 plannerCreateOptions(currentRetriever);
+                plannerController.save();
                 break;
-            case "D": // exit
+            case "m": // exit
                 return false;
         }
         // We know that the user didn't select return to main menu and that the requested action by the user is completed.
@@ -329,7 +332,6 @@ public class UserActionController {
         return true;
     }
 
-    // TODO: Move
     /**
      * Planner options helper method. Enables several options for editing planners.
      * Planner edit options includes edit personal planners, edit other public planners, return to planner menu.
@@ -366,7 +368,6 @@ public class UserActionController {
         return true;
     }
 
-    // TODO: Move
     /**
      * Provides different edit options for editing a personal planner.
      * @param plannerID is the unique id of the planner being edited.
@@ -387,7 +388,7 @@ public class UserActionController {
             case "B": // change privacy setting
                 System.out.println("select private/public");
                 String privacyState = scanner.nextLine();
-                plannerManager.changePrivacyStatus(plannerID, privacyState);
+                plannerController.changePrivacyStatus(plannerID, privacyState);
                 break;
             case "C": // delete planner
                 presenter.showFeatureUnavailableScreen(); // display message showing feature not yet available
@@ -397,7 +398,6 @@ public class UserActionController {
         }
     }
 
-    // TODO: Move
     /**
      * Provides different edit options for editing a public planner.
      * @param plannerID is the unique id of the planner being edited.
@@ -420,7 +420,6 @@ public class UserActionController {
         }
     }
 
-    // TODO: Move
     /**
      * Provides different edit options for editing a planner agenda.
      * @param plannerID is the unique id of the planner being edited.
@@ -432,7 +431,7 @@ public class UserActionController {
         presenter.showDetailViewPlanner(plannerID);
         switch (type){
             case "daily":
-                presenter.showPlannerEditTimeQuestion();
+                presenter.showPlannerEditTimeQuestion(); // TODO: Harry to double check how the closest time works
                 String time = scanner.nextLine();
                 presenter.showPlannerEditAgendaQuestion(); // show message asking user to edit the new agenda for the
                                                             // time chosen
@@ -442,12 +441,13 @@ public class UserActionController {
                 break;
             case "project":
                 presenter.showPlannerEditIndexQuestion();
+                //TODO: Raymond to double check if this should be a (while i > plannerController.getNumAgendas(plannerID)) loop?
                 int i = scanner.nextInt();
                 scanner.nextLine();
-                if (i <= plannerController.getNumAgendas(plannerID)){
+                if (i - 1 <= plannerController.getNumAgendas(plannerID) && i > 0){
                     presenter.showPlannerEditAgendaQuestion();
                     String projectAgenda = scanner.nextLine();
-                    plannerController.edit(plannerID, i, projectAgenda);
+                    plannerController.edit(plannerID, i - 1, projectAgenda);
                     presenter.showUpdateCompletedMessage();
                 }
                 else{
@@ -458,7 +458,6 @@ public class UserActionController {
         }
     }
 
-    // TODO: Move
     /**
      * Planner options helper method. Allows different options for planner creation.
      */
@@ -488,7 +487,6 @@ public class UserActionController {
         }
     }
 
-    // TODO: Move
     /**
      * Planner options helper method. Allows different options for planner viewing.
      */
@@ -500,10 +498,24 @@ public class UserActionController {
         userInput = validInput(viewOptions);
         switch (userInput) {
             case "A": // personal planners
-                plannerController.getPlannerByAuthor(userId);
+                ArrayList<String> arr = accessController.getPlanners(currentRetriever);
+                if (arr.size() == 0) {
+                    System.out.println("No personal planners available yet.");
+                } else {
+                    for (String plannerId : arr) {
+                        plannerController.toString(Integer.parseInt(plannerId));
+                    }
+                }
                 break;
             case "B": // public planners created by others
-                plannerController.getPublicPlanners();
+                ArrayList<Integer> ar = plannerController.getPublicPlanners();
+                if (ar.size() == 0) {
+                    System.out.println("No public planners available yet.");
+                } else {
+                    for (int plannerId : ar) {
+                        plannerController.toString(plannerId);
+                    }
+                }
                 break;
             case "C": // exit to planner menu
                 break;  // this is all this is required here for case C - don't worry!
@@ -561,7 +573,6 @@ public class UserActionController {
         return true;
     }
 
-    // TODO: Move
     /**
      * Template options helper method. Allows different options for template viewing.
      */
@@ -582,7 +593,6 @@ public class UserActionController {
         }
     }
 
-    // TODO: Move
     /**
      * Template options helper method. Allows different options for editing this template.
      * Returns true if the template exists and the user wants to stay in this menu; otherwise, returns false.
@@ -630,7 +640,6 @@ public class UserActionController {
         return true;
     }
 
-    // TODO: Move
     /**
      * Provides different edit options for editing prompts of this template.
      * Returns true if the user wants to stay in this menu; otherwise, returns false.

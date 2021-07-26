@@ -5,6 +5,8 @@ import Entity.Template;
 import Gateway.TemplateGateway;
 import UseCase.TemplateManager;
 
+import java.util.ArrayList;
+
 /**
  * Controller for Templates.
  */
@@ -131,6 +133,14 @@ public class TemplateController {
      */
     public boolean load() {
         return this.templateGateway.load();
+    }
+
+    /**
+     * Get a collection of template ids.
+     * @return A ArrayList representing the template ids.
+     */
+    public ArrayList<Integer> getAllTemplateIds() {
+        return this.templateManager.getAllTemplateId();
     }
 
 }
