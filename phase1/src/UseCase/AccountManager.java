@@ -113,7 +113,8 @@ public class AccountManager implements Serializable{
      */
     private String createTrialAcc(){
         TrialAccount newAccount = new TrialAccount();
-        idToAccount.put(newAccount.getUserId(), newAccount);
+        newAccount.setEmail(newAccount.getUserId());
+        this.addAccount(newAccount);
         return newAccount.getUserId();
     }
 

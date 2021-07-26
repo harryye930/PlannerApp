@@ -72,8 +72,8 @@ public class AccessController {
      */
     public String createAccount(String email, String userName, String passWord) {
         String id = accManager.createAccount(email);
-        accManager.setPassword(email, passWord);
-        accManager.setUserName(email, userName);
+        accManager.setPassword(id, passWord);
+        accManager.setUserName(id, userName);
         return id;
     }
 
