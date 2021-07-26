@@ -442,7 +442,6 @@ public class UserActionController {
                 break;
             case "project":
                 presenter.showPlannerEditIndexQuestion();
-                //TODO: Raymond to double check if this should be a (while i > plannerController.getNumAgendas(plannerID)) loop?
                 int i = scanner.nextInt();
                 scanner.nextLine();
                 if (i <= plannerController.getNumAgendas(plannerID)){
