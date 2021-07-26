@@ -148,7 +148,7 @@ public class UserActionController {
      * @param valid_options are valid options presented to the user by the program to choose from.
      * @return the valid option user has entered.
      */
-    private String validInput(String[] valid_options) {
+    String validInput(String[] valid_options) {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         List<String> options = Arrays.asList(valid_options);
@@ -329,7 +329,7 @@ public class UserActionController {
         return true;
     }
 
-    // TODO: Move
+
     /**
      * Planner options helper method. Enables several options for editing planners.
      * Planner edit options includes edit personal planners, edit other public planners, return to planner menu.
@@ -342,36 +342,15 @@ public class UserActionController {
 
         presenter.showEditPlannerMenu(); // display planner edit menu
         userInput = validInput(plannerEditOptions);
-        int plannerID;
-
-        switch(userInput){
-            case "A": //edit personal planners
-                presenter.showAllPersonalPlanners(currentRetriever); // display all personal planners
-                presenter.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
-                plannerID = Integer.parseInt(scanner.nextLine()); // gets ID of planner user wants to edit
-                personalPlannerEditOptions(plannerID);
-                break;
-            case "B":  //edit other public planners
-                presenter.showAllPublicPlanners(); // display all public planners
-                presenter.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
-                plannerID = Integer.parseInt(scanner.nextLine()); // gets ID of planner user wants to edit
-                publicPlannerEditOptions(plannerID);
-                break;
-            case "C":
-                return false;
-        }
-        // We know that the user didn't select return to prev. menu and that the requested action by the user is completed.
-        // The user will wants to remain in the <plannerEditOptions> menu until they explicitly indicate their interest to
-        // return to the previous menu.
-        return true;
+        return plannerController.plannerEditOptions(currentRetriever, userInput);
     }
 
-    // TODO: Move
+
     /**
      * Provides different edit options for editing a personal planner.
      * @param plannerID is the unique id of the planner being edited.
      */
-    private void personalPlannerEditOptions(int plannerID){
+    void personalPlannerEditOptions(int plannerID){
         String userInput;
         String[] plannerEditOptions = {"A", "B", "C", "D"}; //options user can choose from
 
@@ -380,29 +359,15 @@ public class UserActionController {
         presenter.showEditPersonalPlannerMenu(); // display personal planner edit menu
         userInput = validInput(plannerEditOptions);
 
-        switch (userInput) {
-            case "A": // edit planner agenda
-                editPlannerAgendaOptions(plannerID);
-                break;
-            case "B": // change privacy setting
-                System.out.println("select private/public");
-                String privacyState = scanner.nextLine();
-                plannerManager.changePrivacyStatus(plannerID, privacyState);
-                break;
-            case "C": // delete planner
-                presenter.showFeatureUnavailableScreen(); // display message showing feature not yet available
-                break;
-            case "D": //return to edit planner menu
-                break;
-        }
+        plannerController.personalPlannerEditOptions(plannerID, userInput);
     }
 
-    // TODO: Move
+
     /**
      * Provides different edit options for editing a public planner.
      * @param plannerID is the unique id of the planner being edited.
      */
-    private void publicPlannerEditOptions(int plannerID){
+    void publicPlannerEditOptions(int plannerID){
         String userInput;
         String[] plannerEditOptions = {"A", "B"};
 
@@ -410,104 +375,33 @@ public class UserActionController {
         presenter.showDetailViewPlanner(plannerID);
         presenter.showEditPublicPlannerMenu(); // display public planner edit menu
         userInput = validInput(plannerEditOptions);
+        plannerController.publicPlannerEditOption(plannerID, userInput);
 
-        switch (userInput){
-            case "A": // edit planner agenda
-                editPlannerAgendaOptions(plannerID);
-                break;
-            case "B": // return to edit planner menu
-                break;
-        }
-    }
+            }
 
-    // TODO: Move
+
     /**
      * Provides different edit options for editing a planner agenda.
      * @param plannerID is the unique id of the planner being edited.
      */
-    private void editPlannerAgendaOptions(int plannerID){
-        String type = plannerController.getType(plannerID);
-
-        presenter.showObjIntroMessage("planner", plannerID); // intro message showing what planner looks like now
-        presenter.showDetailViewPlanner(plannerID);
-        switch (type){
-            case "daily":
-                presenter.showPlannerEditTimeQuestion();
-                String time = scanner.nextLine();
-                presenter.showPlannerEditAgendaQuestion(); // show message asking user to edit the new agenda for the
-                                                            // time chosen
-                String agenda = scanner.nextLine();
-                plannerController.edit(plannerID, time, agenda);
-                presenter.showUpdateCompletedMessage();
-                break;
-            case "project":
-                presenter.showPlannerEditIndexQuestion();
-                int i = scanner.nextInt();
-                scanner.nextLine();
-                if (i <= plannerController.getNumAgendas(plannerID)){
-                    presenter.showPlannerEditAgendaQuestion();
-                    String projectAgenda = scanner.nextLine();
-                    plannerController.edit(plannerID, i, projectAgenda);
-                    presenter.showUpdateCompletedMessage();
-                }
-                else{
-                    presenter.showPlannerReEnterIndexMessage();
-                }
-                break;
-
-        }
+    void editPlannerAgendaOptions(int plannerID){
+        plannerController.editPlannerAgendaOptions(plannerID);
     }
 
-    // TODO: Move
+
     /**
      * Planner options helper method. Allows different options for planner creation.
      */
     private void plannerCreateOptions(String userId) {
-        String userInput;
-        String[] createOptions = {"A", "B", "C"};
-
-        presenter.showPlannerCreateMenu(); // display planner creation options: daily, project, exit to planner menu
-        userInput = validInput(createOptions);
-        switch (userInput) {
-            case "A": // daily
-                int dailyPlannerId = plannerController.createNewDailyPlanner();
-                plannerController.setPlannerAuthor(dailyPlannerId, userId);
-                accessController.setPlanner(currentRetriever, ((Integer) dailyPlannerId).toString());
-                presenter.showPlannerCreatedMessage(StringUtils.capitalize(plannerController.getType(dailyPlannerId)));
-                presenter.showDetailViewPlanner(dailyPlannerId);
-                break;
-            case "B": // project
-                int projectPlannerId = plannerController.createNewProjectPlanner();
-                plannerController.setPlannerAuthor(projectPlannerId, userId);
-                accessController.setPlanner(currentRetriever, ((Integer) projectPlannerId).toString());
-                presenter.showPlannerCreatedMessage(StringUtils.capitalize(plannerController.getType(projectPlannerId)));
-                presenter.showDetailViewPlanner(projectPlannerId);
-                break;
-            case "C": // exit to planner menu
-                break;
-        }
+        plannerController.plannerCreateOptions(userId, currentRetriever);
     }
 
-    // TODO: Move
+
     /**
      * Planner options helper method. Allows different options for planner viewing.
      */
     private void plannerViewOptions(String userId) {
-        String userInput;
-        String[] viewOptions = {"A", "B", "C"};
-
-        presenter.showPlannerViewMenu(); // display planner view options: personal, public, exit to planner menu
-        userInput = validInput(viewOptions);
-        switch (userInput) {
-            case "A": // personal planners
-                plannerController.getPlannerByAuthor(userId);
-                break;
-            case "B": // public planners created by others
-                plannerController.getPublicPlanners();
-                break;
-            case "C": // exit to planner menu
-                break;  // this is all this is required here for case C - don't worry!
-        }
+        plannerController.plannerViewOption(userId);
     }
 
     //=================================================================================================================
