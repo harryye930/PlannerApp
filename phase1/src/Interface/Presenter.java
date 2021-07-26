@@ -1,20 +1,18 @@
 package Interface;
 
 import Controller.AccessController;
+import Controller.PlannerController;
 import Controller.TemplateController;
 import UseCase.PlannerManager;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
-import java.util.Scanner;
-
 public class Presenter {
 
     private TemplateController templateController;
-    private PlannerManager plannerManager;
+    private PlannerController plannerController;
     private AccessController accessController;
 
     //================================================================================================================
@@ -208,10 +206,10 @@ public class Presenter {
     }};
     //================================================================================================================
 
-    public Presenter(TemplateController templateController, PlannerManager plannerManager,
+    public Presenter(TemplateController templateController, PlannerController plannerController,
                      AccessController accessController){
         this.templateController = templateController;
-        this.plannerManager = plannerManager;
+        this.plannerController = plannerController;
         this.accessController = accessController;
     }
 
@@ -595,7 +593,7 @@ public class Presenter {
      * Prints out details of all existing personal planners and planners of others that have been made public.
      */
     public void showAllPlanners(){
-        System.out.println(plannerManager.showAllPlanners());
+        System.out.println(plannerController.showAllPlanners());
     }
 
     /**
@@ -605,7 +603,7 @@ public class Presenter {
         ArrayList<String> plannerIDs =  this.accessController.getPlanners(retriever);
         StringBuilder personalPlanners = new StringBuilder();
         for (String plannerID: plannerIDs){
-            personalPlanners.append(plannerManager.findPlanner(Integer.parseInt(plannerID)).toString());
+            personalPlanners.append(plannerController.toString(Integer.parseInt(plannerID)));
             personalPlanners.append("\n");
         }
         System.out.println(personalPlanners);
@@ -615,7 +613,7 @@ public class Presenter {
      * Prints out details of all existing public planners.
      */
     public void showAllPublicPlanners(){
-        plannerManager.getPublicPlanners();
+        plannerController.getPublicPlanners();
     }
 
     /**
@@ -623,7 +621,7 @@ public class Presenter {
      * @param plannerID ID of planner to get detail view for.
      */
     public void showDetailViewPlanner(int plannerID){
-        System.out.println(plannerManager.toString(plannerID));
+        System.out.println(plannerController.toString(plannerID));
     }
 
     /**

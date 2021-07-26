@@ -17,7 +17,6 @@ public class UserActionController {
     AccessController accessController;
     TemplateController templateController;
     PlannerController plannerController;
-    PlannerManager plannerManager;
     Presenter presenter;
 
     Scanner scanner;
@@ -33,10 +32,9 @@ public class UserActionController {
         templateController = new TemplateController();
         templateController.load();
         plannerController = new PlannerController();
-        plannerManager = new PlannerManager();
         // pc.load();
 
-        presenter = new Presenter(templateController, plannerManager, accessController);
+        presenter = new Presenter(templateController, plannerController, accessController);
         scanner = new Scanner(System.in);
     }
 
@@ -383,7 +381,7 @@ public class UserActionController {
             case "B": // change privacy setting
                 System.out.println("select private/public");
                 String privacyState = scanner.nextLine();
-                plannerManager.changePrivacyStatus(plannerID, privacyState);
+                plannerController.changePrivacyStatus(plannerID, privacyState);
                 break;
             case "C": // delete planner
                 presenter.showFeatureUnavailableScreen(); // display message showing feature not yet available
