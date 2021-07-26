@@ -13,8 +13,6 @@ public class PlannerManager {
         this.idToPlanner = new HashMap<>();
     }
 
-
-
     /** Create new DailyPlanner -- default interval 60 mins
      *
      * @param plannerName name of the planner

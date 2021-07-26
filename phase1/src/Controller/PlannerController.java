@@ -20,22 +20,36 @@ public class PlannerController {
     private UserActionController userActionController;
     private AccessController accessController;
 
-
+    /**
+     * Initialize the PlannerController. Create a new PlannerManager.
+     */
     public PlannerController(){
         this.plannerManager = new PlannerManager();
 
 
     }
 
+    /**
+     * Create a new DailyPlanner with default name "daily planner", start time at 9 am, and endtime at 9 pm.
+     * @return an integer representing the id of the planner
+     */
     public int createNewDailyPlanner(){
         return plannerManager.newDailyPlanner("daily planner", "09:00", "18:00");
     }
 
-
+    /**
+     * Create a new Project Planner with default name "project planner".
+     * @return the integer id of the planner
+     */
     public int createNewProjectPlanner(){
         return plannerManager.newProjectPlanner("project planner");
     }
 
+    /**
+     * Set the author of the planner (a user)
+     * @param id the id of the planner
+     * @param userRetriever The userId of the user
+     */
     public void setPlannerAuthor(int id, String userRetriever){
         plannerManager.setPlannerAuthor(id, userRetriever);
     }
@@ -87,30 +101,59 @@ public class PlannerController {
         return plannerManager.changePrivacyStatus(id, status);
     }
 
+    /**
+     * delete the planner corresponding to the given id.
+     * @param id the integer id of the planner
+     * @return true if successfully deleted, false if otherwise.
+     */
     public boolean deletePlanner(int id){
         return this.plannerManager.deletePlanner(id);
     }
 
+    /**
+     * print all planners to the screen.
+     * @return String representation of all planners.
+     */
     public String showAllPlanners (){
         return plannerManager.showAllPlanners();
     }
 
+    /**
+     * Show all the planners id of one author.
+     * @param author the userId of the author.
+     * @return the ArrayList of integer id of planners.
+     */
     public ArrayList<Integer> getPlannerByAuthor(String author){
         return plannerManager.getPlannersByAuthor(author);
     }
 
+    /**
+     * return an ArrayList of all integer id of all planners made public by all authors.
+     * @return the ArrayList of all public planner's id
+     */
     public ArrayList<Integer> getPublicPlanners(){
         return plannerManager.getPublicPlanners();
     }
 
+    /**
+     * get the type of the planner. could be "daily" or "project" planner.
+     * @param id the id of the planner
+     * @return the String representation of the type of planner.
+     */
     public String getType(int id){
         return plannerManager.plannerType(id);
     }
 
+    /**
+     * Get the number of agendas of a planner corresponding to given integer id.
+     * @param id the integer id of the planner
+     * @return the number of agendas of the planner
+     */
     public int getNumAgendas(int id) {
         return plannerManager.getNumAgendas(id);
     }
-    
+
+
     boolean plannerEditOptions(String currentRetriever, String userInput){
         String[] plannerEditOptions = {"A", "B", "C"};
 
