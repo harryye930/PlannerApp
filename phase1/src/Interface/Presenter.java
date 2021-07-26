@@ -51,8 +51,7 @@ public class Presenter {
 
     private final String SHOW_PLANNER_TYPE_MESSAGE = "You have selected a planner of type: %s.%n";
     private final String PLANNER_CREATED_MESSAGE = "%s planner successfully created. This is what it looks like: %n";
-    private final String PLANNER_EDIT_TIME_QUESTION = "Please enter the time slot for which you'd like to edit the agenda. If " +
-            "the time slot entered is not in planner, the agenda of the closest time will be edited.";
+    private final String PLANNER_EDIT_TIME_QUESTION = "Please enter the time slot for which you'd like to edit the agenda."; // closest time functionality will be added to phase 2
     private final String PLANNER_EDIT_AGENDA_QUESTION = "Please enter the new agenda.";
     private final String PLANNER_EDIT_INDEX_QUESTION = "Please enter the index for which you'd like to edit the agenda.";
     private final String PLANNER_RE_ENTER_INDEX_MESSAGE = "The index entered is out of range (exceeds the number of existing " +

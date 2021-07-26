@@ -292,7 +292,7 @@ public class DailyPlanner extends Planner {
         this.endMins = endMins;
     }
 
-    /**
+    /** for Phase 2
      * take the new agenda start time to the closest minutes based on the interval
      *
      * @param NewStartMins the start time for a agenda

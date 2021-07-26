@@ -41,7 +41,7 @@ public abstract class Planner implements Serializable {
         return ID;
     }
 
-     /** @return a String representing of the planner status.
+     /** @return a String representing the planner status.
      */
     public String getPrivacyStatus() {
         return this.privacyStatus;
