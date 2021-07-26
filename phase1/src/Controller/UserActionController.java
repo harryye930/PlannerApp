@@ -242,8 +242,8 @@ public class UserActionController {
         userInput = validInput(accountOptions);
 
         switch (userInput) {
-            case "A": // log out
-                accessController.logOut(retriever);  // TODO: Should we change this to delete account
+            case "A": // TODO: change this to delete account
+                accessController.logOut(retriever);
                 return false;
             case "B": // edit account info
                 while (accountSetting(retriever)) {
@@ -309,10 +309,7 @@ public class UserActionController {
                 plannerViewOptions(currentRetriever);
                 break;
             case "B": // edit an existing planner
-                plannerManager.getPlannersByAuthor(currentRetriever);
-
-                // TODO: Raymond to implement this method in presenter
-                //  (present all existing personal planners and their ids)
+                // plannerManager.getPlannersByAuthor(currentRetriever); TODO: Harry to double check if we need this
                 while (plannerEditOptions()) {
                     presenter.showReturnToPlannerEditMenuMessage();
                 }
@@ -388,7 +385,6 @@ public class UserActionController {
                 break;
             case "C": // delete planner
                 presenter.showFeatureUnavailableScreen(); // display message showing feature not yet available
-                //TODO: (phase 2) implement delete planner --- I think we can save it for phase 2???
                 break;
             case "D": //return to edit planner menu
                 break;
@@ -428,7 +424,7 @@ public class UserActionController {
         presenter.showDetailViewPlanner(plannerID);
         switch (type){
             case "daily":
-                presenter.showPlannerEditTimeQuestion(); // TODO: Question: how does editing the closest time work?
+                presenter.showPlannerEditTimeQuestion(); // TODO: Harry to double check how the closest time works
                 String time = scanner.nextLine();
                 presenter.showPlannerEditAgendaQuestion(); // show message asking user to edit the new agenda for the
                                                             // time chosen
@@ -438,12 +434,9 @@ public class UserActionController {
                 break;
             case "project":
                 presenter.showPlannerEditIndexQuestion();
-//                presenter.interfaceScreen("Here is the planner information: \n" + plannerController.toString(plannerID)
-//                        + "\n" + "Please give the index of agenda you wish to edit. " +
-//                        "If the given time is not shown in planner, the closet time agenda will be edited.");
-                //TODO: Question: does the "closest time" still apply here since it's now index?
-                //TODO: I think this should be a (while i > plannerController.getNumAgendas(plannerID)) loop?
+                //TODO: Raymond to double check if this should be a (while i > plannerController.getNumAgendas(plannerID)) loop?
                 int i = scanner.nextInt();
+                scanner.nextLine();
                 if (i <= plannerController.getNumAgendas(plannerID)){
                     presenter.showPlannerEditAgendaQuestion();
                     String projectAgenda = scanner.nextLine();
