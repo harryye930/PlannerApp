@@ -149,6 +149,7 @@ public class UserActionController {
      * @return the valid option user has entered.
      */
     private String validInput(String[] valid_options) {
+        Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         List<String> options = Arrays.asList(valid_options);
         while (!options.contains(input.trim())) {
@@ -181,6 +182,7 @@ public class UserActionController {
      */
     private void createNewAccount() {
         presenter.showCreateNewAccountScreen(0); // ask user for email
+        Scanner scanner = new Scanner(System.in);
         String email = scanner.nextLine();
         presenter.showCreateNewAccountScreen(1); // ask user for username
         String username = scanner.nextLine();
@@ -201,7 +203,7 @@ public class UserActionController {
         } while (!passwordConfirmed); // continue if the password is not confirmed
         currentRetriever = accessController.createAccount(email, username, password);
         // ac.save();
-        presenter.showAccountCreatedScreen(username); // display message showing that new account with username has been created
+        presenter.showAccountCreatedScreen(currentRetriever); // display message showing that new account with username has been created
     }
 
     /**
@@ -213,6 +215,7 @@ public class UserActionController {
         boolean loginSuccess = false;  // indicates whether the log-in was successful or not
         do {
             presenter.showLoginScreen(0); // ask user for userRetriever or email
+            Scanner scanner = new Scanner(System.in);
             userRetriever = scanner.nextLine();
             presenter.showLoginScreen(1); // ask user for password
             password = scanner.nextLine();

@@ -28,7 +28,7 @@ public class Presenter {
     private final String RETURN_TO_PREV_MESSAGE = "Returning to previous menu...";
     private final String CONFIRM_PASSWORD_MESSAGE = "Please enter the password again to confirm.\n";
     private final String PASSWORD_UNMATCH_MESSAGE = "Password does not match. Please try again.\n";
-    private final String ACCOUNT_CREATED_MESSAGE = "A new account has been created.%nPlease remember your username: %s.%n";
+    private final String ACCOUNT_CREATED_MESSAGE = "A new account has been created.%nPlease remember your ID: %s.%n";
     private final String LOGIN_FAILED_MESSAGE = "Invalid username or password. Please try again.\n";
     private final String LOGIN_SUCCESS_MESSAGE = "Login successful.";
     private final String CHECK_ACCOUNT_PERMISSION_MESSAGE = "Checking your account type and its permissions...";
@@ -304,11 +304,7 @@ public class Presenter {
         String[] createNewAccountPrompts = {String.format(createNewAccountIntro + createNewAccountInfo, "Email"),
                                             String.format(createNewAccountInfo, "Username"),
                                             String.format(createNewAccountInfo, "Password")};
-        for (String s: createNewAccountPrompts) {
-            System.out.println(s);
-            Scanner scanner = new Scanner(System.in);
 
-        }
         System.out.println(createNewAccountPrompts[index]);
     }
 
