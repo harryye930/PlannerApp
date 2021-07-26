@@ -149,6 +149,7 @@ public class UserActionController {
      * @return the valid option user has entered.
      */
     private String validInput(String[] valid_options) {
+        Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         List<String> options = Arrays.asList(valid_options);
         while (!options.contains(input.trim())) {
@@ -175,12 +176,14 @@ public class UserActionController {
     // 1. Account Related Methods - all the helper methods mainly involving accounts are listed below.
     //=================================================================================================================
 
+    // TODO: Move
     /**
      * Allows a user to create an account. The same password must be entered consecutively for the program to proceed
      * with creating a new account for this user.
      */
     private void createNewAccount() {
         presenter.showCreateNewAccountScreen(0); // ask user for email
+        Scanner scanner = new Scanner(System.in);
         String email = scanner.nextLine();
         presenter.showCreateNewAccountScreen(1); // ask user for username
         String username = scanner.nextLine();
@@ -201,9 +204,10 @@ public class UserActionController {
         } while (!passwordConfirmed); // continue if the password is not confirmed
         currentRetriever = accessController.createAccount(email, username, password);
         // ac.save();
-        presenter.showAccountCreatedScreen(username); // display message showing that new account with username has been created
+        presenter.showAccountCreatedScreen(currentRetriever); // display message showing that new account with username has been created
     }
 
+    // TODO: Move
     /**
      * Allows a user to log-in to their account.
      */
@@ -213,6 +217,7 @@ public class UserActionController {
         boolean loginSuccess = false;  // indicates whether the log-in was successful or not
         do {
             presenter.showLoginScreen(0); // ask user for userRetriever or email
+            Scanner scanner = new Scanner(System.in);
             userRetriever = scanner.nextLine();
             presenter.showLoginScreen(1); // ask user for password
             password = scanner.nextLine();
@@ -255,6 +260,7 @@ public class UserActionController {
         return true;
     }
 
+    // TODO: Move
     /**
      * Enables a user to change either edit their username or password.
      * Returns true if the user wants to stay in this menu; otherwise, returns false.
@@ -323,6 +329,7 @@ public class UserActionController {
         return true;
     }
 
+    // TODO: Move
     /**
      * Planner options helper method. Enables several options for editing planners.
      * Planner edit options includes edit personal planners, edit other public planners, return to planner menu.
@@ -359,6 +366,7 @@ public class UserActionController {
         return true;
     }
 
+    // TODO: Move
     /**
      * Provides different edit options for editing a personal planner.
      * @param plannerID is the unique id of the planner being edited.
@@ -389,6 +397,7 @@ public class UserActionController {
         }
     }
 
+    // TODO: Move
     /**
      * Provides different edit options for editing a public planner.
      * @param plannerID is the unique id of the planner being edited.
@@ -411,6 +420,7 @@ public class UserActionController {
         }
     }
 
+    // TODO: Move
     /**
      * Provides different edit options for editing a planner agenda.
      * @param plannerID is the unique id of the planner being edited.
@@ -449,6 +459,7 @@ public class UserActionController {
         }
     }
 
+    // TODO: Move
     /**
      * Planner options helper method. Allows different options for planner creation.
      */
@@ -478,6 +489,7 @@ public class UserActionController {
         }
     }
 
+    // TODO: Move
     /**
      * Planner options helper method. Allows different options for planner viewing.
      */
@@ -550,6 +562,7 @@ public class UserActionController {
         return true;
     }
 
+    // TODO: Move
     /**
      * Template options helper method. Allows different options for template viewing.
      */
@@ -570,6 +583,7 @@ public class UserActionController {
         }
     }
 
+    // TODO: Move
     /**
      * Template options helper method. Allows different options for editing this template.
      * Returns true if the template exists and the user wants to stay in this menu; otherwise, returns false.
@@ -617,6 +631,7 @@ public class UserActionController {
         return true;
     }
 
+    // TODO: Move
     /**
      * Provides different edit options for editing prompts of this template.
      * Returns true if the user wants to stay in this menu; otherwise, returns false.
