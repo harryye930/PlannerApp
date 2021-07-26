@@ -153,7 +153,12 @@ public class PlannerController {
         return plannerManager.getNumAgendas(id);
     }
 
-
+    /**
+     * print the possible options user have for planners to the user.
+     * @param currentRetriever String representing userId
+     * @param userInput User's choice
+     * @return true if successfully did something, false if otherwise (i.e. user chose to go back to menu)
+     */
     boolean plannerEditOptions(String currentRetriever, String userInput){
         String[] plannerEditOptions = {"A", "B", "C"};
 
@@ -181,6 +186,12 @@ public class PlannerController {
         // return to the previous menu.
         return true;
     }
+
+    /**
+     * give user options of editing their personal planner. i.e. the planners they created.
+     * @param plannerID The integer id of the planner
+     * @param userInput the choice user made.
+     */
     void personalPlannerEditOptions(int plannerID, String userInput){
         switch (userInput) {
             case "A": // edit planner agenda
@@ -199,6 +210,11 @@ public class PlannerController {
         }
     }
 
+    /**
+     * print the editing options of public planners to the user.
+     * @param plannerID the integer id of the planner
+     * @param userInput user's choice, expected to be "A" or "B"
+     */
     void publicPlannerEditOption(int plannerID, String userInput){
         switch (userInput){
             case "A": // edit planner agenda
@@ -209,6 +225,10 @@ public class PlannerController {
         }
     }
 
+    /**
+     * print the editing options of planner agenda to user.
+     * @param plannerID the integer id of the planner
+     */
     void editPlannerAgendaOptions(int plannerID) {
         String type = getType(plannerID);
 
@@ -240,7 +260,11 @@ public class PlannerController {
         }
     }
 
-        void plannerCreateOptions (String userId, String currentRetriever){
+    /**
+     * print Options of creating planners to user.
+     * @param currentRetriever the String representation of userId or email. The String that can identify a user.
+     */
+    void plannerCreateOptions (String currentRetriever){
             String userInput;
             String[] createOptions = {"A", "B", "C"};
 
@@ -249,14 +273,14 @@ public class PlannerController {
             switch (userInput) {
                 case "A": // daily
                     int dailyPlannerId = createNewDailyPlanner();
-                    setPlannerAuthor(dailyPlannerId, userId);
+                    setPlannerAuthor(dailyPlannerId, currentRetriever);
                     accessController.setPlanner(currentRetriever, ((Integer) dailyPlannerId).toString());
                     presenter.showPlannerCreatedMessage(StringUtils.capitalize(getType(dailyPlannerId)));
                     presenter.showDetailViewPlanner(dailyPlannerId);
                     break;
                 case "B": // project
                     int projectPlannerId = createNewProjectPlanner();
-                    setPlannerAuthor(projectPlannerId, userId);
+                    setPlannerAuthor(projectPlannerId, currentRetriever);
                     accessController.setPlanner(currentRetriever, ((Integer) projectPlannerId).toString());
                     presenter.showPlannerCreatedMessage(StringUtils.capitalize(getType(projectPlannerId)));
                     presenter.showDetailViewPlanner(projectPlannerId);
@@ -265,7 +289,12 @@ public class PlannerController {
                     break;
             }
         }
-        void plannerViewOption(String userID){
+
+    /**
+     * Print to user the view options of planner.
+     * @param userID the unique String of userId.
+     */
+    void plannerViewOption(String userID){
             String userInput;
             String[] viewOptions = {"A", "B", "C"};
 
@@ -283,6 +312,11 @@ public class PlannerController {
             }
         }
 
+    /**
+     * Return the privacy status of the planner corresponding to the given id.
+     * @param id the integer id of the planner
+     * @return the String "private" or "public".
+     */
     public String  getPrivacyStatus(int id) {
         return this.plannerManager.getPrivacyStatus(id);
     }
