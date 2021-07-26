@@ -187,4 +187,9 @@ public class PlannerManager {
         return this.findPlanner(id).getNumAgendas();
     }
 
+    public String getPrivacyStatus(int id) {
+        Planner planner = this.idToPlanner.get(id);
+        return planner.getPrivacyStatus();
+    }
+
 }

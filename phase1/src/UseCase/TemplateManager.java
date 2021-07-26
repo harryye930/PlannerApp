@@ -163,4 +163,9 @@ public class TemplateManager implements Serializable {
         return this.getTemplates().get(ID).getTemplatePreview();
     }
 
+    /**
+     * Get the collection of template id.
+     * @return An ArrayList representing the template ids.
+     */
+    public ArrayList<Integer> getAllTemplateId() {return new ArrayList<>(this.templates.keySet());}
 }

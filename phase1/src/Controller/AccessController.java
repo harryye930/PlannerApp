@@ -43,6 +43,9 @@ public class AccessController {
      * @return A boolean value representing whether the password is correct or not.
      */
     public boolean logIn(String retriever, String passWord) {
+        if (accManager.findAccount(retriever) == null) {
+            return false;
+        }
         return accManager.findAccount(retriever).getPassword().equals(passWord);
     }
 
@@ -166,4 +169,7 @@ public class AccessController {
         return this.accManager.findAccount(retriever).toString();
     }
 
+    public void removePlanner(String retriever, String plannerId) {
+        this.accManager.removePlanner(retriever, plannerId);
+    }
 }

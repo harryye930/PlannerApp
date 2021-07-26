@@ -28,7 +28,7 @@ public class UserActionController {
 
     public UserActionController() {
         accessController = new AccessController();
-        // ac.load();
+        accessController.load();
         templateController = new TemplateController();
         templateController.load();
         plannerController = new PlannerController();
@@ -134,8 +134,8 @@ public class UserActionController {
      */
     private void saveProgram() {
         presenter.showSavingInfoScreen();
-        // ac.save();
-        // tc.save();
+        accessController.save();
+        templateController.save();
         // pc.save()
         presenter.showSavingSuccessfulScreen();
     }

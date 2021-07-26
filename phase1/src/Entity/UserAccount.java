@@ -87,4 +87,8 @@ public class UserAccount extends Account {
                 "User Email" + this.email + "\n";
         return result;
     }
+
+    public void removePlanner(String plannerId) {
+        this.planners.remove(plannerId);
+    }
 }

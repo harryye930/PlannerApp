@@ -122,13 +122,13 @@ public class PlannerController {
                 presenter.showAllPersonalPlanners(currentRetriever); // display all personal planners
                 presenter.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
                 plannerID = Integer.parseInt(scanner.nextLine()); // gets ID of planner user wants to edit
-                userActionController.personalPlannerEditOptions(plannerID);
+                //userActionController.personalPlannerEditOptions(plannerID);
                 break;
             case "B":  //edit other public planners
                 presenter.showAllPublicPlanners(); // display all public planners
                 presenter.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
                 plannerID = Integer.parseInt(scanner.nextLine()); // gets ID of planner user wants to edit
-                userActionController.publicPlannerEditOptions(plannerID);
+                //userActionController.publicPlannerEditOptions(plannerID);
                 break;
             case "C":
                 return false;
@@ -141,7 +141,7 @@ public class PlannerController {
     void personalPlannerEditOptions(int plannerID, String userInput){
         switch (userInput) {
             case "A": // edit planner agenda
-                userActionController.editPlannerAgendaOptions(plannerID);
+                //userActionController.editPlannerAgendaOptions(plannerID);
                 break;
             case "B": // change privacy setting
                 System.out.println("select private/public");
@@ -159,7 +159,7 @@ public class PlannerController {
     void publicPlannerEditOption(int plannerID, String userInput){
         switch (userInput){
             case "A": // edit planner agenda
-                userActionController.editPlannerAgendaOptions(plannerID);
+                //userActionController.editPlannerAgendaOptions(plannerID);
                 break;
             case "B": // return to edit planner menu
                 break;
@@ -202,7 +202,7 @@ public class PlannerController {
             String[] createOptions = {"A", "B", "C"};
 
             presenter.showPlannerCreateMenu(); // display planner creation options: daily, project, exit to planner menu
-            userInput = userActionController.validInput(createOptions);
+            userInput = "";//userActionController.validInput(createOptions);
             switch (userInput) {
                 case "A": // daily
                     int dailyPlannerId = createNewDailyPlanner();
@@ -227,7 +227,7 @@ public class PlannerController {
             String[] viewOptions = {"A", "B", "C"};
 
             presenter.showPlannerViewMenu(); // display planner view options: personal, public, exit to planner menu
-            userInput = userActionController.validInput(viewOptions);
+            userInput = "";//userActionController.validInput(viewOptions);
             switch (userInput) {
                 case "A": // personal planners
                     getPlannerByAuthor(userID);
@@ -239,4 +239,8 @@ public class PlannerController {
                     break;  // this is all this is required here for case C - don't worry!
             }
         }
+
+    public String  getPrivacyStatus(int id) {
+        return this.plannerManager.getPrivacyStatus(id);
     }
+}
