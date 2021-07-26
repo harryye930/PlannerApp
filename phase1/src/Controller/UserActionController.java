@@ -80,7 +80,7 @@ public class UserActionController {
                 logIn();
                 break;
             case "C": // guest
-                currentRetriever = "guest";
+                currentRetriever = accessController.createAccount("", "", "");
                 break;
             case QUIT:
                 // User wants to close the program.
@@ -121,10 +121,9 @@ public class UserActionController {
             case "D":  // Log out and exit
                 // Except for the guest account, save all the files (i.e., account, planner, template) and log out user
                 // from their account.
-                if (!currentRetriever.equals("guest")) {
                 saveProgram();
                 accessController.logOut(currentRetriever);
-                }
+
                 return false;
         }
         // A user wants to continue using the features available in the main menu.
@@ -150,6 +149,7 @@ public class UserActionController {
      * @return the valid option user has entered.
      */
     private String validInput(String[] valid_options) {
+        Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         List<String> options = Arrays.asList(valid_options);
         while (!options.contains(input.trim())) {
@@ -183,6 +183,7 @@ public class UserActionController {
      */
     private void createNewAccount() {
         presenter.showCreateNewAccountScreen(0); // ask user for email
+        Scanner scanner = new Scanner(System.in);
         String email = scanner.nextLine();
         presenter.showCreateNewAccountScreen(1); // ask user for username
         String username = scanner.nextLine();
@@ -203,7 +204,7 @@ public class UserActionController {
         } while (!passwordConfirmed); // continue if the password is not confirmed
         currentRetriever = accessController.createAccount(email, username, password);
         // ac.save();
-        presenter.showAccountCreatedScreen(username); // display message showing that new account with username has been created
+        presenter.showAccountCreatedScreen(currentRetriever); // display message showing that new account with username has been created
     }
 
     // TODO: Move
@@ -216,6 +217,7 @@ public class UserActionController {
         boolean loginSuccess = false;  // indicates whether the log-in was successful or not
         do {
             presenter.showLoginScreen(0); // ask user for userRetriever or email
+            Scanner scanner = new Scanner(System.in);
             userRetriever = scanner.nextLine();
             presenter.showLoginScreen(1); // ask user for password
             password = scanner.nextLine();
