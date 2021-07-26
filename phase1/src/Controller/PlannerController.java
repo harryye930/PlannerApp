@@ -2,6 +2,7 @@ package Controller;
 
 import Entity.DailyPlanner;
 import Entity.ProjectPlanner;
+import Gateway.AccountGateway;
 import Interface.Presenter;
 import UseCase.PlannerManager;
 import Entity.Planner;
@@ -15,6 +16,7 @@ import java.util.Scanner;
  */
 public class PlannerController {
     private PlannerManager plannerManager;
+    private AccountGateway accGateway;
     private Presenter presenter;
     private Scanner scanner;
     private UserActionController userActionController;
@@ -25,8 +27,23 @@ public class PlannerController {
      */
     public PlannerController(){
         this.plannerManager = new PlannerManager();
+    }
 
+    /**
+     * Save the data to the database, call this function when a saving is needed. Must be called
+     * when exit the application.
+     * @return A boolean value representing whether the loading process is successful or not.
+     */
+    public boolean save() {
+        return this.accGateway.save();
+    }
 
+    /**
+     * Load in the data from database to AccountManager.
+     * @return A boolean value representing whether the loading process is successful or not.
+     */
+    public boolean load() {
+        return this.accGateway.load();
     }
 
     /**
