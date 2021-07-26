@@ -308,7 +308,6 @@ public class UserActionController {
                 plannerViewOptions(currentRetriever);
                 break;
             case "B": // edit an existing planner
-                // plannerManager.getPlannersByAuthor(currentRetriever); TODO: Harry to double check if we need this
                 while (plannerEditOptions()) {
                     presenter.showReturnToPlannerEditMenuMessage();
                 }
@@ -423,7 +422,7 @@ public class UserActionController {
         presenter.showDetailViewPlanner(plannerID);
         switch (type){
             case "daily":
-                presenter.showPlannerEditTimeQuestion(); // TODO: Harry to double check how the closest time works
+                presenter.showPlannerEditTimeQuestion();
                 String time = scanner.nextLine();
                 presenter.showPlannerEditAgendaQuestion(); // show message asking user to edit the new agenda for the
                                                             // time chosen
