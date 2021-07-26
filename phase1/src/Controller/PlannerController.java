@@ -3,6 +3,7 @@ package Controller;
 import Entity.DailyPlanner;
 import Entity.ProjectPlanner;
 import Gateway.AccountGateway;
+import Gateway.PlannerGateway;
 import Interface.Presenter;
 import UseCase.PlannerManager;
 import Entity.Planner;
@@ -16,7 +17,7 @@ import java.util.Scanner;
  */
 public class PlannerController {
     private PlannerManager plannerManager;
-    private AccountGateway accGateway;
+    private PlannerGateway accGateway;
     private Presenter presenter;
     private Scanner scanner;
     private UserActionController userActionController;
@@ -27,6 +28,7 @@ public class PlannerController {
      */
     public PlannerController(){
         this.plannerManager = new PlannerManager();
+        this.accGateway = new PlannerGateway(plannerManager);
     }
 
     /**
