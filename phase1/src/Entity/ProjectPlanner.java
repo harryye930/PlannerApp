@@ -5,12 +5,14 @@ public class ProjectPlanner extends Planner {
     private ArrayList<String> tasks;
     private ArrayList<String> taskStatus;
     private int ID;
+    private int NumAgendas;
 
     public ProjectPlanner(String plannerName) {
         super(plannerName);
         this.tasks = new ArrayList<>();
         this.taskStatus = new ArrayList<>();
         this.ID = super.getID();
+        this.NumAgendas = 0;
 
 
     }
@@ -55,6 +57,7 @@ public class ProjectPlanner extends Planner {
         else{
             this.tasks.add(agenda);
             this.taskStatus.add("not completed");
+            this.NumAgendas ++;
             return true;
         }
     }
@@ -72,6 +75,7 @@ public class ProjectPlanner extends Planner {
         else{
             this.tasks.add(i, agenda);
             this.taskStatus.add(i, "not completed");
+            this.NumAgendas ++;
             return true;
         }
     }
@@ -142,5 +146,9 @@ public class ProjectPlanner extends Planner {
             this.tasks.remove(agenda);
             return true;
         }
+    }
+
+    public int getNumAgendas(){
+        return this.NumAgendas;
     }
 }

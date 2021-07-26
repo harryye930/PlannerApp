@@ -183,4 +183,8 @@ public class PlannerManager {
         }
     }
 
+    public int getNumAgendas(int id){
+        return this.findPlanner(id).getNumAgendas();
+    }
+
 }

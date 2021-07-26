@@ -2,15 +2,15 @@ package Controller;
 
 import Interface.Presenter;
 import UseCase.PlannerManager;
+import com.sun.xml.internal.ws.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Scanner;
 
 /**
  * UserActionController manages user actions.
- * Allocates specific tasks to controllers that are responsible for.
+ * Allocates specific tasks to controllers that should be responsible for them.
  */
 public class UserActionController {
 
@@ -105,17 +105,17 @@ public class UserActionController {
         switch (userInput) {
             case "A":  // Selected actions on planner
                 while (plannerOptions()) {
-                    presenter.interfaceScreen("Returning to planner options menu...");
+                    presenter.showReturnToPlannerMenuMessage();
                 }
                 break;
             case "B":  // Selected actions on template
                 while (templateOptions()) {
-                    presenter.interfaceScreen("Returning to template options menu...");
-                };
+                    presenter.showReturnToTemplateMenuMessage();
+                }
                 break;
             case "C":  // Selected actions on account
                 while (accountOptions(currentRetriever)) {
-                    presenter.interfaceScreen("Returning to account options menu...");
+                    presenter.showReturnToAccountMenuMessage();
                 }
                 break;
             case "D":  // Log out and exit
@@ -163,9 +163,9 @@ public class UserActionController {
      */
     private boolean isAdmin() {
         // TODO: below is commented for testing purpose with guest account - uncomment it when done
-//        if (currentRetriever.equals("guest") || !ac.isAdmin(currentRetriever).equals("admin")) {
-//            p.interfaceScreen("Checking your account status...");  // TODO
-//            System.out.println("Sorry, this feature requires an admin status.");  // TODO
+//        if (currentRetriever.equals("guest") || !accessController.isAdmin(currentRetriever).equals("admin")) {
+//            presenter.showCheckAccountPermMessage(); // show message saying "checking account type and permissions"
+//            presenter.showRequiresAdminMessage(); // show message saying "feature requires an admin account"
 //            return false;
 //        }
         return true;
@@ -241,12 +241,12 @@ public class UserActionController {
         userInput = validInput(accountOptions);
 
         switch (userInput) {
-            case "A": // log out
-                accessController.logOut(retriever);  // TODO: Should we change this to delete account
+            case "A": // TODO: change this to delete account
+                accessController.logOut(retriever);
                 return false;
             case "B": // edit account info
                 while (accountSetting(retriever)) {
-                    presenter.interfaceScreen("Returning to account setting options...");
+                    presenter.showReturnToAccountSettingsMessage();
                 }
                 break;
             case "C":
@@ -308,12 +308,9 @@ public class UserActionController {
                 plannerViewOptions(currentRetriever);
                 break;
             case "B": // edit an existing planner
-                plannerManager.getPlannersByAuthor(currentRetriever);
-
-                // TODO: Raymond to implement this method in presenter
-                //  (present all existing personal planners and their ids)
+                // plannerManager.getPlannersByAuthor(currentRetriever); TODO: Harry to double check if we need this
                 while (plannerEditOptions()) {
-                    presenter.interfaceScreen("Returning to planner edit options...");
+                    presenter.showReturnToPlannerEditMenuMessage();
                 }
             case "C": // create a new planner
                 plannerCreateOptions(currentRetriever);
@@ -387,7 +384,6 @@ public class UserActionController {
                 break;
             case "C": // delete planner
                 presenter.showFeatureUnavailableScreen(); // display message showing feature not yet available
-                //TODO: (phase 2) implement delete planner --- I think we can save it for phase 2???
                 break;
             case "D": //return to edit planner menu
                 break;
@@ -421,31 +417,36 @@ public class UserActionController {
      * @param plannerID is the unique id of the planner being edited.
      */
     private void editPlannerAgendaOptions(int plannerID){
-//         TODO RAYMOND
         String type = plannerController.getType(plannerID);
 
+        presenter.showObjIntroMessage("planner", plannerID); // intro message showing what planner looks like now
+        presenter.showDetailViewPlanner(plannerID);
         switch (type){
             case "daily":
-                presenter.interfaceScreen("Here is the planner information: \n" + plannerController.toString(plannerID)
-                + "\n" + "Please give the time you wish to edit. If the given time is not shown in planner, the " +
-                        "closet time agenda will be edited.");
+                presenter.showPlannerEditTimeQuestion(); // TODO: Harry to double check how the closest time works
                 String time = scanner.nextLine();
-                presenter.interfaceScreen(("Please enter the content you wish to edit."));
+                presenter.showPlannerEditAgendaQuestion(); // show message asking user to edit the new agenda for the
+                                                            // time chosen
                 String agenda = scanner.nextLine();
                 plannerController.edit(plannerID, time, agenda);
-                presenter.interfaceScreen("Successfully edited.");
+                presenter.showUpdateCompletedMessage();
                 break;
             case "project":
-                // TODO test whether the index is out of range.
-                presenter.interfaceScreen("Here is the planner information: \n" + plannerController.toString(plannerID)
-                        + "\n" + "Please give the index of agenda you wish to edit. " +
-                        "If the given time is not shown in planner, the closet time agenda will be edited.");
+                presenter.showPlannerEditIndexQuestion();
+                //TODO: Raymond to double check if this should be a (while i > plannerController.getNumAgendas(plannerID)) loop?
                 int i = scanner.nextInt();
-                presenter.interfaceScreen(("Please enter the content you wish to edit."));
-                String projectAgenda = scanner.nextLine();
-                plannerController.edit(plannerID, i, projectAgenda);
-                presenter.interfaceScreen("Successfully edited.");
+                scanner.nextLine();
+                if (i <= plannerController.getNumAgendas(plannerID)){
+                    presenter.showPlannerEditAgendaQuestion();
+                    String projectAgenda = scanner.nextLine();
+                    plannerController.edit(plannerID, i, projectAgenda);
+                    presenter.showUpdateCompletedMessage();
+                }
+                else{
+                    presenter.showPlannerReEnterIndexMessage();
+                }
                 break;
+
         }
     }
 
@@ -460,20 +461,18 @@ public class UserActionController {
         userInput = validInput(createOptions);
         switch (userInput) {
             case "A": // daily
-                // TODO: to be separated into presenter and USA
                 int dailyPlannerId = plannerController.createNewDailyPlanner();
                 plannerController.setPlannerAuthor(dailyPlannerId, userId);
                 accessController.setPlanner(currentRetriever, ((Integer) dailyPlannerId).toString());
-                System.out.println("these are the information: \n" + plannerController.toString(dailyPlannerId));
+                presenter.showPlannerCreatedMessage(StringUtils.capitalize(plannerController.getType(dailyPlannerId)));
+                presenter.showDetailViewPlanner(dailyPlannerId);
                 break;
             case "B": // project
-                // TODO: to be separated into presenter and USA
                 int projectPlannerId = plannerController.createNewProjectPlanner();
                 plannerController.setPlannerAuthor(projectPlannerId, userId);
                 accessController.setPlanner(currentRetriever, ((Integer) projectPlannerId).toString());
-                System.out.println("Successfully created Project Planner, " +
-                        "these are the information: \n" + plannerController.toString(projectPlannerId));
-
+                presenter.showPlannerCreatedMessage(StringUtils.capitalize(plannerController.getType(projectPlannerId)));
+                presenter.showDetailViewPlanner(projectPlannerId);
                 break;
             case "C": // exit to planner menu
                 break;
@@ -532,7 +531,7 @@ public class UserActionController {
                     // Note that a user will remain in editing a given template options until they explicitly wish to
                     // exit from that menu.
                     while (aTemplateEditOptions(templateID)) {
-                        presenter.interfaceScreen("Returning to template edit options...");
+                        presenter.showReturnToTemplateEditMenuMessage();
                     }
                 }
                 break;
@@ -540,7 +539,7 @@ public class UserActionController {
                 if (!isAdmin()) {
                     break;
                 }
-                // TODO: (phase 2) implement create template
+                // (phase 2) implement create template
                 presenter.showFeatureUnavailableScreen();
                 break;
             case MAIN_MENU:
@@ -563,11 +562,9 @@ public class UserActionController {
         switch (userInput) {
             case "A": // summary view (preview)
                 presenter.showPreviewAllTemplates();
-                System.out.println("preview template executed"); // TODO: delete
                 break;
             case "B": // detailed view
                 presenter.showDetailViewAllTemplates();
-                System.out.println("detailed template view executed"); // TODO: delete
                 break;
             case "C": // exit to template menu
                 break;
@@ -593,21 +590,21 @@ public class UserActionController {
             case "A": // edit template name
                 presenter.showEditNewNameQuestion("template"); // display message asking user to enter a new name
                 String newTemplateName = scanner.nextLine();  // new template name user wants to assign
-                presenter.interfaceScreen("Please wait while we are updating your template..."); // TODO
+                presenter.showUpdatingTemplateMessage(); // show message saying template is being updated please wait
                 templateController.editTemplateName(templateID, newTemplateName);
-                System.out.println("Update is completed: "); // TODO: added
-                System.out.println(templateController.detailViewTemplate(templateID));;  // TODO: added
+                presenter.showUpdateCompletedMessage(); // show message saying that update is completed
+                presenter.showDetailViewTemplate(templateID); // prints out detail view of template
                 break;
             case "B": // edit template prompts
                 while (editPrompts(templateID)) {
-                    presenter.interfaceScreen("Returning to the edit prompts menu...");
+                    presenter.showReturnToEditPromptsMenuMessage(); //show message saying returning to edit prompts menu
                 }
                 break;
             case "C": // delete template
                 presenter.showConfirmDeleteQuestion("template"); // confirm if user wants to delete template
                 presenter.showDetailViewTemplate(templateID);// visualize the template
                 if (validInput(USER_DECISION).equals("yes")) {
-                    // TODO: (phase 2) implement delete template
+                    // (phase 2) implement delete template
                     presenter.showFeatureUnavailableScreen();
                 }
                 return false;
@@ -651,10 +648,11 @@ public class UserActionController {
                     presenter.showEditNewNameQuestion("prompt"); // display message asking user to enter desired new name
                     String newPromptName = scanner.nextLine();
 
-                    presenter.interfaceScreen("Please wait while we are updating your template...");  // TODO
+                    presenter.showUpdatingTemplateMessage(); // show message saying that template is being updated
+                                                             // please wait
                     templateController.renameTemplatePrompt(templateID, promptID, newPromptName);
-                    System.out.println("Update is completed: "); // TODO: added
-                    System.out.println(templateController.detailViewTemplate(templateID));;  // TODO: added
+                    presenter.showUpdateCompletedMessage(); // show message saying that update is completed
+                    presenter.showDetailViewTemplate(templateID); // show detail view of template
 
                     // Ask user if they wish to continue editing other prompts.
                     presenter.showIfContinueEditQuestion();
