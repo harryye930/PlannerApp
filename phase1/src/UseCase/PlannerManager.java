@@ -41,7 +41,6 @@ public class PlannerManager {
     }
 
 
-
     /** Create a string representation of planner tasks
      *
      * @param id A String representing the id number.
@@ -70,6 +69,7 @@ public class PlannerManager {
         this.idToPlanner = hm;
     }
 
+
     /** Edit agenda on current planner
      *
      * @param i index of the agenda user wish to edit
@@ -80,6 +80,7 @@ public class PlannerManager {
         this.findPlanner(id).edit(i, agenda);
         return true;
     }
+
 
     /** Edit agenda on DailyPlanner base on time stamp
      *
@@ -127,6 +128,7 @@ public class PlannerManager {
         return new ArrayList<>(this.idToPlanner.values());
     }
 
+
     /**
      * print all planners in the system
      * @return String representation of all planners
@@ -139,8 +141,8 @@ public class PlannerManager {
             allPlannersStringBuilder.append("\n");
         }
         return allPlannersStringBuilder.toString();
-
     }
+
 
     /**
      * delete a planner from all planners.
@@ -157,6 +159,7 @@ public class PlannerManager {
         }
     }
 
+
     /**
      * set the author of the planner
      * @param id the integer id of the planner
@@ -165,6 +168,7 @@ public class PlannerManager {
     public void setPlannerAuthor(int id, String author){
         findPlanner(id).setAuthor(author);
     }
+
 
     /**
      * Get all planners of one author
@@ -182,6 +186,7 @@ public class PlannerManager {
         return plannersByAuthor;
     }
 
+
     /**
      * return all public planners
      * @return all public planners
@@ -195,6 +200,7 @@ public class PlannerManager {
         }
         return publicPlanners;
     }
+
 
     /**
      * Return the type of the planner
@@ -210,6 +216,7 @@ public class PlannerManager {
         }
     }
 
+
     /**
      * return the number of agendas in this planner
      * @param id the integer id of the planner
@@ -218,6 +225,7 @@ public class PlannerManager {
     public int getNumAgendas(int id){
         return this.findPlanner(id).getNumAgendas();
     }
+
 
     /**
      * return the privacy status of the planner
@@ -228,5 +236,4 @@ public class PlannerManager {
         Planner planner = this.idToPlanner.get(id);
         return planner.getPrivacyStatus();
     }
-
 }
