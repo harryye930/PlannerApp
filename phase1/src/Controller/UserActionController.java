@@ -176,6 +176,7 @@ public class UserActionController {
     // 1. Account Related Methods - all the helper methods mainly involving accounts are listed below.
     //=================================================================================================================
 
+    // TODO: Move
     /**
      * Allows a user to create an account. The same password must be entered consecutively for the program to proceed
      * with creating a new account for this user.
@@ -205,6 +206,7 @@ public class UserActionController {
         presenter.showAccountCreatedScreen(username); // display message showing that new account with username has been created
     }
 
+    // TODO: Move
     /**
      * Allows a user to log-in to their account.
      */
@@ -256,6 +258,7 @@ public class UserActionController {
         return true;
     }
 
+    // TODO: Move
     /**
      * Enables a user to change either edit their username or password.
      * Returns true if the user wants to stay in this menu; otherwise, returns false.
@@ -325,6 +328,7 @@ public class UserActionController {
         return true;
     }
 
+    // TODO: Move
     /**
      * Planner options helper method. Enables several options for editing planners.
      * Planner edit options includes edit personal planners, edit other public planners, return to planner menu.
@@ -361,6 +365,7 @@ public class UserActionController {
         return true;
     }
 
+    // TODO: Move
     /**
      * Provides different edit options for editing a personal planner.
      * @param plannerID is the unique id of the planner being edited.
@@ -391,6 +396,7 @@ public class UserActionController {
         }
     }
 
+    // TODO: Move
     /**
      * Provides different edit options for editing a public planner.
      * @param plannerID is the unique id of the planner being edited.
@@ -413,6 +419,7 @@ public class UserActionController {
         }
     }
 
+    // TODO: Move
     /**
      * Provides different edit options for editing a planner agenda.
      * @param plannerID is the unique id of the planner being edited.
@@ -451,6 +458,7 @@ public class UserActionController {
         }
     }
 
+    // TODO: Move
     /**
      * Planner options helper method. Allows different options for planner creation.
      */
@@ -480,6 +488,7 @@ public class UserActionController {
         }
     }
 
+    // TODO: Move
     /**
      * Planner options helper method. Allows different options for planner viewing.
      */
@@ -552,6 +561,7 @@ public class UserActionController {
         return true;
     }
 
+    // TODO: Move
     /**
      * Template options helper method. Allows different options for template viewing.
      */
@@ -572,6 +582,7 @@ public class UserActionController {
         }
     }
 
+    // TODO: Move
     /**
      * Template options helper method. Allows different options for editing this template.
      * Returns true if the template exists and the user wants to stay in this menu; otherwise, returns false.
@@ -619,6 +630,7 @@ public class UserActionController {
         return true;
     }
 
+    // TODO: Move
     /**
      * Provides different edit options for editing prompts of this template.
      * Returns true if the user wants to stay in this menu; otherwise, returns false.
