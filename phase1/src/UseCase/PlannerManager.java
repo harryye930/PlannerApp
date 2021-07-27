@@ -41,7 +41,6 @@ public class PlannerManager {
     }
 
 
-
     /** Create a string representation of planner tasks
      *
      * @param id A String representing the id number.
@@ -70,6 +69,7 @@ public class PlannerManager {
         this.idToPlanner = hm;
     }
 
+
     /** Edit agenda on current planner
      *
      * @param i index of the agenda user wish to edit
@@ -80,6 +80,7 @@ public class PlannerManager {
         this.findPlanner(id).edit(i, agenda);
         return true;
     }
+
 
     /** Edit agenda on DailyPlanner base on time stamp
      *
@@ -127,6 +128,11 @@ public class PlannerManager {
         return new ArrayList<>(this.idToPlanner.values());
     }
 
+
+    /**
+     * print all planners in the system
+     * @return String representation of all planners
+     */
     public String showAllPlanners (){
         ArrayList<Planner> allPlanners = getAllPlanner();
         StringBuilder allPlannersStringBuilder= new StringBuilder();
@@ -135,9 +141,14 @@ public class PlannerManager {
             allPlannersStringBuilder.append("\n");
         }
         return allPlannersStringBuilder.toString();
-
     }
 
+
+    /**
+     * delete a planner from all planners.
+     * @param id the id of the planner to be deleted
+     * @return true if successfully deleted; false otherwise
+     */
     public Boolean deletePlanner(int id) {
         if (this.idToPlanner.containsKey(id)){
             this.idToPlanner.remove(id);
@@ -147,10 +158,23 @@ public class PlannerManager {
             return false;
         }
     }
+
+
+    /**
+     * set the author of the planner
+     * @param id the integer id of the planner
+     * @param author the identifier of a user
+     */
     public void setPlannerAuthor(int id, String author){
         findPlanner(id).setAuthor(author);
     }
 
+
+    /**
+     * Get all planners of one author
+     * @param author the identifier of a user
+     * @return the ArrayList of planners owned by the user
+     */
     public ArrayList<Integer> getPlannersByAuthor(String author){
         ArrayList<Integer> plannersByAuthor = new ArrayList<Integer>();
         for (Planner planner : this.idToPlanner.values()) {
@@ -162,6 +186,11 @@ public class PlannerManager {
         return plannersByAuthor;
     }
 
+
+    /**
+     * return all public planners
+     * @return all public planners
+     */
     public ArrayList<Integer> getPublicPlanners(){
         ArrayList<Integer> publicPlanners = new ArrayList<Integer>();
         for (Planner planner : this.idToPlanner.values()) {
@@ -172,6 +201,12 @@ public class PlannerManager {
         return publicPlanners;
     }
 
+
+    /**
+     * Return the type of the planner
+     * @param id the integer id of the planner
+     * @return the String representing the planner
+     */
     public String plannerType(int id){
         if (this.idToPlanner.get(id).getType().equals("daily")){
             return "daily";
@@ -181,13 +216,24 @@ public class PlannerManager {
         }
     }
 
+
+    /**
+     * return the number of agendas in this planner
+     * @param id the integer id of the planner
+     * @return the number of agendas in this planner
+     */
     public int getNumAgendas(int id){
         return this.findPlanner(id).getNumAgendas();
     }
 
+
+    /**
+     * return the privacy status of the planner
+     * @param id the integer id of the planner
+     * @return return the privacy status, "private" or "public"
+     */
     public String getPrivacyStatus(int id) {
         Planner planner = this.idToPlanner.get(id);
         return planner.getPrivacyStatus();
     }
-
 }

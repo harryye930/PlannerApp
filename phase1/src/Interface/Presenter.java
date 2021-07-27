@@ -3,7 +3,6 @@ package Interface;
 import Controller.AccessController;
 import Controller.PlannerController;
 import Controller.TemplateController;
-import UseCase.PlannerManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,51 +14,104 @@ public class Presenter {
     private PlannerController plannerController;
     private AccessController accessController;
 
+    // The section below contains all of the String representations that are presented to the users.
     //================================================================================================================
-    // Messages
-    private final String WELCOME_MESSAGE = "Welcome to your planner manager!";
-    private final String CLOSING_MESSAGE = "Thank you for using the program, have a productive day!";
-    private final String SAVING_INFO_MESSAGE = "Saving information...";
-    private final String SAVING_SUCCESSFUL_MESSAGE = "Saving successful!";
-    private final String INVALID_INPUT_MESSAGE = "Invalid input, please try again.";
-    private final String RETURN_TO_MAIN_MESSAGE = "Returning to main menu...";
-    private final String RETURN_TO_PREV_MESSAGE = "Returning to previous menu...";
-    private final String CONFIRM_PASSWORD_MESSAGE = "Please enter the password again to confirm.\n";
-    private final String PASSWORD_UNMATCH_MESSAGE = "Password does not match. Please try again.\n";
-    private final String ACCOUNT_CREATED_MESSAGE = "A new account has been created.%nPlease remember your ID: %s.%n";
-    private final String LOGIN_FAILED_MESSAGE = "Invalid username or password. Please try again.\n";
-    private final String LOGIN_SUCCESS_MESSAGE = "Login successful.";
-    private final String CHECK_ACCOUNT_PERMISSION_MESSAGE = "Checking your account type and its permissions...";
-    private final String REQUIRE_ADMIN_MESSAGE = "Sorry, this feature requires an admin account.";
-    private final String RETURN_TO_ACCOUNT_SETTINGS_MESSAGE = "Returning to account setting options...";
-    private final String RETURN_TO_ACCOUNT_MENU_MESSAGE = "Returning to Account Menu...";
+    // Contains all of the messages that are universal and could be reused throughout the program.
+    private final HashMap<String, String> MESSAGES = new HashMap<String, String>() {{
+        String welcome = "Welcome to your planner manager!";
+        String closing = "Thank you for using the program, have a productive day!";
+        String savingInfo = "Thank you for using the program, have a productive day!";
+        String savingSuccessful = "Saving successful!";
+        String invalidInput = "Invalid input, please try again.";
+        String returnToMain = "Returning to main menu...";
+        String returnToPrevMenu = "Returning to previous menu...";
+        String idForEditQuestion = "Which %s would you like to edit? Please enter the ID.%n";
+        String objectIntro = "You have selected %s with ID %d. " + "This is what the %s currently looks like: %n";
+        String editNewNameQuestion = "Please enter the desired new name of the %s.%n";
+        String ifContinueEditQuestion = "Would you like to make another edit? Enter \"yes\" or \"no\".\n";
+        String confirmDeleteQuestion = "Are you sure you want to delete this %s? Enter \"yes\" or \"no\".%n";
+        String featureUnavailable = "Feature is not yet available. Please check back later!";
+        String idForEditPromptQuestion = "Please enter the ID of the prompt you'd like to %s.%n";
+        String updateCompleted = "Update is completed: ";
 
-    private final String ID_FOR_EDIT_QUESTION = "Which %s would you like to edit? Please enter the ID.%n";
-    private final String OBJECT_INTRO_MESSAGE = "You have selected %s with ID %d. " +
-            "This is what the %s currently looks like: %n";
-    private final String EDIT_NEW_NAME_QUESTION = "Please enter the desired new name of the %s.%n";
-    private final String IF_CONTINUE_EDIT_QUESTION = "Would you like to make another edit? Enter \"yes\" or \"no\".\n";
-    private final String CONFIRM_DELETE_QUESTION = "Are you sure you want to delete this %s? Enter \"yes\" or \"no\".%n";
-    private final String FEATURE_UNAVAILABLE_MESSAGE = "Feature is not yet available. Please check back later!";
-    private final String TEMPLATE_PROMPTS_INTRO_MESSAGE = "Here are the current prompts: \n";
-    private final String ID_FOR_EDIT_PROMPT_QUESTION = "Please enter the ID of the prompt you'd like to %s.%n";
-    private final String UPDATING_TEMPLATE_MESSAGE = "Please wait while we are updating your template...";
-    private final String UPDATE_COMPLETED_MESSAGE = "Update is completed: ";
-    private final String RETURN_TO_EDIT_PROMPTS_MENU_MESSAGE = "Returning to the edit prompts menu...";
-    private final String RETURN_TO_TEMPLATE_EDIT_MENU_MESSAGE = "Returning to template edit options...";
-    private final String RETURN_TO_TEMPLATE_MENU_MESSAGE = "Returning to Template Menu...";
+        put("welcome", welcome);
+        put("closing", closing);
+        put("savingInfo", savingInfo);
+        put("savingSuccessful", savingSuccessful);
+        put("invalidInput", invalidInput);
+        put("returnToMain", returnToMain);
+        put("returnToPrevMenu", returnToPrevMenu);
+        put("idForEditQuestion", idForEditQuestion);
+        put("objectIntro", objectIntro);
+        put("editNewNameQuestion", editNewNameQuestion);
+        put("ifContinueEditQuestion", ifContinueEditQuestion);
+        put("confirmDeleteQuestion", confirmDeleteQuestion);
+        put("featureUnavailable", featureUnavailable);
+        put("idForEditPromptQuestion", idForEditPromptQuestion);
+        put("updateCompleted", updateCompleted);
+    }};
 
-    private final String SHOW_PLANNER_TYPE_MESSAGE = "You have selected a planner of type: %s.%n";
-    private final String PLANNER_CREATED_MESSAGE = "%s planner successfully created. This is what it looks like: %n";
-    private final String PLANNER_EDIT_TIME_QUESTION = "Please enter the time slot for which you'd like to edit the agenda."; // closest time functionality will be added to phase 2
-    private final String PLANNER_EDIT_AGENDA_QUESTION = "Please enter the new agenda.";
-    private final String PLANNER_EDIT_INDEX_QUESTION = "Please enter the index for which you'd like to edit the agenda.";
-    private final String PLANNER_RE_ENTER_INDEX_MESSAGE = "The index entered is out of range (exceeds the number of existing " +
-            "agendas). Please try again.";
-    private final String RETURN_TO_PLANNER_EDIT_MENU_MESSAGE = "Returning to planner edit options...";
-    private final String RETURN_TO_PLANNER_MENU_MESSAGE = "Returning to Planner Menu...";
+    // Contains messages that are specific to account options.
+    private final HashMap<String, String> ACCOUNT_MESSAGES = new HashMap<String, String>() {{
+        String confirmPassword = "Please enter the password again to confirm.\n";
+        String passwordUnmatch = "Password does not match. Please try again.\n";
+        String accountCreated = "A new account has been created.%nPlease remember your ID: %s.%n";
+        String loginFailed = "Invalid username or password. Please try again.\n";
+        String loginSuccessful = "Login successful.";
+        String checkAccountPermission = "Checking your account type and its permissions...";
+        String requireAdminStatus = "Sorry, this feature requires an admin account.";
+        String returnToAccountSettings = "Returning to account setting options...";
+        String returnToAccountMenu = "Returning to Account Menu...";
 
-    // Menus
+        put("confirmPassword", confirmPassword);
+        put("passwordUnmatch", passwordUnmatch);
+        put("accountCreated", accountCreated);
+        put("loginFailed", loginFailed);
+        put("loginSuccessful", loginSuccessful);
+        put("checkAccountPermission", checkAccountPermission);
+        put("requireAdminStatus", requireAdminStatus);
+        put("returnToAccountSettings", returnToAccountSettings);
+        put("returnToAccountMenu", returnToAccountMenu);
+    }};
+
+    // Contains messages that are specific to template options.
+    private final HashMap<String, String> TEMPLATE_MESSAGES = new HashMap<String, String>() {{
+        String templatePromptsIntro = "Here are the current prompts: \n";
+        String updatingTemplate = "Please wait while we are updating your template...";
+        String returnToEditPromptsMenu = "Returning to the edit prompts menu...";
+        String returnToTemplateEditMenu = "Returning to template edit options...";
+        String returnToTemplateMenu = "Returning to Template Menu...";
+
+        put("templatePromptsIntro", templatePromptsIntro);
+        put("updatingTemplate", updatingTemplate);
+        put("returnToEditPromptsMenu", returnToEditPromptsMenu);
+        put("returnToTemplateEditMenu", returnToTemplateEditMenu);
+        put("returnToTemplateMenu", returnToTemplateMenu);
+    }};
+
+    // Contains messages that are specific to planner options.
+    private final HashMap<String, String> PLANNER_MESSAGES = new HashMap<String, String>() {{
+        String showPlannerType = "You have selected a planner of type: %s.%n";
+        String plannerCreated = "%s planner successfully created. This is what it looks like: %n";
+        String plannerEditTimeQuestion = "Please enter the time slot for which you'd like to edit the agenda."; // closest time functionality will be added to phase 2
+        String plannerEditAgendaQuestion = "Please enter the new agenda.";
+        String plannerEditIndexQuestion = "Please enter the index for which you'd like to edit the agenda.";
+        String plannerReEnterIndex = "The index entered is out of range (exceeds the number of existing " +
+                "agendas). Please try again.";
+        String returnToPlannerEditMenu = "Returning to planner edit options...";
+        String returnToPlannerMenu = "Returning to Planner Menu...";
+
+        put("showPlannerType", showPlannerType);
+        put("plannerCreated", plannerCreated);
+        put("plannerEditTimeQuestion", plannerEditTimeQuestion);
+        put("plannerEditAgendaQuestion", plannerEditAgendaQuestion);
+        put("plannerEditIndexQuestion", plannerEditIndexQuestion);
+        put("plannerReEnterIndex", plannerReEnterIndex);
+        put("returnToPlannerEditMenu", returnToPlannerEditMenu);
+        put("returnToPlannerMenu", returnToPlannerMenu);
+    }};
+
+    // Contains all of the menus that are presented by the program.
     private final HashMap<String, String> MENUS = new HashMap<String, String>(){{
         String loginMenu =
                 "=========================================================================\n" +
@@ -229,14 +281,14 @@ public class Presenter {
      * Prints out message for welcome screen at the start of the program.
      */
     public void showWelcomeScreen(){
-        System.out.println(WELCOME_MESSAGE);
+        System.out.println(MESSAGES.get("welcome"));
     }
 
     /**
      * Prints out message for closing screen at the end of the program.
      */
     public void showClosingScreen(){
-        System.out.println(CLOSING_MESSAGE);
+        System.out.println(MESSAGES.get("closing"));
     }
 
     /**
@@ -259,35 +311,35 @@ public class Presenter {
      * Prints out message showing that the program is saving information.
      */
     public void showSavingInfoScreen(){
-        System.out.println(SAVING_INFO_MESSAGE);
+        System.out.println(MESSAGES.get("savingInfo"));
     }
 
     /**
      * Prints out message showing that information has been successfully saved in the program.
      */
     public void showSavingSuccessfulScreen(){
-        System.out.println(SAVING_SUCCESSFUL_MESSAGE);
+        System.out.println(MESSAGES.get("savingSuccessful"));
     }
 
     /**
      * Prints out message showing that the user input is invalid (does not match with any of the options provided).
      */
     public void showInvalidInputScreen(){
-        System.out.println(INVALID_INPUT_MESSAGE);
+        System.out.println(MESSAGES.get("invalidInput"));
     }
 
     /**
      * Prints out message showing that the system is returning back to the main menu.
      */
     public void showReturnToMainScreen(){
-        interfaceScreen(RETURN_TO_MAIN_MESSAGE);
+        interfaceScreen(MESSAGES.get("returnToMain"));
     }
 
     /**
      * Prints out message showing that the system is returning back to the previous menu.
      */
     public void showReturnToPrevMenu(){
-        interfaceScreen(RETURN_TO_PREV_MESSAGE);
+        interfaceScreen(MESSAGES.get("returnToPrevMenu"));
     }
 
     /**
@@ -309,14 +361,14 @@ public class Presenter {
      * Prints out message asking user to enter password again to confirm.
      */
     public void showConfirmPasswordScreen(){
-        System.out.println(CONFIRM_PASSWORD_MESSAGE);
+        System.out.println(ACCOUNT_MESSAGES.get("confirmPassword"));
     }
 
     /**
      * Prints out message showing that password does not match and asking user to try again.
      */
     public void showPasswordUnmatchedScreen(){
-        System.out.println(PASSWORD_UNMATCH_MESSAGE);
+        System.out.println(ACCOUNT_MESSAGES.get("passwordUnmatch"));
     }
 
     /**
@@ -324,7 +376,7 @@ public class Presenter {
      * @param username Username of the new account.
      */
     public void showAccountCreatedScreen(String username){
-        System.out.printf((ACCOUNT_CREATED_MESSAGE), username);
+        System.out.printf((ACCOUNT_MESSAGES.get("accountCreated")), username);
     }
 
     /**
@@ -344,28 +396,28 @@ public class Presenter {
      * Prints out message showing that invalid username or password is entered and asking user to try again.
      */
     public void showLoginFailedScreen(){
-        System.out.println(LOGIN_FAILED_MESSAGE);
+        System.out.println(ACCOUNT_MESSAGES.get("loginFailed"));
     }
 
     /**
      * Prints out message showing that user has successfully logged in.
      */
     public void showLoginSuccessfulScreen(){
-        System.out.println(LOGIN_SUCCESS_MESSAGE);
+        System.out.println(ACCOUNT_MESSAGES.get("loginSuccessful"));
     }
 
     /**
      * Prints out message showing that user account type and permissions are being checked, with delay.
      */
     public void showCheckAccountPermMessage(){
-        interfaceScreen(CHECK_ACCOUNT_PERMISSION_MESSAGE);
+        interfaceScreen(ACCOUNT_MESSAGES.get("checkAccountPermission"));
     }
 
     /**
      * Prints out message showing that feature requires an admin account.
      */
     public void showRequiresAdminMessage(){
-        System.out.println(REQUIRE_ADMIN_MESSAGE);
+        System.out.println(ACCOUNT_MESSAGES.get("requireAdminStatus"));
     }
 
     /**
@@ -410,7 +462,7 @@ public class Presenter {
      * @param obj String representing the type of object. Can be "template" or "planner".
      */
     public void showIDForEditQuestion(String obj){
-        System.out.printf(ID_FOR_EDIT_QUESTION, obj);
+        System.out.printf(MESSAGES.get("idForEditQuestion"), obj);
     }
 
     /**
@@ -419,7 +471,7 @@ public class Presenter {
      * @param ID ID of the template or planner selected.
      */
     public void showObjIntroMessage(String obj, int ID){
-        System.out.printf((OBJECT_INTRO_MESSAGE), obj, ID, obj);
+        System.out.printf((MESSAGES.get("objectIntro")), obj, ID, obj);
     }
 
     /**
@@ -434,14 +486,14 @@ public class Presenter {
      * @param obj Object of which user will give a new name. "obj" can be "template", "prompt", etc.
      */
     public void showEditNewNameQuestion(String obj){
-        System.out.printf((EDIT_NEW_NAME_QUESTION), obj);
+        System.out.printf((MESSAGES.get("editNewNameQuestion")), obj);
     }
 
     /**
      * Prints out message asking user if they would like to continue to make another edit.
      */
     public void showIfContinueEditQuestion(){
-        System.out.println(IF_CONTINUE_EDIT_QUESTION);
+        System.out.println(MESSAGES.get("ifContinueEditQuestion"));
     }
 
     /**
@@ -449,14 +501,14 @@ public class Presenter {
      * @param obj Object that user wants to delete.
      */
     public void showConfirmDeleteQuestion(String obj){
-        System.out.printf((CONFIRM_DELETE_QUESTION), obj);
+        System.out.printf((MESSAGES.get("confirmDeleteQuestion")), obj);
     }
 
     /**
      * Prints out message showing that a feature/a functionality in the program is not yet available.
      */
     public void showFeatureUnavailableScreen(){
-        System.out.println(FEATURE_UNAVAILABLE_MESSAGE);
+        System.out.println(MESSAGES.get("featureUnavailable"));
     }
 
     /**
@@ -470,7 +522,7 @@ public class Presenter {
      * Prints out intro message for showing current template prompts.
      */
     public void showTemplatePromptsIntroScreen(){
-        System.out.println(TEMPLATE_PROMPTS_INTRO_MESSAGE);
+        System.out.println(TEMPLATE_MESSAGES.get("templatePromptsIntro"));
     }
 
     /**
@@ -478,14 +530,14 @@ public class Presenter {
      * @param action Action user would like to perform - can be "rename", "add", or "delete"
      */
     public void showIDForEditPromptQuestion(String action){
-        System.out.printf((ID_FOR_EDIT_PROMPT_QUESTION), action);
+        System.out.printf((MESSAGES.get("idForEditPromptQuestion")), action);
     }
 
     /**
      * Prints out interface screen with message showing that template is being updated.
      */
     public void showUpdatingTemplateMessage(){
-        interfaceScreen(UPDATING_TEMPLATE_MESSAGE);
+        interfaceScreen(TEMPLATE_MESSAGES.get("updatingTemplate"));
     }
 
     /**
@@ -493,28 +545,28 @@ public class Presenter {
      * has been completed.
      */
     public void showUpdateCompletedMessage(){
-        System.out.println(UPDATE_COMPLETED_MESSAGE);
+        System.out.println(MESSAGES.get("updateCompleted"));
     }
 
     /**
      * Prints out message showing that the program is returning to the edit prompts menu with delay.
      */
     public void showReturnToEditPromptsMenuMessage(){
-        interfaceScreen(RETURN_TO_EDIT_PROMPTS_MENU_MESSAGE);
+        interfaceScreen(TEMPLATE_MESSAGES.get("returnToEditPromptsMenu"));
     }
 
     /**
      * Prints out message showing that the program is returning to the template edit menu with delay.
      */
     public void showReturnToTemplateEditMenuMessage(){
-        interfaceScreen(RETURN_TO_TEMPLATE_EDIT_MENU_MESSAGE);
+        interfaceScreen(TEMPLATE_MESSAGES.get("returnToTemplateEditMenu"));
     }
 
     /**
      * Prints out message showing that the program is returning to the Template Menu with delay.
      */
     public void showReturnToTemplateMenuMessage(){
-        interfaceScreen(RETURN_TO_TEMPLATE_MENU_MESSAGE);
+        interfaceScreen(TEMPLATE_MESSAGES.get("returnToTemplateMenu"));
     }
 
     /**
@@ -549,14 +601,14 @@ public class Presenter {
      * Prints out message showing that the program is returning to account setting options with delay.
      */
     public void showReturnToAccountSettingsMessage(){
-        interfaceScreen(RETURN_TO_ACCOUNT_SETTINGS_MESSAGE);
+        interfaceScreen(ACCOUNT_MESSAGES.get("returnToAccountSettings"));
     }
 
     /**
      * Prints out message showing that the program is returning to the Account Menu with delay.
      */
     public void showReturnToAccountMenuMessage(){
-        interfaceScreen(RETURN_TO_ACCOUNT_MENU_MESSAGE);
+        interfaceScreen(ACCOUNT_MESSAGES.get("returnToAccountMenu"));
     }
 
     /**
@@ -628,7 +680,7 @@ public class Presenter {
      * @param type Type of the planner.
      */
     public void showPlannerType(String type){
-        System.out.printf(SHOW_PLANNER_TYPE_MESSAGE, type);
+        System.out.printf(PLANNER_MESSAGES.get("showPlannerType"), type);
     }
 
     /**
@@ -642,6 +694,8 @@ public class Presenter {
      * Prints out Planner creation options.
      */
     public void showPlannerCreateMenu(){
+        System.out.println("The following templates are available to you for reference purpose:");
+        System.out.println(this.templateController.detailViewAllTemplates());
         System.out.println(MENUS.get("plannerCreateMenu"));
     }
 
@@ -650,48 +704,48 @@ public class Presenter {
      * @param plannerType Type of the created planner.
      */
     public void showPlannerCreatedMessage(String plannerType){
-        System.out.printf(PLANNER_CREATED_MESSAGE, plannerType);
+        System.out.printf(PLANNER_MESSAGES.get("plannerCreated"), plannerType);
     }
 
     /**
      * Prints out message asking for the time slot in the planner that the user would like to edit the agenda for.
      */
     public void showPlannerEditTimeQuestion(){
-        System.out.println(PLANNER_EDIT_TIME_QUESTION);
+        System.out.println(PLANNER_MESSAGES.get("plannerEditTimeQuestion"));
     }
 
     /**
      * Prints out message asking user to enter the new agenda for the planner.
      */
     public void showPlannerEditAgendaQuestion(){
-        System.out.println(PLANNER_EDIT_AGENDA_QUESTION);
+        System.out.println(PLANNER_MESSAGES.get("plannerEditAgendaQuestion"));
     }
 
     /**
      * Prints out message asking for the index in the planner that the user would like to edit the agenda for.
      */
     public void showPlannerEditIndexQuestion(){
-        System.out.println(PLANNER_EDIT_INDEX_QUESTION);
+        System.out.println(PLANNER_MESSAGES.get("plannerEditIndexQuestion"));
     }
 
     /**
      * Prints out message showing that the index entered for planner is out of range, and asking user to try again.
      */
     public void showPlannerReEnterIndexMessage(){
-        System.out.println(PLANNER_RE_ENTER_INDEX_MESSAGE);
+        System.out.println(PLANNER_MESSAGES.get("plannerReEnterIndex"));
     }
 
     /**
      * Prints out message showing that the program is returning to the planner edit menu with delay.
      */
     public void showReturnToPlannerEditMenuMessage(){
-        interfaceScreen(RETURN_TO_PLANNER_EDIT_MENU_MESSAGE);
+        interfaceScreen(PLANNER_MESSAGES.get("returnToPlannerEditMenu"));
     }
 
     /**
      * Prints out message showing that the program is returning to the Planner Menu with delay.
      */
     public void showReturnToPlannerMenuMessage(){
-        interfaceScreen(RETURN_TO_PLANNER_MENU_MESSAGE);
+        interfaceScreen(PLANNER_MESSAGES.get("returnToPlannerMenu"));
     }
 }

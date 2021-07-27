@@ -13,8 +13,6 @@ public class ProjectPlanner extends Planner {
         this.taskStatus = new ArrayList<>();
         this.ID = super.getID();
         this.NumAgendas = 0;
-
-
     }
 
     public String getType(){
@@ -70,7 +68,11 @@ public class ProjectPlanner extends Planner {
      */
     public Boolean add(int i, String agenda) {
         if (i > this.tasks.size() - 1){ // if i is over the size limit
-            return false;
+            i = this.tasks.size() - 1;
+            this.tasks.add(i, agenda);
+            this.taskStatus.add(i, "not completed");
+            this.NumAgendas ++;
+            return true;
         }
         else{
             this.tasks.add(i, agenda);
@@ -106,14 +108,13 @@ public class ProjectPlanner extends Planner {
      */
     @Override
     public Boolean edit(int i, String agenda) {
-        if (i > this.tasks.size() - 1){ // if i is over the size limit
+        if (agenda.length() == 0) {  // if the new agenda is empty
             return false;
-        }
-        else if (agenda.length() == 0){  // if the new agenda is empty
-            return false;
-        }
-
-        else{
+        } else if (tasks.size() == 0){
+            return add(agenda);
+        } else if (i > this.tasks.size() - 1) { // if i is over the size limit
+            return this.add(i,agenda);
+        }else{
             this.tasks.set(i, agenda);
             this.taskStatus.set(i, "not completed");
             return true;
@@ -136,18 +137,26 @@ public class ProjectPlanner extends Planner {
         }
     }
 
+    /**
+     * delete the agenda from the task
+     * @param agenda the String representation of the agenda
+     * @return true if successfully removed agenda from task; false if otherwise.
+     */
     public boolean delete(String agenda) {
         if (!this.tasks.contains(agenda)){ // if agenda is not one of the task
             return false;
         }
         else{
-
             this.taskStatus.remove(this.tasks.indexOf(agenda));
             this.tasks.remove(agenda);
             return true;
         }
     }
 
+    /**
+     * get the number of agendas of this planner
+     * @return int of number of agendas.
+     */
     public int getNumAgendas(){
         return this.NumAgendas;
     }
