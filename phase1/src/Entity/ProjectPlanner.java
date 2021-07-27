@@ -110,7 +110,7 @@ public class ProjectPlanner extends Planner {
             return false;
         }
         else if (agenda.length() == 0){  // if the new agenda is empty
-            return false;
+            return add(agenda);
         }
 
         else{
