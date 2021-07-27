@@ -13,8 +13,6 @@ public class ProjectPlanner extends Planner {
         this.taskStatus = new ArrayList<>();
         this.ID = super.getID();
         this.NumAgendas = 0;
-
-
     }
 
     public String getType(){
@@ -70,7 +68,11 @@ public class ProjectPlanner extends Planner {
      */
     public Boolean add(int i, String agenda) {
         if (i > this.tasks.size() - 1){ // if i is over the size limit
-            return false;
+            i = this.tasks.size() - 1;
+            this.tasks.add(i, agenda);
+            this.taskStatus.add(i, "not completed");
+            this.NumAgendas ++;
+            return true;
         }
         else{
             this.tasks.add(i, agenda);
@@ -111,7 +113,7 @@ public class ProjectPlanner extends Planner {
         } else if (tasks.size() == 0){
             return add(agenda);
         } else if (i > this.tasks.size() - 1) { // if i is over the size limit
-            return false;
+            return this.add(i,agenda);
         }else{
             this.tasks.set(i, agenda);
             this.taskStatus.set(i, "not completed");
@@ -145,7 +147,6 @@ public class ProjectPlanner extends Planner {
             return false;
         }
         else{
-
             this.taskStatus.remove(this.tasks.indexOf(agenda));
             this.tasks.remove(agenda);
             return true;
