@@ -107,6 +107,8 @@ public class ProjectPlanner extends Planner {
     @Override
     public Boolean edit(int i, String agenda) {
         if (agenda.length() == 0) {  // if the new agenda is empty
+            return false;
+        } else if (tasks.size() == 0){
             return add(agenda);
         } else if (i > this.tasks.size() - 1) { // if i is over the size limit
             return false;
