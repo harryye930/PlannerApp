@@ -694,6 +694,8 @@ public class Presenter {
      * Prints out Planner creation options.
      */
     public void showPlannerCreateMenu(){
+        System.out.println("The following templates are available to you for reference purpose:");
+        System.out.println(this.templateController.detailViewAllTemplates());
         System.out.println(MENUS.get("plannerCreateMenu"));
     }
 
