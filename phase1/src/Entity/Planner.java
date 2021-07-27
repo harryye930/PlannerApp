@@ -37,6 +37,10 @@ public abstract class Planner implements Serializable {
      */
     public abstract String toString();
 
+     /*** Show the id for the planner
+      *
+      * @return a int id for the planner.
+      */
     public int getID(){
         return ID;
     }
@@ -47,14 +51,27 @@ public abstract class Planner implements Serializable {
         return this.privacyStatus;
     }
 
+    /** @return a String representing of the planner author.
+     */
     public String getAuthor() {
         return this.author;
     }
 
+    /** set a String representing of the planner author.
+     */
     public void setAuthor(String author){
         this.author = author;
     }
 
+    /** @return a String representing of the planner type.
+     */
+    public abstract String getType();
+
+    /** Show the number of planner agendas.
+     *
+     * @return a int representing of the number of planner agendas.
+     */
+    public abstract int getNumAgendas();
 
     /** Add agenda to current planner
      *
@@ -62,11 +79,6 @@ public abstract class Planner implements Serializable {
      * @return true iff the agenda is correctly added to current planner
      */
     public abstract Boolean add(String s);
-
-    public abstract String getType();
-
-    public abstract int getNumAgendas();
-
 
     /** Edit agenda to current planner
      *
