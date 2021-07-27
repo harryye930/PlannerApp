@@ -243,7 +243,7 @@ public class UserActionController {
         userInput = validInput(accountOptions);
 
         switch (userInput) {
-            case "A": // TODO: change this to delete account
+            case "A": //
                 accessController.logOut(retriever);
                 return false;
             case "B": // edit account info
@@ -498,7 +498,7 @@ public class UserActionController {
         switch (userInput) {
             case "A": // personal planners
                 ArrayList<String> arr = accessController.getPlanners(currentRetriever);
-                if (arr.size() == 0) {
+                if (arr == null || arr.size() == 0) {
                     System.out.println("No personal planners available yet.");
                 } else {
                     for (String plannerId : arr) {
