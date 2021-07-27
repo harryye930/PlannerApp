@@ -88,7 +88,6 @@ public abstract class Planner implements Serializable {
      */
     public abstract Boolean edit(int i, String agenda);
 
-
     /** Change the planner's privacy status
      *
      * @param status : expected status of this planner: public or private
