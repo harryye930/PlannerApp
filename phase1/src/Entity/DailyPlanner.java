@@ -218,7 +218,8 @@ public class DailyPlanner extends Planner {
             return false;
         }
         else if (agenda.length() == 0){ // if the new agenda is empty
-            return false;
+            add(agenda);
+            return true;
         }
         else{
             this.dailyPlannerTask.replace(this.timesList.get(i),agenda); // replace the string.
