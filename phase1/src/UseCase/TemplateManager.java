@@ -164,8 +164,22 @@ public class TemplateManager implements Serializable {
     }
 
     /**
-     * Get the collection of template id.
-     * @return An ArrayList representing the template ids.
+     * Preview all Templates stored in the system.
+     * This method is used when user wants to see a list of all Templates, before they select which template they want
+     * to see in detail.
+     * @return String that contains preview of all Template objects stored in the system.
      */
-    public ArrayList<Integer> getAllTemplateId() {return new ArrayList<>(this.templates.keySet());}
+    public String previewAllTemplates(){
+        return this.viewTemplateManager("Summary");
+    }
+
+    /**
+     * View all Templates stored in the system in detail.
+     * This method is used when user wants to see a list of all Templates in detail.
+     * @return String that contains detailed representation of all Template objects stored in the system.
+     */
+    public String detailViewAllTemplates(){
+        return this.viewTemplateManager("Detail");
+    }
+
 }

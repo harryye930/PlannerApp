@@ -2,7 +2,7 @@ package Interface;
 
 import Controller.AccessController;
 import Controller.PlannerController;
-import Controller.TemplateController;
+import UseCase.TemplateManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Presenter {
 
-    private TemplateController templateController;
+    private TemplateManager templateManager;
     private PlannerController plannerController;
     private AccessController accessController;
 
@@ -257,9 +257,9 @@ public class Presenter {
     }};
     //================================================================================================================
 
-    public Presenter(TemplateController templateController, PlannerController plannerController,
+    public Presenter(TemplateManager templateManager, PlannerController plannerController,
                      AccessController accessController){
-        this.templateController = templateController;
+        this.templateManager = templateManager;
         this.plannerController = plannerController;
         this.accessController = accessController;
     }
@@ -439,22 +439,22 @@ public class Presenter {
      * Prints out detail view of all existing templates.
      */
     public void showDetailViewAllTemplates(){
-        System.out.println(templateController.detailViewAllTemplates());
+        System.out.println(templateManager.detailViewAllTemplates());
     }
 
     /**
      * Prints out preview of all existing templates.
      */
     public void showPreviewAllTemplates(){
-        System.out.println(templateController.previewAllTemplates());
+        System.out.println(templateManager.previewAllTemplates());
     }
 
     /**
      * Prints out detail view of template with templateID.
-     * @param templateID ID of template to get detail view for.
+     * @param detailViewTemplate String representation of detail view of a template.
      */
-    public void showDetailViewTemplate(int templateID){
-        System.out.println(templateController.detailViewTemplate(templateID));
+    public void showDetailViewTemplate(String detailViewTemplate){
+        System.out.println(detailViewTemplate);
     }
 
     /**
@@ -695,7 +695,7 @@ public class Presenter {
      */
     public void showPlannerCreateMenu(){
         System.out.println("The following templates are available to you for reference purpose:");
-        System.out.println(this.templateController.detailViewAllTemplates());
+        System.out.println(this.templateManager.detailViewAllTemplates());
         System.out.println(MENUS.get("plannerCreateMenu"));
     }
 
