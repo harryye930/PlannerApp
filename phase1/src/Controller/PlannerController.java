@@ -23,6 +23,7 @@ public class PlannerController {
     private UserActionController userActionController;
     private AccessController accessController;
 
+
     /**
      * Initialize the PlannerController. Create a new PlannerManager.
      */
@@ -30,6 +31,7 @@ public class PlannerController {
         this.plannerManager = new PlannerManager();
         this.accGateway = new PlannerGateway(plannerManager);
     }
+
 
     /**
      * Save the data to the database, call this function when a saving is needed. Must be called
@@ -40,6 +42,7 @@ public class PlannerController {
         return this.accGateway.save();
     }
 
+
     /**
      * Load in the data from database to AccountManager.
      * @return A boolean value representing whether the loading process is successful or not.
@@ -47,6 +50,7 @@ public class PlannerController {
     public boolean load() {
         return this.accGateway.load();
     }
+
 
     /**
      * Create a new DailyPlanner with default name "daily planner", start time at 9 am, and endtime at 9 pm.
@@ -56,6 +60,7 @@ public class PlannerController {
         return plannerManager.newDailyPlanner("daily planner", "09:00", "18:00");
     }
 
+
     /**
      * Create a new Project Planner with default name "project planner".
      * @return the integer id of the planner
@@ -63,6 +68,7 @@ public class PlannerController {
     public int createNewProjectPlanner(){
         return plannerManager.newProjectPlanner("project planner");
     }
+
 
     /**
      * Set the author of the planner (a user)
@@ -72,6 +78,7 @@ public class PlannerController {
     public void setPlannerAuthor(int id, String userRetriever){
         plannerManager.setPlannerAuthor(id, userRetriever);
     }
+
 
     /** Pass on request to get a string representation of a planner
      *
@@ -90,6 +97,7 @@ public class PlannerController {
         return plannerManager.dailyPlannerRemainTasks(id);
     }
 
+
     /** Pass on request to edit planner
      *
      * @param i index of the agenda user wish to edit
@@ -99,6 +107,7 @@ public class PlannerController {
     public boolean edit(int id, int i, String agenda){
         return plannerManager.edit(id, i, agenda);
     }
+
 
     /** Pass on request to edit daily planner.
      *
@@ -120,6 +129,7 @@ public class PlannerController {
         return plannerManager.changePrivacyStatus(id, status);
     }
 
+
     /**
      * delete the planner corresponding to the given id.
      * @param id the integer id of the planner
@@ -129,6 +139,7 @@ public class PlannerController {
         return this.plannerManager.deletePlanner(id);
     }
 
+
     /**
      * print all planners to the screen.
      * @return String representation of all planners.
@@ -136,6 +147,7 @@ public class PlannerController {
     public String showAllPlanners (){
         return plannerManager.showAllPlanners();
     }
+
 
     /**
      * Show all the planners id of one author.
@@ -146,6 +158,7 @@ public class PlannerController {
         return plannerManager.getPlannersByAuthor(author);
     }
 
+
     /**
      * return an ArrayList of all integer id of all planners made public by all authors.
      * @return the ArrayList of all public planner's id
@@ -153,6 +166,7 @@ public class PlannerController {
     public ArrayList<Integer> getPublicPlanners(){
         return plannerManager.getPublicPlanners();
     }
+
 
     /**
      * get the type of the planner. could be "daily" or "project" planner.
@@ -163,6 +177,7 @@ public class PlannerController {
         return plannerManager.plannerType(id);
     }
 
+
     /**
      * Get the number of agendas of a planner corresponding to given integer id.
      * @param id the integer id of the planner
@@ -171,6 +186,7 @@ public class PlannerController {
     public int getNumAgendas(int id) {
         return plannerManager.getNumAgendas(id);
     }
+
 
     /**
      * print the possible options user have for planners to the user.
@@ -206,6 +222,7 @@ public class PlannerController {
         return true;
     }
 
+
     /**
      * give user options of editing their personal planner. i.e. the planners they created.
      * @param plannerID The integer id of the planner
@@ -229,6 +246,7 @@ public class PlannerController {
         }
     }
 
+
     /**
      * print the editing options of public planners to the user.
      * @param plannerID the integer id of the planner
@@ -243,6 +261,7 @@ public class PlannerController {
                 break;
         }
     }
+
 
     /**
      * print the editing options of planner agenda to user.
@@ -279,6 +298,7 @@ public class PlannerController {
         }
     }
 
+
     /**
      * print Options of creating planners to user.
      * @param currentRetriever the String representation of userId or email. The String that can identify a user.
@@ -309,6 +329,7 @@ public class PlannerController {
             }
         }
 
+
     /**
      * Print to user the view options of planner.
      * @param userID the unique String of userId.
@@ -330,6 +351,7 @@ public class PlannerController {
                     break;  // this is all this is required here for case C - don't worry!
             }
         }
+
 
     /**
      * Return the privacy status of the planner corresponding to the given id.

@@ -6,12 +6,19 @@ import Entity.ProjectPlanner;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+
 public class PlannerManager {
     private HashMap<Integer, Planner> idToPlanner;
 
+
+    /**
+     * Initialize the PlannerManager.
+     */
     public PlannerManager() {
         this.idToPlanner = new HashMap<>();
     }
+
 
     /** Create new DailyPlanner -- default interval 60 mins
      *
@@ -159,7 +166,6 @@ public class PlannerManager {
         }
     }
 
-
     /**
      * set the author of the planner
      * @param id the integer id of the planner
@@ -168,7 +174,6 @@ public class PlannerManager {
     public void setPlannerAuthor(int id, String author){
         findPlanner(id).setAuthor(author);
     }
-
 
     /**
      * Get all planners of one author
@@ -186,7 +191,6 @@ public class PlannerManager {
         return plannersByAuthor;
     }
 
-
     /**
      * return all public planners
      * @return all public planners
@@ -200,7 +204,6 @@ public class PlannerManager {
         }
         return publicPlanners;
     }
-
 
     /**
      * Return the type of the planner
@@ -216,7 +219,6 @@ public class PlannerManager {
         }
     }
 
-
     /**
      * return the number of agendas in this planner
      * @param id the integer id of the planner
@@ -225,7 +227,6 @@ public class PlannerManager {
     public int getNumAgendas(int id){
         return this.findPlanner(id).getNumAgendas();
     }
-
 
     /**
      * return the privacy status of the planner

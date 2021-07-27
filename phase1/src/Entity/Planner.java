@@ -13,8 +13,9 @@ public abstract class Planner implements Serializable {
     protected String privacyStatus;
     protected String author;
 
-
-
+    /**
+     * Initialize the Planner.
+     */
     public Planner(){
         this.plannerName = "New Planner";
         ID++;
@@ -22,6 +23,11 @@ public abstract class Planner implements Serializable {
         this.author = "TODO";
 
     }
+
+    /**
+     * Initialize the Planner.
+     * @param plannerName: the planner name.
+     */
     public Planner(String plannerName){
         this.plannerName = plannerName;
         ID++;
@@ -37,6 +43,7 @@ public abstract class Planner implements Serializable {
      */
     public abstract String toString();
 
+
      /*** Show the id for the planner
       *
       * @return a int id for the planner.
@@ -45,11 +52,13 @@ public abstract class Planner implements Serializable {
         return ID;
     }
 
+
      /** @return a String representing the planner status.
      */
     public String getPrivacyStatus() {
         return this.privacyStatus;
     }
+
 
     /** @return a String representing of the planner author.
      */
@@ -57,21 +66,25 @@ public abstract class Planner implements Serializable {
         return this.author;
     }
 
+
     /** set a String representing of the planner author.
      */
     public void setAuthor(String author){
         this.author = author;
     }
 
+
     /** @return a String representing of the planner type.
      */
     public abstract String getType();
+
 
     /** Show the number of planner agendas.
      *
      * @return a int representing of the number of planner agendas.
      */
     public abstract int getNumAgendas();
+
 
     /** Add agenda to current planner
      *
@@ -80,6 +93,7 @@ public abstract class Planner implements Serializable {
      */
     public abstract Boolean add(String s);
 
+
     /** Edit agenda to current planner
      *
      * @param i index of the agenda user wish to edit
@@ -87,6 +101,7 @@ public abstract class Planner implements Serializable {
      * @return true iff the agenda is correctly edited on current planner
      */
     public abstract Boolean edit(int i, String agenda);
+
 
     /** Change the planner's privacy status
      *
@@ -111,6 +126,5 @@ public abstract class Planner implements Serializable {
         }
         return false; // the current status is the same as input status
     }
-
 
 }
