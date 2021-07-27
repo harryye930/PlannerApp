@@ -54,6 +54,10 @@ public class Reader<T> implements IGateWay<T> {
             T obj = (T) objectIn.readObject();
             objectIn.close();
             return obj;
+        } catch (IOException e){
+            System.out.println("Database outdated, automatically deleted.");
+            nf.delete();
+            return null;
         } catch (Exception ex) {
             System.out.println("Please check if the casting type is the correct type ");
             ex.printStackTrace();
