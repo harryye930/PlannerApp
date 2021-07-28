@@ -12,7 +12,7 @@ import java.util.*;
  * UserActionController manages user actions.
  * Allocates specific tasks to controllers that should be responsible for them.
  */
-public class UserActionController extends Presenter {
+public class UserActionController {
 
     AccessController accessController;
     TemplateController templateController;

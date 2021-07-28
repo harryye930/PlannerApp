@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 
 
-public class PlannerManager extends PlannerController {
+public class PlannerManager{
     private HashMap<Integer, Planner> idToPlanner;
 
 

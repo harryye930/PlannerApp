@@ -10,7 +10,7 @@ import java.util.HashMap;
 /**
  * Manages Accounts.
  */
-public class AccountManager extends AccessController implements Serializable{
+public class AccountManager implements Serializable{
     private final HashMap<String, Account> idToAccount;
     private final HashMap<String, Account> emailToAccount;
 

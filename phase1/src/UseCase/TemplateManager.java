@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Manages templates.
  */
-public class TemplateManager extends TemplateController implements Serializable {
+public class TemplateManager implements Serializable {
 
     private Map<Integer, Template> templates;  // a mapping of template ID to Template
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Account accessibility controller.
  */
-public class AccessController extends AccountGateway {
+public class AccessController{
     private AccountManager accManager;
     private AccountGateway accGateway;
 
