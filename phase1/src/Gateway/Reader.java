@@ -31,8 +31,11 @@ public class Reader<T> implements IGateWay<T> {
                 return true;
             }
             return false;
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (IOException ex) {
+            System.out.println("Saving terminated, data lost.");
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
