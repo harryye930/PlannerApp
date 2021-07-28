@@ -42,7 +42,7 @@ public class UserActionController {
      * creating an instance of this UserActionController in the main.
      */
     public void runProgram() {
-        //accessController.load();
+        accessController.load();
         templateController.load();
         plannerController.load();
         presenter.showWelcomeScreen();
