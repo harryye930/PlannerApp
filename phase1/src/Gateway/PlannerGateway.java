@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class PlannerGateway extends Reader<HashMap<Integer, Planner>> {
 
-    private final String filePath = "idMap.ser";
+    private final String filePath = "idToPlannerMap.ser";
     private HashMap<Integer, Planner> idToPlanner = new HashMap<Integer, Planner>();
 
     private final PlannerManager pm;
