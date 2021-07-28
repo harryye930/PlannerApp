@@ -73,12 +73,14 @@ public class Reader<T> implements IGateWay<T> {
     @Override
     public ArrayList<ArrayList<String>> readCSV(String filePath) {
         try {
+            File file = new File(filePath);
+            file.delete();
             // Read in the data from csv file.
             Scanner scanner = new Scanner(new FileInputStream(filePath));
 
             // read in the data.
             String row;
-            ArrayList<ArrayList<String >> data = new ArrayList<ArrayList<String>>();
+            ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 
             while (scanner.hasNext()) {
                 row = scanner.nextLine();
@@ -87,8 +89,8 @@ public class Reader<T> implements IGateWay<T> {
             }
             scanner.close();
             return data;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (IOException ex){
+            System.out.println("Saving terminated.");
             return null;
         }
     }

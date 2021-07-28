@@ -9,8 +9,6 @@ import java.util.Scanner;
 
 public class UserInputController {
 
-    AccessController accessController;
-
     Presenter presenter;
     Scanner scanner;
 
