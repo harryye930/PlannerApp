@@ -653,10 +653,10 @@ public class Presenter {
      * Prints out details of all existing personal planners.
      */
     public void showAllPersonalPlanners(String retriever){
-        ArrayList<String> plannerIDs =  accessController.getPlanners(retriever);
+        ArrayList<Integer> plannerIDs =  this.plannerController.getPlannerByAuthor(retriever);
         StringBuilder personalPlanners = new StringBuilder();
-        for (String plannerID: plannerIDs){
-            personalPlanners.append(plannerController.toString(Integer.parseInt(plannerID)));
+        for (Integer plannerID: plannerIDs){
+            personalPlanners.append(plannerController.toString(plannerID));
             personalPlanners.append("\n");
         }
         System.out.println(personalPlanners);
