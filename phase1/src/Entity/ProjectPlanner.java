@@ -7,6 +7,11 @@ public class ProjectPlanner extends Planner {
     private int ID;
     private int NumAgendas;
 
+
+    /**
+     * initialize ProjectPlanner
+     * @param plannerName: the name of the planner
+     */
     public ProjectPlanner(String plannerName) {
         super(plannerName);
         this.tasks = new ArrayList<>();
@@ -15,9 +20,15 @@ public class ProjectPlanner extends Planner {
         this.NumAgendas = 0;
     }
 
+
+    /** Show the planner type is project planner
+     *
+     * @return a string represent this planner is project planner
+     */
     public String getType(){
         return "project";
     }
+
 
     /** Show the current planner
      *
@@ -38,6 +49,7 @@ public class ProjectPlanner extends Planner {
         }
         return sb.toString();
     }
+
 
     /** Add agenda to current planner
      *
@@ -60,6 +72,7 @@ public class ProjectPlanner extends Planner {
         }
     }
 
+
     /** Add agenda to current planner - index specified
      *
      * @param i index of new agenda item
@@ -81,6 +94,7 @@ public class ProjectPlanner extends Planner {
             return true;
         }
     }
+
 
     /** Complete certain agenda item
      *
@@ -121,6 +135,7 @@ public class ProjectPlanner extends Planner {
         }
     }
 
+
     /** Delete agenda item on current planner
      *
      *
@@ -137,6 +152,7 @@ public class ProjectPlanner extends Planner {
         }
     }
 
+
     /**
      * delete the agenda from the task
      * @param agenda the String representation of the agenda
@@ -152,6 +168,7 @@ public class ProjectPlanner extends Planner {
             return true;
         }
     }
+
 
     /**
      * get the number of agendas of this planner

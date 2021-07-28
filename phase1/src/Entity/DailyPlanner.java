@@ -54,35 +54,59 @@ public class DailyPlanner extends Planner {
         }
     }
 
+
+//    public DailyPlanner(){
+//        super();
+//        timesList = new ArrayList<>();
+//        dailyPlannerTask = new HashMap<>();
+//    }
+
+
+    /** Show the planner type is daily planner
+     *
+     * @return a string represent this planner is daily planner
+     */
     public String getType(){
         return "daily";
     }
 
-    public DailyPlanner(){
-        super();
-        timesList = new ArrayList<>();
-        dailyPlannerTask = new HashMap<>();
-    }
 
+    /** Set the time interval of the daily planner representing by integer
+     *
+     */
     public void setInterval(int interval) {
         this.interval = interval;
     }
 
+    /** Set a start time for the daily planner in HH:MM.
+     *
+     */
     public void setStartTime(int startHour, int startMins){
         this.startHour = startHour;
         this.startMins = startMins;
     }
 
+
+    /** Set a end time for the daily planner in HH:MM.
+     *
+     */
     public void setEndTime(int endHour, int endMins){
         this.endHour = endHour;
         this.endMins = endMins;
     }
 
+
+    /** Set a name for the daily planner representing in String.
+     *
+     */
     public void setPlannerName(String PlannerName){
         this.plannerName = PlannerName;
     }
 
 
+    /** Set a start time list for the daily planner.
+     *
+     */
     public void setTimesList(){
         String timeFormat;
         for (int h = this.startHour; h < this.endHour; h++) {
@@ -94,27 +118,36 @@ public class DailyPlanner extends Planner {
         }
     }
 
+
+    /** Show the current time based on the system time
+     *
+     * @return a string representation of the current time
+     */
     public String CurrentTime(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
         LocalDateTime now = LocalDateTime.now();
         return dtf.format(now);
     }
 
-    public void setPlannerInfo(String plannerName, String startTime, String endTime, int Interval){
-        this.setPlannerName(plannerName);
-        this.setInterval(Interval);
-        this.setStartTime(Integer.parseInt(startTime.substring(0, 2)), Integer.parseInt(startTime.substring(3, 5)));
-        this.setEndTime(Integer.parseInt(endTime.substring(0, 2)), Integer.parseInt(endTime.substring(3, 5)));
-        this.setTimesList();
-        this.setDailyPlannerTask(timesList);
+
+    /** Get the number of agendas the daily planner has
+     *
+     * @return a integer representation of the number of agendas
+     */
+    public int getNumAgendas(){
+        return this.NumAgendas;
     }
 
 
+    /** Show the daily planner tasks
+     *
+     */
     public void setDailyPlannerTask(ArrayList<String> timesList){
         for (String time : timesList) {
             dailyPlannerTask.put(time, "N/A");
         }
     }
+
 
     /**
      * Show the current planner
@@ -200,10 +233,6 @@ public class DailyPlanner extends Planner {
         }
     }
 
-    public int getNumAgendas(){
-        return this.NumAgendas;
-    }
-
 
     /**
      * edit agenda to current planner (given index)
@@ -227,6 +256,7 @@ public class DailyPlanner extends Planner {
         }
     }
 
+
     /**
      * edit agenda to current planner (given time)
      *
@@ -244,6 +274,7 @@ public class DailyPlanner extends Planner {
         }
     }
 
+
     /**
      * delete agenda to current planner
      *
@@ -256,42 +287,43 @@ public class DailyPlanner extends Planner {
         return edit(time, "N/A");
     }
 
+//
+//    public int getInterval() {
+//        return interval;
+//    }
+//
+//    public int getStartHour() {
+//        return startHour;
+//    }
+//
+//    public void setStartHour(int startHour) {
+//        this.startHour = startHour;
+//    }
+//
+//    public int getStartMins() {
+//        return startMins;
+//    }
+//
+//    public void setStartMins(int startMins) {
+//        this.startMins = startMins;
+//    }
+//
+//    public int getEndHour() {
+//        return endHour;
+//    }
+//
+//    public void setEndHour(int endHour) {
+//        this.endHour = endHour;
+//    }
+//
+//    public int getEndMins() {
+//        return endMins;
+//    }
+//
+//    public void setEndMins(int endMins) {
+//        this.endMins = endMins;
+//    }
 
-    public int getInterval() {
-        return interval;
-    }
-
-    public int getStartHour() {
-        return startHour;
-    }
-
-    public void setStartHour(int startHour) {
-        this.startHour = startHour;
-    }
-
-    public int getStartMins() {
-        return startMins;
-    }
-
-    public void setStartMins(int startMins) {
-        this.startMins = startMins;
-    }
-
-    public int getEndHour() {
-        return endHour;
-    }
-
-    public void setEndHour(int endHour) {
-        this.endHour = endHour;
-    }
-
-    public int getEndMins() {
-        return endMins;
-    }
-
-    public void setEndMins(int endMins) {
-        this.endMins = endMins;
-    }
 
     /** for Phase 2
      * take the new agenda start time to the closest minutes based on the interval
@@ -361,6 +393,7 @@ public class DailyPlanner extends Planner {
         }
         return RemainTaskSb.toString();
     }
+
 
     public HashMap<String, String> getDailyPlannerTask() {
         return dailyPlannerTask;
