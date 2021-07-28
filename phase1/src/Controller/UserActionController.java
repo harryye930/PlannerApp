@@ -242,7 +242,7 @@ public class UserActionController {
                     presenter.showReturnToAccountSettingsMessage();
                 }
                 break;
-            case "m":
+            case MAIN_MENU:
                 return false;
         }
         return true;
