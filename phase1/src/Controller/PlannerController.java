@@ -1,12 +1,8 @@
 package Controller;
 
-import Entity.DailyPlanner;
-import Entity.ProjectPlanner;
-import Gateway.AccountGateway;
 import Gateway.PlannerGateway;
-import Interface.Presenter;
+import Presenter.Presenter;
 import UseCase.PlannerManager;
-import Entity.Planner;
 import com.sun.xml.internal.ws.util.StringUtils;
 
 import java.util.ArrayList;

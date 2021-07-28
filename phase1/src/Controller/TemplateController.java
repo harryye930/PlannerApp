@@ -3,12 +3,9 @@ package Controller;
 
 import Entity.Template;
 import Gateway.TemplateGateway;
-import Interface.Presenter;
+import Presenter.Presenter;
 import UseCase.TemplateManager;
-import UseCase.PlannerManager;
-import UseCase.AccountManager;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**

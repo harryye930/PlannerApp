@@ -1,4 +1,4 @@
-package Interface;
+package Presenter;
 
 import Controller.AccessController;
 import Controller.PlannerController;
@@ -97,7 +97,7 @@ public class Presenter {
         String plannerEditTimeQuestion = "Please enter the time slot for which you'd like to edit the agenda:" +
                 "(in form of HH:MM)"; // closest time functionality will be added to phase 2
         String plannerEditAgendaQuestion = "Please enter the new agenda:";
-        String plannerEditIndexQuestion = "Please enter the index for which you'd like to edit the agenda:";
+        String plannerEditIndexQuestion = "Please enter the index for which you'd like to edit the agenda (an integer >= 1):";
         String plannerReEnterIndex = "The index entered is out of range (exceeds the number of existing " +
                 "agendas). Please try again.";
         String returnToPlannerEditMenu = "Returning to planner edit options...";
