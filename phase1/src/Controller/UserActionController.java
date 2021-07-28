@@ -29,8 +29,8 @@ public class UserActionController {
     Presenter presenter;
 
     private final String[] USER_DECISION = {"yes", "no"};
-    private final String QUIT = "q";
-    private final String MAIN_MENU = "m";
+    private final String QUIT = "Q";
+    private final String MAIN_MENU = "M";
     private String currentRetriever;
 
     public UserActionController() {
@@ -328,7 +328,7 @@ public class UserActionController {
                 plannerCreateOptions();
                 plannerController.save();
                 break;
-            case "m": // exit
+            case MAIN_MENU: // exit
                 return false;
         }
         // We know that the user didn't select return to main menu and that the requested action by the user is completed.
