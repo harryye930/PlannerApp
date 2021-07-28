@@ -1,8 +1,8 @@
 package Interface;
 
-import Controller.AccessController;
-import Controller.PlannerController;
-import Controller.TemplateController;
+import UseCase.AccountManager;
+import UseCase.TemplateManager;
+import UseCase.PlannerManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +10,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Presenter {
 
-    private TemplateController templateController;
-    private PlannerController plannerController;
-    private AccessController accessController;
+    private AccountManager accountManager;
+    private TemplateManager templateManager;
+    private PlannerManager plannerManager;
 
     // The section below contains all of the String representations that are presented to the users.
     //================================================================================================================
@@ -257,11 +257,11 @@ public class Presenter {
     }};
     //================================================================================================================
 
-    public Presenter(TemplateController templateController, PlannerController plannerController,
-                     AccessController accessController){
-        this.templateController = templateController;
-        this.plannerController = plannerController;
-        this.accessController = accessController;
+    public Presenter(TemplateManager templateManager, PlannerManager plannerManager,
+                     AccountManager accountManager){
+        this.templateManager = templateManager;
+        this.accountManager = accountManager;
+        this.plannerManager = plannerManager;
     }
 
     /**
@@ -439,22 +439,22 @@ public class Presenter {
      * Prints out detail view of all existing templates.
      */
     public void showDetailViewAllTemplates(){
-        System.out.println(templateController.detailViewAllTemplates());
+        System.out.println(templateManager.detailViewAllTemplates());
     }
 
     /**
      * Prints out preview of all existing templates.
      */
     public void showPreviewAllTemplates(){
-        System.out.println(templateController.previewAllTemplates());
+        System.out.println(templateManager.previewAllTemplates());
     }
 
     /**
      * Prints out detail view of template with templateID.
-     * @param templateID ID of template to get detail view for.
+     * @param detailViewTemplate String representation of detail view of a template.
      */
-    public void showDetailViewTemplate(int templateID){
-        System.out.println(templateController.detailViewTemplate(templateID));
+    public void showDetailViewTemplate(String detailViewTemplate){
+        System.out.println(detailViewTemplate);
     }
 
     /**
@@ -644,17 +644,17 @@ public class Presenter {
      * Prints out details of all existing personal planners and planners of others that have been made public.
      */
     public void showAllPlanners(){
-        System.out.println(plannerController.showAllPlanners());
+        System.out.println(plannerManager.showAllPlanners());
     }
 
     /**
      * Prints out details of all existing personal planners.
      */
     public void showAllPersonalPlanners(String retriever){
-        ArrayList<String> plannerIDs =  this.accessController.getPlanners(retriever);
+        ArrayList<String> plannerIDs =  accountManager.getPlanners(retriever);
         StringBuilder personalPlanners = new StringBuilder();
         for (String plannerID: plannerIDs){
-            personalPlanners.append(plannerController.toString(Integer.parseInt(plannerID)));
+            personalPlanners.append(plannerManager.findPlanner(Integer.parseInt(plannerID)).toString());
             personalPlanners.append("\n");
         }
         System.out.println(personalPlanners);
@@ -664,7 +664,7 @@ public class Presenter {
      * Prints out details of all existing public planners.
      */
     public void showAllPublicPlanners(){
-        plannerController.getPublicPlanners();
+        plannerManager.getPublicPlanners();
     }
 
     /**
@@ -672,7 +672,7 @@ public class Presenter {
      * @param plannerID ID of planner to get detail view for.
      */
     public void showDetailViewPlanner(int plannerID){
-        System.out.println(plannerController.toString(plannerID));
+        System.out.println(plannerManager.findPlanner(plannerID).toString());
     }
 
     /**
@@ -695,7 +695,7 @@ public class Presenter {
      */
     public void showPlannerCreateMenu(){
         System.out.println("The following templates are available to you for reference purpose:");
-        System.out.println(this.templateController.detailViewAllTemplates());
+        System.out.println(this.templateManager.detailViewAllTemplates());
         System.out.println(MENUS.get("plannerCreateMenu"));
     }
 
