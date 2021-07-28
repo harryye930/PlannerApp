@@ -1,6 +1,8 @@
 package Controller;
 
 import Interface.Presenter;
+import UseCase.AccountManager;
+import UseCase.PlannerManager;
 import UseCase.TemplateManager;
 
 import java.util.Arrays;
@@ -9,17 +11,18 @@ import java.util.Scanner;
 
 public class UserInputController {
 
-    AccessController accessController;
-    PlannerController plannerController;
-    Presenter presenter;
+    AccountManager accountManager;
+    PlannerManager plannerManager;
     TemplateManager templateManager;
+
+    Presenter presenter;
     Scanner scanner;
 
     public UserInputController(){
-        accessController = new AccessController();
-        plannerController = new PlannerController();
+        accountManager = new AccountManager();
+        plannerManager = new PlannerManager();
         templateManager = new TemplateManager();
-        presenter = new Presenter(templateManager, plannerController, accessController);
+        presenter = new Presenter(templateManager, plannerManager, accountManager);
         scanner = new Scanner(System.in);
     }
 

@@ -5,6 +5,8 @@ import Entity.Template;
 import Gateway.TemplateGateway;
 import Interface.Presenter;
 import UseCase.TemplateManager;
+import UseCase.PlannerManager;
+import UseCase.AccountManager;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -17,8 +19,8 @@ public class TemplateController{
     private TemplateGateway templateGateway;
     private Presenter presenter;
     private UserInputController userInputController;
-    private PlannerController plannerController;
-    private AccessController accessController;
+    private PlannerManager plannerManager;
+    private AccountManager accountManager;
 
     Scanner scanner;
 
@@ -29,7 +31,7 @@ public class TemplateController{
         templateManager = new TemplateManager();
         templateGateway = new TemplateGateway(templateManager);
         userInputController = new UserInputController();
-        presenter = new Presenter(templateManager, plannerController, accessController);
+        presenter = new Presenter(templateManager, plannerManager, accountManager);
         scanner = new Scanner(System.in);
     }
 

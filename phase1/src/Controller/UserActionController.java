@@ -1,6 +1,7 @@
 package Controller;
 
 import Interface.Presenter;
+import UseCase.AccountManager;
 import UseCase.PlannerManager;
 import UseCase.TemplateManager;
 import com.sun.xml.internal.ws.util.StringUtils;
@@ -19,10 +20,13 @@ public class UserActionController {
     AccessController accessController;
     TemplateController templateController;
     PlannerController plannerController;
-    Presenter presenter;
+
     TemplateManager templateManager;
+    AccountManager accountManager;
+    PlannerManager plannerManager;
 
     Scanner scanner;
+    Presenter presenter;
 
     private final String[] USER_DECISION = {"yes", "no"};
     private final String QUIT = "q";
@@ -34,8 +38,10 @@ public class UserActionController {
         templateController = new TemplateController();
         plannerController = new PlannerController();
         templateManager = new TemplateManager();
+        plannerManager = new PlannerManager();
+        accountManager = new AccountManager();
 
-        presenter = new Presenter(templateManager, plannerController, accessController);
+        presenter = new Presenter(templateManager, plannerManager, accountManager);
         scanner = new Scanner(System.in);
     }
 
