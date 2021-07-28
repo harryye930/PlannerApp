@@ -42,7 +42,7 @@ public class UserActionController {
      * creating an instance of this UserActionController in the main.
      */
     public void runProgram() {
-        accessController.load();
+        //accessController.load();
         templateController.load();
         plannerController.load();
         presenter.showWelcomeScreen();
@@ -235,7 +235,7 @@ public class UserActionController {
 
         switch (userInput) {
             case "A": //
-                accessController.logOut(retriever);
+                this.saveProgram();
                 return false;
             case "B": // edit account info
                 while (accountSetting(retriever)) {
