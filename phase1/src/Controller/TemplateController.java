@@ -31,28 +31,28 @@ public class TemplateController{
         templateManager = new TemplateManager();
         templateGateway = new TemplateGateway(templateManager);
         userInputController = new UserInputController();
-        presenter = new Presenter(templateManager, null, null);
+        presenter = new Presenter(this, null, null);
         scanner = new Scanner(System.in);
     }
 
-//    /**
-//     * Preview all Templates stored in the system.
-//     * This method is used when user wants to see a list of all Templates, before they select which template they want
-//     * to see in detail.
-//     * @return String that contains preview of all Template objects stored in the system.
-//     */
-//    public String previewAllTemplates(){
-//        return templateManager.viewTemplateManager("Summary");
-//    }
+    /**
+     * Preview all Templates stored in the system.
+     * This method is used when user wants to see a list of all Templates, before they select which template they want
+     * to see in detail.
+     * @return String that contains preview of all Template objects stored in the system.
+     */
+    public String previewAllTemplates(){
+        return templateManager.viewTemplateManager("Summary");
+    }
 
-//    /**
-//     * View all Templates stored in the system in detail.
-//     * This method is used when user wants to see a list of all Templates in detail.
-//     * @return String that contains detailed representation of all Template objects stored in the system.
-//     */
-//    public String detailViewAllTemplates(){
-//        return templateManager.viewTemplateManager("Detail");
-//    }
+    /**
+     * View all Templates stored in the system in detail.
+     * This method is used when user wants to see a list of all Templates in detail.
+     * @return String that contains detailed representation of all Template objects stored in the system.
+     */
+    public String detailViewAllTemplates(){
+        return templateManager.viewTemplateManager("Detail");
+    }
 
     //TODO: Are the methods below redundant? We need user input to better decide which methods to call
     //          - but we only get user input in the UserActionController

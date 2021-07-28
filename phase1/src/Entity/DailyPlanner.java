@@ -287,43 +287,6 @@ public class DailyPlanner extends Planner {
         return edit(time, "N/A");
     }
 
-//
-//    public int getInterval() {
-//        return interval;
-//    }
-//
-//    public int getStartHour() {
-//        return startHour;
-//    }
-//
-//    public void setStartHour(int startHour) {
-//        this.startHour = startHour;
-//    }
-//
-//    public int getStartMins() {
-//        return startMins;
-//    }
-//
-//    public void setStartMins(int startMins) {
-//        this.startMins = startMins;
-//    }
-//
-//    public int getEndHour() {
-//        return endHour;
-//    }
-//
-//    public void setEndHour(int endHour) {
-//        this.endHour = endHour;
-//    }
-//
-//    public int getEndMins() {
-//        return endMins;
-//    }
-//
-//    public void setEndMins(int endMins) {
-//        this.endMins = endMins;
-//    }
-
 
     /** for Phase 2
      * take the new agenda start time to the closest minutes based on the interval
@@ -398,5 +361,42 @@ public class DailyPlanner extends Planner {
     public HashMap<String, String> getDailyPlannerTask() {
         return dailyPlannerTask;
     }
+
+    //
+//    public int getInterval() {
+//        return interval;
+//    }
+//
+//    public int getStartHour() {
+//        return startHour;
+//    }
+//
+//    public void setStartHour(int startHour) {
+//        this.startHour = startHour;
+//    }
+//
+//    public int getStartMins() {
+//        return startMins;
+//    }
+//
+//    public void setStartMins(int startMins) {
+//        this.startMins = startMins;
+//    }
+//
+//    public int getEndHour() {
+//        return endHour;
+//    }
+//
+//    public void setEndHour(int endHour) {
+//        this.endHour = endHour;
+//    }
+//
+//    public int getEndMins() {
+//        return endMins;
+//    }
+//
+//    public void setEndMins(int endMins) {
+//        this.endMins = endMins;
+//    }
 }
 

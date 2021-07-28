@@ -2,6 +2,7 @@ package Interface;
 
 import Controller.AccessController;
 import Controller.PlannerController;
+import Controller.TemplateController;
 import UseCase.TemplateManager;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class Presenter {
 
     private AccessController accessController;
-    private TemplateManager templateManager;
+    private TemplateController templateController;
     private PlannerController plannerController;
 
     // The section below contains all of the String representations that are presented to the users.
@@ -93,7 +94,8 @@ public class Presenter {
     private final HashMap<String, String> PLANNER_MESSAGES = new HashMap<String, String>() {{
         String showPlannerType = "You have selected a planner of type: %s.%n";
         String plannerCreated = "%s planner successfully created. This is what it looks like: %n";
-        String plannerEditTimeQuestion = "Please enter the time slot for which you'd like to edit the agenda:"; // closest time functionality will be added to phase 2
+        String plannerEditTimeQuestion = "Please enter the time slot for which you'd like to edit the agenda:" +
+                "(in form of HH:MM)"; // closest time functionality will be added to phase 2
         String plannerEditAgendaQuestion = "Please enter the new agenda:";
         String plannerEditIndexQuestion = "Please enter the index for which you'd like to edit the agenda:";
         String plannerReEnterIndex = "The index entered is out of range (exceeds the number of existing " +
@@ -257,9 +259,9 @@ public class Presenter {
     }};
     //================================================================================================================
 
-    public Presenter(TemplateManager templateManager, PlannerController plannerController,
+    public Presenter(TemplateController templateManager, PlannerController plannerController,
                      AccessController accountManager){
-        this.templateManager = templateManager;
+        this.templateController = templateManager;
         this.accessController = accountManager;
         this.plannerController = plannerController;
     }
@@ -439,14 +441,14 @@ public class Presenter {
      * Prints out detail view of all existing templates.
      */
     public void showDetailViewAllTemplates(){
-        System.out.println(templateManager.detailViewAllTemplates());
+        System.out.println(templateController.detailViewAllTemplates());
     }
 
     /**
      * Prints out preview of all existing templates.
      */
     public void showPreviewAllTemplates(){
-        System.out.println(templateManager.previewAllTemplates());
+        System.out.println(templateController.previewAllTemplates());
     }
 
     /**
@@ -695,7 +697,7 @@ public class Presenter {
      */
     public void showPlannerCreateMenu(){
         System.out.println("The following templates are available to you for reference purpose:");
-        System.out.println(this.templateManager.detailViewAllTemplates());
+        System.out.println(this.templateController.detailViewAllTemplates());
         System.out.println(MENUS.get("plannerCreateMenu"));
     }
 
