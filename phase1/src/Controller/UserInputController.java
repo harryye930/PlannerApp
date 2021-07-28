@@ -31,11 +31,11 @@ public class UserInputController {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine().toUpperCase(Locale.ROOT);
         List<String> options = Arrays.asList(valid_options);
-        while (!options.contains(input.trim())) {
+        while (!options.contains(input.trim().toUpperCase())) {
             presenter.showInvalidInputScreen();
             input = scanner.nextLine();
         }
-        return input;
+        return input.trim().toUpperCase();
     }
 
     /**

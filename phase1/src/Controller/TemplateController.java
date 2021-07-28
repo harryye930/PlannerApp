@@ -24,8 +24,8 @@ public class TemplateController{
 
     Scanner scanner;
 
-    private final String MAIN_MENU = "m";
-    private final String[] USER_DECISION = {"yes", "no"};
+    private final String MAIN_MENU = "M";
+    private final String[] USER_DECISION = {"YES", "NO"};
 
     public TemplateController() {
         templateManager = new TemplateManager();
@@ -121,7 +121,7 @@ public class TemplateController{
                 return false;
         }
         // We know that the user didn't select return to main menu and that the requested action by the user is completed.
-        // The user will wants to remain in the <templateOptions> menu until they explicitly indicate their interest to
+        // The user will want to remain in the <templateOptions> menu until they explicitly indicate their interest to
         // return to the main menu.
         return true;
     }
@@ -252,7 +252,7 @@ public class TemplateController{
                 return false;
         }
         // We know that the user didn't select return to prev. menu and that the requested action by the user is completed.
-        // The user will wants to remain in the <editOptions> menu until they explicitly indicate their interest to
+        // The user will want to remain in the <editOptions> menu until they explicitly indicate their interest to
         // return to the previous menu.
         return true;
     }
