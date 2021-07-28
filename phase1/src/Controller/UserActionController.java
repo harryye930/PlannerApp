@@ -357,12 +357,12 @@ public class UserActionController {
         userInput = validInput(viewOptions);
         switch (userInput) {
             case "A": // personal planners
-                ArrayList<String> arr = accessController.getPlanners(currentRetriever);
+                ArrayList<Integer> arr = this.plannerController.getPlannerByAuthor(currentRetriever);
                 if (arr == null || arr.size() == 0) {
                     System.out.println("No personal planners available yet.");
                 } else {
-                    for (String plannerId : arr) {
-                        System.out.println(plannerController.toString(Integer.parseInt(plannerId)));
+                    for (int plannerId : arr) {
+                        System.out.println(plannerController.toString(plannerId));
                     }
                 }
                 break;
