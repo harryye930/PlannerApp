@@ -94,7 +94,8 @@ public class Presenter {
     private final HashMap<String, String> PLANNER_MESSAGES = new HashMap<String, String>() {{
         String showPlannerType = "You have selected a planner of type: %s.%n";
         String plannerCreated = "%s planner successfully created. This is what it looks like: %n";
-        String plannerEditTimeQuestion = "Please enter the time slot for which you'd like to edit the agenda:"; // closest time functionality will be added to phase 2
+        String plannerEditTimeQuestion = "Please enter the time slot for which you'd like to edit the agenda:" +
+                "(in form of HH:MM)"; // closest time functionality will be added to phase 2
         String plannerEditAgendaQuestion = "Please enter the new agenda:";
         String plannerEditIndexQuestion = "Please enter the index for which you'd like to edit the agenda:";
         String plannerReEnterIndex = "The index entered is out of range (exceeds the number of existing " +
