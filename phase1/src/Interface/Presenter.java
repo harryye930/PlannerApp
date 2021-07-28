@@ -122,7 +122,7 @@ public class Presenter {
                         "A. Create a new account\n" +
                         "B. Log in (have an existing account)\n" +
                         "C. Continue as guest (note that any changes made won't be saved)\n" +
-                        "\nTo close the program, enter \"q\".\n" +
+                        "\nTo close the program, enter \"Q\".\n" +
                         "=========================================================================";
         String mainMenu =
                 "=========================================================================\n" +
@@ -131,7 +131,7 @@ public class Presenter {
                         "A. Planners options\n" +
                         "B. Templates options\n" +
                         "C. Account options\n" +
-                        "D. Log out and exit\n" +
+                        "D. Log out\n" +
                         "=========================================================================";
         String accountMenu =
                 "=========================================================================\n"+

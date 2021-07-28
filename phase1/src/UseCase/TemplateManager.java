@@ -9,13 +9,6 @@ import java.util.*;
  */
 public class TemplateManager implements Serializable {
 
-    // TODO: *** note from office hour ***
-    // TODO: (1) Make template gateway - use an interface (week7) to not violate dependency rule while using gateway to
-    // TODO: read the information
-
-    //TODO: Idea for Gateway:
-    // Gateway reader should return a HashMap, with key being name of the file,
-    // and value being ArrayList<String> - each row in the csv file should be a String in ArrayList<String>
 
     private Map<Integer, Template> templates;  // a mapping of template ID to Template
 

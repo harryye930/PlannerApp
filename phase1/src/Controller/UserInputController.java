@@ -4,6 +4,7 @@ import Interface.Presenter;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class UserInputController {
@@ -28,7 +29,7 @@ public class UserInputController {
      */
     public String validInput(String[] valid_options) {
         Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
+        String input = scanner.nextLine().toUpperCase(Locale.ROOT);
         List<String> options = Arrays.asList(valid_options);
         while (!options.contains(input.trim())) {
             presenter.showInvalidInputScreen();

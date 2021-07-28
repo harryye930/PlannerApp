@@ -10,8 +10,8 @@ import java.util.HashMap;
  * Manages Accounts.
  */
 public class AccountManager implements Serializable{
-    private HashMap<String, Account> idToAccount;
-    private HashMap<String, Account> emailToAccount;
+    private final HashMap<String, Account> idToAccount;
+    private final HashMap<String, Account> emailToAccount;
 
     /**
      * Create an AccountManager Object.
