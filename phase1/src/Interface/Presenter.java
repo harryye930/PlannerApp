@@ -53,10 +53,10 @@ public class Presenter {
 
     // Contains messages that are specific to account options.
     private final HashMap<String, String> ACCOUNT_MESSAGES = new HashMap<String, String>() {{
-        String confirmPassword = "Please enter the password again to confirm.\n";
-        String passwordUnmatch = "Password does not match. Please try again.\n";
+        String confirmPassword = "Please enter the password again to confirm:";
+        String passwordUnmatch = "Password does not match. Please try again!";
         String accountCreated = "A new account has been created.%nPlease remember your ID: %s.%n";
-        String loginFailed = "Invalid username or password. Please try again.\n";
+        String loginFailed = "Invalid username or password. Please try again!";
         String loginSuccessful = "Login successful.";
         String checkAccountPermission = "Checking your account type and its permissions...";
         String requireAdminStatus = "Sorry, this feature requires an admin account.";
@@ -93,9 +93,9 @@ public class Presenter {
     private final HashMap<String, String> PLANNER_MESSAGES = new HashMap<String, String>() {{
         String showPlannerType = "You have selected a planner of type: %s.%n";
         String plannerCreated = "%s planner successfully created. This is what it looks like: %n";
-        String plannerEditTimeQuestion = "Please enter the time slot for which you'd like to edit the agenda."; // closest time functionality will be added to phase 2
-        String plannerEditAgendaQuestion = "Please enter the new agenda.";
-        String plannerEditIndexQuestion = "Please enter the index for which you'd like to edit the agenda.";
+        String plannerEditTimeQuestion = "Please enter the time slot for which you'd like to edit the agenda:"; // closest time functionality will be added to phase 2
+        String plannerEditAgendaQuestion = "Please enter the new agenda:";
+        String plannerEditIndexQuestion = "Please enter the index for which you'd like to edit the agenda:";
         String plannerReEnterIndex = "The index entered is out of range (exceeds the number of existing " +
                 "agendas). Please try again.";
         String returnToPlannerEditMenu = "Returning to planner edit options...";
@@ -137,7 +137,7 @@ public class Presenter {
                         "Please choose one of the options below and enter the letter associated with it.\n" +
                         "A. Log out\n" +
                         "B. Edit account info\n" +
-                        "\nTo return to the MAIN MENU, enter \"m\".\n" +
+                        "\nTo return to the MAIN MENU, enter \"M\".\n" +
                         "=========================================================================";
         String templateMenu =
                 "=========================================================================\n"+
@@ -146,7 +146,7 @@ public class Presenter {
                         "A. View all templates\n" +
                         "B. Edit an existing template (Admin Only) \n" +
                         "C. Create a new template (Admin Only) \n" +
-                        "\nTo return to the MAIN MENU, enter \"m\".\n" +
+                        "\nTo return to the MAIN MENU, enter \"M\".\n" +
                         "=========================================================================";
         String plannerMenu =
                 "=========================================================================\n"+
@@ -155,7 +155,7 @@ public class Presenter {
                         "A. View planners \n" +
                         "B. Edit an existing planner \n" +
                         "C. Create a new planner \n" +
-                        "\nTo return to the MAIN MENU, enter \"m\".\n" +
+                        "\nTo return to the MAIN MENU, enter \"M\".\n" +
                         "=========================================================================";
         // SUB-MENUS
         // Account sub-menus
@@ -349,7 +349,7 @@ public class Presenter {
      */
     public void showCreateNewAccountScreen(int index){
         String createNewAccountIntro = "You have chosen to create a new account.\n";
-        String createNewAccountInfo = "Please enter %s.\n";
+        String createNewAccountInfo = "Please enter %s:";
         String[] createNewAccountPrompts = {String.format(createNewAccountIntro + createNewAccountInfo, "Email"),
                                             String.format(createNewAccountInfo, "Username"),
                                             String.format(createNewAccountInfo, "Password")};
@@ -386,7 +386,7 @@ public class Presenter {
      */
     public void showLoginScreen(int index){
         String loginIntro = "You have chosen to log in with an existing account.\n";
-        String loginInfo = "Please enter your %s.\n";
+        String loginInfo = "Please enter your %s:\n";
         String[] loginPrompts = {String.format(loginIntro + loginInfo, "Username or Email"),
                 String.format(loginInfo, "Password")};
         System.out.println(loginPrompts[index]);

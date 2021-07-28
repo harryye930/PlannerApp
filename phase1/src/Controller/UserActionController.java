@@ -29,8 +29,8 @@ public class UserActionController {
     Presenter presenter;
 
     private final String[] USER_DECISION = {"yes", "no"};
-    private final String QUIT = "q";
-    private final String MAIN_MENU = "m";
+    private final String QUIT = "Q";
+    private final String MAIN_MENU = "M";
     private String currentRetriever;
 
     public UserActionController() {

@@ -154,8 +154,14 @@ public class PlannerController {
      * @param author the userId of the author.
      * @return the ArrayList of integer id of planners.
      */
-    public ArrayList<Integer> getPlannerByAuthor(String author){
-        return plannerManager.getPlannersByAuthor(author);
+    public Object getPlannerByAuthor(String author){
+        try {
+            return plannerManager.getPlannersByAuthor(author);
+        }
+        catch(Exception NullPointerException) {
+            System.out.println("Empty...");
+            return null;
+        }
     }
 
 
@@ -205,13 +211,13 @@ public class PlannerController {
                 presenter.showAllPersonalPlanners(currentRetriever); // display all personal planners
                 presenter.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
                 plannerID = Integer.parseInt(scanner.nextLine()); // gets ID of planner user wants to edit
-                //userActionController.personalPlannerEditOptions(plannerID);
+//                userActionController.personalPlannerEditOptions(plannerID);
                 break;
             case "B":  //edit other public planners
                 presenter.showAllPublicPlanners(); // display all public planners
                 presenter.showIDForEditQuestion("planner"); // display message asking user to enter ID of planner to edit
                 plannerID = Integer.parseInt(scanner.nextLine()); // gets ID of planner user wants to edit
-                //userActionController.publicPlannerEditOptions(plannerID);
+//                userActionController.publicPlannerEditOptions(plannerID);
                 break;
             case "C":
                 return false;
