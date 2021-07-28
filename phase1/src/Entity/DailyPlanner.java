@@ -139,19 +139,6 @@ public class DailyPlanner extends Planner {
     }
 
 
-    /** Show the daily planner basic information
-     *
-     */
-    public void setPlannerInfo(String plannerName, String startTime, String endTime, int Interval){
-        this.setPlannerName(plannerName);
-        this.setInterval(Interval);
-        this.setStartTime(Integer.parseInt(startTime.substring(0, 2)), Integer.parseInt(startTime.substring(3, 5)));
-        this.setEndTime(Integer.parseInt(endTime.substring(0, 2)), Integer.parseInt(endTime.substring(3, 5)));
-        this.setTimesList();
-        this.setDailyPlannerTask(timesList);
-    }
-
-
     /** Show the daily planner tasks
      *
      */
@@ -300,7 +287,7 @@ public class DailyPlanner extends Planner {
         return edit(time, "N/A");
     }
 
-
+//
 //    public int getInterval() {
 //        return interval;
 //    }
