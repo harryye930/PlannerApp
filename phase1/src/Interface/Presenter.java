@@ -21,7 +21,7 @@ public class Presenter {
     private final HashMap<String, String> MESSAGES = new HashMap<String, String>() {{
         String welcome = "Welcome to your planner manager!";
         String closing = "Thank you for using the program, have a productive day!";
-        String savingInfo = "Thank you for using the program, have a productive day!";
+        String savingInfo = "Saving program data...";
         String savingSuccessful = "Saving successful!";
         String invalidInput = "Invalid input, please try again.";
         String returnToMain = "Returning to main menu...";

@@ -9,13 +9,11 @@ import java.util.*;
  */
 public class TemplateManager implements Serializable {
 
-
     private Map<Integer, Template> templates;  // a mapping of template ID to Template
 
     /**
      * Creates a new empty TemplateManager.
      */
-
     public TemplateManager(){
         templates = new HashMap<>();
     }
@@ -133,7 +131,6 @@ public class TemplateManager implements Serializable {
 
             stringRep += "\n";
         }
-
         return stringRep;
     }
 
