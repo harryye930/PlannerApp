@@ -19,8 +19,6 @@ public class TemplateController{
     private TemplateGateway templateGateway;
     private Presenter presenter;
     private UserInputController userInputController;
-    private PlannerManager plannerManager;
-    private AccountManager accountManager;
 
     Scanner scanner;
 
