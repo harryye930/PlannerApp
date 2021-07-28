@@ -1,5 +1,6 @@
 package UseCase;
 
+import Controller.AccessController;
 import Entity.*;
 
 import java.io.*;
@@ -9,7 +10,7 @@ import java.util.HashMap;
 /**
  * Manages Accounts.
  */
-public class AccountManager implements Serializable{
+public class AccountManager extends AccessController implements Serializable{
     private final HashMap<String, Account> idToAccount;
     private final HashMap<String, Account> emailToAccount;
 

@@ -1,4 +1,5 @@
 package UseCase;
+import Controller.PlannerController;
 import Entity.DailyPlanner;
 import Entity.Planner;
 import Entity.ProjectPlanner;
@@ -8,7 +9,7 @@ import java.util.HashMap;
 
 
 
-public class PlannerManager {
+public class PlannerManager extends PlannerController {
     private HashMap<Integer, Planner> idToPlanner;
 
 

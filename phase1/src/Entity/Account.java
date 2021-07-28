@@ -1,5 +1,6 @@
 package Entity;
 
+import UseCase.AccountManager;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.*;
@@ -11,7 +12,7 @@ import java.io.Serializable;
 /**
  * A instance of this class represent an account in this application.
  */
-public abstract class Account implements Serializable {
+public abstract class Account extends AccountManager implements Serializable {
     protected String accountType;
     protected String userName;
     protected String userId;

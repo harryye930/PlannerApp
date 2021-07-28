@@ -1,5 +1,6 @@
 package UseCase;
 
+import Controller.TemplateController;
 import Entity.Template;
 import java.io.*;
 import java.util.*;
@@ -7,7 +8,7 @@ import java.util.*;
 /**
  * Manages templates.
  */
-public class TemplateManager implements Serializable {
+public class TemplateManager extends TemplateController implements Serializable {
 
     private Map<Integer, Template> templates;  // a mapping of template ID to Template
 

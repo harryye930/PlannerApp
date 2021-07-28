@@ -14,7 +14,7 @@ import java.util.Scanner;
 /**
  * Controller for Templates.
  */
-public class TemplateController{
+public class TemplateController extends UserActionController {
     private TemplateManager templateManager;
     private TemplateGateway templateGateway;
     private Presenter presenter;

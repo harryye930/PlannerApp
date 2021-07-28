@@ -1,4 +1,6 @@
 package Entity;
+import Tests.PlannerTests;
+
 import java.util.ArrayList;
 
 public class ProjectPlanner extends Planner {

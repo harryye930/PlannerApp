@@ -15,7 +15,7 @@ import java.util.Scanner;
 /**
  *  the Planner controller.
  */
-public class PlannerController {
+public class PlannerController extends PlannerGateway {
     private PlannerManager plannerManager;
     private PlannerGateway accGateway;
     private UserInputController userInputController;

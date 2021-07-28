@@ -1,5 +1,7 @@
 package Entity;
 
+import UseCase.PlannerManager;
+
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -7,7 +9,7 @@ import java.util.UUID;
  * @author Runlong, Zifan
  */
 
-public abstract class Planner implements Serializable {
+public abstract class Planner extends PlannerManager implements Serializable {
     protected String plannerName;
     private static int ID;
     protected String privacyStatus;
