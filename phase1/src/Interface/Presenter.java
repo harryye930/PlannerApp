@@ -1,8 +1,8 @@
 package Interface;
 
-import UseCase.AccountManager;
+import Controller.AccessController;
+import Controller.PlannerController;
 import UseCase.TemplateManager;
-import UseCase.PlannerManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +10,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Presenter {
 
-    private AccountManager accountManager;
+    private AccessController accessController;
     private TemplateManager templateManager;
-    private PlannerManager plannerManager;
+    private PlannerController plannerController;
 
     // The section below contains all of the String representations that are presented to the users.
     //================================================================================================================
@@ -257,11 +257,11 @@ public class Presenter {
     }};
     //================================================================================================================
 
-    public Presenter(TemplateManager templateManager, PlannerManager plannerManager,
-                     AccountManager accountManager){
+    public Presenter(TemplateManager templateManager, PlannerController plannerController,
+                     AccessController accountManager){
         this.templateManager = templateManager;
-        this.accountManager = accountManager;
-        this.plannerManager = plannerManager;
+        this.accessController = accountManager;
+        this.plannerController = plannerController;
     }
 
     /**
@@ -644,17 +644,17 @@ public class Presenter {
      * Prints out details of all existing personal planners and planners of others that have been made public.
      */
     public void showAllPlanners(){
-        System.out.println(plannerManager.showAllPlanners());
+        System.out.println(plannerController.showAllPlanners());
     }
 
     /**
      * Prints out details of all existing personal planners.
      */
     public void showAllPersonalPlanners(String retriever){
-        ArrayList<String> plannerIDs =  accountManager.getPlanners(retriever);
+        ArrayList<String> plannerIDs =  accessController.getPlanners(retriever);
         StringBuilder personalPlanners = new StringBuilder();
         for (String plannerID: plannerIDs){
-            personalPlanners.append(plannerManager.findPlanner(Integer.parseInt(plannerID)).toString());
+            personalPlanners.append(plannerController.toString(Integer.parseInt(plannerID)));
             personalPlanners.append("\n");
         }
         System.out.println(personalPlanners);
@@ -664,7 +664,7 @@ public class Presenter {
      * Prints out details of all existing public planners.
      */
     public void showAllPublicPlanners(){
-        plannerManager.getPublicPlanners();
+        plannerController.getPublicPlanners();
     }
 
     /**
@@ -672,7 +672,7 @@ public class Presenter {
      * @param plannerID ID of planner to get detail view for.
      */
     public void showDetailViewPlanner(int plannerID){
-        System.out.println(plannerManager.findPlanner(plannerID).toString());
+        System.out.println(plannerController.toString(plannerID));
     }
 
     /**

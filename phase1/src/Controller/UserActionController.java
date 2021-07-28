@@ -41,7 +41,7 @@ public class UserActionController {
         plannerManager = new PlannerManager();
         accountManager = new AccountManager();
 
-        presenter = new Presenter(templateManager, plannerManager, accountManager);
+        presenter = new Presenter(templateManager, plannerController, accessController);
         scanner = new Scanner(System.in);
     }
 
@@ -171,13 +171,11 @@ public class UserActionController {
      * Returns true if a user is an admin; otherwise it returns false and prints out a message to the user.
      */
     public boolean isAdmin() {
-        // TODO: below is commented for testing purpose with guest account - uncomment it when done
-//        if (currentRetriever.equals("guest") || !accessController.isAdmin(currentRetriever).equals("admin")) {
-//            presenter.showCheckAccountPermMessage(); // show message saying "checking account type and permissions"
-//            presenter.showRequiresAdminMessage(); // show message saying "feature requires an admin account"
-//            return false;
-//        }
-        return true;
+        if (accessController.isAdmin(currentRetriever).equals("admin")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //=================================================================================================================
@@ -323,7 +321,6 @@ public class UserActionController {
                 plannerViewOptions(currentRetriever);
                 break;
             case "B": // edit an existing planner
-                // plannerManager.getPlannersByAuthor(currentRetriever); TODO: Harry to double check if we need this
                 while (plannerEditOptions()) {
                     presenter.showReturnToPlannerEditMenuMessage();
                 }
@@ -440,7 +437,7 @@ public class UserActionController {
         presenter.showDetailViewPlanner(plannerID);
         switch (type){
             case "daily":
-                presenter.showPlannerEditTimeQuestion(); // TODO: Harry to double check how the closest time works
+                presenter.showPlannerEditTimeQuestion();
                 String time = scanner.nextLine();
                 presenter.showPlannerEditAgendaQuestion(); // show message asking user to edit the new agenda for the
                                                             // time chosen
@@ -511,7 +508,7 @@ public class UserActionController {
                     System.out.println("No personal planners available yet.");
                 } else {
                     for (String plannerId : arr) {
-                        plannerController.toString(Integer.parseInt(plannerId));
+                        System.out.println(plannerController.toString(Integer.parseInt(plannerId)));
                     }
                 }
                 break;
@@ -521,7 +518,7 @@ public class UserActionController {
                     System.out.println("No public planners available yet.");
                 } else {
                     for (int plannerId : ar) {
-                        plannerController.toString(plannerId);
+                        System.out.println(plannerController.toString(plannerId));
                     }
                 }
                 break;

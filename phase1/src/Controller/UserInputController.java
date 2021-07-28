@@ -11,16 +11,16 @@ import java.util.Scanner;
 
 public class UserInputController {
 
-    AccountManager accountManager;
-    PlannerManager plannerManager;
+    AccessController accountManager;
+    PlannerController plannerManager;
     TemplateManager templateManager;
 
     Presenter presenter;
     Scanner scanner;
 
     public UserInputController(){
-        accountManager = new AccountManager();
-        plannerManager = new PlannerManager();
+        accountManager = new AccessController();
+        plannerManager = new PlannerController();
         templateManager = new TemplateManager();
         presenter = new Presenter(templateManager, plannerManager, accountManager);
         scanner = new Scanner(System.in);

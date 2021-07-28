@@ -31,7 +31,7 @@ public class TemplateController{
         templateManager = new TemplateManager();
         templateGateway = new TemplateGateway(templateManager);
         userInputController = new UserInputController();
-        presenter = new Presenter(templateManager, plannerManager, accountManager);
+        presenter = new Presenter(templateManager, null, null);
         scanner = new Scanner(System.in);
     }
 
