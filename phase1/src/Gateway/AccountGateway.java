@@ -15,7 +15,7 @@ import java.util.List;
 public class AccountGateway extends Reader<HashMap<String, Account>> {
 
     //Assign the file path of data.
-    private final String idMapPath = "phase1/src/UserData/idMap.ser";
+    private final String idMapPath = "idMap.ser";
 
     private HashMap<String, Account> idToAccount = new HashMap<String, Account>();
 

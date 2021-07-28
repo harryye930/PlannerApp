@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class TemplateGateway extends Reader<HashMap<Integer, Template>> {
 
-    private String filePath = "phase1/src/TemplateData/idToTemplate.ser";
+    private String filePath = "idToTemplate.ser";
     private HashMap<Integer, Template> idToTemplate = new HashMap<Integer, Template>();
 
     private final TemplateManager tm;
