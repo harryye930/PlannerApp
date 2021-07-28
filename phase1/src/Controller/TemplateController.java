@@ -52,7 +52,6 @@ public class TemplateController{
         return templateManager.viewTemplateManager("Detail");
     }
 
-
     /**
      * Add Template t into TemplateManager.
      * @param t Template to be added to TemplateManager.
