@@ -22,8 +22,7 @@ public class Reader<T> implements IGateWay<T> {
     public boolean writeSer(String filePath, T obj) {
         File nf = new File(filePath);
         try {
-            if (nf.createNewFile()) {
-                nf.delete();
+            if (nf.createNewFile() || nf.delete()) {
                 FileOutputStream fileOut = new FileOutputStream(new File(filePath));
                 ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
                 objectOut.writeObject(obj);
