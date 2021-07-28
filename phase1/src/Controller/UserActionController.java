@@ -28,7 +28,7 @@ public class UserActionController {
     Scanner scanner;
     Presenter presenter;
 
-    private final String[] USER_DECISION = {"yes", "no"};
+    private final String[] USER_DECISION = {"YES", "NO"};
     private final String QUIT = "Q";
     private final String MAIN_MENU = "M";
     private String currentRetriever;
@@ -160,11 +160,11 @@ public class UserActionController {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         List<String> options = Arrays.asList(valid_options);
-        while (!options.contains(input.trim())) {
+        while (!options.contains(input.trim().toUpperCase())) {
             presenter.showInvalidInputScreen();
             input = scanner.nextLine();
         }
-        return input;
+        return input.trim().toUpperCase();
     }
 
     /**
