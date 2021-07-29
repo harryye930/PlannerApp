@@ -9,7 +9,7 @@ import java.util.UUID;
  * @author Runlong, Zifan
  */
 
-public abstract class Planner extends PlannerManager implements Serializable {
+public abstract class Planner implements Serializable {
     protected String plannerName;
     private static int ID;
     protected String privacyStatus;
