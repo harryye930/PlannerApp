@@ -14,7 +14,9 @@ public class Text extends Widget{
     public Text(Widget parent, String prompt, boolean hold) {
         super();
         super.parent = parent;
-        this.parent.child = this;
+        if (parent != null) {
+            this.parent.child = this;
+        }
         this.setPrompt(prompt);
         this.hold = hold;
     }

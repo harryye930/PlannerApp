@@ -49,4 +49,6 @@ public interface IController {
 
     public  String getPlannerType();
 
+    public void saveProgram();
+
 }

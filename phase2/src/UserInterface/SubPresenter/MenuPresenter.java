@@ -11,6 +11,8 @@ public class MenuPresenter extends GeneralPresenter {
 
     public MenuPresenter(IController controller) {
         this.controller = controller;
+        this.adminPresenter = new AdminPresenter(controller, this);
+        this.regularPresenter = new RegularUserPresenter(controller, this);
     }
 
     public void run() {

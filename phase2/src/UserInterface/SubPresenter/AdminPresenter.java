@@ -9,14 +9,22 @@ public class AdminPresenter extends GeneralPresenter {
     private String plannerId;
     private GeneralPresenter prevInterface;
 
-    public AdminPresenter(IController controller, GeneralPresenter parent) {
+    public AdminPresenter(IController controller) {
         this.controller = controller;
-        this.prevInterface = parent;
     }
 
+    public AdminPresenter(IController controller, GeneralPresenter parent) {
+        this.controller = controller;
+        this.setParent(parent);
+    }
+
+    @Override
     public void run() {
         this.adminOptions();
     }
+
+    @Override
+    public void runMenu() {this.adminOptions();}
 
     private void adminOptions() {
         MultiOptions adminOptions = new MultiOptions(null, "Please select the things you wanna do");

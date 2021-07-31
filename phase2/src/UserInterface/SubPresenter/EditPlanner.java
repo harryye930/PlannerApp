@@ -11,10 +11,16 @@ public class EditPlanner extends GeneralPresenter {
         this.controller = controller;
     }
 
+    public EditPlanner(IController controller, GeneralPresenter parent) {
+        this.controller = controller;
+        this.setParent(parent);
+    }
+
     @Override
     public void run() {
         this.plannerTypeIdentifier();
     }
+
 
     @Override
     public void runMenu() {

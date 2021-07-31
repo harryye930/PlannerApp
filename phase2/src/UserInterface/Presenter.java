@@ -18,14 +18,6 @@ public class Presenter {
     public static void main(String[] args) {
         IController controller = new ActionController();
         MenuPresenter menu = new MenuPresenter(controller);
-
-        RegularUserPresenter rp = new RegularUserPresenter(controller, menu);
-        AdminPresenter ap = new AdminPresenter(controller, menu);
-        menu.setAdminPresenter(ap);
-        menu.setRegularPresenter(rp);
-
-        PlannerPresenter pp = new PlannerPresenter(controller, rp);
-        rp.setPlannerP(pp);
         menu.run();
 
     }

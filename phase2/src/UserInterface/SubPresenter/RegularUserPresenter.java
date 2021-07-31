@@ -10,26 +10,25 @@ public class RegularUserPresenter extends GeneralPresenter {
     private GeneralPresenter templateP;
     private GeneralPresenter userP;
 
+    //TODO: Add template presenter and user presenter.
+    public RegularUserPresenter(IController controller) {
+        this.controller = controller;
+        this.plannerP = new PlannerPresenter(controller, this);
+    }
+
     public RegularUserPresenter(IController controller, GeneralPresenter parent) {
         this.controller = controller;
         this.setParent(parent);
+        this.plannerP = new PlannerPresenter(controller, this);
     }
 
-    public void setPlannerP(GeneralPresenter plannerP) {
-        this.plannerP = plannerP;
-    }
-
-    public void setUserP(GeneralPresenter userP) {
-        this.userP = userP;
-    }
-
-    public void setTemplateP(GeneralPresenter templateP) {
-        this.templateP = templateP;
-    }
-
+    @Override
     public void run() {
         this.regularOptions();
     }
+
+    @Override
+    public void runMenu() {this.regularOptions();}
 
     private void regularOptions() {
         MultiOptions regularOptions = new MultiOptions(null, "Please select the things you wanna do");

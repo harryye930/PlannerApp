@@ -9,20 +9,18 @@ import UserInterface.Widgets.Widget;
 
 public class PlannerChecker extends GeneralPresenter {
     private final String separator = "=============================";
-    private final String plannerCheckerPrompt = "Please enter the planner id you want to operate on:(enter q to quit)";
-    private final String QUIT = "q";
     private final IController controller;
 
-    private EditPlanner editPlanner;
+    private final GeneralPresenter editPlanner;
 
     public PlannerChecker(IController controller) {
         this.controller = controller;
-        this.editPlanner = new EditPlanner(controller);
+        this.editPlanner = new EditPlanner(controller, this);
     }
 
     public PlannerChecker(IController controller, GeneralPresenter parent) {
         this.controller = controller;
-        this.editPlanner = new EditPlanner(controller);
+        this.editPlanner = new EditPlanner(controller, this);
         this.setParent(parent);
     }
 
@@ -37,7 +35,10 @@ public class PlannerChecker extends GeneralPresenter {
     }
 
     private void checkPlanner() {
-        Text plannerId = new Text(null, this.plannerCheckerPrompt, true);
+        String plannerCheckerPrompt = "Please enter the planner id you want to operate on:(enter q to quit)";
+        Text plannerId = new Text(null, plannerCheckerPrompt, true);
+        plannerId.trigger();
+        String QUIT = "q";
         if (plannerId.getText().equals(QUIT)) {
             this.getParent().runMenu();
         }
@@ -76,7 +77,7 @@ public class PlannerChecker extends GeneralPresenter {
         } else if (plannerOps.getChosenOp() == 'C') {
             this.changeStatus(plannerOps);
         } else if (plannerOps.getChosenOp() == 'D') {
-            this.plannerOptions();
+            this.getParent().runMenu();
         }
     }
 

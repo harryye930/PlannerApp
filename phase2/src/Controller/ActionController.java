@@ -21,6 +21,7 @@ public class ActionController implements IController{
 
         accessController.load();
         templateController.load();
+        plannerController.load();
     }
 
     @Override
@@ -52,11 +53,16 @@ public class ActionController implements IController{
     public String viewUserPlanners() {
         StringBuilder res = new StringBuilder();
         ArrayList<String> plannerIds = this.accessController.getPlanners(this.currRetriever);
-        for (String plannerId: plannerIds) {
-            res.append(this.plannerController.toString(Integer.parseInt(plannerId)));
-            res.append("==================================");
+        System.out.println(plannerIds.toString());
+        if (plannerIds.size() == 0) {
+            return "No personal planners available yet.";
+        } else {
+            for (String plannerId : plannerIds) {
+                res.append(this.plannerController.toString(Integer.parseInt(plannerId)));
+                res.append("==================================");
+            }
+            return res.toString();
         }
-        return res.toString();
     }
 
     @Override
@@ -73,7 +79,7 @@ public class ActionController implements IController{
     @Override
     public String createAccount(String email, String userName, String password) {
         String  retriever =  accessController.createAccount(email, userName, password);
-        this.accessController.save();
+        this.saveProgram();
         return retriever;
     }
 
@@ -82,7 +88,7 @@ public class ActionController implements IController{
         String id =  ((Integer)plannerController.createNewDailyPlanner()).toString();
         this.plannerController.setPlannerAuthor(Integer.parseInt(id), this.currRetriever);
         this.accessController.setPlanner(this.currRetriever, id);
-        this.accessController.save();
+        this.saveProgram();
         return id;
     }
 
@@ -91,7 +97,7 @@ public class ActionController implements IController{
         String id =  ((Integer)plannerController.createNewProjectPlanner()).toString();
         this.plannerController.setPlannerAuthor(Integer.parseInt(id), this.currRetriever);
         this.accessController.setPlanner(this.currRetriever, id);
-        this.accessController.save();
+        this.saveProgram();
         return id;
     }
 
@@ -146,6 +152,7 @@ public class ActionController implements IController{
         if (flag) {
             this.accessController.removePlanner(currRetriever, id);
             this.accessController.save();
+            this.saveProgram();
             return true;
         } else {
             return false;
@@ -167,12 +174,19 @@ public class ActionController implements IController{
     @Override
     public boolean editPlanner(String timeSlot, String agenda) {
         boolean res = this.plannerController.edit(Integer.parseInt(this.currPlannerId), timeSlot, agenda);
-        this.accessController.save();
+        this.saveProgram();
         return res;
     }
 
     @Override
     public String getPlannerType() {
         return this.plannerController.getType(Integer.parseInt(this.currPlannerId));
+    }
+
+    @Override
+    public void saveProgram() {
+        this.accessController.save();
+        this.plannerController.save();
+        this.templateController.save();
     }
 }
