@@ -41,7 +41,7 @@ public class AdminPresenter extends GeneralPresenter {
         if (parent.getChosenOp() == 'A') {
             this.editTemplate(parent);
         } else if (parent.getChosenOp() == 'B') {
-            this.prevInterface.run();
+            this.getParent().runMenu();
         }
     }
 

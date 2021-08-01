@@ -34,6 +34,7 @@ public class PlannerChecker extends GeneralPresenter {
         this.plannerOptions();
     }
 
+
     private void checkPlanner() {
         String plannerCheckerPrompt = "Please enter the planner id you want to operate on:(enter q to quit)";
         Text plannerId = new Text(null, plannerCheckerPrompt, true);

@@ -1,6 +1,12 @@
 package Interface;
 
 public interface IController {
+    /**
+     * Login the user with given retriever and password.
+     * @param retriever A string representing the User ID or Email.
+     * @param password A String representing the password.
+     * @return A boolean value representing whether the login has success or not.
+     */
     public boolean logIn(String retriever, String password);
 
     public String accountRole(String retriever);
@@ -50,5 +56,13 @@ public interface IController {
     public  String getPlannerType();
 
     public void saveProgram();
+
+    public void deleteAccount();
+
+    public boolean changePassword(String original, String newPassword);
+
+    public String getAccountInfo();
+
+    public void changeUserName(String newName);
 
 }

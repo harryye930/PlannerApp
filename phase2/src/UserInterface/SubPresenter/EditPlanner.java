@@ -30,6 +30,7 @@ public class EditPlanner extends GeneralPresenter {
         this.run();
     }
 
+
     private void plannerTypeIdentifier() {
         if (controller.getPlannerType().equals("daily")) {
             this.editDailyPlanner();
@@ -37,6 +38,7 @@ public class EditPlanner extends GeneralPresenter {
             this.editProjectPlanner();
         }
     }
+
 
     private void editProjectPlanner() {
         Text index = new Text(null, "Please enter the index of the agenda you wanna edit", false);
@@ -53,6 +55,7 @@ public class EditPlanner extends GeneralPresenter {
             this.editDailyPlanner();
         }
     }
+
 
     private void editDailyPlanner() {
         if (controller.getPlannerType().equals("daily")) {
@@ -73,5 +76,4 @@ public class EditPlanner extends GeneralPresenter {
             }
         }
     }
-
 }

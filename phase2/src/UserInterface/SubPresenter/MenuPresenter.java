@@ -15,31 +15,24 @@ public class MenuPresenter extends GeneralPresenter {
         this.regularPresenter = new RegularUserPresenter(controller, this);
     }
 
+
     @Override
     public void run() {
         this.menuStage();
     }
 
+
     @Override
     public void runMenu() { this.menuStage(); }
-
-
-    public void setAdminPresenter(GeneralPresenter adminPresenter) {
-        this.adminPresenter = adminPresenter;
-    }
-
-
-    public void setRegularPresenter(GeneralPresenter regularPresenter) {
-        this.regularPresenter = regularPresenter;
-    }
 
 
     private void menuStage() {
         MultiOptions menu = new MultiOptions();
         menu.setPrompt("Welcome! Please choose the option:");
 
-        Option logIn = new Option(menu, "Login");
-        Option createAccount = new Option(menu, "Create New account:");
+        Option logIn = new Option(menu, "Login"); //"A: Login"
+        Option createAccount = new Option(menu, "Create New account:"); // "B: "
+        Option terminate = new Option(menu, "Save and exit.");
 
         menu.trigger();
         this.menuOptionIdentify(menu);
@@ -50,6 +43,10 @@ public class MenuPresenter extends GeneralPresenter {
             this.logIn(parent);
         } else if (parent.getChosenOp() == 'B') {
             this.createAccount(parent);
+        } else if (parent.getChosenOp() == 'C') {
+            System.out.println("Saving the program:");
+            this.controller.saveProgram();
+            System.out.println("program saved.");
         }
     }
 
@@ -59,6 +56,7 @@ public class MenuPresenter extends GeneralPresenter {
         Text password = new Text(userName, "Please enter your password", true);
 
         email.trigger();
+
         System.out.println("Register success");
         System.out.println("Please remember your ID (you can also login by email)");
         System.out.println(this.controller.createAccount(email.getText(), userName.getText(), password.getText()));
@@ -78,10 +76,7 @@ public class MenuPresenter extends GeneralPresenter {
 
     private void logIn(Widget parent) {
         Text loginId = new Text(parent, "Please Enter your ID:", false);
-        parent.setChild(loginId);
-
         Text loginPassword = new Text(loginId, "Please enter your password", true);
-        loginId.setChild(loginPassword);
 
         loginId.trigger();
 
