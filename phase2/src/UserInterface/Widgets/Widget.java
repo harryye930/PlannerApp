@@ -23,18 +23,16 @@ public class Widget {
     }
 
     public void unhold() {
-        this.child.trigger();
+        if (this.child == null) {
+            System.out.println("Child widget is not initialized.");
+        } else {
+            this.child.trigger();
+        }
     }
 
     public void trigger() {
         throw new NotImplementedException();
     }
 
-    public void rollBack() {
-        if (this.parent.getClass() == Option.class || this.parent.getClass() == Text.class) {
-            this.parent.rollBack();
-        } else {
-            this.parent.trigger();
-        }
-    }
+
 }

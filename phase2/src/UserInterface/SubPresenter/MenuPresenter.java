@@ -15,17 +15,24 @@ public class MenuPresenter extends GeneralPresenter {
         this.regularPresenter = new RegularUserPresenter(controller, this);
     }
 
+    @Override
     public void run() {
         this.menuStage();
     }
+
+    @Override
+    public void runMenu() { this.menuStage(); }
+
 
     public void setAdminPresenter(GeneralPresenter adminPresenter) {
         this.adminPresenter = adminPresenter;
     }
 
+
     public void setRegularPresenter(GeneralPresenter regularPresenter) {
         this.regularPresenter = regularPresenter;
     }
+
 
     private void menuStage() {
         MultiOptions menu = new MultiOptions();

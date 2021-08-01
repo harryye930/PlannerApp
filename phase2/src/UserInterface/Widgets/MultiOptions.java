@@ -1,8 +1,5 @@
 package UserInterface.Widgets;
 
-import com.sun.xml.internal.fastinfoset.util.CharArray;
-
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -58,10 +55,6 @@ public class MultiOptions extends Widget {
         currOption = (char) ((int) currOption + 1);
     }
 
-//    @Override
-//    public void setChild(Widget child) {
-//        this.addBranch(child);
-//    }
 
     @Override
     public String toString() {

@@ -42,6 +42,7 @@ public class Text extends Widget{
         }
     }
 
+    @Override
     public void unhold() {
         super.child.trigger();
     }
@@ -53,7 +54,6 @@ public class Text extends Widget{
     public void setPrompt(String prompt) {
         this.prompt = prompt;
     }
-
 
     public void goBack() {
         super.parent.trigger();

@@ -7,14 +7,17 @@ import UserInterface.Widgets.Text;
 public class EditPlanner extends GeneralPresenter {
     private final IController controller;
 
+
     public EditPlanner(IController controller) {
         this.controller = controller;
     }
+
 
     public EditPlanner(IController controller, GeneralPresenter parent) {
         this.controller = controller;
         this.setParent(parent);
     }
+
 
     @Override
     public void run() {
