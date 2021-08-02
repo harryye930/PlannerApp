@@ -168,7 +168,15 @@ public class AccessController{
         return this.accManager.findAccount(retriever).toString();
     }
 
+
+    /**
+     *
+     * @param retriever
+     * @param plannerId
+     */
     public void removePlanner(String retriever, String plannerId) {
         this.accManager.removePlanner(retriever, plannerId);
     }
+
+
 }

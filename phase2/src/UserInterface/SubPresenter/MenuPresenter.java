@@ -6,8 +6,8 @@ import UserInterface.Widgets.*;
 
 public class MenuPresenter extends GeneralPresenter {
     private final IController controller;
-    private GeneralPresenter adminPresenter;
-    private GeneralPresenter regularPresenter;
+    private final GeneralPresenter adminPresenter;
+    private final GeneralPresenter regularPresenter;
 
     public MenuPresenter(IController controller) {
         this.controller = controller;

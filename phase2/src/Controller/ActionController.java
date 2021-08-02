@@ -189,4 +189,29 @@ public class ActionController implements IController{
         this.plannerController.save();
         this.templateController.save();
     }
+
+    @Override
+    public void deleteAccount() {
+        for (String plannerId: this.accessController.getPlanners(currRetriever)) {
+            if (this.plannerController.getPrivacyStatus(Integer.parseInt(plannerId)).equals("private")) {
+                this.plannerController.deletePlanner(Integer.parseInt(plannerId));
+            }
+        }
+        this.accessController.removeAccount(this.currRetriever);
+    }
+
+    @Override
+    public boolean changePassword(String original, String newPassword) {
+        return this.accessController.changePassword(currRetriever, original, newPassword);
+    }
+
+    @Override
+    public String getAccountInfo() {
+        return this.accessController.getInfo(currRetriever);
+    }
+
+    @Override
+    public void changeUserName(String newName) {
+        this.accessController.changeUserName(currRetriever, newName);
+    }
 }
