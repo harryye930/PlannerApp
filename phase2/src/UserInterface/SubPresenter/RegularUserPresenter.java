@@ -2,26 +2,27 @@ package UserInterface.SubPresenter;
 
 import UserInterface.GeneralPresenter;
 import Interface.IController;
+import UserInterface.SubPresenter.Planner.PlannerPresenter;
 import UserInterface.Widgets.*;
 
 public class RegularUserPresenter extends GeneralPresenter {
     private final IController controller;
     private GeneralPresenter plannerPresenter;
     private GeneralPresenter templatePresenter;
-    private GeneralPresenter regularUserPresenter;
+    private GeneralPresenter regularAccSetting;
 
     //TODO: Add template presenter.
     public RegularUserPresenter(IController controller) {
         this.controller = controller;
         this.plannerPresenter = new PlannerPresenter(controller, this);
-        this.regularUserPresenter = new RegularUserPresenter(controller, this);
+        this.regularAccSetting = new RegularAccSetting(controller, this);
     }
 
     public RegularUserPresenter(IController controller, GeneralPresenter parent) {
         this.controller = controller;
         this.setParent(parent);
         this.plannerPresenter = new PlannerPresenter(controller, this);
-        this.regularUserPresenter = new RegularUserPresenter(controller, this);
+        this.regularAccSetting = new RegularAccSetting(controller, this);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class RegularUserPresenter extends GeneralPresenter {
         } else if (parent.getChosenOp() == 'B') {
             this.templatePresenter.run();
         } else if (parent.getChosenOp() == 'C') {
-            this.regularUserPresenter.run();
+            this.regularAccSetting.run();
         } else if (parent.getChosenOp() == 'D') {
             this.getParent().run();
         }

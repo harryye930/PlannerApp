@@ -37,6 +37,7 @@ public class ProjectPlanner extends Planner {
      */
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("Status").append(this.privacyStatus).append("\n");
         String plannerInfo = this.plannerName + "\n" + "ID: " + ID + "\n" + "\nTasks: \n";
         sb.append(plannerInfo);
         if (this.tasks.isEmpty()){

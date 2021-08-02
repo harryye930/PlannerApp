@@ -1,4 +1,4 @@
-package UserInterface.SubPresenter;
+package UserInterface.SubPresenter.Planner;
 
 import Interface.IController;
 import UserInterface.GeneralPresenter;
@@ -55,9 +55,9 @@ public class PlannerChecker extends GeneralPresenter {
     private void plannerOptions() {
         String prom;
         if (this.controller.getPlannerStatus()) {
-            prom = "Make planner private";
-        } else {
             prom = "Make planner public";
+        } else {
+            prom = "Make planner private";
         }
         MultiOptions plannerOps = new MultiOptions(null, "Please select the option you want to do:");
 
@@ -83,9 +83,16 @@ public class PlannerChecker extends GeneralPresenter {
     }
 
     private void changeStatus(Widget parent) {
+        String status = "";
         this.controller.setPlannerStatus();
-        System.out.println("The planner status has now been set to" + controller.getPlannerStatus());
-        parent.trigger();
+
+        if (controller.getPlannerStatus()) {
+            status = "private";
+        } else if (!controller.getPlannerStatus()) {
+            status = "public";
+        }
+        System.out.println("The planner status has now been set to " + status);
+        this.plannerOptions();
     }
 
     private void deletePlanner(MultiOptions plannerOps) {

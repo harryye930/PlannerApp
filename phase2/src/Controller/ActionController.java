@@ -5,15 +5,22 @@ import Interface.IController;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * A Class that control AccessController, PlannerController and TemplateController.
+ */
 public class ActionController implements IController{
-    private PlannerController plannerController;
-    private AccessController accessController;
-    private TemplateController templateController;
+    private final PlannerController plannerController;
+    private final AccessController accessController;
+    private final TemplateController templateController;
 
     private String currRetriever;
     private String currPlannerId;
     private String currTemplateId;
 
+
+    /**
+     * Initialize the object with new managers and load the data at the same time.
+     */
     public ActionController() {
         this.accessController = new AccessController();
         this.templateController = new TemplateController();
@@ -24,6 +31,13 @@ public class ActionController implements IController{
         plannerController.load();
     }
 
+
+    /**
+     * Login the user, return true if the login is success.
+     * @param retriever A string representing the User ID or Email.
+     * @param password A String representing the password.
+     * @return A boolean value that representing whether the login is success or not.
+     */
     @Override
     public boolean logIn(String retriever, String password) {
         if (this.accessController.logIn(retriever, password)) {
@@ -172,7 +186,7 @@ public class ActionController implements IController{
     }
 
     @Override
-    public boolean editPlanner(String timeSlot, String agenda) {
+    public boolean editDailyPlanner(String timeSlot, String agenda) {
         boolean res = this.plannerController.edit(Integer.parseInt(this.currPlannerId), timeSlot, agenda);
         this.saveProgram();
         return res;

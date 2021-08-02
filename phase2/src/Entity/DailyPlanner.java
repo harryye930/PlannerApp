@@ -157,6 +157,7 @@ public class DailyPlanner extends Planner {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("Status: ").append(this.privacyStatus).append("\n");
 
         String timeInfo = String.format("Start time -> %d:%d, End time -> %d:%d. \n",
                 this.startHour, this.startMins, this.endHour, this.endMins);

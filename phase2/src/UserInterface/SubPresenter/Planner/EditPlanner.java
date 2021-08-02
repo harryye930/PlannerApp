@@ -1,4 +1,4 @@
-package UserInterface.SubPresenter;
+package UserInterface.SubPresenter.Planner;
 
 import Interface.IController;
 import UserInterface.GeneralPresenter;
@@ -44,7 +44,7 @@ public class EditPlanner extends GeneralPresenter {
         Text index = new Text(null, "Please enter the index of the agenda you wanna edit", false);
         Text agenda = new Text(index, "Please enter the agenda you manna set", true);
         index.trigger();
-        if (this.controller.editPlanner(index.getText(), agenda.getText())) {
+        if (this.controller.editDailyPlanner(index.getText(), agenda.getText())) {
             System.out.println("Successfully edited:");
             System.out.println(controller.viewPlanner());
             this.getParent().runMenu();
@@ -64,7 +64,7 @@ public class EditPlanner extends GeneralPresenter {
             Text agenda = new Text(timeSlot, "Please enter the agenda you wanna add or reset(enter q to go back)",
                     true);
             timeSlot.trigger();
-            if (this.controller.editPlanner(timeSlot.getText(), agenda.getText())) {
+            if (this.controller.editDailyPlanner(timeSlot.getText(), agenda.getText())) {
                 System.out.println("Successfully edited:");
                 System.out.println(controller.viewPlanner());
                 this.getParent().runMenu();

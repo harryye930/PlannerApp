@@ -1,7 +1,8 @@
-package UserInterface.SubPresenter;
+package UserInterface.SubPresenter.Planner;
 
 import UserInterface.GeneralPresenter;
 import Interface.IController;
+import UserInterface.SubPresenter.Planner.PlannerChecker;
 import UserInterface.Widgets.*;
 
 public class PlannerPresenter extends GeneralPresenter {
