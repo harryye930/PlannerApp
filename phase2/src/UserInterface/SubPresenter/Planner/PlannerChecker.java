@@ -10,18 +10,20 @@ import UserInterface.Widgets.Widget;
 public class PlannerChecker extends GeneralPresenter {
     private final String separator = "=============================";
     private final IController controller;
-
-    private final GeneralPresenter editPlanner;
+    private final AdminPlannerPresenter adminPlannerPresenter;
+    private final RegularPlannerPresenter regularPlannerPresenter;
 
     public PlannerChecker(IController controller) {
         this.controller = controller;
-        this.editPlanner = new EditPlanner(controller, this);
+        this.adminPlannerPresenter = new AdminPlannerPresenter(controller, this.getParent());
+        this.regularPlannerPresenter = new RegularPlannerPresenter(controller, this.getParent());
     }
 
     public PlannerChecker(IController controller, GeneralPresenter parent) {
         this.controller = controller;
-        this.editPlanner = new EditPlanner(controller, this);
         this.setParent(parent);
+        this.adminPlannerPresenter = new AdminPlannerPresenter(controller, this.getParent());
+        this.regularPlannerPresenter = new RegularPlannerPresenter(controller, this.getParent());
     }
 
     @Override
@@ -53,59 +55,12 @@ public class PlannerChecker extends GeneralPresenter {
     }
 
     private void plannerOptions() {
-        String prom;
-        if (this.controller.getPlannerStatus()) {
-            prom = "Make planner public";
+        if (this.controller.accountRole().equals("admin")) {
+            this.adminPlannerPresenter.run();
         } else {
-            prom = "Make planner private";
-        }
-        MultiOptions plannerOps = new MultiOptions(null, "Please select the option you want to do:");
-
-        Option deletePlanner = new Option(plannerOps, "Delete planner");
-        Option editPlanner = new Option(plannerOps, "Edit planner");
-        Option changeStatus = new Option(plannerOps, prom); //Change privacy status.
-        Option back = new Option(plannerOps, "Go back");
-
-        plannerOps.trigger();
-        this.plannerOptionsIdentify(plannerOps);
-    }
-
-    private void plannerOptionsIdentify(MultiOptions plannerOps) {
-        if (plannerOps.getChosenOp() == 'A') {
-            this.deletePlanner(plannerOps);
-        } else if(plannerOps.getChosenOp() == 'B') {
-            this.editPlanner.run();
-        } else if (plannerOps.getChosenOp() == 'C') {
-            this.changeStatus(plannerOps);
-        } else if (plannerOps.getChosenOp() == 'D') {
-            this.getParent().runMenu();
+            this.regularPlannerPresenter.run();
         }
     }
 
-    private void changeStatus(Widget parent) {
-        String status = "";
-        this.controller.setPlannerStatus();
-
-        if (controller.getPlannerStatus()) {
-            status = "private";
-        } else if (!controller.getPlannerStatus()) {
-            status = "public";
-        }
-        System.out.println("The planner status has now been set to " + status);
-        this.plannerOptions();
-    }
-
-    private void deletePlanner(MultiOptions plannerOps) {
-        Text idToDelete = new Text(plannerOps, "Please enter the planner id you want to delete", true);
-        idToDelete.trigger();
-
-        if (this.controller.deletePlanner(idToDelete.getText())) {
-            System.out.println("Planner deleted.");
-            this.returnToMenu();
-        } else {
-            System.out.println("Deletion failed, please check your planner ID");
-            this.deletePlanner(plannerOps);
-        }
-    }
 
 }

@@ -21,28 +21,11 @@ public class AdminPlannerPresenter extends GeneralPresenter{
     }
 
     @Override
-    public void run(){checkPlanner();}
+    public void run(){changePlanner();}
 
     @Override
     public void runMenu(){changePlanner();}
 
-    private void checkPlanner(){
-        String plannerCheckerPrompt = "Please enter the planner id you want to operate on:(enter q to quit)";
-        Text plannerId = new Text(null, plannerCheckerPrompt, true);
-        plannerId.trigger();
-        String QUIT = "q";
-        if (plannerId.getText().equals(QUIT)) {
-            this.getParent().runMenu();
-        }
-        if (controller.checkPlanner(plannerId.getText())) {
-            System.out.println(controller.viewPlanner(plannerId.getText()));
-            this.changePlanner();
-            this.plannerId = plannerId.getText();
-        } else {
-            System.out.println("Invalid Id, please try again");
-            this.checkPlanner();
-        }
-    }
 
     private void changePlanner(){
         String prom;
