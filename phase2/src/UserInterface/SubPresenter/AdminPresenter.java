@@ -5,20 +5,22 @@ import Interface.IController;
 import UserInterface.Widgets.*;
 import UserInterface.SubPresenter.Planner.*;
 
+import java.util.ArrayList;
+
 public class AdminPresenter extends GeneralPresenter {
     private final IController controller;
     private String plannerId;
-    private final PlannerStatus plannerStatus;
+    private final AdminPlannerPresenter adminPlannerPresenter;
 
     public AdminPresenter(IController controller) {
         this.controller = controller;
-        this.plannerStatus = new PlannerStatus(controller, this);
+        this.adminPlannerPresenter = new AdminPlannerPresenter(controller, this);
     }
 
     public AdminPresenter(IController controller, GeneralPresenter parent) {
         this.controller = controller;
         this.setParent(parent);
-        this.plannerStatus = new PlannerStatus(controller, this);
+        this.adminPlannerPresenter = new AdminPlannerPresenter(controller, this);
     }
 
     @Override
@@ -80,8 +82,7 @@ public class AdminPresenter extends GeneralPresenter {
         if (parent.getChosenOp() == 'A') {
             //TODO
         } else if (parent.getChosenOp() == 'B') {
-            controller.viewPlanner(userId);
-            this.plannerStatus.run();
+            this.controller.viewUserPlanners(userId);
             this.userOptions(userId);
         } else if (parent.getChosenOp() == 'C'){
             this.adminOptions();

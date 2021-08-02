@@ -151,6 +151,11 @@ public class AccessController{
         return this.accManager.getAllAccount();
     }
 
+
+    /**
+     * Retuan the account information of every account.
+     * @return An ArrayList of
+     */
     public ArrayList<String> viewAllAccount(){
         ArrayList<Account> acc = getAllAccount();
         ArrayList<String> info = new ArrayList<>();

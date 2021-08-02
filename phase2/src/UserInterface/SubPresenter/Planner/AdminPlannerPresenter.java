@@ -6,20 +6,23 @@ import UserInterface.Widgets.MultiOptions;
 import UserInterface.Widgets.Option;
 import UserInterface.Widgets.Text;
 
-public class PlannerStatus extends GeneralPresenter{
+public class AdminPlannerPresenter extends GeneralPresenter{
     private final IController controller;
     private String plannerId;
 
-    public PlannerStatus(IController controller) {
+    public AdminPlannerPresenter(IController controller) {
         this.controller = controller;
     }
-    public PlannerStatus(IController controller, GeneralPresenter gp) {
+
+
+    public AdminPlannerPresenter(IController controller, GeneralPresenter gp) {
         this.controller = controller;
         this.setParent(gp);
     }
 
     @Override
     public void run(){checkPlanner();}
+
     @Override
     public void runMenu(){changePlanner();}
 

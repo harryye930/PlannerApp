@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+/**
+ * A Widget that let client choose among the options.
+ */
 public class MultiOptions extends Widget {
     private String prompt = "";
     private HashMap<Character, Widget> options = new HashMap<>();
@@ -11,10 +14,20 @@ public class MultiOptions extends Widget {
     private boolean hold = true;
     private Character chosenOp = null;
 
+
+    /**
+     * Initialize the object.
+     */
     public MultiOptions() {
         super();
     }
 
+
+    /**
+     * Initialize the object, setting the parent and prompt.
+     * @param parent A Widget object representing the parent of this widget.
+     * @param prompt A String representing the prompt information of this widget.
+     */
     public MultiOptions(Widget parent, String prompt) {
         super();
         this.setParent(parent);

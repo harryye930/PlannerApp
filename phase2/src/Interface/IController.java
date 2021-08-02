@@ -40,6 +40,14 @@ public interface IController {
 
 
     /**
+     * Return a String of planners owned by current user.
+     * @param retriever A String representing user id or email.
+     * @return A String representing the information of planners.
+     */
+    public String viewUserPlanners(String retriever);
+
+
+    /**
      * Return a String of public planners.
      * @return A String representing the information of public planners.
      */
@@ -196,6 +204,18 @@ public interface IController {
      */
     public void changeUserName(String newName);
 
-    ArrayList<String> allUserInfo();
+
+    /**
+     * Return a collection of the planner ids that owned by the current user.
+     * @return A ArrayList representing planner ids.
+     */
+    public ArrayList<String> getPlannerIds();
+
+
+    /**
+     * Return all the user information in a collection.
+     * @return An ArrayList representing all the user info.
+     */
+    public ArrayList<String> allUserInfo();
 
 }

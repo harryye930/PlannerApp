@@ -238,4 +238,17 @@ public class PlannerManager{
         Planner planner = this.idToPlanner.get(id);
         return planner.getPrivacyStatus();
     }
+
+
+    /**
+     * Return a collection of the planner ids.
+     * @return An arraylist representing the planner ids.
+     */
+    public ArrayList<String> getAllPlannerId() {
+        ArrayList<String> res = new ArrayList<>();
+        for (Integer id: this.idToPlanner.keySet()) {
+            res.add(id.toString());
+        }
+        return res;
+    }
 }

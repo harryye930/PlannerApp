@@ -100,6 +100,28 @@ public class ActionController implements IController{
         }
     }
 
+    /**
+     * Return a String of planners owned by current user.
+     *
+     * @param retriever A String representing user id or email.
+     * @return A String representing the information of planners.
+     */
+    @Override
+    public String viewUserPlanners(String retriever) {
+        StringBuilder res = new StringBuilder();
+        ArrayList<String> plannerIds = this.accessController.getPlanners(retriever);
+        System.out.println(plannerIds.toString());
+        if (plannerIds.size() == 0) {
+            return "No personal planners available yet.";
+        } else {
+            for (String plannerId : plannerIds) {
+                res.append(this.plannerController.toString(Integer.parseInt(plannerId)));
+                res.append("==================================");
+            }
+            return res.toString();
+        }
+    }
+
 
     /**
      * Return a String of public planners.
@@ -275,7 +297,12 @@ public class ActionController implements IController{
      */
     @Override
     public boolean checkPlanner(String id) {
-        ArrayList<String> plannerIds = this.accessController.getPlanners(this.currRetriever);
+        ArrayList<String> plannerIds;
+        if (this.accessController.isAdmin(currRetriever).equals("admin")) {
+            plannerIds = this.getPlannerIds();
+        } else {
+            plannerIds = this.accessController.getPlanners(this.currRetriever);
+        }
         ArrayList<Integer> publicIds = this.plannerController.getPublicPlanners();
         if (plannerIds.contains(id) || publicIds.contains(Integer.parseInt(id))) {
             this.currPlannerId = id;
@@ -368,6 +395,22 @@ public class ActionController implements IController{
         this.accessController.changeUserName(currRetriever, newName);
     }
 
+
+    /**
+     * Return a collection of the planner ids that owned by the current user.
+     *
+     * @return A ArrayList representing planner ids.
+     */
+    @Override
+    public ArrayList<String> getPlannerIds() {
+        return this.accessController.getPlanners(currRetriever);
+    }
+
+
+    /**
+     * Return all the user information in a collection.
+     * @return An ArrayList representing all the user info.
+     */
     @Override
     public ArrayList<String> allUserInfo(){
         return accessController.viewAllAccount();
