@@ -3,6 +3,7 @@ package Controller;
 import Entity.Account;
 import Gateway.AccountGateway;
 import UseCase.*;
+//import com.sun.org.apache.xpath.internal.operations.String;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ public class AccessController{
      * @return A boolean value representing whether the password is correct or not.
      */
     public boolean logIn(String retriever, String passWord) {
-        if (accManager.findAccount(retriever) == null) {
+        if (accManager.findAccount(retriever) == null || accManager.findAccount(retriever).getSuspendedTime() > 0) {
             return false;
         }
         return accManager.findAccount(retriever).getPassword().equals(passWord);
@@ -100,6 +101,7 @@ public class AccessController{
         accManager.setUserName(retriever, userName);
     }
 
+
     /**
      * Remove an account. User can only remove an account after they logged in or when a trial account logged out.
      * @param retriever A String representing the User ID or Email.
@@ -149,6 +151,15 @@ public class AccessController{
         return this.accManager.getAllAccount();
     }
 
+    public ArrayList<String> viewAllAccount(){
+        ArrayList<Account> acc = getAllAccount();
+        ArrayList<String> info = new ArrayList<>();
+        for (Account i : acc){
+            info.add(i.toString());
+        }
+        return info;
+    }
+
     /**
      *
      * @param retriever A String representing the User ID or Email.
@@ -176,6 +187,10 @@ public class AccessController{
      */
     public void removePlanner(String retriever, String plannerId) {
         this.accManager.removePlanner(retriever, plannerId);
+    }
+
+    public void suspendUser(String retriever, int time){
+        accManager.suspendUser(retriever, time);
     }
 
 

@@ -17,12 +17,26 @@ public abstract class Account implements Serializable {
     protected String userId;
     protected String email;
     protected String password;
+    protected int suspendedTime;
 
     public Account() {
         this.accountType = "regular";
         this.userId = ((Integer) this.hashCode()).toString();
+        suspendedTime = 0;
     }
 
+    /**
+     * suspendedTime is the variable that determines how long (in days) the user need to wait for them
+     * to be able to login again. Set the suspended time with given integer
+     * @param time the time that set to be suspended (in days).
+     */
+    public void setSuspendedTime(int time){
+        suspendedTime = time;
+    }
+
+    public int getSuspendedTime(){
+        return suspendedTime;
+    }
 
     /**
      * Return the available information of this account including username, id, and email.

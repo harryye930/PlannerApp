@@ -1,5 +1,7 @@
 package Interface;
 
+import java.util.ArrayList;
+
 public interface IController {
     /**
      * Login the user with given retriever and password.
@@ -193,5 +195,7 @@ public interface IController {
      * @param newName A String representing the new name want to assign.
      */
     public void changeUserName(String newName);
+
+    ArrayList<String> allUserInfo();
 
 }

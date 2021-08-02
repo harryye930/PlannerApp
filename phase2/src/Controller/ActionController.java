@@ -367,4 +367,9 @@ public class ActionController implements IController{
     public void changeUserName(String newName) {
         this.accessController.changeUserName(currRetriever, newName);
     }
+
+    @Override
+    public ArrayList<String> allUserInfo(){
+        return accessController.viewAllAccount();
+    }
 }

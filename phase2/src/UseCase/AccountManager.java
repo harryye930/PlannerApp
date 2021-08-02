@@ -220,4 +220,14 @@ public class AccountManager implements Serializable{
         UserAccount acc =(UserAccount) this.findAccount(retriever);
         acc.removePlanner(plannerId);
     }
+
+    public String toString(String retriever){
+        Account acc = findAccount(retriever);
+        return acc.toString();
+    }
+
+    public void suspendUser(String retriever, int time){
+        Account acc = findAccount(retriever);
+        acc.setSuspendedTime(time);
+    }
 }
