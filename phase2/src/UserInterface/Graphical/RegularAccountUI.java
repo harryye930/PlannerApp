@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 
 public class RegularAccountUI extends GeneralPresenter {
 
-    public RegularAccountUI(JPanel parent) {
+    public RegularAccountUI(String parent) {
         this.setParent(parent);
     }
 
