@@ -2,48 +2,35 @@ package UserInterface;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class GUI implements ActionListener {
-
-    private JFrame frame = new JFrame();
-    JPanel page;
-    JPanel loginPage;
-
-    JLabel usernameLabel;
-    JLabel passwordLabel;
-    JLabel loginStatus;
-
-    JTextField usernameText;
-    JTextField passwordText;
-
-    JButton loginButton;
+    JFrame frame = new JFrame("CardLayout demo");
+    JPanel panelCont = new JPanel();
+    JPanel loginPage = new JPanel();
+    JPanel mainMenuPage = new JPanel();
+    JButton buttonOne = new JButton("to main menu");
+    JButton buttonSecond = new JButton("Log out");
+    CardLayout cl = new CardLayout();
     JButton newAccountButton;
     JButton guestButton;
-
+    JLabel usernameLabel;
+    JLabel passwordLabel;
+    JTextField usernameText;
+    JTextField passwordText;
+    JButton loginButton;
+    JLabel loginStatus;
 
 
     public GUI() {
-        loginPage();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Login Page");
-        frame.pack();
-        frame.setVisible(true);
-    }
-    private void newPage(){
+        panelCont.setLayout(cl);
 
-
-        JPanel page = new JPanel();
-        frame.add(page, BorderLayout.CENTER);
-        page.setLayout(null);
-        JLabel test = new JLabel("New page!");
-        page.add(test);
-    }
-
-    private void loginPage(){
-        loginPage = new JPanel(new GridLayout(4,2));
-        frame.add(loginPage, BorderLayout.CENTER);
+        loginPage.add(buttonOne);
+        loginPage = new JPanel(new GridLayout(4, 2));
+        loginPage.setPreferredSize(new Dimension(400, 200));
 
         usernameLabel = new JLabel("Username:");
         loginPage.add(usernameLabel);
@@ -65,9 +52,44 @@ public class GUI implements ActionListener {
 
         loginStatus = new JLabel("");
         loginPage.add(loginStatus);
+        mainMenuPage.add(buttonSecond);
 
+        panelCont.add(loginPage, "loginPage");
+        panelCont.add(mainMenuPage, "mainMenuPage");
+        cl.show(panelCont, "loginPage");
+
+        buttonOne.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                cl.show(panelCont, "mainMenuPage");
+            }
+        });
+
+        buttonSecond.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                cl.show(panelCont, "loginPage");
+            }
+        });
+
+        frame.add(panelCont);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
 
     }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new GUI();
+            }
+        });
+    }
+
+
+
     /**
      * Invoked when an action occurs.
      *
@@ -82,21 +104,13 @@ public class GUI implements ActionListener {
             Boolean authStatus = Objects.equals(username, "ABCD"); //todo check username and password match
             System.out.println(username + ", " + password + ", " + String.valueOf(authStatus));
             if (authStatus) {
-                loginStatus.setText("Login successful!");
+                JOptionPane.showMessageDialog(frame, "Login successful!");
+                cl.show(panelCont, "mainMenuPage");
             } else {
-                loginStatus.setText("Invalid username or password!");
+                JOptionPane.showMessageDialog(frame, "Invalid username or password!");
             }
         }
-
-
-
-
-
-
     }
-    public static void main (String[]args){
-        new GUI();
-    }
+
+
 }
-
-
