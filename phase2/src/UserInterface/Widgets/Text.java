@@ -33,6 +33,7 @@ public class Text extends Widget{
         return text;
     }
 
+    @Override
     public void trigger() {
         System.out.println(prompt);
         Scanner scanner = new Scanner(System.in);
