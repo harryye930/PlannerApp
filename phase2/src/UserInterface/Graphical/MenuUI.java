@@ -15,9 +15,9 @@ public class MenuUI extends GeneralPresenter {
     private JButton login;
     private JButton createAccount;
 
-    private final GeneralPresenter adminUI = new AdminUI("LoginMenu");
-    private final GeneralPresenter regularUserUI = new AdminUI("LoginMenu");
-    private final GeneralPresenter createAccountUI = new CreateAccountUI("LoginMenu");
+    private final GeneralPresenter adminUI = new AdminUI("LoginPage");
+    private final GeneralPresenter regularUserUI = new AdminUI("LoginPage");
+    private final GeneralPresenter createAccountUI = new CreateAccountUI("LoginPage");
 
 
     public MenuUI() {}
