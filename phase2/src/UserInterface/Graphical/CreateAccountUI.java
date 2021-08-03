@@ -5,18 +5,22 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Objects;
 
 public class CreateAccountUI extends GeneralPresenter {
     private boolean flag = false;
+    private final GeneralPresenter adminUI = new AdminUI("createAccount");
+    private final GeneralPresenter regularAccUI = new RegularAccountUI("createAccount");
 
-    private JLabel createAccount = new JLabel("Register your account!");
-    private JTextField email = new JTextField();
-    private JTextField userName = new JTextField();
-    private JPasswordField password0 = new JPasswordField();
-    private JPasswordField password1 = new JPasswordField();
-    private JButton register = new JButton("Register");
-    private JButton back = new JButton("Go back");
-    private JPanel create = new JPanel();
+    private final JLabel createAccount = new JLabel("Register your account!");
+    private final JTextField email = new JTextField();
+    private final JTextField userName = new JTextField();
+    private final JPasswordField password0 = new JPasswordField();
+    private final JPasswordField password1 = new JPasswordField();
+    private final JButton register = new JButton("Register");
+    private final JButton back = new JButton("Go back");
+    private final JPanel create = new JPanel();
+    private JPanel grids;
 
 
     public CreateAccountUI(String parent) {
@@ -47,9 +51,9 @@ public class CreateAccountUI extends GeneralPresenter {
         createAccount.setOpaque(true);
         create.add(createAccount);
 
-        JPanel grids = new JPanel();
+        grids = new JPanel();
         grids.setLayout(new GridLayout(5, 2));
-        grids.setBounds(0, 100, 700, 250);
+        grids.setBounds(70, 100, 500, 250);
         create.add(grids);
 
         JLabel emailPrompt = new JLabel("Please enter your email");
@@ -97,5 +101,18 @@ public class CreateAccountUI extends GeneralPresenter {
     }
 
     private void createNewAccount() {
+        if (!Objects.equals(password0.getText(), password0.getText())) {
+            this.createAccount.setText("Incorrect password, please try again");
+        } else {
+            String id = controller.createAccount(email.getText(), userName.getText(), password0.getText());
+            grids.setVisible(false);
+            this.createAccount.setText("Please remember your ID:(You can also login by email)\n" + id);
+            controller.logIn(id, password0.getText());
+            if (controller.accountRole().equals("admin")) {
+                this.adminUI.run();
+            } else {
+                this.regularAccUI.run();
+            }
+        }
     }
 }

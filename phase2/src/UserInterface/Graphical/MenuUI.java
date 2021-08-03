@@ -16,7 +16,7 @@ public class MenuUI extends GeneralPresenter {
     private JButton createAccount;
 
     private final GeneralPresenter adminUI = new AdminUI("LoginPage");
-    private final GeneralPresenter regularUserUI = new AdminUI("LoginPage");
+    private final GeneralPresenter regularUserUI = new RegularAccountUI("LoginPage");
     private final GeneralPresenter createAccountUI = new CreateAccountUI("LoginPage");
 
 
@@ -90,6 +90,7 @@ public class MenuUI extends GeneralPresenter {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == login) {
             this.loginIdentifier();
+            this.password.setText("");
         } else if (e.getSource() == createAccount) {
             this.createAccountUI.run();
         }
