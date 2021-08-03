@@ -1,83 +1,114 @@
 package UserInterface;
 
+import Entity.Account;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public class GUI implements ActionListener {
-    JFrame frame = new JFrame("CardLayout demo");
+    //
+    JFrame frame = new JFrame("Productivity App GUI");
+
+    //initialize Panels (pages)
     JPanel panelCont = new JPanel();
-    JPanel loginPage = new JPanel();
+    JPanel loginPage;
     JPanel mainMenuPage = new JPanel();
-    JButton buttonOne = new JButton("to main menu");
-    JButton buttonSecond = new JButton("Log out");
-    CardLayout cl = new CardLayout();
+
+    //initialize buttons
+    JButton logOut = new JButton("Log out");
     JButton newAccountButton;
     JButton guestButton;
+    JButton loginButton;
+    JButton plannerButton = new JButton("Planners");
+    JButton templateButton = new JButton("Templates");
+    JButton accountButton = new JButton("Account");
+
+    CardLayout cl = new CardLayout();
+
+    //initialize labels (fix texts in GUI)
     JLabel usernameLabel;
     JLabel passwordLabel;
+
+    //initialize text field (place where user can type)
     JTextField usernameText;
     JTextField passwordText;
-    JButton loginButton;
-    JLabel loginStatus;
+
+
 
 
     public GUI() {
         panelCont.setLayout(cl);
 
-        loginPage.add(buttonOne);
+       loginPage = loginPage();
+       mainMenuPage = mainMenuPage();
+
+
+
+        panelCont.add(loginPage, "loginPage");
+        panelCont.add(mainMenuPage, "mainMenuPage");
+        cl.show(panelCont, "loginPage");
+
+
+
+        // GUI setup
+        frame.add(panelCont);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+
+    }
+
+    public JPanel mainMenuPage() {
+        mainMenuPage = new JPanel();
+        mainMenuPage.add(plannerButton);
+        mainMenuPage.add(templateButton);
+        mainMenuPage.add(accountButton);
+        mainMenuPage.add(logOut);
+
+        // redefine logout button functionality
+        logOut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                cl.show(panelCont, "loginPage");
+            }
+        });
+        return mainMenuPage;
+    }
+
+    /**
+     * @return Login panel
+     */
+    public JPanel loginPage() {
         loginPage = new JPanel(new GridLayout(4, 2));
         loginPage.setPreferredSize(new Dimension(400, 200));
 
+        //username and place to enter
         usernameLabel = new JLabel("Username:");
         loginPage.add(usernameLabel);
         usernameText = new JTextField(20);
         loginPage.add(usernameText);
 
+        // password and place to enter
         passwordLabel = new JLabel("Password:");
         loginPage.add(passwordLabel);
         passwordText = new JPasswordField(20);
         loginPage.add(passwordText);
 
         loginButton = new JButton("Login");
-        loginButton.addActionListener(this);
+        loginButton.addActionListener(this); // we can now interact with button click using addActionListener
         loginPage.add(loginButton);
+
         newAccountButton = new JButton("Create account");
         loginPage.add(newAccountButton);
         guestButton = new JButton("Continue as guest");
         loginPage.add(guestButton);
-
-        loginStatus = new JLabel("");
-        loginPage.add(loginStatus);
-        mainMenuPage.add(buttonSecond);
-
-        panelCont.add(loginPage, "loginPage");
-        panelCont.add(mainMenuPage, "mainMenuPage");
-        cl.show(panelCont, "loginPage");
-
-        buttonOne.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                cl.show(panelCont, "mainMenuPage");
-            }
-        });
-
-        buttonSecond.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                cl.show(panelCont, "loginPage");
-            }
-        });
-
-        frame.add(panelCont);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-
+        return loginPage;
     }
+
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -91,7 +122,7 @@ public class GUI implements ActionListener {
 
 
     /**
-     * Invoked when an action occurs.
+     * Perform login process after user entered username and password
      *
      * @param e
      */
