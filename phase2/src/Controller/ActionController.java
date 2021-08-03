@@ -17,7 +17,6 @@ public class ActionController implements IController{
     private String currPlannerId;
     private String currTemplateId;
 
-
     /**
      * Initialize the object with new managers and load the data at the same time.
      */
@@ -30,7 +29,6 @@ public class ActionController implements IController{
         templateController.load();
         plannerController.load();
     }
-
 
     /**
      * Login the user, return true if the login is success.
@@ -48,7 +46,6 @@ public class ActionController implements IController{
         }
     }
 
-
     /**
      * Return the account Role.
      * @param retriever A String representing the user ID or Email.
@@ -59,7 +56,6 @@ public class ActionController implements IController{
         return accessController.isAdmin(retriever);
     }
 
-
     /**
      * Return the account Role.
      * @return A String indicating the account role, "admin", "regular" or "trial".
@@ -69,7 +65,6 @@ public class ActionController implements IController{
         return this.accessController.isAdmin(this.currRetriever);
     }
 
-
     /**
      * Return the ID of currently logged in user, null if user did not login
      * @return A String representing the user ID.
@@ -78,7 +73,6 @@ public class ActionController implements IController{
     public String getCurrentId() {
         return this.currRetriever;
     }
-
 
     /**
      * Return a String of planners owned by current user.
@@ -122,7 +116,6 @@ public class ActionController implements IController{
         }
     }
 
-
     /**
      * Return a String of public planners.
      * @return A String representing the information of public planners.
@@ -138,7 +131,6 @@ public class ActionController implements IController{
         return res.toString();
     }
 
-
     /**
      * Create an account.
      * @param email A String representing the email of the account.
@@ -153,7 +145,6 @@ public class ActionController implements IController{
         return retriever;
     }
 
-
     /**
      * Create a Daily Planner.
      * @return A String representing the id of the created planner.
@@ -166,7 +157,6 @@ public class ActionController implements IController{
         this.saveProgram();
         return id;
     }
-
 
     /**
      * Create a project Planner.
@@ -181,7 +171,6 @@ public class ActionController implements IController{
         return id;
     }
 
-
     /**
      * View the templates' information.
      * @return A String representing the information of the data.
@@ -190,7 +179,6 @@ public class ActionController implements IController{
     public String viewTemplates() {
         return templateController.detailViewAllTemplates();
     }
-
 
     /**
      * Check the template, similar to login so that the controller will
@@ -210,7 +198,6 @@ public class ActionController implements IController{
         return false;
     }
 
-
     /**
      * View the information of specific planner.
      * @param id A String representing the id of the planner we want to check.
@@ -220,7 +207,6 @@ public class ActionController implements IController{
     public String viewPlanner(String id) {
         return plannerController.toString(Integer.parseInt(id));
     }
-
 
     /**
      * View the information of specific planner.
@@ -232,7 +218,6 @@ public class ActionController implements IController{
         return plannerController.toString(Integer.parseInt(this.currPlannerId));
     }
 
-
     /**
      *
      * @return A boolean value representing the status of the planner, true if it
@@ -242,7 +227,6 @@ public class ActionController implements IController{
     public boolean getPlannerStatus() {
         return this.plannerController.getPrivacyStatus(Integer.parseInt(this.currPlannerId)).equals("private");
     }
-
 
     /**
      *
@@ -254,7 +238,6 @@ public class ActionController implements IController{
     public boolean getPlannerStatus(String id) {
         return this.plannerController.getPrivacyStatus(Integer.parseInt(id)).equals("private");
     }
-
 
     /**
      * Change the planner status without parameter, from private to public or public
@@ -268,7 +251,6 @@ public class ActionController implements IController{
             this.plannerController.changePrivacyStatus(Integer.parseInt(this.currPlannerId), "private");
         }
     }
-
 
     /**
      * Delete the planner with given id.
@@ -287,7 +269,6 @@ public class ActionController implements IController{
             return false;
         }
     }
-
 
     /**
      * Check the planner with given id, similar to the login process.
@@ -312,7 +293,6 @@ public class ActionController implements IController{
         }
     }
 
-
     /**
      * Edit the planner with given time and agenda
      * @param timeSlot A String representing the timeslot or index of the planner. For daily planner,
@@ -328,7 +308,6 @@ public class ActionController implements IController{
         return res;
     }
 
-
     /**
      * Get the planner type, Daily planner or Project Planner
      * @return A String representing the planner type.
@@ -337,7 +316,6 @@ public class ActionController implements IController{
     public String getPlannerType() {
         return this.plannerController.getType(Integer.parseInt(this.currPlannerId));
     }
-
 
     /**
      * Save the data in ser. files.
@@ -348,7 +326,6 @@ public class ActionController implements IController{
         this.plannerController.save();
         this.templateController.save();
     }
-
 
     /**
      * Delete the account with current retriever.
@@ -363,7 +340,6 @@ public class ActionController implements IController{
         this.accessController.removeAccount(this.currRetriever);
     }
 
-
     /**
      * Change the password of the current retriever.
      * @param original A String representing the original password.
@@ -375,7 +351,6 @@ public class ActionController implements IController{
         return this.accessController.changePassword(currRetriever, original, newPassword);
     }
 
-
     /**
      * Get the account information.
      * @return A String representing the account information.
@@ -384,7 +359,6 @@ public class ActionController implements IController{
     public String getAccountInfo() {
         return this.accessController.getInfo(currRetriever);
     }
-
 
     /**
      * Change the username with given new name.
@@ -395,7 +369,6 @@ public class ActionController implements IController{
         this.accessController.changeUserName(currRetriever, newName);
     }
 
-
     /**
      * Return a collection of the planner ids that owned by the current user.
      *
@@ -405,7 +378,6 @@ public class ActionController implements IController{
     public ArrayList<String> getPlannerIds() {
         return this.accessController.getPlanners(currRetriever);
     }
-
 
     /**
      * Return all the user information in a collection.
