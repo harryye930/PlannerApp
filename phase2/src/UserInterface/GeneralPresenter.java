@@ -6,24 +6,19 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 /**
  * A parent class for all presenters.
  */
-public class GeneralPresenter {
+public abstract class GeneralPresenter {
     private GeneralPresenter child;
     private GeneralPresenter parent;
-
 
     /**
      * run the presenter from the beginning.
      */
-    public void run() {
-        throw new NotImplementedException();
-    }
-
+    public abstract void run();
 
     /**
      * run the presenter from the menu stage.
      */
-    public void runMenu() {throw new NotImplementedException();}
-
+    public abstract void runMenu();
 
     /**
      * set the child presenter of the current presenter.
@@ -32,7 +27,6 @@ public class GeneralPresenter {
     public void setChild(GeneralPresenter child) {
         this.child = child;
     }
-
 
     /**
      * Set the parent of the current presenter.
@@ -43,7 +37,6 @@ public class GeneralPresenter {
         this.parent.child = this;
     }
 
-
     /**
      * Return to the previous menu.
      */
@@ -51,18 +44,14 @@ public class GeneralPresenter {
         this.getParent().runMenu();
     }
 
-
     /**
-     *
      * @return The Parent Presenter
      */
     public GeneralPresenter getParent() {
         return this.parent;
     }
 
-
     /**
-     *
      * @return The child Presenter.
      */
     public GeneralPresenter getChild() {

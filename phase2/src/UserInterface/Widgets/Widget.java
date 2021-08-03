@@ -8,14 +8,12 @@ import java.util.ArrayList;
 /**
  * A Class represent a fundamental element of UI.
  */
-public class Widget {
+public abstract class Widget {
     protected Widget parent = null;
     protected Widget child;
     protected String text;
 
-
     /**
-     *
      * @return Return the information or prompt about this Widget.
      */
     @Override
@@ -23,24 +21,19 @@ public class Widget {
         return this.text;
     }
 
-
     /**
-     *
      * @param parent A widget to be set as the parent of current widget.
      */
     public void setParent(Widget parent) {
         this.parent = parent;
     }
 
-
     /**
-     *
      * @param child A widget to be set as the child of the current widget.
      */
     public void setChild(Widget child) {
         this.child = child;
     }
-
 
     /**
      * call the trigger method of the the child widget since in some cases
@@ -54,13 +47,10 @@ public class Widget {
         }
     }
 
-
     /**
      * Trigger the widget.
      */
-    public void trigger() {
-        throw new NotImplementedException();
-    }
+    public abstract void trigger();
 
 
 }
