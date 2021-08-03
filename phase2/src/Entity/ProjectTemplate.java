@@ -1,9 +1,6 @@
 package Entity;
 
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Represents one type of Template in the program - a Task Template, which allows users to create a Planner where
@@ -11,17 +8,75 @@ import java.util.List;
  */
 public class ProjectTemplate extends Template{
     /**
-     * Indexes of of specific setting required for all ProjectTemplates (i.e., 3 status headings should be specified),
-     * and an index indicating where the set of prompts asked for every events starts.
+     * Prompts that are unique to this template.
+     * firstStatusPrompt: the prompt for the first status heading (e.g., To Do)
+     * secondStatusPrompt: the prompt for the second status heading (e.g., Doing)
+     * thirdStatusPrompt: the prompt for the third status heading (e.g., Completed)
      */
-    private final int STATUS_START = 0; // e.g., to do
-    private final int STATUS_MIDDLE = 1; // e.g., doing
-    private final int STATUS_END = 2; // e.g., done
+    private String firstStatusPrompt, secondStatusPrompt, thirdStatusPrompt;
     private int id;
 
-    public ProjectTemplate(String name, ArrayList<String> prompts) {
-        super(name, prompts);
+    public ProjectTemplate(String name, String plannerNamePrompt,
+                           String firstStatusPrompt, String secondStatusPrompt, String thirdStatusPrompt) {
+        super(name, plannerNamePrompt);
         this.id = super.getId();
+        this.firstStatusPrompt = firstStatusPrompt;
+        this.secondStatusPrompt = secondStatusPrompt;
+        this.thirdStatusPrompt = thirdStatusPrompt;
+    }
+
+    /**
+     * Setter for changing the prompt for the first status heading of the planner that will be created based on
+     * this template.
+     * @param newPrompt A new prompt for the template.
+     */
+    public void setFirstStatusPrompt (String newPrompt){
+        firstStatusPrompt = newPrompt;
+    }
+
+    /**
+     * Getter for retrieving the prompt for the first status heading of the planner that will be created based on
+     * this template.
+     * @return String that's the prompt for the first status heading of this template.
+     */
+    public String getFirstStatusPrompt (){
+        return firstStatusPrompt;
+    }
+
+    /**
+     * Setter for changing the prompt for the second status heading of the planner that will be created based on
+     * this template.
+     * @param newPrompt A new prompt for the template.
+     */
+    public void setSecondStatusPrompt (String newPrompt){
+        secondStatusPrompt = newPrompt;
+    }
+
+    /**
+     * Getter for retrieving the prompt for the second status heading of the planner that will be created based on
+     * this template.
+     * @return String that's the prompt for the second status heading of this template.
+     */
+    public String getSecondStatusPrompt (){
+        return secondStatusPrompt;
+    }
+
+    /**
+     * Setter for changing the prompt for the third status heading of the planner that will be created based on
+     * this template.
+     * @param newPrompt A new prompt for the template.
+     */
+    public void setThirdStatusPrompt (String newPrompt){
+        thirdStatusPrompt = newPrompt;
+    }
+
+    /**
+     * Getter for retrieving the prompt for the third status heading of the planner that will be created based on
+     * this template.
+     * @return String that's the prompt for the third status heading of this template.
+     */
+    public String getThirdStatusPrompt (){
+        return thirdStatusPrompt;
     }
 
     @Override
@@ -35,24 +90,35 @@ public class ProjectTemplate extends Template{
     }
 
     /**
-     * @return the setting prompt for the first heading (i.e., start)
+     * Returns all the prompts of this template.
+     * @return ArrayList<String> that contains prompts of the template.
      */
-    public String firstStatusPrompt() {
-        return this.getPrompts().get(STATUS_START);
+    @Override
+    public ArrayList<String> retrievePrompts() {
+        ArrayList<String> prompts = super.retrievePrompts();
+        prompts.add(firstStatusPrompt);
+        prompts.add(secondStatusPrompt);
+        prompts.add(thirdStatusPrompt);
+        return prompts;
     }
 
     /**
-     * @return the setting prompt for the second heading (i.e., middle)
+     * Replace the old prompt of this template with the new prompt.
+     * If the provided old prompt is not one of the prompts in this template, it does nothing.
+     * @param oldPrompt is the provided prompt to be replaced.
+     * @param newPrompt is the new prompt provided to replace the old prompt.
      */
-    public String secondStatusPrompt() {
-        return this.getPrompts().get(STATUS_MIDDLE);
+    @Override
+    public void replacePrompt(String oldPrompt, String newPrompt) {
+        super.replacePrompt(oldPrompt, newPrompt);
+        if (oldPrompt.equals(firstStatusPrompt)) {
+            setFirstStatusPrompt(newPrompt);
+        }
+        if (oldPrompt.equals(secondStatusPrompt)) {
+            setSecondStatusPrompt(newPrompt);
+        }
+        if (oldPrompt.equals(thirdStatusPrompt)) {
+            setThirdStatusPrompt(newPrompt);
+        }
     }
-
-    /**
-     * @return the setting prompt for the third heading (i.e., end)
-     */
-    public String thirdStatusPrompt() {
-        return this.getPrompts().get(STATUS_END);
-    }
-
 }
