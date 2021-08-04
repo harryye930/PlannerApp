@@ -307,10 +307,10 @@ public class AccountManager implements Serializable{
      */
     public boolean setPlanners(String retriever, ArrayList<String > plannerIds){
         Account account = this.findAccount(retriever);
-        if (account.getAccountType().equals("regular")){
+        String status = account.getAccountType();
+
+        if (status.equals("regular") | status.equals("temporary")){
             return ((UserAccount) account).setPlanners(plannerIds);
-        } else if (account.getAccountType().equals("temporary")){
-            return ((TemporaryAccount) account).setPlanners(plannerIds);
         } else {
             return false;
         }
@@ -324,7 +324,9 @@ public class AccountManager implements Serializable{
      */
     public boolean setPlanners(String retriever, String  plannerId){
         Account account = this.findAccount(retriever);
-        if (account.getAccountType().equals("regular")){
+        String status = account.getAccountType();
+
+        if (status.equals("regular") | status.equals("temporary")){
             return ((UserAccount) account).setPlanners(plannerId);
         } else {
             return false;
@@ -332,39 +334,68 @@ public class AccountManager implements Serializable{
     }
 
     /**
-     *
+     * Get all planners created by the given user
      * @param retriever A String representing the User ID or Email.
      * @return An ArrayList of Planner that owned by this account, if the account is regular. Else, return
      * null.
      */
-    public ArrayList<String > getPlanners(String retriever) {
-        if (this.findAccount(retriever).getAccountType().equals("regular")){
-            return ((UserAccount) findAccount(retriever)).getPlanner();
+    public ArrayList<String> getPlanners(String retriever) {
+        Account account = this.findAccount(retriever);
+        String status = account.getAccountType();
+
+        if (status.equals("regular") | status.equals("temporary")){
+            return ((UserAccount) account).getPlanner();
         } else {
             return null;
         }
     }
 
+    /**
+     * Remove given planner from user's planners
+     * @param retriever A String representing the User ID or Email.
+     * @param plannerId A String representing the planner id.
+     */
     public void removePlanner(String retriever, String plannerId) {
-        UserAccount acc =(UserAccount) this.findAccount(retriever);
-        acc.removePlanner(plannerId);
+        Account account = this.findAccount(retriever);
+        String status = account.getAccountType();
+
+        if (status.equals("regular") | status.equals("temporary")){
+            ((UserAccount) account).removePlanner(plannerId);
+        }
     }
 
+    /**
+     * Get the String representation of an account
+     * @param retriever A String representing the User ID or Email.
+     * @return The String representation of the account
+     */
     public String toString(String retriever){
         Account acc = findAccount(retriever);
         return acc.toString();
     }
 
+    /**
+     * Suspend the given user for x amount of days
+     * @param retriever A String representing the User ID or Email.
+     */
     public void suspendUser(String retriever, long days){
         Account acc = findAccount(retriever);
         acc.setSuspendedTime(days);
     }
 
+    /**
+     * Reverse the suspension of a user
+     * @param retriever A String representing the User ID or Email.
+     */
     public void unSuspendUser(String retriever){
         Account acc = findAccount(retriever);
         acc.removeSuspendTime();
     }
 
+    /**
+     * Return whether a user is suspended or not
+     * @param retriever A String representing the User ID or Email.
+     */
     public boolean suspendedStatus(String retriever){
         Account acc = findAccount(retriever);
         return acc.getSuspendedTime().isAfter(LocalDateTime.now());

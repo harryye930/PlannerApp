@@ -6,18 +6,15 @@ import java.util.ArrayList;
 /**
  * A instance of this class represents a temporary account in this application.
  */
-public class TemporaryAccount extends Account {
+public class TemporaryAccount extends UserAccount {
 
     private ArrayList<String > planners = new ArrayList<>();
     private final LocalDateTime startDate;
     private LocalDateTime endDate;
 
     public TemporaryAccount(String email) {
-        super();
+        super(email);
         this.accountType = "temporary";
-        super.email = email;
-        super.userId = ((Integer) (email).hashCode()).toString();
-
         this.startDate = LocalDateTime.now();
     }
 
@@ -65,21 +62,5 @@ public class TemporaryAccount extends Account {
     public void setEndDate(LocalDateTime endDate) {
 
         this.endDate = endDate;
-    }
-
-    /**
-     * Add a list of planners to planners for this Temporary Account.
-     * @param planners the planners id that need to be added.
-     * @return Return true if any one of the planner is successfully added.
-     */
-    public boolean setPlanners(ArrayList<String> planners) {
-        boolean flag = false;
-        for (String planner : planners) {
-            if (!this.planners.contains(planner)) {
-                this.planners.add(planner);
-                flag = true;
-            }
-        }
-        return flag;
     }
 }
