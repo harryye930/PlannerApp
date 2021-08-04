@@ -7,6 +7,7 @@ import UseCase.TemplateManager;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -90,5 +91,16 @@ public class TemplateController{
      */
     public ArrayList<String> getTemplatePrompts(int ID) {
         return this.templateManager.retrievePrompts(ID);
+    }
+
+    /**
+     * Return the template type with give id.
+     * @param id A int representing the template id.
+     * @return A String representing the type of the template.
+     */
+    public String getTemplateType(int id) {
+        Map<Integer, Template> hm = this.templateManager.getTemplates();
+        Template item = hm.get(id);
+        return item.getTemplateType();
     }
 }

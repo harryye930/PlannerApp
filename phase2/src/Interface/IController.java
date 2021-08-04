@@ -58,17 +58,8 @@ public interface IController {
      */
     public String createAccount(String email, String userName, String password);
 
-    /**
-     * Create a Daily Planner.
-     * @return A String representing the id of the created planner.
-     */
-    public String createDailyPlanner();
 
-    /**
-     * Create a project Planner.
-     * @return A String representing the id of the created planner.
-     */
-    public String createProjectPlanner();
+
 
     /**
      * View the templates' information.
