@@ -102,9 +102,9 @@ public class AccountManager implements Serializable{
      */
     public int getNumberOfCriteriaMet(String password){
         String atLeastFour = ".{4,}";
-        String atLeastOneUpper = "(?=.*?[A-Z])";
-        String atLeastOneLower = "(?=.*?[a-z])";
-        String atLeastOneNumber = "(?=.*?[0-9])";
+        String atLeastOneUpper = ".*[A-Z].*";
+        String atLeastOneLower = ".*[a-z].*";
+        String atLeastOneNumber = ".*[0-9].*";
 
         int numberOfCriteriaMet = 0;
 
