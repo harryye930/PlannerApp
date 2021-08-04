@@ -33,13 +33,13 @@ public class PlannerOptionUI extends GeneralPresenter {
         if (flag) {
             cl.show(main, "plannerMenu");
         } else {
-            this.showPlannerMenu();
+            this.buildPlannerMenu();
             cl.show(main, "plannerMenu");
             frame.setVisible(true);
-            flag = !flag;
+            flag = !flag; // flag = false?
         }
     }
-    private void showPlannerMenu(){
+    private void buildPlannerMenu(){
         main.add(plannerMenu, "plannerMenu");
         plannerMenu.setLayout(null);
 

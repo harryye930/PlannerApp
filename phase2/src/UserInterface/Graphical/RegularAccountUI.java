@@ -18,6 +18,7 @@ public class RegularAccountUI extends GeneralPresenter {
     private final JButton logOutButton = new JButton("Logout");
 
     private final GeneralPresenter plannerOptionUI = new PlannerOptionUI("LoginPage");
+    private final GeneralPresenter templateOptionUI = new TemplateOptionUI("LoginPage");
 
 
     public RegularAccountUI(String parent) {
@@ -79,6 +80,11 @@ public class RegularAccountUI extends GeneralPresenter {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == plannerButton){
             this.plannerOptionUI.run();
+//            JOptionPane.showMessageDialog(frame, "Planner Button Clicked");
+        }
+
+        if (e.getSource() == templateButton){
+            this.templateOptionUI.run();
 //            JOptionPane.showMessageDialog(frame, "Planner Button Clicked");
         }
 
