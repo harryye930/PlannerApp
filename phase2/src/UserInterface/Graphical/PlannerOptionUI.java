@@ -10,9 +10,7 @@ public class PlannerOptionUI extends GeneralPresenter {
     private boolean flag = false;
     // all buttons
     private final JButton newPlannerButton = new JButton("Create New Planner");
-    private final JButton editPlannerButton = new JButton("Edit Your Planner");
-    private final JButton deletePlannerButton = new JButton("Delete Your Planner");
-    private final JButton showPlannerButton = new JButton("Show Planners");
+    private final JButton checkPlannerButton = new JButton("Check my Planners");
     private final JButton returnToMainMenuButton= new JButton("Return to Main Menu");
 
     //planner panel
@@ -20,6 +18,8 @@ public class PlannerOptionUI extends GeneralPresenter {
 
     //planner menu text
     private JLabel prompt;
+
+    private GeneralPresenter createPlanner = new createPlannerUI("plannerMenu");
 
     public PlannerOptionUI(String parent) {
         this.setParent(parent);
@@ -53,21 +53,16 @@ public class PlannerOptionUI extends GeneralPresenter {
 
         JPanel panel = new JPanel();
         panel.setBounds(150, 150, 400, 200);
-        panel.setLayout(new GridLayout(4, 1));
+        panel.setLayout(new GridLayout(3, 1));
         plannerMenu.add(panel);
 
         panel.add(newPlannerButton);
-        panel.add(editPlannerButton);
-        panel.add(deletePlannerButton);
-        panel.add(showPlannerButton);
+        panel.add(checkPlannerButton);
         panel.add(returnToMainMenuButton);
 
         newPlannerButton.addActionListener(this);
-        editPlannerButton.addActionListener(this);
-        deletePlannerButton.addActionListener(this);
-        showPlannerButton.addActionListener(this);
+        checkPlannerButton.addActionListener(this);
         returnToMainMenuButton.addActionListener(this);
-
 
     }
 
@@ -80,10 +75,8 @@ public class PlannerOptionUI extends GeneralPresenter {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == returnToMainMenuButton){
             cl.show(main, "regularUserMainMenu");
-
-
+        } else if (e.getSource() == newPlannerButton) {
+            this.createPlanner.run();
         }
-
-
     }
 }
