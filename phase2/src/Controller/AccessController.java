@@ -211,14 +211,27 @@ public class AccessController{
         this.accManager.removePlanner(retriever, plannerId);
     }
 
+    /**
+     * suspend a user for x amount of days
+     * @param retriever A String representing information of account
+     * @param days The number of days user is suspended for
+     */
     public void suspendUser(String retriever, long days){
         accManager.suspendUser(retriever, days);
     }
 
+    /**
+     * reverse the suspension of a user
+     * @param retriever A String representing information of account
+     */
     public void unSuspendUser(String retriever){
         accManager.unSuspendUser(retriever);
     }
 
+    /**
+     * get the suspension status of a user
+     * @param retriever A String representing information of account
+     */
     public boolean getSuspensionStatus(String retriever){
         return accManager.suspendedStatus(retriever);
     }
