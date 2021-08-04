@@ -10,7 +10,7 @@ public class TemporaryAccount extends Account {
 
     private ArrayList<String > planners = new ArrayList<>();
     private final LocalDateTime startDate;
-    private final LocalDateTime endDate;
+    private LocalDateTime endDate;
 
     public TemporaryAccount(String email) {
         super();
@@ -19,7 +19,6 @@ public class TemporaryAccount extends Account {
         super.userId = ((Integer) (email).hashCode()).toString();
 
         this.startDate = LocalDateTime.now();
-        this.endDate = startDate.plusDays(30);
     }
 
     /**
@@ -58,6 +57,14 @@ public class TemporaryAccount extends Account {
      */
     public LocalDateTime getEndDate() {
         return this.endDate;
+    }
+
+    /**
+     * Set the end time of this account.
+     */
+    public void setEndDate(LocalDateTime endDate) {
+
+        this.endDate = endDate;
     }
 
     /**

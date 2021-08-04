@@ -170,7 +170,7 @@ public class AccessController{
 
 
     /**
-     * Retuan the account information of every account.
+     * Return the account information of every account.
      * @return An ArrayList of
      */
     public ArrayList<String> viewAllAccount(){

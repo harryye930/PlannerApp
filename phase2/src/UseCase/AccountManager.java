@@ -214,6 +214,11 @@ public class AccountManager implements Serializable{
      */
     private String createTempAcc(String email){
         TemporaryAccount newAccount = new TemporaryAccount(email);
+        LocalDateTime startDate = newAccount.getStartDate();
+        long days = 30;
+
+        newAccount.setEndDate(startDate.plusDays(days));
+
         this.addAccount(newAccount);
         return newAccount.getUserId();
     }
@@ -304,6 +309,8 @@ public class AccountManager implements Serializable{
         Account account = this.findAccount(retriever);
         if (account.getAccountType().equals("regular")){
             return ((UserAccount) account).setPlanners(plannerIds);
+        } else if (account.getAccountType().equals("temporary")){
+            return ((TemporaryAccount) account).setPlanners(plannerIds);
         } else {
             return false;
         }
