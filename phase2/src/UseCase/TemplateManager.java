@@ -65,36 +65,36 @@ public class TemplateManager implements Serializable {
         this.getTemplates().get(ID).renamePrompt(promptNumber, newName);
     }
 
-    /**
-     * For Template with ID, adds a new prompt named promptName to the list of prompts and numbers it with promptNumber
-     * (i.e., all existing prompts that have number equal to or greater than promptNumber will have their number
-     * increased by 1).
-     * Note that the prompt numbers start from 0.
-     * @param ID ID of template being edited.
-     * @param promptNumber The number to give to the new prompt.
-     * @param promptName The name to give to the new prompt.
-     */
-    public void addTemplatePrompt(int ID, int promptNumber, String promptName){
-        this.getTemplates().get(ID).addPrompt(promptNumber, promptName);
-    }
-
-    /**
-     * For Template with ID, adds a new prompt named promptName to the end of the existing list of prompts.
-     * @param ID ID of template being edited.
-     * @param promptName The name to give to the new prompt.
-     */
-    public void addTemplatePrompt(int ID, String promptName){
-        this.getTemplates().get(ID).addPrompt(promptName);
-    }
-
-    /**
-     * For Template with ID,  removes an existing prompt with promptNumber.
-     * @param ID ID of template being edited.
-     * @param promptNumber The number that corresponds to the prompt to remove.
-     */
-    public void removeTemplatePrompt(int ID, int promptNumber){
-        this.getTemplates().get(ID).removePrompt(promptNumber);
-    }
+//    /**
+//     * For Template with ID, adds a new prompt named promptName to the list of prompts and numbers it with promptNumber
+//     * (i.e., all existing prompts that have number equal to or greater than promptNumber will have their number
+//     * increased by 1).
+//     * Note that the prompt numbers start from 0.
+//     * @param ID ID of template being edited.
+//     * @param promptNumber The number to give to the new prompt.
+//     * @param promptName The name to give to the new prompt.
+//     */
+//    public void addTemplatePrompt(int ID, int promptNumber, String promptName){
+//        this.getTemplates().get(ID).addPrompt(promptNumber, promptName);
+//    }
+//
+//    /**
+//     * For Template with ID, adds a new prompt named promptName to the end of the existing list of prompts.
+//     * @param ID ID of template being edited.
+//     * @param promptName The name to give to the new prompt.
+//     */
+//    public void addTemplatePrompt(int ID, String promptName){
+//        this.getTemplates().get(ID).addPrompt(promptName);
+//    }
+//
+//    /**
+//     * For Template with ID,  removes an existing prompt with promptNumber.
+//     * @param ID ID of template being edited.
+//     * @param promptNumber The number that corresponds to the prompt to remove.
+//     */
+//    public void removeTemplatePrompt(int ID, int promptNumber){
+//        this.getTemplates().get(ID).removePrompt(promptNumber);
+//    }
 
     /**
      * @return Number of templates in TemplateManager.

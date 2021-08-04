@@ -85,11 +85,20 @@ public class AccessController{
      * @return A boolean representing whether the password is successfully changed or not.
      */
     public boolean changePassword(String retriever, String oldPassWord, String newPassWord) {
-        if (accManager.checkPassword(retriever, oldPassWord)) {
-            return accManager.setPassword(retriever, newPassWord);
-        } else {
-            return false;
+        if (!accManager.checkPassword(retriever, oldPassWord)){
+            return false; // old password incorrect
         }
+        //TODO: sends a temporary password that the user can use to log back into the system before changing it to a
+        // more permanent password
+
+        if (!accManager.checkPassword(retriever, newPassWord)){
+            return false; // new password cannot be the same as the old password
+        }
+
+        if (!accManager.setPassword(retriever, newPassWord)){
+            return false; // new password is not complex enough
+        }
+        return true; // if none of the above is satisfied, then able to successfully change password
     }
 
     /**

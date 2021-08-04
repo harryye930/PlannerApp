@@ -5,6 +5,7 @@ import Entity.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 /**
  * Manages Accounts.
@@ -31,24 +32,111 @@ public class AccountManager implements Serializable{
         account.setUserName(userName);
     }
 
-    /**
-     * set the password. User can change their password to something different from the previous one.
-     * @param retriever A String representing the user ID or Email.
-     * @param newPassword the new password that user want to change to.
-     * @return true if successfully changed password, false otherwise.
+//    /**
+//     * set the password. User can change their password to something different from the previous one.
+//     * @param retriever A String representing the user ID or Email.
+//     * @param newPassword the new password that user want to change to.
+//     * @return true if successfully changed password, false otherwise.
+//     */
+//    public boolean setPassword(String retriever, String newPassword){
+//        Account account = this.findAccount(retriever);
+//        if (account.getPassword() == null) {
+//            account.setPassword(newPassword);
+//            return true;
+//        }
+//        // users need to enter the correct password to set a new password (just like iPhone)
+//        else if ((!account.getPassword().equals(newPassword))){
+//            account.setPassword(newPassword);
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
+
+
+    // set password for new account
+    // - check that the password is complicated enough
+    // update password for existing account
+    // - sends a temporary password that the user can use to log back into the system --- controller
+    // - check that the new password is different from the old password
+    // - check that the password is complicated enough
+
+    /***
+     * Sets the password if the password meets the complexity criteria.
+     * @param retriever A string representing the user ID or email.
+     * @param password The password user wants to set for the account.
+     * @return Boolean value indicating if the password is successfully set. If false, then the password provided is
+     * not complex enough and therefore not set; if true, the password is complex enough and is set successfully.
      */
-    public boolean setPassword(String retriever, String newPassword){
+    public boolean setPassword(String retriever, String password){
         Account account = this.findAccount(retriever);
-        if (account.getPassword() == null) {
-            account.setPassword(newPassword);
-            return true;
-        }
-        // users need to enter the correct password to set a new password (just like iPhone)
-        else if ((!account.getPassword().equals(newPassword))){
-            account.setPassword(newPassword);
+        if (checkPasswordComplexity(password)){
+            account.setPassword(password);
             return true;
         } else {
             return false;
+        }
+    }
+
+    /***
+     * Returns true if the password is complex enough, i.e., the complexity level is NOT Too Weak.
+     * Returns false if the password's complexity level is Too Weak.
+     * @param password Password to check for complexity.
+     * @return A boolean value indicating if the password satisfies the complexity requirement.
+     */
+    public boolean checkPasswordComplexity(String password){
+        return getPasswordComplexityLevel(getNumberOfCriteriaMet(password)).equals("Too Weak");
+    }
+
+    /**
+     * Returns the number of password criteria met by the provided password.
+     * Password criteria include:
+     * (1) at least 4 characters long,
+     * (2) must include at least one upper case letter,
+     * (3) must include at least one lower case letter, and
+     * (4) must include at least one number.
+     * @param password is the password to be checked whether it meets the criteria or not.
+     * @return An integer indicating how many of the criteria are met by the password.
+     */
+    public int getNumberOfCriteriaMet(String password){
+        String atLeastFour = ".{4,}";
+        String atLeastOneUpper = "(?=.*?[A-Z])";
+        String atLeastOneLower = "(?=.*?[a-z])";
+        String atLeastOneNumber = "(?=.*?[0-9])";
+
+        int numberOfCriteriaMet = 0;
+
+        if (Pattern.matches(atLeastFour, password)) {
+            numberOfCriteriaMet++;
+        }
+        if (Pattern.matches(atLeastOneUpper, password)) {
+            numberOfCriteriaMet++;
+        }
+        if (Pattern.matches(atLeastOneLower, password)) {
+            numberOfCriteriaMet++;
+        }
+        if (Pattern.matches(atLeastOneNumber, password)) {
+            numberOfCriteriaMet++;
+        }
+        return numberOfCriteriaMet;
+    }
+
+    /**
+     * Returns complexity level (i.e., too weak, weak, or good) depending on the given number of criteria met
+     * by a password.
+     * Too weak: two or less criteria met
+     * Weak: three criteria met
+     * Good: all four criteria met
+     * @param numberOfCriteriaMet number of criteria met by a password.
+     * @return A string that's the complexity level of the password.
+     */
+    private String getPasswordComplexityLevel(int numberOfCriteriaMet) {
+        if (numberOfCriteriaMet <= 2) {
+            return "Too Weak";
+        } else if (numberOfCriteriaMet <= 3) {
+            return "Weak";
+        } else { // All the criteria are met.
+            return "Good";
         }
     }
 
