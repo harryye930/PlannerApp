@@ -5,6 +5,7 @@ import Entity.Template;
 import Gateway.TemplateGateway;
 import UseCase.TemplateManager;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -82,4 +83,12 @@ public class TemplateController{
         return res;
     }
 
+    /**
+     * Retrieves a collection of all prompts in the template with a given template ID.
+     * @param ID of the the template.
+     * @return An ArrayList that contains the prompts of template with a given ID.
+     */
+    public ArrayList<String> getTemplatePrompts(int ID) {
+        return this.templateManager.retrievePrompts(ID);
+    }
 }

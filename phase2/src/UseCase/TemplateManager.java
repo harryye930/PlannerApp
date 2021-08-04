@@ -55,6 +55,15 @@ public class TemplateManager implements Serializable {
     }
 
     /**
+     * Retrieves prompts of the Template with ID.
+     * @param ID ID of template being edited.
+     * @return An ArrayList that's contains prompts.
+     */
+    public ArrayList<String> retrievePrompts(int ID) {
+        return this.getTemplates().get(ID).retrievePrompts();
+    }
+
+    /**
      * For Template with ID, renames the prompt with the corresponding promptNumber to newName.
      * Note that the prompt numbers start from 0.
      * @param ID ID of template being edited.
