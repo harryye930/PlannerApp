@@ -15,12 +15,29 @@ public abstract class Template implements Serializable {
     protected String plannerNamePrompt; // name of the planner being created from this template
     private static int id; // id of this template
     protected boolean publishedStatus; // published status of this template (if true, the template is published)
+    private String templateType;
 
     public Template(String name, String plannerNamePrompt) {
         this.name = name;
         this.plannerNamePrompt = plannerNamePrompt;
         publishedStatus = false;  // the default published status of all templates are false (i.e., unpublished)
         id++;
+    }
+
+    /**
+     * Get the type of the template.
+     * @return A String representing the type of the template.
+     */
+    public String getTemplateType() {
+        return templateType;
+    }
+
+    /**
+     * Set the type of the template
+     * @param templateType A String representing the type of the template.
+     */
+    public void setTemplateType(String templateType) {
+        this.templateType = templateType;
     }
 
     /**
