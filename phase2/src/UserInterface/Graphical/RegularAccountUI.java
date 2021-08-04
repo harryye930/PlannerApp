@@ -17,6 +17,10 @@ public class RegularAccountUI extends GeneralPresenter {
     private final JButton accountButton = new JButton("Account Setting");
     private final JButton logOutButton = new JButton("Logout");
 
+    private final GeneralPresenter plannerOptionUI = new PlannerOptionUI("LoginPage");
+    private final GeneralPresenter templateOptionUI = new TemplateOptionUI("LoginPage");
+
+
     public RegularAccountUI(String parent) {
         this.setParent(parent);
     }
@@ -27,17 +31,17 @@ public class RegularAccountUI extends GeneralPresenter {
     @Override
     public void run() {
         if (flag) {
-            cl.show(main, "regularUserPage");
+            cl.show(main, "regularUserMainMenu");
         } else {
             this.showMenu();
-            cl.show(main, "regularUserPage");
+            cl.show(main, "regularUserMainMenu");
             frame.setVisible(true);
             flag = !flag;
         }
     }
 
     private void showMenu() {
-        main.add(regularUserMainMenu, "regularUserPage");
+        main.add(regularUserMainMenu, "regularUserMainMenu");
 
         regularUserMainMenu.setLayout(null);
 
@@ -58,7 +62,12 @@ public class RegularAccountUI extends GeneralPresenter {
         panel.add(templateButton);
         panel.add(accountButton);
         panel.add(logOutButton);
+
+        plannerButton.addActionListener(this);
+        templateButton.addActionListener(this);
+        accountButton.addActionListener(this);
         logOutButton.addActionListener(this);
+
 
     }
 
@@ -69,7 +78,17 @@ public class RegularAccountUI extends GeneralPresenter {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == logOutButton){
+        if (e.getSource() == plannerButton){
+            this.plannerOptionUI.run();
+//            JOptionPane.showMessageDialog(frame, "Planner Button Clicked");
+        }
+
+        if (e.getSource() == templateButton){
+            this.templateOptionUI.run();
+//            JOptionPane.showMessageDialog(frame, "Planner Button Clicked");
+        }
+
+        else if (e.getSource() == logOutButton){
             cl.show(main, "LoginPage");
         }
     }

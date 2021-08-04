@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.SplittableRandom;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * A instance of this class represent an account in this application.
@@ -17,12 +18,12 @@ public abstract class Account implements Serializable {
     protected String userId;
     protected String email;
     protected String password;
-    protected int suspendedTime;
+    protected LocalDateTime suspendedTime;
 
     public Account() {
         this.accountType = "regular";
         this.userId = ((Integer) this.hashCode()).toString();
-        suspendedTime = 0;
+        suspendedTime = LocalDateTime.now();
     }
 
     /**
@@ -30,11 +31,15 @@ public abstract class Account implements Serializable {
      * to be able to login again. Set the suspended time with given integer
      * @param time the time that set to be suspended (in days).
      */
-    public void setSuspendedTime(int time){
-        suspendedTime = time;
+    public void setSuspendedTime(long time){
+        suspendedTime = suspendedTime.plusDays(time);
     }
 
-    public int getSuspendedTime(){
+    public void removeSuspendTime(){
+        suspendedTime = LocalDateTime.now();
+    }
+
+    public LocalDateTime getSuspendedTime(){
         return suspendedTime;
     }
 

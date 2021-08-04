@@ -6,6 +6,7 @@ import UseCase.*;
 //import com.sun.org.apache.xpath.internal.operations.String;
 
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 /**
  * Account accessibility controller.
@@ -43,7 +44,8 @@ public class AccessController{
      * @return A boolean value representing whether the password is correct or not.
      */
     public boolean logIn(String retriever, String passWord) {
-        if (accManager.findAccount(retriever) == null || accManager.findAccount(retriever).getSuspendedTime() > 0) {
+        if (accManager.findAccount(retriever) == null ||
+        accManager.findAccount(retriever).getSuspendedTime().isAfter(LocalDateTime.now())) {
             return false;
         }
         return accManager.findAccount(retriever).getPassword().equals(passWord);
@@ -95,10 +97,8 @@ public class AccessController{
             return false; // new password cannot be the same as the old password
         }
 
-        if (!accManager.setPassword(retriever, newPassWord)){
-            return false; // new password is not complex enough
-        }
-        return true; // if none of the above is satisfied, then able to successfully change password
+        return accManager.setPassword(retriever, newPassWord); // new password is not complex enough
+// if none of the above is satisfied, then able to successfully change password
     }
 
     /**
@@ -203,8 +203,16 @@ public class AccessController{
         this.accManager.removePlanner(retriever, plannerId);
     }
 
-    public void suspendUser(String retriever, int time){
-        accManager.suspendUser(retriever, time);
+    public void suspendUser(String retriever, long days){
+        accManager.suspendUser(retriever, days);
+    }
+
+    public void unSuspendUser(String retriever){
+        accManager.unSuspendUser(retriever);
+    }
+
+    public boolean getSuspensionStatus(String retriever){
+        return accManager.suspendedStatus(retriever);
     }
 
 

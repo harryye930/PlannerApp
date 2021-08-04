@@ -28,9 +28,9 @@ public class PlannerManager{
      * @param endTime end time of planner
      * @return true iff a new DailyPlanner is created
      */
-    public int newDailyPlanner(String plannerName, String startTime, String endTime){
+    public int newDailyPlanner(String plannerName, String startTime, String endTime, String interval){
 
-        DailyPlanner dailyPlanner = new DailyPlanner(plannerName, startTime, endTime, 60);
+        DailyPlanner dailyPlanner = new DailyPlanner(plannerName, startTime, endTime, Integer.parseInt(interval));
         this.idToPlanner.put(dailyPlanner.getID(), dailyPlanner);
         return dailyPlanner.getID();
     }
