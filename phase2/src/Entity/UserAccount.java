@@ -66,8 +66,8 @@ public class UserAccount extends Account {
     }
 
     /**
-     * Return the role of this account: admin, regular or trial.
-     * @return Return false.
+     * Return the role of this account: admin, regular, trial or temporary.
+     * @return A string.
      */
     @Override
     public String getAccountType() {
