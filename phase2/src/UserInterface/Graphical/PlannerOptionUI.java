@@ -2,9 +2,13 @@ package UserInterface.Graphical;
 
 import UserInterface.GeneralPresenter;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class PlannerOptionUI extends GeneralPresenter {
+    private boolean flag = false;
+
+
     /**
      * run the presenter from the beginning.
      */

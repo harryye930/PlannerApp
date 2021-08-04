@@ -21,6 +21,8 @@ public class CreateAccountUI extends GeneralPresenter {
     private final JButton back = new JButton("Go back");
     private final JPanel create = new JPanel();
     private JPanel grids;
+    private final JButton goNext = new JButton("I see");
+    JPanel messagePanel = new JPanel();
 
 
     public CreateAccountUI(String parent) {
@@ -86,6 +88,32 @@ public class CreateAccountUI extends GeneralPresenter {
         back.addActionListener(this);
     }
 
+    private void createNewAccount() {
+        if (!Objects.equals(password0.getText(), password0.getText())) {
+            this.createAccount.setText("Incorrect password, please try again");
+        } else {
+            String id = controller.createAccount(email.getText(), userName.getText(), password0.getText());
+
+            //messagePanel.setLayout(new GridLayout(2, 1));
+            messagePanel.setLayout(null);
+            //messagePanel.setBounds(100, 100, 200, 200);
+
+            JLabel message = new JLabel("Please remember your ID: " + id);
+            message.setBounds(50, 0, 600, 300);
+            message.setFont(new Font("MV Boli", Font.PLAIN, 15));
+            message.setHorizontalAlignment(JLabel.CENTER);
+            messagePanel.add(message);
+
+            goNext.setBounds(300, 200, 100, 50);
+            goNext.addActionListener(this);
+            messagePanel.add(goNext);
+
+            main.add(messagePanel, "createMessage");
+            controller.logIn(id, password0.getText());
+            cl.show(main, "createMessage");
+        }
+    }
+
     /**
      * Invoked when an action occurs.
      *
@@ -97,17 +125,9 @@ public class CreateAccountUI extends GeneralPresenter {
             createNewAccount();
         } else if (e.getSource() == back) {
             cl.show(main, "LoginPage");
-        }
-    }
-
-    private void createNewAccount() {
-        if (!Objects.equals(password0.getText(), password0.getText())) {
-            this.createAccount.setText("Incorrect password, please try again");
-        } else {
-            String id = controller.createAccount(email.getText(), userName.getText(), password0.getText());
-            grids.setVisible(false);
-            this.createAccount.setText("Please remember your ID:(You can also login by email)\n" + id);
-            controller.logIn(id, password0.getText());
+        } else if (e.getSource() == goNext) {
+            main.remove(messagePanel);
+            messagePanel.removeAll();
             if (controller.accountRole().equals("admin")) {
                 this.adminUI.run();
             } else {
@@ -115,4 +135,5 @@ public class CreateAccountUI extends GeneralPresenter {
             }
         }
     }
+
 }
