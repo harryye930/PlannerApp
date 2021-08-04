@@ -5,6 +5,7 @@ import Entity.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 /**
  * Manages Accounts.
@@ -49,6 +50,57 @@ public class AccountManager implements Serializable{
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * Returns the number of password criteria met by the provided password.
+     * Password criteria involves:
+     * (1) at least 4 characters long,
+     * (2) must include at least one upper case letter,
+     * (3) must include at least one lower case letter, and
+     * (4) must include at least one number.
+     * @param password is the password to be checked whether it meets the criteria or not.
+     * @return A string that's the privacy level of the password.
+     */
+    public int numberOfCriteriaMet(String password){
+        String atLeastFour = ".{4,}";
+        String atLeastOneUpper = "(?=.*?[A-Z])";
+        String atLeastOneLower = "(?=.*?[a-z])";
+        String atLeastOneNumber = "(?=.*?[0-9])";
+
+        int numberOfCriteriaMet = 0;
+
+        if (Pattern.matches(atLeastFour, password)) {
+            numberOfCriteriaMet++;
+        }
+        if (Pattern.matches(atLeastOneUpper, password)) {
+            numberOfCriteriaMet++;
+        }
+        if (Pattern.matches(atLeastOneLower, password)) {
+            numberOfCriteriaMet++;
+        }
+        if (Pattern.matches(atLeastOneNumber, password)) {
+            numberOfCriteriaMet++;
+        }
+        return numberOfCriteriaMet;
+    }
+
+    /**
+     * Returns privacy level (i.e., too weak, weak, or good) depending on the given number of criteria met for a password.
+     * Too weak: two or less criteria met
+     * Weak: three criteria met
+     * Good: all four criteria met
+     * @param numberOfCriteriaMet number of criteria met for a password.
+     * @return A string that's the privacy level of the password.
+     */
+    private String passwordPrivacyLevel(int numberOfCriteriaMet) {
+        if (numberOfCriteriaMet <= 2) {
+            return "Too Weak";
+        } else if (numberOfCriteriaMet <= 3) {
+            return "Weak";
+        } else { // All of the criteria are met.
+            return "Good";
         }
     }
 
