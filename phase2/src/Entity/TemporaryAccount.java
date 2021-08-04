@@ -14,7 +14,7 @@ public class TemporaryAccount extends Account {
 
     public TemporaryAccount(String email) {
         super();
-        this.accountType = "Temporary";
+        this.accountType = "temporary";
         super.email = email;
         super.userId = ((Integer) (email).hashCode()).toString();
 
@@ -41,8 +41,8 @@ public class TemporaryAccount extends Account {
         result = "This is an Temporary Account with following information available:\n" +
                 "User Name: " + this.userName + "\n" +
                 "User ID: " + this.userId + "\n" +
-                "User Email" + this.email + "\n" +
-                "End Date" + this.endDate.toString() + "\n";
+                "User Email:" + this.email + "\n" +
+                "This account will be automatically deleted after " + this.endDate.toString() + "\n";
         return result;
     }
 

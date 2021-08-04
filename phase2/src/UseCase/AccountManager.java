@@ -265,9 +265,9 @@ public class AccountManager implements Serializable{
         LocalDateTime todayDate = LocalDateTime.now();
         LocalDateTime endDate = account.getEndDate();
 
-        int compareInt = todayDate.compareTo(endDate);
+        boolean isAfter = todayDate.isAfter(endDate);
 
-        if (this.getAllAccount().contains(account) & compareInt > 0) {
+        if (this.getAllAccount().contains(account) & isAfter) {
             idToAccount.remove(account.getUserId());
             emailToAccount.remove(account.getEmail());
             return true; //Return true if the account object is in the collection.

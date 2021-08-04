@@ -84,7 +84,7 @@ public class UserAccount extends Account {
         result = "This is an Regular Account with following information available:\n" +
                 "User Name: " + this.userName + "\n" +
                 "User ID: " + this.userId + "\n" +
-                "User Email" + this.email + "\n";
+                "User Email:" + this.email + "\n";
         return result;
     }
 
