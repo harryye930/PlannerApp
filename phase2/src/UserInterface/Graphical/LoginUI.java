@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class MenuUI extends GeneralPresenter {
+public class LoginUI extends GeneralPresenter {
 
     private final JPanel menu = new JPanel();
     private JLabel prompt;
@@ -20,9 +20,9 @@ public class MenuUI extends GeneralPresenter {
     private final GeneralPresenter createAccountUI = new CreateAccountUI("LoginPage");
 
 
-    public MenuUI() {}
+    public LoginUI() {}
 
-    public MenuUI(String parent) {
+    public LoginUI(String parent) {
         this.setParent(parent);
     }
 
@@ -31,12 +31,13 @@ public class MenuUI extends GeneralPresenter {
      */
     @Override
     public void run() {
-        this.showMenu();
+        this.showLoginPage();
         cl.show(main, "LoginPage");
         frame.setVisible(true);
     }
 
-    private void showMenu() {
+    private void showLoginPage() {
+
         menu.setLayout(null);
         main.add(menu, "LoginPage");
 
@@ -109,7 +110,7 @@ public class MenuUI extends GeneralPresenter {
     }
 
     public static void main(String[] args) {
-        MenuUI x = new MenuUI();
+        LoginUI x = new LoginUI();
         x.run();
     }
 }
