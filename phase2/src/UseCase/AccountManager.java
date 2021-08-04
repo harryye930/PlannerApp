@@ -209,6 +209,16 @@ public class AccountManager implements Serializable{
     }
 
     /**
+     * create a temporary account, add it to all accounts and the hashmaps.
+     * @return the userId of the new account.
+     */
+    private String createTempAcc(String email){
+        TemporaryAccount newAccount = new TemporaryAccount(email);
+        this.addAccount(newAccount);
+        return newAccount.getUserId();
+    }
+
+    /**
      * create an account which type is determined by user's email. if user's email contains "@admin.com",
      * we think that it would be an admin. If the user has no email (email is empty), then we create
      * trial account. Else, it would be a regular account.
@@ -236,6 +246,28 @@ public class AccountManager implements Serializable{
     public boolean removeAccount(String retriever){
         Account account = this.findAccount(retriever);
         if (this.getAllAccount().contains(account)) {
+            idToAccount.remove(account.getUserId());
+            emailToAccount.remove(account.getEmail());
+            return true; //Return true if the account object is in the collection.
+        } else {
+            return false; //Return false if the account object is not in the collection.
+        }
+    }
+
+    /**
+     * delete a temporary account from allAccount, emailToAccount, and idToAccount
+     * when the end date has passed.
+     * @param retriever A String representing the user ID or Email.
+     * @return true if successfully removed account, false otherwise.
+     */
+    public boolean deleteTempAccount(String retriever){
+        TemporaryAccount account = (TemporaryAccount) this.findAccount(retriever);
+        LocalDateTime todayDate = LocalDateTime.now();
+        LocalDateTime endDate = account.getEndDate();
+
+        int compareInt = todayDate.compareTo(endDate);
+
+        if (this.getAllAccount().contains(account) & compareInt > 0) {
             idToAccount.remove(account.getUserId());
             emailToAccount.remove(account.getEmail());
             return true; //Return true if the account object is in the collection.
