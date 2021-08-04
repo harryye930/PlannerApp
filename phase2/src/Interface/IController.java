@@ -191,4 +191,10 @@ public interface IController {
      */
     public ArrayList<String> allUserInfo();
 
+    void setSuspension(String userId, long days);
+
+    void unSuspend(String userId);
+
+    boolean suspendStatus(String userId);
+
 }

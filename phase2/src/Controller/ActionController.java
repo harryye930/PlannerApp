@@ -387,4 +387,20 @@ public class ActionController implements IController{
     public ArrayList<String> allUserInfo(){
         return accessController.viewAllAccount();
     }
+
+    @Override
+    public void setSuspension(String userId, long days) {
+        accessController.suspendUser(userId, days);
+    }
+
+    @Override
+    public void unSuspend(String userId) {
+        accessController.unSuspendUser(userId);
+    }
+
+    @Override
+    public boolean suspendStatus(String userId) {
+       return accessController.getSuspensionStatus(userId);
+    }
+
 }

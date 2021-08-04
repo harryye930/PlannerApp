@@ -3,6 +3,8 @@ package UseCase;
 import Entity.*;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -314,8 +316,18 @@ public class AccountManager implements Serializable{
         return acc.toString();
     }
 
-    public void suspendUser(String retriever, int time){
+    public void suspendUser(String retriever, long days){
         Account acc = findAccount(retriever);
-        acc.setSuspendedTime(time);
+        acc.setSuspendedTime(days);
+    }
+
+    public void unSuspendUser(String retriever){
+        Account acc = findAccount(retriever);
+        acc.removeSuspendTime();
+    }
+
+    public boolean suspendedStatus(String retriever){
+        Account acc = findAccount(retriever);
+        return acc.getSuspendedTime().isAfter(LocalDateTime.now());
     }
 }

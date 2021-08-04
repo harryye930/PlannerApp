@@ -5,6 +5,7 @@ import Interface.IController;
 import UserInterface.Widgets.*;
 import UserInterface.SubPresenter.Planner.*;
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class AdminPresenter extends GeneralPresenter {
@@ -68,9 +69,15 @@ public class AdminPresenter extends GeneralPresenter {
     }
 
     private void userOptions(String userId){
+        String prompt;
+        if (controller.suspendStatus(userId)){
+            prompt = new String("Unsuspend the user.");
+        } else {
+            prompt = new String("Suspend the user. ");
+        }
         MultiOptions userOptions = new MultiOptions(null, "What would you like to do to this user? ");
 
-        Option suspendUser = new Option(userOptions, "Suspend the user. ");
+        Option suspendUser = new Option(userOptions, prompt);
         Option seePlanners = new Option(userOptions, "See all creations of the user. ");
         Option goback = new Option(userOptions, "Go back to previous menu. ");
         userOptions.trigger();
@@ -80,7 +87,7 @@ public class AdminPresenter extends GeneralPresenter {
 
     private void userOptionsIdentify(MultiOptions parent, String userId){
         if (parent.getChosenOp() == 'A') {
-            //TODO
+            userSuspension(userId);
         } else if (parent.getChosenOp() == 'B') {
             this.controller.viewUserPlanners(userId);
             this.userOptions(userId);
@@ -89,4 +96,14 @@ public class AdminPresenter extends GeneralPresenter {
         }
     }
 
+    private void userSuspension(String userId){
+        if (controller.suspendStatus(userId)){
+            Text suspend = new Text(null, "Please enter the number of days of suspension:", true);
+            suspend.trigger();
+            controller.setSuspension(userId, Long.parseLong(suspend.getText()));
+        } else {
+            controller.unSuspend(userId);
+        }
+        userOptions(userId);
+    }
 }
