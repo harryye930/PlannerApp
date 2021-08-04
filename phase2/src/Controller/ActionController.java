@@ -153,7 +153,7 @@ public class ActionController implements IController{
             id = this.plannerController.createNewDailyPlanner(prompts.get(0), prompts.get(1), prompts.get(2));
         } else if (type.equals("project")) {
             ArrayList<String> prompts = this.templateController.getTemplatePrompts(Integer.parseInt(currTemplateId));
-            id = this.plannerController.createNewProjectPlanner(prompts.get(0), prompts.get(1), prompts.get(2));
+            //id = this.plannerController.createNewProjectPlanner(prompts.get(0), prompts.get(1), prompts.get(2));
         }
         return ((Integer) id).toString();
     }

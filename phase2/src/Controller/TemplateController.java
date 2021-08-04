@@ -95,12 +95,10 @@ public class TemplateController{
 
     /**
      * Return the template type with give id.
-     * @param id A int representing the template id.
+     * @param id An int representing the template id.
      * @return A String representing the type of the template.
      */
     public String getTemplateType(int id) {
-        Map<Integer, Template> hm = this.templateManager.getTemplates();
-        Template item = hm.get(id);
-        return item.getTemplateType();
+        return this.templateManager.getType(id);
     }
 }

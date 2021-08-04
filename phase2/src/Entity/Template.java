@@ -25,14 +25,6 @@ public abstract class Template implements Serializable {
     }
 
     /**
-     * Get the type of the template.
-     * @return A String representing the type of the template.
-     */
-    public String getTemplateType() {
-        return templateType;
-    }
-
-    /**
      * Set the type of the template
      * @param templateType A String representing the type of the template.
      */
