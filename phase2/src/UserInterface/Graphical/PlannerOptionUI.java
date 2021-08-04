@@ -19,7 +19,7 @@ public class PlannerOptionUI extends GeneralPresenter {
     //planner menu text
     private JLabel prompt;
 
-    private GeneralPresenter createPlanner = new createPlannerUI("plannerMenu");
+    private GeneralPresenter createPlanner = new CreatePlannerUI("plannerMenu");
 
     public PlannerOptionUI(String parent) {
         this.setParent(parent);

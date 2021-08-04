@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class createPlannerUI extends GeneralPresenter {
+public class CreatePlannerUI extends GeneralPresenter {
     private boolean flag = false;
 
     JPanel createPlanner = new JPanel();
@@ -15,7 +15,7 @@ public class createPlannerUI extends GeneralPresenter {
     JTextField id = new JTextField();
     JButton submit = new JButton("Submit");
 
-    public createPlannerUI(String parent) {
+    public CreatePlannerUI(String parent) {
         this.setParent(parent);
     }
 
