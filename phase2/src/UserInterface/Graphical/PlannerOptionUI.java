@@ -30,9 +30,14 @@ public class PlannerOptionUI extends GeneralPresenter {
      */
     @Override
     public void run() {
-        this.showPlannerMenu();
-        cl.show(main, "plannerMenu");
-        frame.setVisible(true);
+        if (flag) {
+            cl.show(main, "plannerMenu");
+        } else {
+            this.showPlannerMenu();
+            cl.show(main, "plannerMenu");
+            frame.setVisible(true);
+            flag = !flag;
+        }
     }
     private void showPlannerMenu(){
         main.add(plannerMenu, "plannerMenu");
