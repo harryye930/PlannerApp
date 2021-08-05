@@ -11,9 +11,10 @@ public class CreatePlannerUI extends GeneralPresenter {
 
     JPanel createPlanner = new JPanel();
     JTextArea templateInfo = new JTextArea();
-    JLabel message = new JLabel("<html>Please enter the ID of template you want to use:</html>");
+    JTextArea message = new JTextArea("Please enter the ID of template \nyou want to use:");
     JTextField id = new JTextField();
     JButton submit = new JButton("Submit");
+    JButton back = new JButton("Go back");
 
     public CreatePlannerUI(String parent) {
         this.setParent(parent);
@@ -35,18 +36,6 @@ public class CreatePlannerUI extends GeneralPresenter {
     }
 
     private void showMenu() {
-        String x = "kdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\n" +
-                "kdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\n" +
-                "kdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\n" +
-                "kdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\n" +
-                "kdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\n" +
-                "kdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\n" +
-                "kdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\n" +
-                "kdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\n" +
-                "kdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\n" +
-                "kdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\n" +
-                "kdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\n" +
-                "kdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\nkdafjkjsahdfkafjak\n";
         createPlanner.setLayout(null);
 
         main.add(createPlanner, "createPlanner");
@@ -54,19 +43,26 @@ public class CreatePlannerUI extends GeneralPresenter {
         createPlanner.add(templates);
 
         templates.setBounds(25, 25, 400, 500);
-        templateInfo.setText(controller.viewTemplates() + x );
-        templates.setBackground(new Color(255, 255, 255));
+        templateInfo.setText(controller.viewTemplates());
+        templateInfo.setEditable(false);
+        templates.setBackground(new Color(143, 141, 141));
 
         createPlanner.add(templates);
 
-        message.setBounds(500, 50, 100, 50);
+        message.setBounds(450, 50, 200, 50);
+        message.setEditable(false);
         createPlanner.add(message);
 
-        id.setBounds(500, 150, 100, 50);
+        id.setBounds(500, 130, 100, 50);
         createPlanner.add(id);
 
-        submit.setBounds(600, 250, 70, 40);
+        submit.setBounds(515, 200, 70, 40);
+        submit.addActionListener(this);
         createPlanner.add(submit);
+
+        back.setBounds(515, 250, 70, 40);
+        back.addActionListener(this);
+        createPlanner.add(back);
     }
 
     /**
@@ -76,6 +72,10 @@ public class CreatePlannerUI extends GeneralPresenter {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() == submit) {
+            //controller.createPlanner(submit.getText());
+        } else if (e.getSource() == back) {
+            cl.show(main, this.getParent());
+        }
     }
 }
