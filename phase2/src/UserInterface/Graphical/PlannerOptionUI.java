@@ -12,9 +12,11 @@ public class PlannerOptionUI extends GeneralPresenter {
     private final JButton newPlannerButton = new JButton("Create New Planner");
     private final JButton checkPlannerButton = new JButton("Check my Planners");
     private final JButton returnToMainMenuButton= new JButton("Return to Main Menu");
+    private final JButton back = new JButton("Go back");
 
     //planner panel
     private final JPanel plannerMenu = new JPanel();
+    private final JPanel temp = new JPanel();
 
     //planner menu text
     private JLabel prompt;
@@ -77,6 +79,22 @@ public class PlannerOptionUI extends GeneralPresenter {
             cl.show(main, "regularUserMainMenu");
         } else if (e.getSource() == newPlannerButton) {
             this.createPlanner.run();
+        } else if (e.getSource() == checkPlannerButton) {
+            temp.setLayout(null);
+            main.add(temp, "plannerInfo");
+
+            JScrollPane plannerInfo = data.getPlanners();
+            plannerInfo.setBounds(25, 25, 400, 500);
+            temp.add(plannerInfo);
+
+            back.setBounds(515, 250, 70, 40);
+            temp.add(back);
+            back.addActionListener(this);
+
+            cl.show(main, "plannerInfo");
+        } else if (e.getSource() == back) {
+            cl.show(main, "plannerMenu");
+            main.remove(temp);
         }
     }
 }

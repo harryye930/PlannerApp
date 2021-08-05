@@ -38,12 +38,12 @@ public class ViewData {
         templateInfo.setEditable(false);
 
         //plannerInfo.setBounds(25, 25, 400, 500);
-        plannerInfo.setText(controller.viewUserPlanners() + controller.viewPublicPlanners());
+        String separator = "\n===============\n";
+        planners.setBackground(new Color(143, 141, 141));
+        plannerInfo.setText(controller.viewUserPlanners() + separator + controller.viewPublicPlanners());
+        plannerInfo.removeAll();
         plannerInfo.setEditable(false);
-        plannerInfo.setBackground(new Color(143, 141, 141));
-        planners.removeAll();
-        planners.setLayout(null);
-        planners.add(plannerInfo);
+        plannerInfo.setLayout(null);
 
 
     }
