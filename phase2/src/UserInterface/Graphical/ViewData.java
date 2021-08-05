@@ -52,7 +52,7 @@ public class ViewData {
         plannerInfo.setEditable(false);
         plannerInfo.setLayout(null);
 
-        accountInfo.setBackground(new Color(255, 255, 255));
+        accountInfo.setBackground(new Color(241, 241, 241));
         accountInfo.setText(controller.getAccountInfo());
         accountInfo.removeAll();
         accountInfo.setEditable(false);
