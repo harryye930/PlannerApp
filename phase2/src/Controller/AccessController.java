@@ -117,7 +117,13 @@ public class AccessController{
      * @return A boolean value representing whether the remove operation is successful or not.
      */
     public boolean removeAccount(String retriever) {
-        return accManager.removeAccount(retriever);
+        String accountType = accManager.findAccount(retriever).getAccountType();
+        if(accountType.equals("temporary")){
+            return accManager.deleteTempAccount(retriever);
+        }
+        else {
+            return accManager.removeAccount(retriever);
+        }
     }
 
     /**
@@ -126,7 +132,9 @@ public class AccessController{
      * @return A boolean representing whether the log out is success.
      */
     public boolean logOut(String retriever){
-        if(accManager.findAccount(retriever).getAccountType().equals("trial")){
+        String accountType = accManager.findAccount(retriever).getAccountType();
+
+        if(accountType.equals("trial") | accountType.equals("temporary")){
             this.removeAccount(retriever);
         }
         return true;
@@ -162,7 +170,7 @@ public class AccessController{
 
 
     /**
-     * Retuan the account information of every account.
+     * Return the account information of every account.
      * @return An ArrayList of
      */
     public ArrayList<String> viewAllAccount(){
@@ -186,7 +194,7 @@ public class AccessController{
 
     /**
      * Return the information of the Account with given id.
-     * @param retriever A String representing
+     * @param retriever A String representing information of account
      * @return A String representing the information of the account.
      */
     public String getInfo(String retriever) {
@@ -195,22 +203,35 @@ public class AccessController{
 
 
     /**
-     *
-     * @param retriever
-     * @param plannerId
+     * remove planner from the user's planners
+     * @param retriever A String representing information of account
+     * @param plannerId A String that identifies the planner
      */
     public void removePlanner(String retriever, String plannerId) {
         this.accManager.removePlanner(retriever, plannerId);
     }
 
+    /**
+     * suspend a user for x amount of days
+     * @param retriever A String representing information of account
+     * @param days The number of days user is suspended for
+     */
     public void suspendUser(String retriever, long days){
         accManager.suspendUser(retriever, days);
     }
 
+    /**
+     * reverse the suspension of a user
+     * @param retriever A String representing information of account
+     */
     public void unSuspendUser(String retriever){
         accManager.unSuspendUser(retriever);
     }
 
+    /**
+     * get the suspension status of a user
+     * @param retriever A String representing information of account
+     */
     public boolean getSuspensionStatus(String retriever){
         return accManager.suspendedStatus(retriever);
     }
