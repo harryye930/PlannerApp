@@ -3,6 +3,7 @@ package UserInterface.Graphical;
 import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class AccountOptionUI extends GeneralPresenter {
@@ -10,6 +11,14 @@ public class AccountOptionUI extends GeneralPresenter {
 
     //JPanel
     JPanel accountMenu = new JPanel();
+
+    //Buttons
+    private final JButton changeUserEmailButton = new JButton("Change Your Associated Email");
+    private final JButton changeUserPasswordButton = new JButton("Change Your Password");
+    private final JButton deleteAccountButton = new JButton("Delete your account");
+    private final JButton returnToMainButton = new JButton("Return to Main Menu");
+
+
 
     public AccountOptionUI(String parent) {
         this.setParent(parent);
@@ -36,6 +45,20 @@ public class AccountOptionUI extends GeneralPresenter {
         JScrollPane accounts = data.getAccounts();
         accounts.setBounds(75, 25, 450, 100);
         accountMenu.add(accounts);
+
+
+        accountMenu.add(changeUserEmailButton);
+        accountMenu.add(changeUserPasswordButton);
+        accountMenu.add(deleteAccountButton);
+        accountMenu.add(returnToMainButton);
+
+        changeUserEmailButton.addActionListener(this);
+        changeUserPasswordButton.addActionListener(this);
+        deleteAccountButton.addActionListener(this);
+        returnToMainButton.addActionListener(this);
+
+
+
     }
 
     /**
@@ -45,6 +68,18 @@ public class AccountOptionUI extends GeneralPresenter {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == changeUserEmailButton){
+            System.out.println("remove after implement");
+        }
+        else if (e.getSource() == changeUserPasswordButton){
+            System.out.println("remove after implement");
+        }
+        else if (e.getSource() == returnToMainButton){
+            System.out.println("remove after implement");
+        }
+        else if (e.getSource() == returnToMainButton){
+            cl.show(main, this.getParent());
+        }
 
     }
 }

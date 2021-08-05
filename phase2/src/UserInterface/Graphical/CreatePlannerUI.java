@@ -15,7 +15,7 @@ public class CreatePlannerUI extends GeneralPresenter {
     JTextArea message = new JTextArea("Please enter the ID of template \nyou want to use:");
     JTextField id = new JTextField();
     JButton submit = new JButton("Submit");
-    JButton back = new JButton("Go back");
+    JButton back = new JButton("Return to Planner Menu");
 
     public CreatePlannerUI(String parent) {
         this.setParent(parent);

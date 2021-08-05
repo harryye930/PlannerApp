@@ -81,10 +81,8 @@ public class RegularAccountUI extends GeneralPresenter {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == plannerButton){
             this.plannerOptionUI.run();
-//            JOptionPane.showMessageDialog(frame, "Planner Button Clicked");
         }else if (e.getSource() == templateButton){
             this.templateOptionUI.run();
-//           JOptionPane.showMessageDialog(frame, "Planner Button Clicked");
         } else if (e.getSource() == logOutButton){
             cl.show(main, "LoginPage");
         } else if (e.getSource() == accountButton) {
