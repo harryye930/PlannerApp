@@ -4,11 +4,7 @@ package Controller;
 import Entity.Template;
 import Gateway.TemplateGateway;
 import UseCase.TemplateManager;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Scanner;
 
 /**
  * Controller for Templates.
@@ -16,11 +12,6 @@ import java.util.Scanner;
 public class TemplateController{
     private TemplateManager templateManager;
     private TemplateGateway templateGateway;
-
-    Scanner scanner;
-
-    private final String MAIN_MENU = "M";
-    private final String[] USER_DECISION = {"YES", "NO"};
 
     public TemplateController() {
         templateManager = new TemplateManager();
@@ -75,11 +66,17 @@ public class TemplateController{
 
     /**
      * Return a collection of all template id in String.
+     * @param publishedTemplatesOnly Boolean indicating whether to retrieve ids of only published templates or not.
      * @return An ArrayList that contain the id of all template
      */
-    public ArrayList<String> getAllTemplateIds() {
+    public ArrayList<String> getAllTemplateIds(boolean publishedTemplatesOnly) {
         ArrayList<String> res = new ArrayList<>();
-        ArrayList<Integer> arr = new ArrayList<>(this.templateManager.getTemplates().keySet());
+        ArrayList<Integer> arr;
+        if (publishedTemplatesOnly) {
+            arr = new ArrayList<>(this.templateManager.retrievePublishedTemplates().keySet());
+        } else {
+            arr = new ArrayList<>(this.templateManager.getTemplates().keySet());
+        }
         for (Integer id: arr) {
             res.add(id.toString());
         }

@@ -110,7 +110,7 @@ public class TemplateManager implements Serializable {
      * A template is published if their publishedStatus is true.
      * @return Map<Integer, Template> which contains all published templates.
      */
-    private Map<Integer, Template> retrievePublishedTemplates() {
+    public Map<Integer, Template> retrievePublishedTemplates() {
         Map<Integer, Template> publishedTemplates = new HashMap<>();
         for (Map.Entry<Integer, Template> items: this.getTemplates().entrySet()) {
             Template value = items.getValue();
