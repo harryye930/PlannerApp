@@ -17,9 +17,9 @@ public class RegularAccountUI extends GeneralPresenter {
     private final JButton accountButton = new JButton("Account Setting");
     private final JButton logOutButton = new JButton("Logout");
 
-    private final GeneralPresenter plannerOptionUI = new PlannerOptionUI("LoginPage");
-    private final GeneralPresenter templateOptionUI = new TemplateOptionUI("LoginPage");
-    private final GeneralPresenter accountOptionUI = new AccountOptionUI("LoginPage");
+    private final GeneralPresenter plannerOptionUI = new PlannerOptionUI("regularUserMainMenu");
+    private final GeneralPresenter templateOptionUI = new TemplateOptionUI("regularUserMainMenu");
+    private final GeneralPresenter accountOptionUI = new AccountOptionUI("regularUserMainMenu");
 
 
     public RegularAccountUI(String parent) {
