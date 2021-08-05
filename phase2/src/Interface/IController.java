@@ -58,8 +58,11 @@ public interface IController {
      */
     public String createAccount(String email, String userName, String password);
 
-
-
+    /**
+     * Create a new planner based on existing template.
+     * @return A String representing the planner ID.
+     */
+    public String createPlanner();
 
     /**
      * View the templates' information.

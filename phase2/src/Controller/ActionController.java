@@ -145,17 +145,20 @@ public class ActionController implements IController{
         return retriever;
     }
 
+    @Override
     public String createPlanner() {
         String type = this.templateController.getTemplateType(Integer.parseInt(this.currTemplateId));
-        int id = 0;
+        Integer id = 0;
         if (type.equals("daily")) {
             ArrayList<String> prompts = this.templateController.getTemplatePrompts(Integer.parseInt(currTemplateId));
             id = this.plannerController.createNewDailyPlanner(prompts.get(0), prompts.get(1), prompts.get(2));
+            this.currPlannerId = id.toString();
         } else if (type.equals("project")) {
             ArrayList<String> prompts = this.templateController.getTemplatePrompts(Integer.parseInt(currTemplateId));
             //id = this.plannerController.createNewProjectPlanner(prompts.get(0), prompts.get(1), prompts.get(2));
+            this.currPlannerId = id.toString();
         }
-        return ((Integer) id).toString();
+        return id.toString();
     }
 
 

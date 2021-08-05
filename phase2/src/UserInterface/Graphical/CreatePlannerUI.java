@@ -9,8 +9,9 @@ import java.awt.event.ActionEvent;
 public class CreatePlannerUI extends GeneralPresenter {
     private boolean flag = false;
 
+    private final GeneralPresenter checkPlanner = new CheckPlannerUI("createPlanner");
+
     JPanel createPlanner = new JPanel();
-    JTextArea templateInfo = new JTextArea();
     JTextArea message = new JTextArea("Please enter the ID of template \nyou want to use:");
     JTextField id = new JTextField();
     JButton submit = new JButton("Submit");
@@ -39,15 +40,11 @@ public class CreatePlannerUI extends GeneralPresenter {
         createPlanner.setLayout(null);
 
         main.add(createPlanner, "createPlanner");
-        JScrollPane templates = new JScrollPane(templateInfo);
-        createPlanner.add(templates);
+        JScrollPane templateInfo = data.getTemplates();
+        createPlanner.add(templateInfo);
 
-        templates.setBounds(25, 25, 400, 500);
-        templateInfo.setText(controller.viewTemplates());
-        templateInfo.setEditable(false);
-        templates.setBackground(new Color(143, 141, 141));
-
-        createPlanner.add(templates);
+        templateInfo.setBounds(25, 25, 400, 500);
+        templateInfo.setBackground(new Color(143, 141, 141));
 
         message.setBounds(450, 50, 200, 50);
         message.setEditable(false);
@@ -73,7 +70,12 @@ public class CreatePlannerUI extends GeneralPresenter {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submit) {
-            //controller.createPlanner(submit.getText());
+            if (!controller.checkTemplate(id.getText())) {
+                this.message.setText("Invalid ID, please try again!");
+            } else {
+                controller.createPlanner();
+                this.checkPlanner.run();
+            }
         } else if (e.getSource() == back) {
             cl.show(main, this.getParent());
         }

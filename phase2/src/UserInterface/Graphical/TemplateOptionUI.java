@@ -9,8 +9,10 @@ import java.awt.event.ActionEvent;
 public class TemplateOptionUI extends GeneralPresenter {
     private boolean flag = false;
     // all buttons
-    private final JButton viewAllTemplate = new JButton("View All Template");
-    private final JButton returnToMainMenuButton= new JButton("Return to Main Menu");
+    JButton viewAllTemplate = new JButton("View All Template");
+    JButton returnToMainMenuButton= new JButton("Return to Main Menu");
+    JButton back = new JButton("Go back");
+    JPanel temp = new JPanel();
 
     // panel
     private final JPanel templateMenu = new JPanel();
@@ -57,7 +59,7 @@ public class TemplateOptionUI extends GeneralPresenter {
         panel.add(returnToMainMenuButton);
 
         returnToMainMenuButton.addActionListener(this);
-
+        viewAllTemplate.addActionListener(this);
 
     }
 
@@ -70,10 +72,24 @@ public class TemplateOptionUI extends GeneralPresenter {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == returnToMainMenuButton){
             cl.show(main, "regularUserMainMenu");
+        } else if (e.getSource() == viewAllTemplate) {
+            JPanel temp = new JPanel();
+            temp.setLayout(null);
 
+            JScrollPane templates = data.getTemplates();
+            templates.setBounds(25, 25, 400, 500);
+            temp.add(templates);
+            main.add(temp, "templateInfo");
 
+            back.addActionListener(this);
+            back.setBounds(515, 150, 70, 40);
+            temp.add(back);
+
+            cl.show(main, "templateInfo");
+        } else if (e.getSource() == back) {
+            main.remove(temp);
+            cl.show(main, "templateMenu");
         }
-
 
     }
 }
