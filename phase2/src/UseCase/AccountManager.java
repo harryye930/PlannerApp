@@ -83,9 +83,9 @@ public class AccountManager implements Serializable{
      */
     public int getNumberOfCriteriaMet(String password){
         String atLeastFour = ".{4,}";
-        String atLeastOneUpper = "(?=.*?[A-Z])";
-        String atLeastOneLower = "(?=.*?[a-z])";
-        String atLeastOneNumber = "(?=.*?[0-9])";
+        String atLeastOneUpper = ".*[A-Z].*";
+        String atLeastOneLower = ".*[a-z].*";
+        String atLeastOneNumber = ".*[0-9].*";
 
         int numberOfCriteriaMet = 0;
 
@@ -190,6 +190,21 @@ public class AccountManager implements Serializable{
     }
 
     /**
+     * create a temporary account, add it to all accounts and the hashmaps.
+     * @return the userId of the new account.
+     */
+    private String createTempAcc(String email){
+        TemporaryAccount newAccount = new TemporaryAccount(email);
+        LocalDateTime startDate = newAccount.getStartDate();
+        long days = 30;
+
+        newAccount.setEndDate(startDate.plusDays(days));
+
+        this.addAccount(newAccount);
+        return newAccount.getUserId();
+    }
+
+    /**
      * create an account which type is determined by user's email. if user's email contains "@admin.com",
      * we think that it would be an admin. If the user has no email (email is empty), then we create
      * trial account. Else, it would be a regular account.
@@ -226,6 +241,28 @@ public class AccountManager implements Serializable{
     }
 
     /**
+     * delete a temporary account from allAccount, emailToAccount, and idToAccount
+     * when the end date has passed.
+     * @param retriever A String representing the user ID or Email.
+     * @return true if successfully removed account, false otherwise.
+     */
+    public boolean deleteTempAccount(String retriever){
+        TemporaryAccount account = (TemporaryAccount) this.findAccount(retriever);
+        LocalDateTime todayDate = LocalDateTime.now();
+        LocalDateTime endDate = account.getEndDate();
+
+        boolean isAfter = todayDate.isAfter(endDate);
+
+        if (this.getAllAccount().contains(account) & isAfter) {
+            idToAccount.remove(account.getUserId());
+            emailToAccount.remove(account.getEmail());
+            return true; //Return true if the account object is in the collection.
+        } else {
+            return false; //Return false if the account object is not in the collection.
+        }
+    }
+
+    /**
      * return the list of all accounts
      * @return allAccount: the list that contains all accounts.
      */
@@ -251,7 +288,9 @@ public class AccountManager implements Serializable{
      */
     public boolean setPlanners(String retriever, ArrayList<String > plannerIds){
         Account account = this.findAccount(retriever);
-        if (account.getAccountType().equals("regular")){
+        String status = account.getAccountType();
+
+        if (status.equals("regular") | status.equals("temporary")){
             return ((UserAccount) account).setPlanners(plannerIds);
         } else {
             return false;
@@ -266,7 +305,9 @@ public class AccountManager implements Serializable{
      */
     public boolean setPlanners(String retriever, String  plannerId){
         Account account = this.findAccount(retriever);
-        if (account.getAccountType().equals("regular")){
+        String status = account.getAccountType();
+
+        if (status.equals("regular") | status.equals("temporary")){
             return ((UserAccount) account).setPlanners(plannerId);
         } else {
             return false;
@@ -274,39 +315,68 @@ public class AccountManager implements Serializable{
     }
 
     /**
-     *
+     * Get all planners created by the given user
      * @param retriever A String representing the User ID or Email.
      * @return An ArrayList of Planner that owned by this account, if the account is regular. Else, return
      * null.
      */
-    public ArrayList<String > getPlanners(String retriever) {
-        if (this.findAccount(retriever).getAccountType().equals("regular")){
-            return ((UserAccount) findAccount(retriever)).getPlanner();
+    public ArrayList<String> getPlanners(String retriever) {
+        Account account = this.findAccount(retriever);
+        String status = account.getAccountType();
+
+        if (status.equals("regular") | status.equals("temporary")){
+            return ((UserAccount) account).getPlanner();
         } else {
             return null;
         }
     }
 
+    /**
+     * Remove given planner from user's planners
+     * @param retriever A String representing the User ID or Email.
+     * @param plannerId A String representing the planner id.
+     */
     public void removePlanner(String retriever, String plannerId) {
-        UserAccount acc =(UserAccount) this.findAccount(retriever);
-        acc.removePlanner(plannerId);
+        Account account = this.findAccount(retriever);
+        String status = account.getAccountType();
+
+        if (status.equals("regular") | status.equals("temporary")){
+            ((UserAccount) account).removePlanner(plannerId);
+        }
     }
 
+    /**
+     * Get the String representation of an account
+     * @param retriever A String representing the User ID or Email.
+     * @return The String representation of the account
+     */
     public String toString(String retriever){
         Account acc = findAccount(retriever);
         return acc.toString();
     }
 
+    /**
+     * Suspend the given user for x amount of days
+     * @param retriever A String representing the User ID or Email.
+     */
     public void suspendUser(String retriever, long days){
         Account acc = findAccount(retriever);
         acc.setSuspendedTime(days);
     }
 
+    /**
+     * Reverse the suspension of a user
+     * @param retriever A String representing the User ID or Email.
+     */
     public void unSuspendUser(String retriever){
         Account acc = findAccount(retriever);
         acc.removeSuspendTime();
     }
 
+    /**
+     * Return whether a user is suspended or not
+     * @param retriever A String representing the User ID or Email.
+     */
     public boolean suspendedStatus(String retriever){
         Account acc = findAccount(retriever);
         return acc.getSuspendedTime().isAfter(LocalDateTime.now());

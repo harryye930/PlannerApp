@@ -46,8 +46,8 @@ public class PlannerController {
      * Create a new DailyPlanner with default name "daily planner", start time at 9 am, and endtime at 9 pm.
      * @return an integer representing the id of the planner
      */
-    public int createNewDailyPlanner(){
-        return plannerManager.newDailyPlanner("daily planner", "09:00", "18:00");
+    public int createNewDailyPlanner(String startTime, String endTime, String interval){
+        return plannerManager.newDailyPlanner("daily planner", startTime, endTime, interval);
     }
 
 

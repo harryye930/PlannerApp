@@ -145,31 +145,22 @@ public class ActionController implements IController{
         return retriever;
     }
 
-    /**
-     * Create a Daily Planner.
-     * @return A String representing the id of the created planner.
-     */
     @Override
-    public String createDailyPlanner() {
-        String id =  ((Integer)plannerController.createNewDailyPlanner()).toString();
-        this.plannerController.setPlannerAuthor(Integer.parseInt(id), this.currRetriever);
-        this.accessController.setPlanner(this.currRetriever, id);
-        this.saveProgram();
-        return id;
+    public String createPlanner() {
+        String type = this.templateController.getTemplateType(Integer.parseInt(this.currTemplateId));
+        Integer id = 0;
+        if (type.equals("daily")) {
+            ArrayList<String> prompts = this.templateController.getTemplatePrompts(Integer.parseInt(currTemplateId));
+            id = this.plannerController.createNewDailyPlanner(prompts.get(0), prompts.get(1), prompts.get(2));
+            this.currPlannerId = id.toString();
+        } else if (type.equals("project")) {
+            ArrayList<String> prompts = this.templateController.getTemplatePrompts(Integer.parseInt(currTemplateId));
+            //id = this.plannerController.createNewProjectPlanner(prompts.get(0), prompts.get(1), prompts.get(2));
+            this.currPlannerId = id.toString();
+        }
+        return id.toString();
     }
 
-    /**
-     * Create a project Planner.
-     * @return A String representing the id of the created planner.
-     */
-    @Override
-    public String createProjectPlanner() {
-        String id =  ((Integer)plannerController.createNewProjectPlanner()).toString();
-        this.plannerController.setPlannerAuthor(Integer.parseInt(id), this.currRetriever);
-        this.accessController.setPlanner(this.currRetriever, id);
-        this.saveProgram();
-        return id;
-    }
 
     /**
      * View the templates' information.

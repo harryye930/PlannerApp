@@ -181,4 +181,14 @@ public class TemplateManager implements Serializable {
         return this.viewTemplateManager("Detail");
     }
 
+    /**
+     * Return the type of the template
+     * @param id A int representing the id of the template.
+     * @return A String representing the Type of the template.
+     */
+    public String getType(int id) {
+        Map<Integer, Template> hm = this.getTemplates();
+        return hm.get(id).isType();
+    }
+
 }

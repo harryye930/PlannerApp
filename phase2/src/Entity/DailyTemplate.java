@@ -14,7 +14,7 @@ public class DailyTemplate extends Template{
      * incrementPrompt: the prompt for the time increment of the planner that will be created based on this template.
      */
     private String startTimePrompt, endTimePrompt, incrementPrompt;
-    private int id;
+    private final int id;
 
     public DailyTemplate(String name, String plannerNamePrompt,
                          String startTimePrompt, String endTimePrompt, String incrementPrompt) {
@@ -23,6 +23,7 @@ public class DailyTemplate extends Template{
         this.startTimePrompt = startTimePrompt;
         this.endTimePrompt = endTimePrompt;
         this.incrementPrompt = incrementPrompt;
+        this.setTemplateType("daily");
     }
 
     /**

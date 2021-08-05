@@ -10,16 +10,18 @@ public class PlannerOptionUI extends GeneralPresenter {
     private boolean flag = false;
     // all buttons
     private final JButton newPlannerButton = new JButton("Create New Planner");
-    private final JButton editPlannerButton = new JButton("Edit Your Planner");
-    private final JButton deletePlannerButton = new JButton("Delete Your Planner");
-    private final JButton showPlannerButton = new JButton("Show Planners");
+    private final JButton checkPlannerButton = new JButton("Check my Planners");
     private final JButton returnToMainMenuButton= new JButton("Return to Main Menu");
+    private final JButton back = new JButton("Go back");
 
     //planner panel
     private final JPanel plannerMenu = new JPanel();
+    private final JPanel temp = new JPanel();
 
     //planner menu text
     private JLabel prompt;
+
+    private GeneralPresenter createPlanner = new CreatePlannerUI("plannerMenu");
 
     public PlannerOptionUI(String parent) {
         this.setParent(parent);
@@ -30,11 +32,16 @@ public class PlannerOptionUI extends GeneralPresenter {
      */
     @Override
     public void run() {
-        this.showPlannerMenu();
-        cl.show(main, "plannerMenu");
-        frame.setVisible(true);
+        if (flag) {
+            cl.show(main, "plannerMenu");
+        } else {
+            this.buildPlannerMenu();
+            cl.show(main, "plannerMenu");
+            frame.setVisible(true);
+            flag = !flag; // flag = false?
+        }
     }
-    private void showPlannerMenu(){
+    private void buildPlannerMenu(){
         main.add(plannerMenu, "plannerMenu");
         plannerMenu.setLayout(null);
 
@@ -48,21 +55,16 @@ public class PlannerOptionUI extends GeneralPresenter {
 
         JPanel panel = new JPanel();
         panel.setBounds(150, 150, 400, 200);
-        panel.setLayout(new GridLayout(4, 1));
+        panel.setLayout(new GridLayout(3, 1));
         plannerMenu.add(panel);
 
         panel.add(newPlannerButton);
-        panel.add(editPlannerButton);
-        panel.add(deletePlannerButton);
-        panel.add(showPlannerButton);
+        panel.add(checkPlannerButton);
         panel.add(returnToMainMenuButton);
 
         newPlannerButton.addActionListener(this);
-        editPlannerButton.addActionListener(this);
-        deletePlannerButton.addActionListener(this);
-        showPlannerButton.addActionListener(this);
+        checkPlannerButton.addActionListener(this);
         returnToMainMenuButton.addActionListener(this);
-
 
     }
 
@@ -75,10 +77,24 @@ public class PlannerOptionUI extends GeneralPresenter {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == returnToMainMenuButton){
             cl.show(main, "regularUserMainMenu");
+        } else if (e.getSource() == newPlannerButton) {
+            this.createPlanner.run();
+        } else if (e.getSource() == checkPlannerButton) {
+            temp.setLayout(null);
+            main.add(temp, "plannerInfo");
 
+            JScrollPane plannerInfo = data.getPlanners();
+            plannerInfo.setBounds(25, 25, 400, 500);
+            temp.add(plannerInfo);
 
+            back.setBounds(515, 250, 70, 40);
+            temp.add(back);
+            back.addActionListener(this);
+
+            cl.show(main, "plannerInfo");
+        } else if (e.getSource() == back) {
+            cl.show(main, "plannerMenu");
+            main.remove(temp);
         }
-
-
     }
 }

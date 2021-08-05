@@ -14,7 +14,7 @@ public class ProjectTemplate extends Template{
      * thirdStatusPrompt: the prompt for the third status heading (e.g., Completed)
      */
     private String firstStatusPrompt, secondStatusPrompt, thirdStatusPrompt;
-    private int id;
+    private final int id;
 
     public ProjectTemplate(String name, String plannerNamePrompt,
                            String firstStatusPrompt, String secondStatusPrompt, String thirdStatusPrompt) {
@@ -23,6 +23,7 @@ public class ProjectTemplate extends Template{
         this.firstStatusPrompt = firstStatusPrompt;
         this.secondStatusPrompt = secondStatusPrompt;
         this.thirdStatusPrompt = thirdStatusPrompt;
+        this.setTemplateType("project");
     }
 
     /**

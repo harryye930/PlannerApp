@@ -145,7 +145,7 @@ public abstract class Account implements Serializable {
     }
 
     /**
-     * @return A boolean value indicating that whether this account id admin.
+     * @return the type of this account.
      */
     public String getAccountType() {
         return this.accountType;

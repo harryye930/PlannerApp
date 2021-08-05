@@ -2,6 +2,7 @@ package UserInterface;
 
 import Controller.ActionController;
 import Interface.IController;
+import UserInterface.Graphical.ViewData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,13 +16,13 @@ public abstract class GeneralPresenter implements ActionListener{
     private String child;
     private String parent;
     protected static JPanel main = new JPanel();
-    protected static IController controller;
+    protected static IController controller = new ActionController();
     protected static CardLayout cl;
     protected static JFrame frame = new JFrame();
+    protected static ViewData data = new ViewData(controller);
 
 
     public GeneralPresenter() {
-        controller = new ActionController();
         cl = new CardLayout();
         main.setLayout(cl);
         frame.add(main);
