@@ -5,6 +5,7 @@ import Entity.Template;
 import Gateway.TemplateGateway;
 import UseCase.TemplateManager;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Controller for Templates.
@@ -99,5 +100,22 @@ public class TemplateController{
      */
     public String getTemplateType(int id) {
         return this.templateManager.getType(id);
+    }
+
+    /**
+     * Return the template published status with a given id.
+     * @param id An int representing the template id.
+     * @return A boolean representing the published status of the template.
+     */
+    public boolean getTemplatePublishedStatus(int id) {
+        return this.templateManager.getPublishedStatus(id);
+    }
+
+    /**
+     * Changes the published status of a given template (i.e., published to unpublished, vice versa).
+     * @param id A int representing the id of the template.
+     */
+    public void switchPublishedStatus(int id) {
+        this.templateManager.switchPublishedStatus(id);
     }
 }

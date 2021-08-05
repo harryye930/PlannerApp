@@ -257,4 +257,22 @@ public class TemplateManager implements Serializable {
         return hm.get(id).isType();
     }
 
+    /**
+     * Returns the published status of a given template.
+     * @param id A int representing the id of the template.
+     * @return A boolean representing the Type of the template.
+     */
+    public boolean getPublishedStatus(int id) {
+        Map<Integer, Template> hm = this.getTemplates();
+        return hm.get(id).getPublishedStatus();
+    }
+
+    /**
+     * Changes the published status of a given template (i.e., published to unpublished, vice versa).
+     * @param id A int representing the id of the template.
+     */
+    public void switchPublishedStatus(int id) {
+        Map<Integer, Template> hm = this.getTemplates();
+        hm.get(id).switchPublishStatus();
+    }
 }
