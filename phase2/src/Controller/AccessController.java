@@ -3,17 +3,17 @@ package Controller;
 import Entity.Account;
 import Gateway.AccountGateway;
 import UseCase.*;
-//import com.sun.org.apache.xpath.internal.operations.String;
 
 import java.util.ArrayList;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 /**
  * Account accessibility controller.
  */
 public class AccessController{
-    private AccountManager accManager;
-    private AccountGateway accGateway;
+    private final AccountManager accManager;
+    private final AccountGateway accGateway;
 
     public AccessController(){
         accManager = new AccountManager();
@@ -236,4 +236,45 @@ public class AccessController{
     }
 
 
+
+    public boolean addFriend(String selfId, String friendId){
+        return accManager.addFriend(selfId, friendId);
+    }
+
+    public boolean deleteFriend(String selfId, String friendId){
+        return accManager.deleteFriend(selfId, friendId);
+    }
+
+    public String getFriends(String selfId){
+        ArrayList<String> friends = accManager.getFriends(selfId);
+        StringBuilder strFriends = new StringBuilder();
+        for (String i : friends){
+            strFriends.append("\n").append(i);
+        }
+        return strFriends.toString();
+    }
+
+    public void sendMail(String senderId, String revieveId, String mail){
+        accManager.sendMail(senderId, revieveId,mail);
+    }
+
+    public HashMap<String, ArrayList<String>> getMailbox(String userId){
+        return accManager.getMailbox(userId);
+    }
+
+    public String seeOnesMail(String selfId, String senderId){
+        return accManager.seeOnesMail(selfId, senderId);
+    }
+
+    public String seeAllMail(String userId){
+        return accManager.seeAllMail(userId);
+    }
+
+    public ArrayList<String> getTrashPlanner(String userId){
+        return accManager.getTrashPlanner(userId);
+    }
+
+    public boolean unTrashPlanner(String userId, String plannerId){
+        return accManager.unTrashPlanner(userId, plannerId);
+    }
 }
