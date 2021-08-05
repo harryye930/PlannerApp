@@ -104,12 +104,36 @@ public class TemplateManager implements Serializable {
 //    public void removeTemplatePrompt(int ID, int promptNumber){
 //        this.getTemplates().get(ID).removePrompt(promptNumber);
 //    }
+    /**
+     * Retrieves and returns all published templates stored in this TemplateManager (i.e., templates that are viewable
+     * by all users).
+     * A template is published if their publishedStatus is true.
+     * @return Map<Integer, Template> which contains all published templates.
+     */
+    private Map<Integer, Template> retrievePublishedTemplates() {
+        Map<Integer, Template> publishedTemplates = new HashMap<>();
+        for (Map.Entry<Integer, Template> items: this.getTemplates().entrySet()) {
+            Template value = items.getValue();
+            if (value.getPublishedStatus()) {
+                publishedTemplates.put(value.getId(), value);
+            }
+        }
+        return publishedTemplates;
+    }
 
     /**
      * @return Number of templates in TemplateManager.
      */
     public int numberOfTemplates() {
         return templates.size();
+    }
+
+    /**
+     * Returns number of published templates in the TemplateManager (i.e., templates that are viewable by all users).
+     * @return Number of published template in TemplateManager.
+     */
+    public int numberOfPublishedTemplates() {
+        return retrievePublishedTemplates().size();
     }
 
     /** Returns a string representation of the TemplateManager object, with the option of:
@@ -130,6 +154,38 @@ public class TemplateManager implements Serializable {
         // Traverse through all key-value pairs in templates, and add those templates' string representation
         // to stringRep.
         for (Map.Entry<Integer, Template> items: this.getTemplates().entrySet()){
+            Template value = items.getValue();
+
+            if (viewOption.equals("Detail")){
+                stringRep += value.toString();
+            } else {
+                stringRep += value.getTemplatePreview();
+            }
+
+            stringRep += "\n";
+        }
+        return stringRep;
+    }
+
+    /**
+     * Returns a string representation of the published templates stored in this TemplateManager , with the option of:
+     * - either including full details of each Template stored in it;
+     * - or including only the summary of each Template stored in it.
+     * @param viewOption Can only have one of these two values: "Detail", "Summary".
+     * @return String that contains a representation of all Template objects stored in the TemplateManager.
+     */
+    public String viewPublishedInTemplateManager (String viewOption) throws IllegalArgumentException{
+        if ((!viewOption.equals("Detail")) & (!viewOption.equals("Summary"))){
+            throw new IllegalArgumentException(
+                    String.format("Invalid user input %s. Please enter either \"Detail\" or \"Summary\".", viewOption));
+        }
+        String stringRep = "Number of templates stored in the TemplateManager: " + this.numberOfPublishedTemplates()
+                + "\n";
+        stringRep += "Templates: " + "\n";
+
+        // Traverse through all key-value pairs in templates, and add those templates' string representation
+        // to stringRep.
+        for (Map.Entry<Integer, Template> items: retrievePublishedTemplates().entrySet()){
             Template value = items.getValue();
 
             if (viewOption.equals("Detail")){
@@ -166,19 +222,29 @@ public class TemplateManager implements Serializable {
      * Preview all Templates stored in the system.
      * This method is used when user wants to see a list of all Templates, before they select which template they want
      * to see in detail.
+     * @param publishedTemplatesOnly Boolean indicating whether to show only published templates or not.
      * @return String that contains preview of all Template objects stored in the system.
      */
-    public String previewAllTemplates(){
-        return this.viewTemplateManager("Summary");
+    public String previewAllTemplates(boolean publishedTemplatesOnly){
+        if (publishedTemplatesOnly) {
+            return this.viewPublishedInTemplateManager("Summary");
+        } else {
+            return this.viewTemplateManager("Summary");
+        }
     }
 
     /**
      * View all Templates stored in the system in detail.
      * This method is used when user wants to see a list of all Templates in detail.
+     * @param publishedTemplatesOnly Boolean indicating whether to show only published templates or not.
      * @return String that contains detailed representation of all Template objects stored in the system.
      */
-    public String detailViewAllTemplates(){
-        return this.viewTemplateManager("Detail");
+    public String detailViewAllTemplates(boolean publishedTemplatesOnly){
+        if (publishedTemplatesOnly) {
+            return this.viewPublishedInTemplateManager("Detail");
+        } else {
+            return this.viewTemplateManager("Detail");
+        }
     }
 
     /**

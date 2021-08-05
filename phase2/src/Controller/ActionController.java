@@ -166,9 +166,13 @@ public class ActionController implements IController{
      * View the templates' information.
      * @return A String representing the information of the data.
      */
+    // TODO: Indicate whether you want to view all templates (i.e., both published and unpublished templates) or just
+    // TODO: published templates. Note that users should only be allowed to view PUBLISHED template.
+    // TODO: I added "false" to detailViewAllTemplates for now (which will return all templates including unpublished
+    // TODO: ones).
     @Override
     public String viewTemplates() {
-        return templateController.detailViewAllTemplates();
+        return templateController.detailViewAllTemplates(false);
     }
 
     /**

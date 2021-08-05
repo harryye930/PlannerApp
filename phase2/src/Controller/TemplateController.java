@@ -31,19 +31,21 @@ public class TemplateController{
      * Preview all Templates stored in the system.
      * This method is used when user wants to see a list of all Templates, before they select which template they want
      * to see in detail.
+     * @param publishedTemplatesOnly Boolean indicating whether to show only published templates or not.
      * @return String that contains preview of all Template objects stored in the system.
      */
-    public String previewAllTemplates(){
-        return templateManager.viewTemplateManager("Summary");
+    public String previewAllTemplates(boolean publishedTemplatesOnly){
+        return templateManager.previewAllTemplates(publishedTemplatesOnly);
     }
 
     /**
      * View all Templates stored in the system in detail.
      * This method is used when user wants to see a list of all Templates in detail.
+     * @param publishedTemplatesOnly Boolean indicating whether to show only published templates or not.
      * @return String that contains detailed representation of all Template objects stored in the system.
      */
-    public String detailViewAllTemplates(){
-        return templateManager.viewTemplateManager("Detail");
+    public String detailViewAllTemplates(boolean publishedTemplatesOnly){
+        return templateManager.previewAllTemplates(publishedTemplatesOnly);
     }
 
     /**
