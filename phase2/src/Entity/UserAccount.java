@@ -8,7 +8,8 @@ import java.util.List;
  */
 public class UserAccount extends Account {
 
-    private ArrayList<String > planners = new ArrayList<>();
+    private ArrayList<String> planners = new ArrayList<>();
+    private ArrayList<String> trashPlanner = new ArrayList<>();
 
     /**
      * @param email represent the email of this user account.
@@ -41,7 +42,7 @@ public class UserAccount extends Account {
      * @param plannerId The planner id that need to be added.
      * @return Return true if the plan is successfully added and false if not.
      */
-    public boolean setPlanners(String  plannerId) {
+    public boolean setPlanners(String plannerId) {
         if (!this.planners.contains(plannerId)) {
             this.planners.add(plannerId);
             return true;
@@ -90,5 +91,19 @@ public class UserAccount extends Account {
 
     public void removePlanner(String plannerId) {
         this.planners.remove(plannerId);
+        trashPlanner.add(plannerId);
+    }
+
+    public ArrayList<String> getTrashPlanner(){
+        return trashPlanner;
+    }
+
+    public boolean removeFromTrash(String plannerId){
+        if(trashPlanner.contains(plannerId)){
+            trashPlanner.remove(plannerId);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

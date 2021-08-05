@@ -3,7 +3,9 @@ package Entity;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.SplittableRandom;
 import java.io.Serializable;
@@ -19,11 +21,15 @@ public abstract class Account implements Serializable {
     protected String email;
     protected String password;
     protected LocalDateTime suspendedTime;
+    protected ArrayList<Account> friends;
+    protected HashMap<String, ArrayList<String>> mailbox;
 
     public Account() {
         this.accountType = "regular";
         this.userId = ((Integer) this.hashCode()).toString();
         suspendedTime = LocalDateTime.now();
+        friends = new ArrayList<>();
+        mailbox = new HashMap<>();
     }
 
     /**
@@ -52,6 +58,42 @@ public abstract class Account implements Serializable {
         throw new NotImplementedException();
     }
 
+    public ArrayList<Account> getFriends() {
+        return friends;
+    }
+
+    public boolean findFriend(Account acc){
+        return friends.contains(acc);
+    }
+
+    public void addFriend(Account acc){
+        friends.add(acc);
+    }
+
+    public boolean removeFriend(Account acc){
+        if (friends.contains(acc)){
+            friends.remove(acc);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public HashMap<String, ArrayList<String>> getMailbox() {
+        return mailbox;
+    }
+
+    public void receiveMail(String id, String mail){
+        mailbox.get(id).add(mail);
+    }
+
+    public String seeAllMail(){
+        return mailbox.toString();
+    }
+
+    public String seeOnesMail(String userId){
+        return mailbox.get(userId).toString();
+    }
 
     /**
      * @return A String that represent the email of this account.

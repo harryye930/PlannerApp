@@ -1,5 +1,7 @@
 package Entity;
 
+import java.util.ArrayList;
+
 /**
  * A instance of this class represents a admin account in this application.
  */
@@ -26,7 +28,7 @@ public class AdminAccount  extends Account {
      */
     @Override
     public String getAccountType() {
-        return  this.accountType;
+        return this.accountType;
     }
 
     /**

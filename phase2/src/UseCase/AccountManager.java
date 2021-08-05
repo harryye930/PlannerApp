@@ -1,6 +1,7 @@
 package UseCase;
 
 import Entity.*;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -34,26 +35,6 @@ public class AccountManager implements Serializable{
         account.setUserName(userName);
     }
 
-//    /**
-//     * set the password. User can change their password to something different from the previous one.
-//     * @param retriever A String representing the user ID or Email.
-//     * @param newPassword the new password that user want to change to.
-//     * @return true if successfully changed password, false otherwise.
-//     */
-//    public boolean setPassword(String retriever, String newPassword){
-//        Account account = this.findAccount(retriever);
-//        if (account.getPassword() == null) {
-//            account.setPassword(newPassword);
-//            return true;
-//        }
-//        // users need to enter the correct password to set a new password (just like iPhone)
-//        else if ((!account.getPassword().equals(newPassword))){
-//            account.setPassword(newPassword);
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 
 
     // set password for new account
@@ -329,5 +310,72 @@ public class AccountManager implements Serializable{
     public boolean suspendedStatus(String retriever){
         Account acc = findAccount(retriever);
         return acc.getSuspendedTime().isAfter(LocalDateTime.now());
+    }
+
+    public boolean isFriend(String selfId, String friendId){
+        return getAllAccount().contains(findAccount(friendId)) && getAllAccount().contains(findAccount(selfId))
+                && findAccount(selfId).findFriend(findAccount(friendId));
+    }
+
+    public boolean addFriend(String selfId, String friendId){
+        if (getAllAccount().contains(findAccount(friendId))){
+            findAccount(selfId).addFriend(findAccount(friendId));
+            findAccount(friendId).addFriend(findAccount(selfId));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean deleteFriend(String selfId, String friendId){
+        if (getAllAccount().contains(findAccount(friendId)) && isFriend(selfId, friendId)){
+            findAccount(selfId).removeFriend(findAccount(friendId));
+            findAccount(friendId).removeFriend(findAccount(selfId));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public ArrayList<String> getFriends(String selfId){
+        ArrayList<Account> friends = findAccount(selfId).getFriends();
+        ArrayList<String> friendIds = new ArrayList<>();
+        for (Account i : friends){
+            friendIds.add(i.getUserId());
+        }
+        return friendIds;
+    }
+
+    public void sendMail(String senderId, String revieveId, String mail){
+        Account acc = findAccount(revieveId);
+        acc.receiveMail(senderId, mail);
+    }
+
+    public HashMap<String, ArrayList<String>> getMailbox(String userId){
+        return findAccount(userId).getMailbox();
+    }
+
+    public String seeOnesMail(String selfId, String senderId){
+        return findAccount(selfId).seeOnesMail(senderId);
+    }
+
+    public String seeAllMail(String userId){
+        return findAccount(userId).seeAllMail();
+    }
+
+    public ArrayList<String> getTrashPlanner(String userId){
+        UserAccount acc = (UserAccount) findAccount(userId);
+        return acc.getTrashPlanner();
+    }
+
+    public boolean unTrashPlanner(String userId, String plannerId){
+        UserAccount acc = (UserAccount) findAccount(userId);
+        if (acc.getTrashPlanner().contains(plannerId)){
+            acc.setPlanners(plannerId);
+            acc.removeFromTrash(plannerId);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
