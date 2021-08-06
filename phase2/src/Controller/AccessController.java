@@ -86,25 +86,61 @@ public class AccessController{
     }
 
     /**
-     * Reset the password of given account, user need to enter the correct original password to proceed.
+     * Reset the password of given account, user needs to enter the correct original password to proceed.
      * @param retriever A String representing the User ID or Email.
      * @param oldPassWord A String representing the original password.
      * @param newPassWord A String representing the new password.
-     * @return A boolean representing whether the password is successfully changed or not.
+     * @return A string representing the status of the change. It is not to be displayed to users.
+     *         It must be one of the following:
+     *          - "oldPasswordIncorrect": The current password user entered is not correct, must re-enter.
+     *          - "repeatingPassword": The new password is the same as the current password, must choose another
+     *                                 new password.
+     *          - "passwordTooWeak": The new password does not meet the complexity requirement, must choose another
+     *                               new password.
+     *          - "changeSuccessful": Password has been successfully set to newPassWord.
+     *          - "changeUnsuccessful": Change was unsuccessful but not due to any of the above reasons, needs
+     *                                  investigation.
      */
-    public boolean changePassword(String retriever, String oldPassWord, String newPassWord) {
+    public String changePassword(String retriever, String oldPassWord, String newPassWord) {
         if (!accManager.checkPassword(retriever, oldPassWord)){
-            return false; // old password incorrect
-        }
-        //TODO: sends a temporary password that the user can use to log back into the system before changing it to a
-        // more permanent password
-
-        if (!accManager.checkPassword(retriever, newPassWord)){
-            return false; // new password cannot be the same as the old password
+            return "oldPasswordIncorrect"; // old password incorrect
         }
 
-        return accManager.setPassword(retriever, newPassWord); // new password is not complex enough
-// if none of the above is satisfied, then able to successfully change password
+        if (accManager.checkPassword(retriever, newPassWord)){
+            return "repeatingPassword"; // new password cannot be the same as the old password
+        }
+
+        if (!accManager.checkPasswordComplexity(newPassWord)){
+            return "passwordTooWeak"; // new password is not complex enough
+        }
+
+        if (accManager.setPassword(retriever, newPassWord)){
+            return "changeSuccessful";
+        } else {
+            return "changeUnsuccessful";
+        }
+        // if none of the above is satisfied, then able to successfully change password
+    }
+
+    /***
+     * Creates randomly generated password that satisfies the specified complexityLevel.
+     * @param complexityLevel Desired complexity level for the password. Must be "weak" or "good", as we do not allow
+     *                        users to create passwords that are too weak.
+     * @return A randomly generated string that satisfies the complexityLevel.
+     */
+    public String generatePassword(String complexityLevel){
+        return accManager.generatePassword(complexityLevel);
+    }
+
+    /**
+     * Saves temporary password to a text file. This should be called when user requests to have a temporary password
+     * stored in a text file for them to access.
+     * @param retriever A String representing the User ID or Email.
+     * @return A boolean value representing whether the saving process is successful.
+     */
+    public boolean updateAndSaveTempPassword(String retriever){
+        String tempPassword = this.generatePassword("good");
+        return accManager.setPassword(retriever, tempPassword) & accGateway.saveTempPassword(tempPassword);
     }
 
     /**
@@ -174,7 +210,6 @@ public class AccessController{
         return this.accManager.getAllAccount();
     }
 
-
     /**
      * Return the account information of every account.
      * @return An ArrayList of
@@ -196,7 +231,6 @@ public class AccessController{
     public ArrayList<String> getPlanners(String retriever){
         return accManager.getPlanners(retriever);
     }
-
 
     /**
      * Return the information of the Account with given id.
@@ -240,8 +274,6 @@ public class AccessController{
     public boolean getSuspensionStatus(String retriever){
         return accManager.suspendedStatus(retriever);
     }
-
-
 
     public boolean addFriend(String selfId, String friendId){
         return accManager.addFriend(selfId, friendId);
