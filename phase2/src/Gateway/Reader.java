@@ -3,7 +3,9 @@ package Gateway;
 import Interface.IGateWay;
 
 import java.io.*;
+import java.nio.Buffer;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Arrays;
 
@@ -127,6 +129,29 @@ public class Reader<T> implements IGateWay<T> {
 
         } catch (Exception e) {
             System.out.println("Process terminated.");
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+
+    /***
+     * Writes lines to a text file at filePath. Returns true if content is successfully saved to text file,
+     * false otherwise.
+     * @param filePath A string representing the file path where you would like to store the text file.
+     * @param lines A List of Strings containing content you would like to write to text file.
+     * @return A boolean value representing whether the process is successful.
+     */
+    public boolean writeTextFile(String filePath, List<String> lines){
+        try {
+            File file = new File(filePath);
+            FileWriter fileWriter = new FileWriter(file);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            for (String line : lines) {
+                bufferedWriter.write(line); // write each line in lines to text file
+                return true;
+            }
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
