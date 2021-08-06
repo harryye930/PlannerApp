@@ -16,6 +16,7 @@ public class AccountGateway extends Reader<HashMap<String, Account>> {
 
     //Assign the file path of data.
     private final String idMapPath = "idToAccountMap.ser";
+    private final String tempPasswordPath = "tempPassword.txt";
 
     private HashMap<String, Account> idToAccount = new HashMap<String, Account>();
 
@@ -42,6 +43,17 @@ public class AccountGateway extends Reader<HashMap<String, Account>> {
      */
     public boolean save() {
         return this.writeMaps();
+    }
+
+    /***
+     * Saves tempPassword to a text file.
+     * @param tempPassword A string representing the temporary password to be saved.
+     * @return A boolean value representing whether the saving process is successful.
+     */
+    public boolean saveTempPassword(String tempPassword){
+        List<String> lines = new ArrayList<>();
+        lines.add(tempPassword);
+        return super.writeTextFile(this.tempPasswordPath, lines);
     }
 
     // Private methods.

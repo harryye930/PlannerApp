@@ -42,7 +42,7 @@ public class AccountManager implements Serializable{
      *                        users to create passwords that are too weak.
      * @return A randomly generated string that satisfies the complexityLevel.
      */
-    public String createPassword(String complexityLevel){
+    public String generatePassword(String complexityLevel){
         // at least 4 characters that are NOT upper case letter / lower case letter / number
         String atLeastFourChars = "[^a-zA-Z0-9]{4,}";
         // includes at least one upper case letter
