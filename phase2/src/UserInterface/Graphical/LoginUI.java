@@ -98,8 +98,8 @@ public class LoginUI extends GeneralPresenter {
     }
 
     private void loginIdentifier() {
-        if (controller.logIn(retriever.getText(), password.getText())) {
-            if (controller.accountRole().equals("admin")) {
+        if (accessController.logIn(retriever.getText(), password.getText())) {
+            if (accessController.isAdmin(accessController.getCurrUserId()).equals("admin")) {
                 this.adminUI.run();
             } else {
                 this.regularUserUI.run();

@@ -6,17 +6,47 @@ import Gateway.TemplateGateway;
 import UseCase.TemplateManager;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Controller for Templates.
  */
 public class TemplateController{
-    private TemplateManager templateManager;
-    private TemplateGateway templateGateway;
+    private final TemplateManager templateManager;
+    private final TemplateGateway templateGateway;
+
+    private AccessController accessController;
+    private PlannerController plannerController;
+
+    private String currTemplateId;
+
+    /**
+     * Set the access controller
+     * @param accessController An access controller object
+     */
+    public void setAccessController(AccessController accessController) {
+        this.accessController = accessController;
+    }
+
+    /**
+     * Set the planner controller.
+     * @param plannerController A planner Controller object.
+     */
+    public void setPlannerController(PlannerController plannerController) {
+        this.plannerController = plannerController;
+    }
 
     public TemplateController() {
         templateManager = new TemplateManager();
         templateGateway = new TemplateGateway(templateManager);
+    }
+
+    /**
+     * Get the current template ID.
+     * @return A String representing the current template ID.
+     */
+    public String getCurrTemplateId() {
+        return currTemplateId;
     }
 
     /**
@@ -64,6 +94,25 @@ public class TemplateController{
         return this.templateGateway.load();
     }
 
+    /**
+     * Check the template, similar to login so that the controller will
+     * remember the planner's id.
+     * @param id A String representing the planner id we want to check.
+     * @return A boolean value representing whether the planner is available to the current
+     * account.
+     */
+    // TODO: Same TODO as the one for viewTemplates() above. Please indicate whether you want to get ID of just published
+    // TODO: templates (i.e., publishedTemplatesOnly = true) or IDs of all templates regardless of its published status
+    // TODO: (i.e., publishedTemplatesOnly = false). I put it as false for now.
+    public boolean checkTemplate(String id) {
+        for (String tempId: this.getAllTemplateIds(false)) {
+            if (Objects.equals(id, tempId)) {
+                this.currTemplateId = id;
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Return a collection of all template id in String.

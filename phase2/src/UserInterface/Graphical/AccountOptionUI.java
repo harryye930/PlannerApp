@@ -144,21 +144,21 @@ public class AccountOptionUI extends GeneralPresenter {
         } else if (e.getSource() == changePassword) {
             this.changePassword();
         } else if (e.getSource() == submit0) {
-            controller.changeUserName(text0.getText());
+            accessController.changeUserName(accessController.getCurrUserId(), text0.getText());
             main.remove(changeMenu);
             this.run();
             //cl.show(main, "accountMenu");
         } else if (e.getSource() == submit1) {
-            if (controller.changePassword(text0.getText(), text1.getText())) {
-                main.remove(changeMenu);
-                this.run();
-                //cl.show(main, "accountMenu");
-            } else {
-                text0.setText("Invalid input, please try again!");
-            }
-        } else if (e.getSource() == goBack) {
-            cl.show(main, "accountMenu");
+            String message = accessController.changePassword(accessController.getCurrUserId(), text0.getText(), text1.getText());
             main.remove(changeMenu);
+            //cl.show(main, "accountMenu");
+            text0.setText("");
+            text0.setText(message);
+
+        } else if (e.getSource() == goBack) {
+            //cl.show(main, "accountMenu");
+            main.remove(changeMenu);
+            this.run();
         }
     }
 }
