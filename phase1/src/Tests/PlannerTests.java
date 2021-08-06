@@ -26,8 +26,8 @@ public class PlannerTests {
         System.out.println(dailyPlanner);
         System.out.println(dailyPlanner.remainTasks());
 
-        //Testing ProjectPlanner
-        System.out.println("Testing ProjectPlanner...");
+        //Testing ProjectPlanner.java
+        System.out.println("Testing ProjectPlanner.java...");
         ProjectPlanner projectPlanner = new ProjectPlanner("Test Task Planner");
         System.out.println(projectPlanner);
         projectPlanner.add("Write Entity");

@@ -39,7 +39,7 @@ public class PlannerManager{
     /** Create an empty Project Planner
      *
      * @param plannerName name of planner
-     * @return true iff a new ProjectPlanner is correctly created
+     * @return true iff a new ProjectPlanner.java is correctly created
      */
     public int newProjectPlanner(String plannerName){
 

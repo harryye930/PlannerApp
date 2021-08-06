@@ -25,9 +25,9 @@ public class ActionController implements IController{
         this.templateController = new TemplateController();
         this.plannerController = new PlannerController();
 
-        accessController.load();
-        templateController.load();
-        plannerController.load();
+        //accessController.load();
+        //templateController.load();
+        //plannerController.load();
     }
 
     /**
@@ -151,7 +151,7 @@ public class ActionController implements IController{
         Integer id = 0;
         if (type.equals("daily")) {
             ArrayList<String> prompts = this.templateController.getTemplatePrompts(Integer.parseInt(currTemplateId));
-            id = this.plannerController.createNewDailyPlanner(prompts.get(0), prompts.get(1), prompts.get(2));
+            //id = this.plannerController.createNewDailyPlanner(prompts.get(0), prompts.get(1), prompts.get(2));
             this.currPlannerId = id.toString();
         } else if (type.equals("project")) {
             ArrayList<String> prompts = this.templateController.getTemplatePrompts(Integer.parseInt(currTemplateId));
@@ -338,16 +338,16 @@ public class ActionController implements IController{
         this.accessController.removeAccount(this.currRetriever);
     }
 
-    /**
-     * Change the password of the current retriever.
-     * @param original A String representing the original password.
-     * @param newPassword A String representing the new password.
-     * @return A boolean value representing whether the reset is successful or not.
-     */
-    @Override
-    public boolean changePassword(String original, String newPassword) {
-        return this.accessController.changePassword(currRetriever, original, newPassword);
-    }
+//    /**
+//     * Change the password of the current retriever.
+//     * @param original A String representing the original password.
+//     * @param newPassword A String representing the new password.
+//     * @return A boolean value representing whether the reset is successful or not.
+//     */
+//    @Override
+//    public boolean changePassword(String original, String newPassword) {
+//        return this.accessController.changePassword(currRetriever, original, newPassword);
+//    }
 
     /**
      * Get the account information.

@@ -7,9 +7,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
 public class DailyPlanner extends Planner {
-    private HashMap<String, String> dailyPlannerTask;
-    private ArrayList<String> timesList; // time array
-    private int ID;
+    private final HashMap<String, String> dailyPlannerTask;
+    private final ArrayList<String> timesList; // time array
+    private final int ID;
     private int interval;  //minutes interval
     private int startHour;
     private int startMins;
@@ -175,104 +175,110 @@ public class DailyPlanner extends Planner {
 
     /**
      * add agenda to current planner, if the user does not give a time.
-     * @param s: the content of new agenda item
+     * @param time: the timeslot of the new agenda.
      * @return true iff the agenda is correctly added to current planner
      */
     @Override
-    public Boolean add(String s) {
-        // add task to the available time slot closest to start time and last an hour
-        // call overloaded complete add method
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-        LocalDateTime now = LocalDateTime.now();
-        String time = dtf.format(now);
+    public Boolean add(String time, String agenda) {
+
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+//        LocalDateTime now = LocalDateTime.now();
+//        String currTime = dtf.format(now);
         this.NumAgendas ++;
-        return this.add(time, s);
-    }
-
-
-    /**
-     * add agenda to current planner, if the user give a time newStartTime
-     * @param newStartTime: start time for new agenda item
-     * @param agenda:            content of new agenda item
-     * @return true iff the new agenda is successfully added
-     */
-    public Boolean add(String newStartTime, String agenda) {
-        // assume start time and duration on whole clock (10:00, 10:15 ... if interval for daily planner is 15 mins)
-        // check if time slots already occupied, check if start time and end time is within legal time frame
-        // (for phase 2) add warning for double booking
-        // add to agenda
-        int newStartHour = Integer.parseInt(newStartTime.substring(0, 2));
-        int newStartMins = Integer.parseInt(newStartTime.substring(3, 5));
+        int newStartHour = Integer.parseInt(time.substring(0, 2));
+        int newStartMins = Integer.parseInt(time.substring(3, 5));
         String hourIndex;
         String minIndex;
-        if (newStartHour < this.startHour || newStartHour > this.endHour || newStartMins < 0 || newStartMins > 60) {
-            return false;
+//        if (newStartHour < this.startHour || newStartHour > this.endHour || newStartMins < 0 || newStartMins > 60) {
+//            return false;
+        if (newStartHour < this.startHour) {
+            int gap = startHour - newStartHour;
+            for (int i = 0; i < gap; i++) {
+                int currH = i + newStartHour;
+                this.dailyPlannerTask.put(currH + ":00", "N/A");
+            }
+        } else if (newStartHour > this.startHour) {
+            int gap = newStartHour - startHour;
+            for (int i = 0; i < gap; i++) {
+                int currH = i + startHour;
+                this.dailyPlannerTask.put(currH + ":00", "N/A");
+            }
         } else {
-            newStartMins = getClosestMins(newStartMins, this.interval);
-            if (newStartHour<10){
-                hourIndex = String.format("0%d", newStartHour);
-            }
-            else{
-                hourIndex = String.format("%d", newStartHour);
-            }
-            if (newStartMins<10){
-                minIndex = String.format("0%d", newStartMins);
-            }
-            else{
-                minIndex = String.format("%d", newStartMins);
-            }
-            String newTime = hourIndex + ":" + minIndex;
-            if (this.dailyPlannerTask.get(newTime).equals("N/A")){
-                this.dailyPlannerTask.replace(newTime, agenda);
-            }
-            else {
-                String updatedTasks = this.dailyPlannerTask.get(newTime) + ", " + agenda;
-                this.dailyPlannerTask.put(newTime, updatedTasks);
-            }
-            this.NumAgendas ++;
-            return true;
+            this.dailyPlannerTask.put(Integer.toString(newStartHour), agenda);
         }
+
+        this.NumAgendas ++;
+        return true;
+
     }
+
+
+//    /**
+//     * add agenda to current planner, if the user give a time newStartTime
+//     * @param time: start time for new agenda item
+//     * @param agenda:            content of new agenda item
+//     * @return true iff the new agenda is successfully added
+//     */
+//    public Boolean add(String time, String agenda) {
+//        // assume start time and duration on whole clock (10:00, 10:15 ... if interval for daily planner is 15 mins)
+//        // check if time slots already occupied, check if start time and end time is within legal time frame
+//        // (for phase 2) add warning for double booking
+//        // add to agenda
+//        int newStartHour = Integer.parseInt(time.substring(0, 2));
+//        int newStartMins = Integer.parseInt(time.substring(3, 5));
+//        String hourIndex;
+//        String minIndex;
+//        if (newStartHour < this.startHour || newStartHour > this.endHour || newStartMins < 0 || newStartMins > 60) {
+//            return false;
+//        } else {
+//            newStartMins = getClosestMins(newStartMins, this.interval);
+//            if (newStartHour<10){
+//                hourIndex = String.format("0%d", newStartHour);
+//            }
+//            else{
+//                hourIndex = String.format("%d", newStartHour);
+//            }
+//            if (newStartMins<10){
+//                minIndex = String.format("0%d", newStartMins);
+//            }
+//            else{
+//                minIndex = String.format("%d", newStartMins);
+//            }
+//            String newTime = hourIndex + ":" + minIndex;
+//            if (this.dailyPlannerTask.get(newTime).equals("N/A")){
+//                this.dailyPlannerTask.replace(newTime, agenda);
+//            }
+//            else {
+//                String updatedTasks = this.dailyPlannerTask.get(newTime) + ", " + agenda;
+//                this.dailyPlannerTask.put(newTime, updatedTasks);
+//            }
+//            this.NumAgendas ++;
+//            return true;
+//        }
+//    }
 
 
     /**
      * edit agenda to current planner (given index)
      *
-     * @param i index of the agenda user wish to edit
+     * @param time index of the agenda user wish to edit
      * @param agenda content of the agenda user wish to edit
      * @return true iff the agenda is correctly edited on current planner
      */
     @Override
-    public Boolean edit(int i, String agenda) {
-        if (i > this.dailyPlannerTask.size() - 1){ // if i is over the size limit
-            return false;
-        }
-        else if (agenda.length() == 0){ // if the new agenda is empty
-            add(agenda);
-            return true;
-        }
-        else{
-            this.dailyPlannerTask.replace(this.timesList.get(i),agenda); // replace the string.
-            return true;
-        }
+    public Boolean edit(String time, String agenda) {
+        return this.add(time, agenda);
     }
 
 
     /**
-     * edit agenda to current planner (given time)
-     *
-     * @param time the time for the new agenda
-     * @param newAgenda the new agenda
-     *
-     * @return true iff the agenda is correctly edited on current planner
+     * @param TaskName   the task name the user wants to change status
+     * @param TaskStatus the status the user wants to change
+     * @return true iff the planner is correctly changed to the right status
      */
-    public Boolean edit(String time, String newAgenda) {
-        if (this.dailyPlannerTask.containsKey(time)) {
-            this.dailyPlannerTask.replace(time, newAgenda);
-            return true;
-        } else {
-            return false;
-        }
+    @Override
+    public Boolean ChangeTaskStatus(String TaskName, String TaskStatus) {
+        return false; // This is a daily planner which does not need to change status.
     }
 
 
@@ -315,7 +321,6 @@ public class DailyPlanner extends Planner {
         return numbers.get(idx);
 
     }
-
 
     /**
      * get the remaining tasks the user need to do

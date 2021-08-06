@@ -39,11 +39,11 @@ public class PlannerManager{
     /** Create an empty Project Planner
      *
      * @param plannerName name of planner
-     * @return true iff a new ProjectPlanner is correctly created
+     * @return true iff a new ProjectPlanner.java is correctly created
      */
-    public int newProjectPlanner(String plannerName){
+    public int newProjectPlanner(String plannerName, String firstColumn, String secondColumn, String thirdColumn){
 
-        ProjectPlanner projectPlanner = new ProjectPlanner(plannerName);
+        ProjectPlanner projectPlanner = new ProjectPlanner(plannerName, firstColumn, secondColumn, thirdColumn);
         this.idToPlanner.put(projectPlanner.getID(), projectPlanner);
         return projectPlanner.getID();
     }
@@ -77,17 +77,6 @@ public class PlannerManager{
         this.idToPlanner = hm;
     }
 
-
-    /** Edit agenda on current planner
-     *
-     * @param i index of the agenda user wish to edit
-     * @param agenda content of the agenda user wish to edit
-     * @return true iff the agenda is correctly edited on current planner
-     */
-    public boolean edit(int id, int i, String agenda){
-        this.findPlanner(id).edit(i, agenda);
-        return true;
-    }
 
 
     /** Edit agenda on DailyPlanner base on time stamp
