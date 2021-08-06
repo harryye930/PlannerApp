@@ -290,7 +290,7 @@ public class AccountManager implements Serializable{
         Account account = this.findAccount(retriever);
         String status = account.getAccountType();
 
-        if (status.equals("regular") | status.equals("temporary")){
+        if (status.equals("regular")){
             return ((UserAccount) account).setPlanners(plannerIds);
         } else {
             return false;
@@ -307,7 +307,7 @@ public class AccountManager implements Serializable{
         Account account = this.findAccount(retriever);
         String status = account.getAccountType();
 
-        if (status.equals("regular") | status.equals("temporary")){
+        if (status.equals("regular")){
             return ((UserAccount) account).setPlanners(plannerId);
         } else {
             return false;
@@ -324,7 +324,7 @@ public class AccountManager implements Serializable{
         Account account = this.findAccount(retriever);
         String status = account.getAccountType();
 
-        if (status.equals("regular") | status.equals("temporary")){
+        if (status.equals("regular")){
             return ((UserAccount) account).getPlanner();
         } else {
             return null;
@@ -340,7 +340,7 @@ public class AccountManager implements Serializable{
         Account account = this.findAccount(retriever);
         String status = account.getAccountType();
 
-        if (status.equals("regular") | status.equals("temporary")){
+        if (status.equals("regular")){
             ((UserAccount) account).removePlanner(plannerId);
         }
     }
