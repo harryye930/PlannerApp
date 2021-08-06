@@ -1,6 +1,8 @@
 package UserInterface.Graphical;
 
+import Controller.AccessController;
 import UserInterface.GeneralPresenter;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +10,8 @@ import java.awt.event.ActionEvent;
 
 public class AccountOptionUI extends GeneralPresenter {
     private boolean flag = false;
+    AccessController accessController = new AccessController();
+
 
     //Panel
     private final JPanel accountMenu = new JPanel();
@@ -23,8 +27,9 @@ public class AccountOptionUI extends GeneralPresenter {
     private JButton goBack;
 
     //Text
-    private JTextField text0;
-    private JPasswordField text1;
+    private JTextField username;
+    private JTextField oldPassword;
+    private JPasswordField newPassword;
 
     //Label
     private JLabel message;
@@ -72,14 +77,14 @@ public class AccountOptionUI extends GeneralPresenter {
         changeMenu.setLayout(null);
         main.add(changeMenu, "changeMenu");
 
-        message = new JLabel("Please enter your new user name:");
+        message = new JLabel("Please enter your new username:");
         message.setBounds(125, 100, 500, 50);
         message.setFont(new Font("MV Boli", Font.PLAIN, 20));
         changeMenu.add(message);
 
-        text0 = new JTextField();
-        text0.setBounds(125, 175, 400, 40);
-        changeMenu.add(text0);
+        username = new JTextField();
+        username.setBounds(125, 175, 400, 40);
+        changeMenu.add(username);
 
         submit0 = new JButton("Submit");
         submit0.setBounds(275, 275, 100, 40);
@@ -104,18 +109,18 @@ public class AccountOptionUI extends GeneralPresenter {
         message.setFont(new Font("MV Boli", Font.PLAIN, 20));
         changeMenu.add(message);
 
-        text0 = new JTextField();
-        text0.setBounds(125, 100, 400, 40);
-        changeMenu.add(text0);
+        oldPassword = new JTextField();
+        oldPassword.setBounds(125, 100, 400, 40);
+        changeMenu.add(oldPassword);
 
         JLabel message0 = new JLabel("Please enter your new password:");
         message0.setBounds(125, 150, 500, 50);
         message0.setFont(new Font("MV Boli", Font.PLAIN, 20));
         changeMenu.add(message0);
 
-        text1 = new JPasswordField();
-        text1.setBounds(125, 200, 400, 40);
-        changeMenu.add(text1);
+        newPassword = new JPasswordField();
+        newPassword.setBounds(125, 200, 400, 40);
+        changeMenu.add(newPassword);
 
         submit1 = new JButton("Submit");
         submit1.setBounds(275, 300, 100, 40);
@@ -144,17 +149,17 @@ public class AccountOptionUI extends GeneralPresenter {
         } else if (e.getSource() == changePassword) {
             this.changePassword();
         } else if (e.getSource() == submit0) {
-            controller.changeUserName(text0.getText());
+            controller.changeUserName(username.getText());
             main.remove(changeMenu);
             this.run();
             //cl.show(main, "accountMenu");
         } else if (e.getSource() == submit1) {
-            if (controller.changePassword(text0.getText(), text1.getText())) {
+            if (accessController.changePassword(username.getText(), oldPassword.getText(), newPassword.getText()).equals("changeSuccessful")) {
                 main.remove(changeMenu);
                 this.run();
                 //cl.show(main, "accountMenu");
             } else {
-                text0.setText("Invalid input, please try again!");
+                username.setText("Invalid input, please try again!");
             }
         } else if (e.getSource() == goBack) {
             cl.show(main, "accountMenu");
