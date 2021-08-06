@@ -256,9 +256,9 @@ public class AccountManager implements Serializable{
         if (this.getAllAccount().contains(account) & isAfter) {
             idToAccount.remove(account.getUserId());
             emailToAccount.remove(account.getEmail());
-            return true; //Return true if the account object is in the collection.
+            return true; //Return true if the account object is deleted.
         } else {
-            return false; //Return false if the account object is not in the collection.
+            return false; //Return false if the account object is not deleted.
         }
     }
 
