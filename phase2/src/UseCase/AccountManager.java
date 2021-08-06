@@ -475,7 +475,7 @@ public class AccountManager implements Serializable{
      * create a temporary account, add it to all accounts and the hashmaps.
      * @return the userId of the new account.
      */
-    private String createTempAcc(String email){
+    public String createTempAcc(String email){
         TemporaryAccount newAccount = new TemporaryAccount(email);
         LocalDateTime startDate = newAccount.getStartDate();
         long days = 30;

@@ -112,6 +112,20 @@ public class AccessController{
     }
 
     /**
+     * Create a new temporary account.
+     * @param email A String representing the email of this account.
+     * @param userName A String representing the user name of this account.
+     * @param passWord A String representing the password of this account.
+     * @return A String representing the unique user ID of this account.
+     */
+    public String createTemporaryAccount(String email, String userName, String passWord) {
+        String id = accManager.createTempAcc(email);
+        accManager.setPassword(id, passWord);
+        accManager.setUserName(id, userName);
+        return id;
+    }
+
+    /**
      * Reset the password of given account, user needs to enter the correct original password to proceed.
      * @param retriever A String representing the User ID or Email.
      * @param oldPassWord A String representing the original password.
