@@ -117,7 +117,7 @@ public class ProjectPlanner extends Planner {
      * @param newEvent content of the agenda user wish to edit
      * @return true iff the agenda is correctly edited on current planner
      */
-    @Override
+
     public Boolean edit(int i, String newEvent) {
         if (i < this.allProjectEvents.size() && !this.allProjectEvents.contains(newEvent)) {
             String oldAgenda = this.allProjectEvents.get(i);
@@ -151,6 +151,12 @@ public class ProjectPlanner extends Planner {
         }
     }
 
+    /**
+     * Change event to a different column
+     * @param eventName name of the event
+     * @param newColumnName name of the new column
+     * @return
+     */
     public Boolean editColumn(String eventName, String newColumnName) {
         if (this.getColumnName(eventName) != "ERROR"){  // the event exist and is in one of the column
            String oldColumnName = this.getColumnName(eventName);
@@ -175,6 +181,11 @@ public class ProjectPlanner extends Planner {
         }
     }
 
+    /**
+     * delete planner event
+     * @param eventName name of the event
+     * @return true iff the event is successfully deleted
+     */
     public Boolean delete(String eventName) {
         if (!this.getColumnName(eventName).equals("ERROR")) { //means event exist and we can have the col name
             String columnName = this.getColumnName(eventName);
@@ -190,6 +201,11 @@ public class ProjectPlanner extends Planner {
 
     }
 
+    /**
+     * get name of the column where a event is located
+     * @param eventName name of the event
+     * @return the column name or ERROR if no event exists in this planner
+     */
     private String getColumnName(String eventName) {
         if (this.allProjectEvents.contains(eventName)) {
             if (this.firstColEvents.contains(eventName)) {
@@ -208,6 +224,11 @@ public class ProjectPlanner extends Planner {
         }
     }
 
+    /**
+     * get the events in that column given column name (No checking of name)
+     * @param colName name of the column
+     * @return the arraylist of events
+     */
     private ArrayList<String> getColumnEvent(String colName) {
         if (colName.equals(this.firstColName)) {
             return this.firstColEvents;
@@ -218,6 +239,11 @@ public class ProjectPlanner extends Planner {
         }
     }
 
+    /**
+     * checking if columnName is a valid column name
+     * @param columnName column name
+     * @return true iff columnName is the name of one of three columns
+     */
     private Boolean validColumn(String columnName){
         return (columnName == this.firstColName ||
                 columnName == this.secondColName ||
