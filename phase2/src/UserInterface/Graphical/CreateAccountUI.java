@@ -92,7 +92,7 @@ public class CreateAccountUI extends GeneralPresenter {
         if (!Objects.equals(password0.getText(), password0.getText())) {
             this.createAccount.setText("Incorrect password, please try again");
         } else {
-            String id = controller.createAccount(email.getText(), userName.getText(), password0.getText());
+            String id = accessController.createAccount(email.getText(), userName.getText(), password0.getText());
 
             //messagePanel.setLayout(new GridLayout(2, 1));
             messagePanel.setLayout(null);
@@ -109,7 +109,7 @@ public class CreateAccountUI extends GeneralPresenter {
             messagePanel.add(goNext);
 
             main.add(messagePanel, "createMessage");
-            controller.logIn(id, password0.getText());
+            accessController.logIn(id, password0.getText());
             cl.show(main, "createMessage");
         }
     }
@@ -128,7 +128,7 @@ public class CreateAccountUI extends GeneralPresenter {
         } else if (e.getSource() == goNext) {
             main.remove(messagePanel);
             messagePanel.removeAll();
-            if (controller.accountRole().equals("admin")) {
+            if (accessController.isAdmin(accessController.getCurrUserId()).equals("admin")) {
                 this.adminUI.run();
             } else {
                 this.regularAccUI.run();

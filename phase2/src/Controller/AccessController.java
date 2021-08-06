@@ -15,9 +15,15 @@ public class AccessController{
     private final AccountManager accManager;
     private final AccountGateway accGateway;
 
+    private TemplateController templateController;
+    private PlannerController plannerController;
+
+    private String currUserId;
+
     public AccessController(){
         accManager = new AccountManager();
         accGateway = new AccountGateway(accManager);
+        this.accGateway.load();
     }
 
     /**
@@ -30,15 +36,31 @@ public class AccessController{
     }
 
     /**
-     * Load in the data from database to AccountManager.
-     * @return A boolean value representing whether the loading process is successful or not.
+     * Set the template Controller.
+     * @param templateController A template controller object
      */
-    public boolean load() {
-        return this.accGateway.load();
+    public void setTemplateController(TemplateController templateController) {
+        this.templateController = templateController;
     }
 
     /**
-     * Check whether the given password is correct to to account.
+     * Get current user id.
+     * @return A string representing user id.
+     */
+    public String getCurrUserId() {
+        return currUserId;
+    }
+
+    /**
+     * Set the plannerController.
+     * @param plannerController A Planner Controller.
+     */
+    public void setPlannerController(PlannerController plannerController) {
+        this.plannerController = plannerController;
+    }
+
+    /**
+     * Check whether the given password is correct to account.
      * @param retriever A String representing User ID or Email.
      * @param passWord A String representing password.
      * @return A boolean value representing whether the password is correct or not.
@@ -53,8 +75,12 @@ public class AccessController{
                 return false;
             }
         }
-
-        return accManager.findAccount(retriever).getPassword().equals(passWord);
+        if (accManager.findAccount(retriever).getPassword().equals(passWord)) {
+            currUserId = this.accManager.findAccount(retriever).getUserId();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -166,20 +192,6 @@ public class AccessController{
         else {
             return accManager.removeAccount(retriever);
         }
-    }
-
-    /**
-     * Log out the account, delete the account if it is a trial account.
-     * @param retriever A String representing the User ID or Email.
-     * @return A boolean representing whether the log out is success.
-     */
-    public boolean logOut(String retriever){
-        String accountType = accManager.findAccount(retriever).getAccountType();
-
-        if(accountType.equals("trial")){
-            this.removeAccount(retriever);
-        }
-        return true;
     }
 
     /**

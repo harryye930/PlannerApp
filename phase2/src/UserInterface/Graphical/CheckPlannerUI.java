@@ -47,7 +47,7 @@ public class CheckPlannerUI extends GeneralPresenter {
         main.add(checkPlanner, "checkPlanner");
 
         plannerInfo.setBounds(25, 25, 400, 500);
-        plannerInfo.setText(controller.viewUserPlanners() + separator + controller.viewPublicPlanners());
+        plannerInfo.setText(plannerController.viewUserPlanners() + separator + plannerController.viewPublicPlanners());
         plannerInfo.setEditable(false);
         plannerInfo.setBackground(new Color(143, 141, 141));
         checkPlanner.add(plannerInfo);
@@ -76,7 +76,7 @@ public class CheckPlannerUI extends GeneralPresenter {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submit) {
-            if (controller.checkPlanner(plannerId.getText())) {
+            if (plannerController.checkPlanner(plannerId.getText())) {
                 this.plannerEdit.run();
             } else {
                 this.prompt.setText("Invalid ID, please try again!");

@@ -11,8 +11,29 @@ import java.util.Scanner;
  *  the Planner controller.
  */
 public class PlannerController {
-    private PlannerManager plannerManager;
-    private PlannerGateway accGateway;
+    private final PlannerManager plannerManager;
+    private final PlannerGateway accGateway;
+
+    private AccessController accessController;
+    private TemplateController templateController;
+
+    private String currPlannerId;
+
+    /**
+     * Set the access Controller.
+     * @param accessController A access Controller Controller.
+     */
+    public void setAccessController(AccessController accessController) {
+        this.accessController = accessController;
+    }
+
+    /**
+     * Set the template Controller.
+     * @param templateController A template controller object
+     */
+    public void setTemplateController(TemplateController templateController) {
+        this.templateController = templateController;
+    }
 
     /**
      * Initialize the PlannerController. Create a new PlannerManager.
@@ -22,6 +43,13 @@ public class PlannerController {
         this.accGateway = new PlannerGateway(plannerManager);
     }
 
+    /**
+     * Get the current planner ID.
+     * @return
+     */
+    public String getCurrPlannerId() {
+        return currPlannerId;
+    }
 
     /**
      * Save the data to the database, call this function when a saving is needed. Must be called
@@ -32,7 +60,6 @@ public class PlannerController {
         return this.accGateway.save();
     }
 
-
     /**
      * Load in the data from database to AccountManager.
      * @return A boolean value representing whether the loading process is successful or not.
@@ -41,24 +68,27 @@ public class PlannerController {
         return this.accGateway.load();
     }
 
-
     /**
-     * Create a new DailyPlanner with default name "daily planner", start time at 9 am, and endtime at 9 pm.
-     * @return an integer representing the id of the planner
+     * Create a new planner based on the chosen template.
+     * @return A String representing the planner id.
      */
-    public int createNewDailyPlanner(String startTime, String endTime, String interval){
-        return plannerManager.newDailyPlanner("daily planner", startTime, endTime, interval);
+    public String createPlanner() {
+        String type = this.templateController.getTemplateType(Integer.parseInt(templateController.getCurrTemplateId()));
+        Integer id = 0;
+        if (type.equals("daily")) {
+            ArrayList<String> prompts = this.templateController.
+                    getTemplatePrompts(Integer.parseInt(templateController.getCurrTemplateId()));
+            id = this.plannerManager.newDailyPlanner(accessController.getCurrUserId(),
+                    prompts.get(0), prompts.get(1), prompts.get(2));
+            this.currPlannerId = id.toString();
+        } else if (type.equals("project")) {
+            ArrayList<String> prompts = this.templateController.
+                    getTemplatePrompts(Integer.parseInt(templateController.getCurrTemplateId()));
+            //id = this.plannerController.createNewProjectPlanner(prompts.get(0), prompts.get(1), prompts.get(2));
+            this.currPlannerId = id.toString();
+        }
+        return id.toString();
     }
-
-
-    /**
-     * Create a new Project Planner with default name "project planner".
-     * @return the integer id of the planner
-     */
-    public int createNewProjectPlanner(){
-        return plannerManager.newProjectPlanner("project planner");
-    }
-
 
     /**
      * Set the author of the planner (a user)
@@ -69,7 +99,6 @@ public class PlannerController {
         plannerManager.setPlannerAuthor(id, userRetriever);
     }
 
-
     /** Pass on request to get a string representation of a planner
      *
      * @return a string of the planner tasks
@@ -78,6 +107,60 @@ public class PlannerController {
         return plannerManager.findPlanner(id).toString();
     }
 
+    /**
+     * Return a String of planners owned by current user.
+     * @return A String representing the information of planners.
+     */
+    public String viewUserPlanners() {
+        StringBuilder res = new StringBuilder();
+        ArrayList<String> plannerIds = this.accessController.getPlanners(this.accessController.getCurrUserId());
+        System.out.println(plannerIds.toString());
+        if (plannerIds.size() == 0) {
+            return "No personal planners available yet.";
+        } else {
+            for (String plannerId : plannerIds) {
+                res.append(this.toString(Integer.parseInt(plannerId)));
+                res.append("==================================");
+            }
+            return res.toString();
+        }
+    }
+
+    /**
+     * Return a String of public planners.
+     * @return A String representing the information of public planners.
+     */
+    public String viewPublicPlanners() {
+        StringBuilder res = new StringBuilder();
+        ArrayList<Integer> publicPlanners = this.getPublicPlanners();
+        for (int plannerId: publicPlanners) {
+            res.append(this.toString(plannerId));
+            res.append("==================================");
+        }
+        return res.toString();
+    }
+
+    /**
+     * Check the planner with given id, similar to the login process.
+     * @param id A String representing the if the planner we want to check.
+     * @return A boolean value representing whether the planner is available to the
+     * user or not.
+     */
+    public boolean checkPlanner(String id) {
+        ArrayList<String> plannerIds;
+        if (this.accessController.isAdmin(this.accessController.getCurrUserId()).equals("admin")) {
+            plannerIds = this.plannerManager.getAllPlannerId();
+        } else {
+            plannerIds = this.accessController.getPlanners(accessController.getCurrUserId());
+        }
+        ArrayList<Integer> publicIds = this.getPublicPlanners();
+        if (plannerIds.contains(id) || publicIds.contains(Integer.parseInt(id))) {
+            this.currPlannerId = id;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /** Pass on request to get a string representation of the daily planner remain tasks
      *
@@ -86,7 +169,6 @@ public class PlannerController {
     public String DailyPlannerRemainTasks(int id){
         return plannerManager.dailyPlannerRemainTasks(id);
     }
-
 
     /** Pass on request to edit planner
      *
@@ -98,7 +180,6 @@ public class PlannerController {
         return plannerManager.edit(id, i, agenda);
     }
 
-
     /** Pass on request to edit daily planner.
      *
      * @param time: time slot on DailyPlanner, HH:MM
@@ -109,7 +190,6 @@ public class PlannerController {
         return plannerManager.edit(id, time, newAgenda);
     }
 
-
     /** Pass on request to change their own planner
      *
      * @param status "private" or "public"
@@ -118,7 +198,6 @@ public class PlannerController {
     public boolean changePrivacyStatus(int id, String status){
         return plannerManager.changePrivacyStatus(id, status);
     }
-
 
     /**
      * delete the planner corresponding to the given id.
@@ -129,7 +208,6 @@ public class PlannerController {
         return this.plannerManager.deletePlanner(id);
     }
 
-
     /**
      * print all planners to the screen.
      * @return String representation of all planners.
@@ -137,7 +215,6 @@ public class PlannerController {
     public String showAllPlanners (){
         return plannerManager.showAllPlanners();
     }
-
 
     /**
      * Show all the planners id of one author.
@@ -148,7 +225,6 @@ public class PlannerController {
         return plannerManager.getPlannersByAuthor(author);
     }
 
-
     /**
      * return an ArrayList of all integer id of all planners made public by all authors.
      * @return the ArrayList of all public planner's id
@@ -156,7 +232,6 @@ public class PlannerController {
     public ArrayList<Integer> getPublicPlanners(){
         return plannerManager.getPublicPlanners();
     }
-
 
     /**
      * get the type of the planner. could be "daily" or "project" planner.
@@ -167,7 +242,6 @@ public class PlannerController {
         return plannerManager.plannerType(id);
     }
 
-
     /**
      * Get the number of agendas of a planner corresponding to given integer id.
      * @param id the integer id of the planner
@@ -176,7 +250,6 @@ public class PlannerController {
     public int getNumAgendas(int id) {
         return plannerManager.getNumAgendas(id);
     }
-
 
     /**
      * Return the privacy status of the planner corresponding to the given id.

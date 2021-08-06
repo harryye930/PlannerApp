@@ -70,10 +70,11 @@ public class CreatePlannerUI extends GeneralPresenter {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submit) {
-            if (!controller.checkTemplate(id.getText())) {
+            if (!templateController.checkTemplate(id.getText())) {
                 this.message.setText("Invalid ID, please try again!");
             } else {
-                controller.createPlanner();
+                //TODO: finish this when the planner part is done.
+                //plannerController.createPlanner();
                 this.checkPlanner.run();
             }
         } else if (e.getSource() == back) {
