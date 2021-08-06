@@ -123,13 +123,11 @@ public class AccessController{
     }
 
     /***
-     * Creates randomly generated password that satisfies the specified complexityLevel.
-     * @param complexityLevel Desired complexity level for the password. Must be "weak" or "good", as we do not allow
-     *                        users to create passwords that are too weak.
-     * @return A randomly generated string that satisfies the complexityLevel.
+     * Creates randomly generated password that satisfies the complexity requirement of a "good" password.
+     * @return A string representing a randomly generated password.
      */
-    public String generatePassword(String complexityLevel){
-        return accManager.generatePassword(complexityLevel);
+    public String generateTempPassword(){
+        return accManager.generatePassword("good");
     }
 
     /**
@@ -139,7 +137,7 @@ public class AccessController{
      * @return A boolean value representing whether the saving process is successful.
      */
     public boolean updateAndSaveTempPassword(String retriever){
-        String tempPassword = this.generatePassword("good");
+        String tempPassword = this.generateTempPassword();
         return accManager.setPassword(retriever, tempPassword) & accGateway.saveTempPassword(tempPassword);
     }
 
