@@ -74,20 +74,20 @@ public class PlannerController {
      */
     public String createPlanner() {
         String type = this.templateController.getTemplateType(Integer.parseInt(templateController.getCurrTemplateId()));
-        Integer id = 0;
+        int id = 0;
         if (type.equals("daily")) {
             ArrayList<String> prompts = this.templateController.
                     getTemplatePrompts(Integer.parseInt(templateController.getCurrTemplateId()));
             id = this.plannerManager.newDailyPlanner(accessController.getCurrUserId(),
                     prompts.get(0), prompts.get(1), prompts.get(2));
-            this.currPlannerId = id.toString();
+            this.currPlannerId = Integer.toString(id);
         } else if (type.equals("project")) {
             ArrayList<String> prompts = this.templateController.
                     getTemplatePrompts(Integer.parseInt(templateController.getCurrTemplateId()));
             //id = this.plannerController.createNewProjectPlanner(prompts.get(0), prompts.get(1), prompts.get(2));
-            this.currPlannerId = id.toString();
+            this.currPlannerId = Integer.toString(id);
         }
-        return id.toString();
+        return Integer.toString(id);
     }
 
     /**
@@ -162,23 +162,23 @@ public class PlannerController {
         }
     }
 
-    /** Pass on request to get a string representation of the daily planner remain tasks
-     *
-     * @return a string of the daily planner remain tasks.
-     */
-    public String DailyPlannerRemainTasks(int id){
-        return plannerManager.dailyPlannerRemainTasks(id);
-    }
+//    /** Pass on request to get a string representation of the daily planner remain tasks
+//     *
+//     * @return a string of the daily planner remain tasks.
+//     */
+//    public String DailyPlannerRemainTasks(int id){
+//        return plannerManager.dailyPlannerRemainTasks(id);
+//    }
 
-    /** Pass on request to edit planner
-     *
-     * @param i index of the agenda user wish to edit
-     * @param agenda content of the agenda user wish to edit
-     * @return true iff the agenda is correctly requested to change based on current planner
-     */
-    public boolean edit(int id, int i, String agenda){
-        return plannerManager.edit(id, i, agenda);
-    }
+//    /** Pass on request to edit planner
+//     *
+//     * @param i index of the agenda user wish to edit
+//     * @param agenda content of the agenda user wish to edit
+//     * @return true iff the agenda is correctly requested to change based on current planner
+//     */
+//    public boolean edit(int id, int i, String agenda){
+//        return plannerManager.edit(id, i, agenda);
+//    }
 
     /** Pass on request to edit daily planner.
      *
@@ -186,8 +186,8 @@ public class PlannerController {
      * @param newAgenda: new agenda item
      * @return true iff is correctly request to change.
      */
-    public boolean edit(int id, String time, String newAgenda){
-        return plannerManager.edit(id, time, newAgenda);
+    public boolean edit(String time, String newAgenda){
+        return plannerManager.edit(Integer.parseInt(currPlannerId), time, newAgenda);
     }
 
     /** Pass on request to change their own planner
@@ -195,17 +195,16 @@ public class PlannerController {
      * @param status "private" or "public"
      * @return true iff the status is correctly requested to change. (from "public to "private or vise versa)
      */
-    public boolean changePrivacyStatus(int id, String status){
-        return plannerManager.changePrivacyStatus(id, status);
+    public boolean changePrivacyStatus(String status){
+        return plannerManager.changePrivacyStatus(Integer.parseInt(currPlannerId), status);
     }
 
     /**
      * delete the planner corresponding to the given id.
-     * @param id the integer id of the planner
      * @return true if successfully deleted, false if otherwise.
      */
-    public boolean deletePlanner(int id){
-        return this.plannerManager.deletePlanner(id);
+    public boolean deletePlanner(){
+        return this.plannerManager.deletePlanner(Integer.parseInt(currPlannerId));
     }
 
     /**

@@ -11,7 +11,7 @@ public class ProjectPlanner extends Planner {
 
 
     /**
-     * initialize ProjectPlanner
+     * initialize ProjectPlanner.java
      * @param plannerName: the name of the planner
      */
     public ProjectPlanner(String plannerName) {
