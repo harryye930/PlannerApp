@@ -49,6 +49,8 @@ public class PlannerManager{
     }
 
 
+    //TODO create a reminder planner
+
     /** Create a string representation of planner tasks
      *
      * @param id A String representing the id number.
@@ -78,7 +80,7 @@ public class PlannerManager{
     }
 
 
-
+    //TODO the input of edit is changed, see on planner entity class
     /** Edit agenda on DailyPlanner base on time stamp
      *
      * @param time: time slot on DailyPlanner, HH:MM
@@ -240,4 +242,6 @@ public class PlannerManager{
         }
         return res;
     }
+
+    //TODO Adding ChangeTaskStatus method, details in planner entity class
 }

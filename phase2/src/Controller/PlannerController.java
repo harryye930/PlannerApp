@@ -45,7 +45,7 @@ public class PlannerController {
 
     /**
      * Get the current planner ID.
-     * @return
+     * @return the planner id
      */
     public String getCurrPlannerId() {
         return currPlannerId;
@@ -180,6 +180,7 @@ public class PlannerController {
 //        return plannerManager.edit(id, i, agenda);
 //    }
 
+    // TODO double check the edit method whether is ok
     /** Pass on request to edit daily planner.
      *
      * @param time: time slot on DailyPlanner, HH:MM
@@ -258,4 +259,7 @@ public class PlannerController {
     public String  getPrivacyStatus(int id) {
         return this.plannerManager.getPrivacyStatus(id);
     }
+
+    //TODO the ChangeTaskStatus method, based on project type; daily always return false; project planner detail see
+    //TODO in project planner entity class; reminder planner the second input parameter should be a default value(e.g. "")
 }
