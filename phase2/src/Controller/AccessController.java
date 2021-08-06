@@ -47,7 +47,13 @@ public class AccessController{
         if (accManager.findAccount(retriever) == null ||
         accManager.findAccount(retriever).getSuspendedTime().isAfter(LocalDateTime.now())) {
             return false;
+        } else if (accManager.findAccount(retriever).getAccountType().equals("temporary")) {
+            boolean isDeleted = accManager.deleteTempAccount(retriever);
+            if (isDeleted){
+                return false;
+            }
         }
+
         return accManager.findAccount(retriever).getPassword().equals(passWord);
     }
 
@@ -134,7 +140,7 @@ public class AccessController{
     public boolean logOut(String retriever){
         String accountType = accManager.findAccount(retriever).getAccountType();
 
-        if(accountType.equals("trial") | accountType.equals("temporary")){
+        if(accountType.equals("trial")){
             this.removeAccount(retriever);
         }
         return true;
