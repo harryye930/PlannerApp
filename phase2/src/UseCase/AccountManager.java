@@ -2,12 +2,14 @@ package UseCase;
 
 import Entity.*;
 import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+import nl.flotsam.xeger.Xeger;
 
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.regex.Pattern;
+
 
 /**
  * Manages Accounts.
@@ -34,6 +36,45 @@ public class AccountManager implements Serializable{
         account.setUserName(userName);
     }
 
+    /***
+     * Creates randomly generated password that satisfies the specified complexityLevel.
+     * @param complexityLevel Desired complexity level for the password. Must be "weak" or "good", as we do not allow
+     *                        users to create passwords that are too weak.
+     * @return A randomly generated string that satisfies the complexityLevel.
+     */
+    public String createPassword(String complexityLevel){
+        // at least 4 characters that are NOT upper case letter / lower case letter / number
+        String atLeastFourChars = "[^a-zA-Z0-9]{4,}";
+        // includes at least one upper case letter
+        String atLeastOneUpperCase = "[A-Z]+";
+        // includes at least one lower case letter
+        String atLeastOneLowerCase = "[a-z]+";
+        // includes at least one number
+        String atLeastOneNumber = "[0-9]+";
+
+        List<String> meetThreeCriteria =  new ArrayList<>();
+        meetThreeCriteria.add(atLeastFourChars + atLeastOneUpperCase + atLeastOneLowerCase);
+        meetThreeCriteria.add(atLeastFourChars + atLeastOneUpperCase + atLeastOneNumber);
+        meetThreeCriteria.add(atLeastFourChars + atLeastOneLowerCase + atLeastOneNumber);
+        meetThreeCriteria.add(atLeastOneUpperCase + atLeastOneLowerCase + atLeastOneNumber);
+
+        List<String> meetFourCriteria = new ArrayList<>();
+        meetFourCriteria.add(atLeastFourChars + atLeastOneUpperCase + atLeastOneLowerCase + atLeastOneNumber);
+
+        List<String> chosenList = null;
+        if (complexityLevel.equals("weak")) {
+            chosenList = meetThreeCriteria;
+        } else if (complexityLevel.equals("good")) {
+            chosenList = meetFourCriteria;
+        }
+
+        Collections.shuffle(chosenList);
+        String selectedPattern = chosenList.get(0);
+
+        Xeger generator = new Xeger(selectedPattern);
+        String output = generator.generate(); // the randomly created password
+        return output;
+    }
 
 
     // set password for new account
@@ -67,7 +108,7 @@ public class AccountManager implements Serializable{
      * @return A boolean value indicating if the password satisfies the complexity requirement.
      */
     public boolean checkPasswordComplexity(String password){
-        return getPasswordComplexityLevel(getNumberOfCriteriaMet(password)).equals("Too Weak");
+        return !getPasswordComplexityLevel(getNumberOfCriteriaMet(password)).equals("Too Weak");
     }
 
     /**
@@ -497,9 +538,9 @@ public class AccountManager implements Serializable{
         if (this.getAllAccount().contains(account) & isAfter) {
             idToAccount.remove(account.getUserId());
             emailToAccount.remove(account.getEmail());
-            return true; //Return true if the account object is in the collection.
+            return true; //Return true if the account object is deleted.
         } else {
-            return false; //Return false if the account object is not in the collection.
+            return false; //Return false if the account object is not deleted.
         }
     }
 
@@ -531,7 +572,7 @@ public class AccountManager implements Serializable{
         Account account = this.findAccount(retriever);
         String status = account.getAccountType();
 
-        if (status.equals("regular")){
+        if (status.equals("regular") | status.equals("temporary")){
             return ((UserAccount) account).setPlanners(plannerIds);
         } else {
             return false;
@@ -548,7 +589,7 @@ public class AccountManager implements Serializable{
         Account account = this.findAccount(retriever);
         String status = account.getAccountType();
 
-        if (status.equals("regular")){
+        if (status.equals("regular") | status.equals("temporary")){
             return ((UserAccount) account).setPlanners(plannerId);
         } else {
             return false;
@@ -565,7 +606,7 @@ public class AccountManager implements Serializable{
         Account account = this.findAccount(retriever);
         String status = account.getAccountType();
 
-        if (status.equals("regular")){
+        if (status.equals("regular") | status.equals("temporary")){
             return ((UserAccount) account).getPlanner();
         } else {
             return null;
@@ -581,7 +622,7 @@ public class AccountManager implements Serializable{
         Account account = this.findAccount(retriever);
         String status = account.getAccountType();
 
-        if (status.equals("regular")){
+        if (status.equals("regular") | status.equals("temporary")){
             ((UserAccount) account).removePlanner(plannerId);
         }
     }
