@@ -52,26 +52,27 @@ public class ProjectPlanner extends Planner {
         return sb.toString();
     }
 
-
+    //TODO
     /** Add agenda to current planner
-     *
-     * @param agenda the agenda user wish to add
+     * / TODO
+     * @param s1 the agenda user wish to add
+     * @param s2 the .....
      * @return true iff the agenda is correctly added to current planner
      */
     @Override
-    public Boolean add(String agenda){
-        if (this.tasks.contains(agenda)){
-            return false;
-        }
-        else if (agenda.length() == 0){
-            return false;
-        }
-        else{
-            this.tasks.add(agenda);
-            this.taskStatus.add("not completed");
-            this.NumAgendas ++;
-            return true;
-        }
+    public Boolean add(String s1, String s2){
+//        if (this.tasks.contains(agenda)){
+//            return false;
+//        }
+//        else if (agenda.length() == 0){
+//            return false;
+//        }
+//        else{
+//            this.tasks.add(agenda);
+//            this.taskStatus.add("not completed");
+//            this.NumAgendas ++;
+//            return true;
+//        }
     }
 
 
@@ -116,6 +117,8 @@ public class ProjectPlanner extends Planner {
     }
 
 
+
+    //TODO
     /** Edit agenda to current planner
      *
      * @param i index of the agenda user wish to edit
@@ -123,20 +126,25 @@ public class ProjectPlanner extends Planner {
      * @return true iff the agenda is correctly edited on current planner
      */
     @Override
-    public Boolean edit(int i, String agenda) {
-        if (agenda.length() == 0) {  // if the new agenda is empty
-            return false;
-        } else if (tasks.size() == 0){
-            return add(agenda);
-        } else if (i > this.tasks.size() - 1) { // if i is over the size limit
-            return this.add(i,agenda);
-        }else{
-            this.tasks.set(i, agenda);
-            this.taskStatus.set(i, "not completed");
-            return true;
-        }
-    }
+//    public Boolean edit(String OldAgenda, String NewAgenda) {
+//        if (agenda.length() == 0) {  // if the new agenda is empty
+//            return false;
+//        } else if (tasks.size() == 0){
+//            return add(agenda);
+//        } else if (i > this.tasks.size() - 1) { // if i is over the size limit
+//            return this.add(i,agenda);
+//        }else{
+//            this.tasks.set(i, agenda);
+//            this.taskStatus.set(i, "not completed");
+//            return true;
+//        }
+//    }
 
+
+    //TODO
+    public Boolean ChangeTaskStatus(String TaskName, String TaskStatus){
+        return true;
+    }
 
     /** Delete agenda item on current planner
      *
