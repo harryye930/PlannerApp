@@ -18,5 +18,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="automaton-1.11-8" level="application" />
   </component>
 </module>
