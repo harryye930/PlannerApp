@@ -19,8 +19,8 @@ public class AccountOptionUI extends GeneralPresenter {
     JScrollPane accounts;
 
     //Button
-    private final JButton changName = new JButton("Change User name");
-    private final JButton changePassword = new JButton("Change Password");
+    private final JButton changName = new JButton("Change username");
+    private final JButton changePassword = new JButton("Change password");
     private final JButton back = new JButton("Go back");
     private JButton submit0;
     private JButton submit1;
@@ -61,12 +61,13 @@ public class AccountOptionUI extends GeneralPresenter {
         accounts.setBounds(75, 25, 450, 100);
         accountMenu.add(accounts);
 
-        changName.setBounds(515, 150, 150, 40);
-        changePassword.setBounds(515, 200, 150, 40);
-        back.setBounds(515, 250, 70, 40);
+        changName.setBounds(200, 150, 200, 40);
+        changePassword.setBounds(200, 200, 200, 40);
+        back.setBounds(200, 250, 200, 40);
         accountMenu.add(changName);
         accountMenu.add(changePassword);
         accountMenu.add(back);
+
         changName.addActionListener(this);
         changePassword.addActionListener(this);
         back.addActionListener(this);
