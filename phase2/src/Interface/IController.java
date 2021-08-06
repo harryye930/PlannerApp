@@ -153,13 +153,13 @@ public interface IController {
      */
     public void deleteAccount();
 
-    /**
-     * Change the password of the current retriever.
-     * @param original A String representing the original password.
-     * @param newPassword A String representing the new password.
-     * @return A boolean value representing whether the update is successful or not.
-     */
-    public boolean changePassword(String original, String newPassword);
+//    /**
+//     * Change the password of the current retriever.
+//     * @param original A String representing the original password.
+//     * @param newPassword A String representing the new password.
+//     * @return A boolean value representing whether the update is successful or not.
+//     */
+//    public boolean changePassword(String original, String newPassword);
 
     /**
      * Get account information.
