@@ -1,8 +1,15 @@
 package Entity;
 
 
+import javafx.concurrent.Task;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
+
 
 /**
  * Represents one type of Planner in the program - a Reminder Planner, it corresponds to the Reminder Template.
@@ -39,6 +46,11 @@ public class ReminderPlanner extends Planner{
         this.NumAgendas = 0;
     }
 
+
+    /** Show the current planner
+     *
+     * @return a string represent reminder planner's content
+     */
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -80,6 +92,21 @@ public class ReminderPlanner extends Planner{
         return this.NumAgendas;
     }
 
+    /**
+     *
+     * @param dateStr the date string the user enters
+     * @return true iff the input time is a valid time format
+     */
+    public boolean isValid(String dateStr) {
+        DateFormat sdf = new SimpleDateFormat(dateStr);
+        sdf.setLenient(false);
+        try {
+            sdf.parse("MM/dd/yyyy");
+        } catch (ParseException e) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      *
@@ -89,20 +116,58 @@ public class ReminderPlanner extends Planner{
      */
     @Override
     public Boolean add (String s1, String s2){
-        this.reminderPlannerTask.get(this.taskHeadingPrompt).add(s1);
-        this.reminderPlannerTask.get(this.dateHeadingPrompt).add(s2);
-        this.NumAgendas ++;
-        return true;
+        if (!isValid(s2)){
+            return false;
+        } else {
+            this.reminderPlannerTask.get(this.taskHeadingPrompt).add(s1);
+            this.reminderPlannerTask.get(this.dateHeadingPrompt).add(s2);
+            this.reminderPlannerTask.get(this.completionStatusHeadingPrompt).add("incomplete");
+            this.NumAgendas ++;
+            return true;
+        }
     }
 
 
+    /**
+     *
+     * @param OldAgenda the original agenda the user wants to change
+     * @param NewAgenda the new content of the agenda user wish to edit
+     * @return true iff the agenda is correctly edited on current planner
+     */
     @Override
     public Boolean edit(String OldAgenda, String NewAgenda){
-        return true;
+        if (this.reminderPlannerTask.get(this.taskHeadingPrompt).contains(OldAgenda)){
+            int TaskIndex = this.reminderPlannerTask.get(this.taskHeadingPrompt).indexOf(OldAgenda);
+            this.reminderPlannerTask.get(this.taskHeadingPrompt).remove(OldAgenda);
+            this.reminderPlannerTask.get(this.taskHeadingPrompt).add(TaskIndex, NewAgenda);
+            return true;
+        } else {
+            return false;
+        }
     }
 
+    /**
+     *
+     * @param TaskName the task name the user wants to change status
+     * @param TaskStatus the status the user wants to change
+     * @return true iff the task status is corrected changed.
+     */
     @Override
     public Boolean ChangeTaskStatus(String TaskName, String TaskStatus){
-        return true;
+        if (this.reminderPlannerTask.get(this.taskHeadingPrompt).contains(TaskName)){
+            int TaskIndex = this.reminderPlannerTask.get(this.taskHeadingPrompt).indexOf(TaskName);
+            if (Objects.equals(this.reminderPlannerTask.
+                    get(this.completionStatusHeadingPrompt).get(TaskIndex), "incomplete")){
+                this.reminderPlannerTask.get(completionStatusHeadingPrompt).remove(TaskIndex);
+                this.reminderPlannerTask.get(this.taskHeadingPrompt).add(TaskIndex, "completed");
+            } else if (Objects.equals(this.reminderPlannerTask.
+                    get(this.completionStatusHeadingPrompt).get(TaskIndex), "completed")){
+                this.reminderPlannerTask.get(completionStatusHeadingPrompt).remove(TaskIndex);
+                this.reminderPlannerTask.get(this.taskHeadingPrompt).add(TaskIndex, "incomplete");
+            }
+            return true;
+            } else{
+            return false;
+        }
     }
 }
