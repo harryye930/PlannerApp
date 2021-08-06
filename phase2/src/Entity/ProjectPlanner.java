@@ -13,6 +13,8 @@ public class ProjectPlanner extends Planner {
     ArrayList<String> secondColEvents;
     ArrayList<String> thirdColEvents;
 
+    int ID;
+
     public ProjectPlanner(String plannerName, String firstColName, String secondColName, String thirdColName) {
         this.plannerName = plannerName;
         this.firstColName = firstColName;
@@ -24,7 +26,7 @@ public class ProjectPlanner extends Planner {
         this.thirdColEvents = new ArrayList<String>();
         this.allProjectEvents = new ArrayList<String>();
 
-
+        this.ID = super.getID();
     }
 
 
