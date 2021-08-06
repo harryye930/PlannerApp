@@ -82,26 +82,27 @@ public abstract class Planner implements Serializable {
 
     /** Show the number of planner agendas.
      *
-     * @return a int representing of the number of planner agendas.
+     * @return an int representing of the number of planner agendas.
      */
     public abstract int getNumAgendas();
 
 
     /** Add agenda to current planner
      *
-     * @param s agenda of the agenda user wish to add
-     * @return true iff the agenda is correctly added to current planner
+     * @param s1 the first input of the add method.
+     * @param s2 the second input of the add method.
+     * @return true iff the agenda is correctly added to current planner.
      */
-    public abstract Boolean add(String s);
+    public abstract Boolean add(String s1, String s2);
 
 
     /** Edit agenda to current planner
      *
-     * @param i index of the agenda user wish to edit
-     * @param agenda content of the agenda user wish to edit
+     * @param OldAgenda the original agenda the user wants to change
+     * @param NewAgenda the new content of the agenda user wish to edit
      * @return true iff the agenda is correctly edited on current planner
      */
-    public abstract Boolean edit(int i, String agenda);
+    public abstract Boolean edit(String OldAgenda, String NewAgenda);
 
 
     /** Change the planner's privacy status
@@ -127,5 +128,14 @@ public abstract class Planner implements Serializable {
         }
         return false; // the current status is the same as input status
     }
+
+
+    /**
+     *
+     * @param TaskName the task name the user wants to change status
+     * @param TaskStatus the status the user wants to change
+     * @return true iff the planner is correctly changed to the right status
+     */
+    public abstract Boolean ChangeTaskStatus(String TaskName, String TaskStatus);
 
 }
