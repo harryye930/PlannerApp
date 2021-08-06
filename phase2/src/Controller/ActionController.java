@@ -49,7 +49,7 @@ public class ActionController implements IController{
     /**
      * Return the account Role.
      * @param retriever A String representing the user ID or Email.
-     * @return A String indicating the account role, "admin", "regular" or "trial".
+     * @return A String indicating the account role, "admin", "regular", "trial" or "temporary".
      */
     @Override
     public String accountRole(String retriever) {
@@ -58,7 +58,7 @@ public class ActionController implements IController{
 
     /**
      * Return the account Role.
-     * @return A String indicating the account role, "admin", "regular" or "trial".
+     * @return A String indicating the account role, "admin", "regular", "trial" or "temporary".
      */
     @Override
     public String accountRole() {
