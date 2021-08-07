@@ -12,7 +12,7 @@ public class DailyPlanner extends Planner {
     private final int ID;
     private int interval;  //minutes interval
     private int startHour;
-    private int startMines;
+    private int startMins;
     private int endHour;
     private int endMins;
     private int NumAgendas;
@@ -32,7 +32,7 @@ public class DailyPlanner extends Planner {
         this.plannerName = plannerName;
         this.interval = Interval;
         this.startHour = Integer.parseInt(startTime.substring(0, 2));
-        this.startMines = Integer.parseInt(startTime.substring(3, 5));
+        this.startMins = Integer.parseInt(startTime.substring(3, 5));
         this.endHour = Integer.parseInt(endTime.substring(0, 2));
         this.endMins = Integer.parseInt(endTime.substring(3, 5));
         this.timesList = new ArrayList<>();
@@ -41,7 +41,7 @@ public class DailyPlanner extends Planner {
         this.NumAgendas = 0;
         String timeFormat;
         for (int h = this.startHour; h < this.endHour; h++) {
-            for (int m = this.startMines; m < 60; ) {
+            for (int m = this.startMins; m < 60; ) {
                 timeFormat = String.format("%02d:%02d", h, m);
                 timesList.add(timeFormat);
                 m = m + interval;
@@ -83,7 +83,7 @@ public class DailyPlanner extends Planner {
      */
     public void setStartTime(int startHour, int startMins){
         this.startHour = startHour;
-        this.startMines = startMins;
+        this.startMins = startMins;
     }
 
 
@@ -110,7 +110,7 @@ public class DailyPlanner extends Planner {
     public void setTimesList(){
         String timeFormat;
         for (int h = this.startHour; h < this.endHour; h++) {
-            for (int m = this.startMines; m < 60; ) {
+            for (int m = this.startMins; m < 60; ) {
                 timeFormat = String.format("%02d:%02d", h, m);
                 timesList.add(timeFormat);
                 m = m + interval;
@@ -160,7 +160,7 @@ public class DailyPlanner extends Planner {
         sb.append("Status: ").append(this.privacyStatus).append("\n");
 
         String timeInfo = String.format("Start time -> %d:%d, End time -> %d:%d. \n",
-                this.startHour, this.startMines, this.endHour, this.endMins);
+                this.startHour, this.startMins, this.endHour, this.endMins);
         String plannerInfo = this.plannerName + "\n" + "ID: " + this.ID + "\n" + timeInfo + "\nTasks: \n";
         sb.append(plannerInfo);
         for (String time : timesList) {
