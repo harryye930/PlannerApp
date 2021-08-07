@@ -17,10 +17,12 @@ public class ViewData {
     JTextArea templateInfo = new JTextArea();
     JTextArea plannerInfo = new JTextArea();
     JTextArea accountInfo = new JTextArea();
+    JTextArea singlePlannerInfo = new JTextArea();
 
     JScrollPane planners = new JScrollPane(plannerInfo);
     JScrollPane templates = new JScrollPane(templateInfo);
     JScrollPane accounts = new JScrollPane(accountInfo);
+    JScrollPane planner = new JScrollPane(singlePlannerInfo);
 
     public ViewData(AccessController accessController, TemplateController templateController,
                     PlannerController plannerController) {
@@ -37,6 +39,11 @@ public class ViewData {
     public JScrollPane getPlanners() {
         this.update();
         return this.planners;
+    }
+
+    public JScrollPane getPlanner(String id) {
+        this.updatePlanner(id);
+        return this.planner;
     }
 
     public JScrollPane getAccounts() {
@@ -66,6 +73,10 @@ public class ViewData {
         accountInfo.removeAll();
         accountInfo.setEditable(false);
         accountInfo.setLayout(null);
+    }
+
+    private void updatePlanner(String id) {
+        singlePlannerInfo.setText(plannerController.toString(Integer.parseInt(id)));
     }
 
 }
