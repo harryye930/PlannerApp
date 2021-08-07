@@ -42,9 +42,10 @@ days, where x is a number decided by the admin user
 #### Admin User
 - Select a template, and change the template name or template "published" status
 - Able to change any of the users' planners from private to public or public to private
-- Able to interact with every user's planners, even if they are private
   - can admin user revert change as well? QUESTION
-- Able to delete a planner (e.g., if they decide that the content of the planner is not appropriate for the app)
+- Able to interact with every user's planners, even if they are private
+- Able to delete any planner, including private planners (e.g., if they decide that the content of the planner is not 
+appropriate for the app)
   - can admin user undo delete as well? QUESTION
 - Able to "suspend" a user by x number of days, where x is a number decided by the admin user. This means the user is 
 not allowed to log in for x number of days
