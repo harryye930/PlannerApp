@@ -28,19 +28,19 @@ days, where x is a number decided by the admin user
   previous accessibility level (public, private, etc.)
   - The friend-only setting allows users to select other users for their friends list. Whenever they set a creation to 
   "friends-only", any user on that list will have access to it
-  - Upon being added as a friend, there should be immediate access to all of the friends-only content
+  - Upon being added as a friend, there should be immediate access to all the friends-only content
 - GUI using java.swing
 
 ### Create your own new features
 - Added a "published" property to templates
-  - Added the ability to change a template's "published" status 
+  - Added the ability to change a template's "published" status (admin users only)
   - Added the ability to show only the published templates
 
 
 ## Project Specification
 ### Users
 #### Admin User
-- Select a template, and change at least one thing about the template
+- Select a template, and change the template name or template "published" status
 - Able to change any of the users' planners from private to public or public to private
 - Able to interact with every user's planners, even if they are private
   - can admin user revert change as well? QUESTION
@@ -58,7 +58,7 @@ not allowed to log in for x number of days
   - Able to revert their planner to its previous accessibility level (public, private, etc.)
   - Able to select other users for their friends list
   - Whenever they set a creation to "friends-only", any user on that list will have access to it
-  - Upon being added as a friend, there should be immediate access to all of the friends-only content
+  - Upon being added as a friend, there should be immediate access to all the friends-only content
 - Interact with other users' planners that have been made "public"
 
 #### Trial User
