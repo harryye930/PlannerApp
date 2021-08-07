@@ -186,7 +186,7 @@ public class DailyPlanner extends Planner {
 //        String currTime = dtf.format(now);
         this.NumAgendas ++;
         int newStartHour = Integer.parseInt(time.substring(0, 2));
-        int newStartMins = Integer.parseInt(time.substring(3, 5));
+//        int newStartMins = Integer.parseInt(time.substring(3, 5));
         String hourIndex;
         String minIndex;
 //        if (newStartHour < this.startHour || newStartHour > this.endHour || newStartMins < 0 || newStartMins > 60) {
@@ -194,18 +194,28 @@ public class DailyPlanner extends Planner {
         if (newStartHour < this.startHour) {
             int gap = startHour - newStartHour;
             for (int i = 0; i < gap; i++) {
-                int currH = i + newStartHour;
-                this.dailyPlannerTask.put(currH + ":00", "N/A");
+                int currH = startHour - i - 1;
+                String hour = String.format("%02d", currH);
+                this.dailyPlannerTask.put(hour + ":00", "N/A");
+                this.timesList.add(0, hour + ":00");
             }
-        } else if (newStartHour > this.startHour) {
-            int gap = newStartHour - startHour;
+            this.dailyPlannerTask.put(String.format("%02d", newStartHour) + ":00", agenda);
+            this.startHour = newStartHour;
+        } else if (newStartHour > this.endHour) {
+            int gap = newStartHour - endHour;
             for (int i = 0; i < gap; i++) {
-                int currH = i + startHour;
-                this.dailyPlannerTask.put(currH + ":00", "N/A");
+                int currH = endHour + i + 1;
+                String hour = String.format("%02d", currH);
+                this.dailyPlannerTask.put(hour + ":00", "N/A");
+                this.timesList.add( hour + ":00");
             }
+            this.dailyPlannerTask.put(String.format("%02d", newStartHour) + ":00", agenda);
+            this.endHour = newStartHour;
         } else {
-            this.dailyPlannerTask.put(Integer.toString(newStartHour), agenda);
+            String hour = String.format("%02d", newStartHour);
+            this.dailyPlannerTask.put(hour + ":00", agenda);
         }
+        System.out.println(this.dailyPlannerTask);
 
         this.NumAgendas ++;
         return true;

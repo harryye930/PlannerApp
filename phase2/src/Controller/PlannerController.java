@@ -268,15 +268,15 @@ public class PlannerController {
     //TODO the ChangeTaskStatus method, based on project type; daily always return false; project planner detail see
     //TODO in project planner entity class; reminder planner the second input parameter should be a default value(e.g. "")
     public static void main(String[] args) {
-//        PlannerController x = new PlannerController();
-//        AccessController y = new AccessController();
-//        String userId = y.createAccount("123", "123", "Qazwsx");
-//        x.load();
-//        int id = x.plannerManager.newDailyPlanner("trial", "09:00", "20:00", "60");
-//        x.plannerManager.setPlannerAuthor(id, userId);
-//        y.setPlanner(userId, Integer.toString(id));
-//        x.save();
-//        y.save();
+        PlannerController x = new PlannerController();
+        AccessController y = new AccessController();
+        String userId = y.createAccount("nzy", "123", "qweasd");
+        x.load();
+        int id = x.plannerManager.newDailyPlanner("trial", "09:00", "20:00", "60");
+        x.plannerManager.setPlannerAuthor(id, userId);
+        y.setPlanner(userId, Integer.toString(id));
+        x.save();
+        y.save();
         LoginUI f = new LoginUI();
         f.run();
     }
