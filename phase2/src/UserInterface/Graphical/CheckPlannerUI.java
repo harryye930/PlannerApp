@@ -16,8 +16,9 @@ public class CheckPlannerUI extends GeneralPresenter {
     JPanel checkPlanner = new JPanel();
 
     //TextArea/Field
-    JTextArea plannerInfo = new JTextArea();
-    JTextArea prompt = new JTextArea("Please enter the planner ID you want to operate on:");
+
+    JScrollPane plannerInfo;
+    JTextArea prompt = new JTextArea("Please enter the planner ID\n you want to operate on:");
     JTextField plannerId = new JTextField();
 
     //Button
@@ -33,8 +34,9 @@ public class CheckPlannerUI extends GeneralPresenter {
     @Override
     public void run() {
         if (flag) {
-            plannerInfo.setText(plannerController.viewUserPlanners() +
-                    separator + plannerController.viewPublicPlanners());
+//            plannerInfo.setText(plannerController.viewUserPlanners() +
+//                    separator + plannerController.viewPublicPlanners());
+            plannerInfo = data.getPlanners();
             cl.show(main, "checkPlanner");
         } else {
             this.showPlanners();
@@ -48,10 +50,9 @@ public class CheckPlannerUI extends GeneralPresenter {
         checkPlanner.setLayout(null);
         main.add(checkPlanner, "checkPlanner");
 
+        plannerInfo = data.getPlanners();
         plannerInfo.setBounds(25, 25, 400, 500);
-        plannerInfo.setText(plannerController.viewUserPlanners() +
-                separator + plannerController.viewPublicPlanners());
-        plannerInfo.setEditable(false);
+
         plannerInfo.setBackground(new Color(213, 212, 212));
         checkPlanner.add(plannerInfo);
 
