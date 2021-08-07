@@ -125,7 +125,7 @@ public class PlannerController {
         } else {
             for (String plannerId : plannerIds) {
                 res.append(this.toString(Integer.parseInt(plannerId)));
-                res.append("==================================");
+                res.append("==================================\n");
             }
             return res.toString();
         }
