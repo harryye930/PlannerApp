@@ -17,7 +17,10 @@ public class PlannerEditUI extends GeneralPresenter {
     // Pane/Panel
     private JScrollPane planner;
     private final JPanel editPlanner = new JPanel();
-    private JPanel projectPanel;
+    private JPanel projectPanel = new JPanel();
+    JPanel currentPanel;
+    private JPanel edit;
+    private JPanel add;
 
     //Label
     private final JLabel message = new JLabel();
@@ -31,7 +34,7 @@ public class PlannerEditUI extends GeneralPresenter {
     private final JButton changeButton = new JButton();
     private final JButton back = new JButton("Go back");
 
-    private CardLayout current;
+    private CardLayout current = new CardLayout();
 
     public PlannerEditUI(String parent) {
         this.setParent(parent);
@@ -49,6 +52,7 @@ public class PlannerEditUI extends GeneralPresenter {
             cl.show(main, "editPlanner");
             flag = !flag;
         }
+
     }
 
     private void showEditUI() {
@@ -58,7 +62,6 @@ public class PlannerEditUI extends GeneralPresenter {
         editPlanner.setLayout(null);
         editPlanner.add(planner);
 
-        JPanel currentPanel;
         if (plannerController.getType(Integer.parseInt(plannerController.getCurrPlannerId())).equals("daily")) {
             currentPanel = this.getDailyPanel();
             currentPanel.setBounds(475, 25, 200, 200);
@@ -70,6 +73,13 @@ public class PlannerEditUI extends GeneralPresenter {
 
         submit.setBounds(500, 350, 150, 30);
         back.setBounds(500, 400, 150, 30);
+        changeButton.setBounds(500, 250, 150, 30);
+
+        if (plannerController.getType(Integer.parseInt(plannerController.getCurrPlannerId())).equals("project")) {
+            editPlanner.add(changeButton);
+            changeButton.addActionListener(this);
+        }
+
         editPlanner.add(submit);
         submit.addActionListener(this);
         editPlanner.add(back);
@@ -92,48 +102,52 @@ public class PlannerEditUI extends GeneralPresenter {
     }
 
     private JPanel getProjectPanel() {
-        projectPanel = new JPanel();
-        current = new CardLayout();
         projectPanel.setLayout(current);
 
-        JPanel edit = new JPanel();
-        JPanel add = new JPanel();
+        edit = new JPanel();
+        add = new JPanel();
         projectPanel.add(edit, "editProject");
         projectPanel.add(add, "addProject");
+//        changeButton.addActionListener(this);
 
         //Add
-        add.setLayout(new GridLayout(4, 1));
-        add.setPreferredSize(new Dimension(300, 200));
+        if (firstStatus) {
+            add.setLayout(new GridLayout(4, 1));
+            add.setPreferredSize(new Dimension(150, 80));
 
-        JLabel columnName = new JLabel("Please enter the column name you want to add task to");
-        JLabel task = new JLabel("Please enter the task you want to add.");
+            JLabel columnName = new JLabel("<html>Please enter the column name<br/> you want to add task to</html>");
+            JLabel task = new JLabel("<html>Please enter the task you<br/> want to add.</html>");
 
-        add.add(columnName);
-        add.add(text0);
-        add.add(task);
-        add.add(text1);
+            add.add(columnName);
+            add.add(text0);
+            add.add(task);
+            add.add(text1);
 
-        //Edit
-        edit.setLayout(new GridLayout(5,1));
-        edit.setPreferredSize(new Dimension(300, 200));
+        }
+        else {
+            //Edit
+            edit.setLayout(new GridLayout(4, 1));
+            edit.setPreferredSize(new Dimension(150, 80));
 
-        JLabel taskName = new JLabel("Please enter the task name you wan to change status:");
-        JLabel destinyColumn = new JLabel("Please enter the column name you want to change to:");
+            JLabel taskName = new JLabel("<html>Please enter the task name<br/> you wan to change status:</html>");
+            JLabel destinyColumn = new JLabel("<html>Please enter the column name<br/> you want to change to:</html>");
 
-        edit.add(taskName);
-        edit.add(text0);
-        edit.add(destinyColumn);
-        edit.add(text1);
+            edit.add(taskName);
+            edit.add(text0);
+            edit.add(destinyColumn);
+            edit.add(text1);
 
-        changeButton.addActionListener(this);
-        edit.add(changeButton);
+        }
+
+//        projectPanel.add(changeButton);
+        //changeButton.setBounds(600, 200, 150, 30);
 
         if (this.firstStatus) {
             changeButton.setText("Change to edit page");
-            current.show(projectPanel, "add");
+            current.show(projectPanel, "addProject");
         } else {
-            changeButton.setText("change to add page");
-            current.show(projectPanel, "edit");
+            changeButton.setText("Change to add page");
+            current.show(projectPanel, "editProject");
         }
 
         return projectPanel;
@@ -149,11 +163,19 @@ public class PlannerEditUI extends GeneralPresenter {
         if (e.getSource() == changeButton) {
             firstStatus = !firstStatus;
             if (this.firstStatus) {
+                projectPanel.remove(edit);
+                edit.removeAll();
                 changeButton.setText("Change to edit page");
-                current.show(projectPanel, "add");
+                //projectPanel = this.getProjectPanel();
+                current.show(projectPanel, "addProject");
+                currentPanel = this.getProjectPanel();
             } else {
-                changeButton.setText("change to add page");
-                current.show(projectPanel, "edit");
+                projectPanel.remove(add);
+                add.removeAll();
+                changeButton.setText("Change to add page");
+                //projectPanel = this.getProjectPanel();
+                current.show(projectPanel, "editProject");
+                currentPanel = this.getProjectPanel();
             }
         } else if (e.getSource() == submit) {
             plannerController.edit(text0.getText(), text1.getText());

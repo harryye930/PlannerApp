@@ -275,8 +275,13 @@ public class PlannerController {
         int id = x.plannerManager.newDailyPlanner("trial", "09:00", "20:00", "60");
         x.plannerManager.setPlannerAuthor(id, userId);
         y.setPlanner(userId, Integer.toString(id));
+
+        id = x.plannerManager.newProjectPlanner("trial" ,"todo", "doing", "done");
+        x.plannerManager.setPlannerAuthor(id, userId);
+        y.setPlanner(userId, Integer.toString(id));
         x.save();
         y.save();
+
         LoginUI f = new LoginUI();
         f.run();
     }
