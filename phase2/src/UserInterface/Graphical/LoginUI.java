@@ -21,7 +21,7 @@ public class LoginUI extends GeneralPresenter {
     private JButton createAccount;
     private JButton guest;
 
-    private final GeneralPresenter adminUI = new AdminUI("LoginPage");
+    private final GeneralPresenter adminUI = new AdminAccountUI("LoginPage");
     private final GeneralPresenter regularUserUI = new RegularAccountUI("LoginPage");
     private final GeneralPresenter createAccountUI = new CreateAccountUI("LoginPage");
 

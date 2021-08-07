@@ -61,7 +61,7 @@ public class CreatePlannerUI extends GeneralPresenter {
         submit.addActionListener(this);
         createPlanner.add(submit);
 
-        back.setBounds(515, 250, 140, 80);
+        back.setBounds(445, 250, 210, 40);
         back.addActionListener(this);
         createPlanner.add(back);
     }

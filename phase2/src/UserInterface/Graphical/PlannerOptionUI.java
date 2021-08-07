@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
- * GUI class for displaying planner options for a regular account.
+ * GUI class for displaying planner options for a regular user.
  * Options include: create a new planner, view all planners available to the user, and return to the main menu.
  */
 public class PlannerOptionUI extends GeneralPresenter {

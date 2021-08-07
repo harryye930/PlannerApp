@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
- * GUI class for viewing all planners available to a regular account (all personal planners, all public planners,
+ * GUI class for viewing all planners available to a regular user (all personal planners, all public planners,
  * any friends-only planners if they are added to the friends list of another user)
  */
 

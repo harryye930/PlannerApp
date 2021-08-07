@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class CreateAccountUI extends GeneralPresenter {
     private boolean flag = false;
-    private final GeneralPresenter adminUI = new AdminUI("createAccount");
+    private final GeneralPresenter adminAccUI = new AdminAccountUI("createAccount");
     private final GeneralPresenter regularAccUI = new RegularAccountUI("createAccount");
 
     private final JLabel createAccount = new JLabel("Register your account!");
@@ -148,7 +148,7 @@ public class CreateAccountUI extends GeneralPresenter {
             main.remove(messagePanel);
             messagePanel.removeAll();
             if (accessController.isAdmin(accessController.getCurrUserId()).equals("admin")) {
-                this.adminUI.run();
+                this.adminAccUI.run();
             } else {
                 this.regularAccUI.run();
             }

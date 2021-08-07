@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
- * GUI class for displaying template options for a regular account.
+ * GUI class for displaying template options for a regular user.
  * Options include: view all planners, return to main menu.
  */
 public class TemplateOptionUI extends GeneralPresenter {
