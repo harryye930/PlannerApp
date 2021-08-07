@@ -6,6 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/***
+ * GUI class for the account setting screen: displays account information and allows user to change account username
+ * and password.
+ */
 public class AccountOptionUI extends GeneralPresenter {
     private boolean flag = false;
 

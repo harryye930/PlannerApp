@@ -6,6 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * GUI class for the first planner creation screen.
+ * Displays a list of templates available, and asks the user to enter the ID of the template they would like to use.
+ */
 public class CreatePlannerUI extends GeneralPresenter {
     private boolean flag = false;
 
@@ -57,7 +61,7 @@ public class CreatePlannerUI extends GeneralPresenter {
         submit.addActionListener(this);
         createPlanner.add(submit);
 
-        back.setBounds(515, 250, 70, 40);
+        back.setBounds(515, 250, 140, 80);
         back.addActionListener(this);
         createPlanner.add(back);
     }
