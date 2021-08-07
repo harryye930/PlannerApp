@@ -7,6 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * GUI class for displaying the main menu for a regular account.
+ * The main menu includes 4 options: planner option, template option, account setting, log out.
+ */
 public class RegularAccountUI extends GeneralPresenter {
     private boolean flag = false;
 

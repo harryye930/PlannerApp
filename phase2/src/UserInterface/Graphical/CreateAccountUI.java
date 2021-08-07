@@ -7,6 +7,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.Objects;
 
+/**
+ * GUI class for creating a new account by entering email, username, password, and confirmed password.
+ * Allows user to create a temporary account by checking a box for creating temporary account.
+ * If the temporary account checkbox is not selected, then either a regular account or an admin account will be
+ * automatically created, based on the email domain that the user enters.
+ */
 public class CreateAccountUI extends GeneralPresenter {
     private boolean flag = false;
     private final GeneralPresenter adminUI = new AdminUI("createAccount");

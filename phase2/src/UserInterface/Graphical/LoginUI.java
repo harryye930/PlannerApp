@@ -6,6 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * GUI class for the start of the program.
+ * Displays three options for the user to either log in, create a new account, or login as guest.
+ */
 public class LoginUI extends GeneralPresenter {
 
     private final JPanel menu = new JPanel();
