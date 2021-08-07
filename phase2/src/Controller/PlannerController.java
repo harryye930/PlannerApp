@@ -193,7 +193,7 @@ public class PlannerController {
 
     /** Pass on request to change their own planner
      *
-     * @param status "private" or "public"
+     * @param status "private" or "public" or "friends-only"
      * @return true iff the status is correctly requested to change. (from "public to "private or vise versa)
      */
     public boolean changePrivacyStatus(String status){

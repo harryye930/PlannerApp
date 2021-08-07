@@ -1,6 +1,7 @@
 package Controller;
 
 import Entity.Account;
+import Entity.UserAccount;
 import Gateway.AccountGateway;
 import UseCase.*;
 
@@ -84,7 +85,7 @@ public class AccessController{
     }
 
     /**
-     * Check whether a account is an admin account or not.
+     * Check whether an account is an admin account or not.
      * @param retriever A String representing the User ID or Email.
      * @return A String value representing whether the account is an admin account, regular
      * account or a trial account.
@@ -100,7 +101,7 @@ public class AccessController{
     /**
      * Create a new account.
      * @param email A String representing the email of this account.
-     * @param userName A String representing the user name of this account.
+     * @param userName A String representing the username of this account.
      * @param passWord A String representing the password of this account.
      * @return A String representing the unique user ID of this account.
      */
@@ -114,7 +115,7 @@ public class AccessController{
     /**
      * Create a new temporary account.
      * @param email A String representing the email of this account.
-     * @param userName A String representing the user name of this account.
+     * @param userName A String representing the username of this account.
      * @param passWord A String representing the password of this account.
      * @return A String representing the unique user ID of this account.
      */
@@ -182,9 +183,9 @@ public class AccessController{
     }
 
     /**
-     * Reset the user name.
+     * Reset the username.
      * @param retriever A String representing the User ID or Email.
-     * @param userName A String representing the new user name.
+     * @param userName A String representing the new username.
      */
     public void changeUserName(String retriever, String userName) {
         accManager.setUserName(retriever, userName);
@@ -210,7 +211,7 @@ public class AccessController{
      *
      * @param retriever A String representing the User ID or Email.
      * @param plannerId A planner id that need to be added to the account.
-     * @return A boolean value representing whether the adding is successful or not..
+     * @return A boolean value representing whether the adding is successful or not.
      */
     public boolean setPlanner(String retriever, String  plannerId){
         return this.accManager.setPlanners(retriever, plannerId);
@@ -220,7 +221,7 @@ public class AccessController{
      * Add new planner to a given account. return true if any one of the planners is added.
      * @param retriever A String representing the User ID or Email.
      * @param planner A planner id that need to be added to the account.
-     * @return A boolean value representing whether the adding is successful or not..
+     * @return A boolean value representing whether the adding is successful or not.
      */
     public boolean setPlanner(String retriever, ArrayList<String > planner){
         return this.accManager.setPlanners(retriever, planner);
@@ -316,8 +317,21 @@ public class AccessController{
         return strFriends.toString();
     }
 
-    public void sendMail(String senderId, String revieveId, String mail){
-        accManager.sendMail(senderId, revieveId,mail);
+    public ArrayList<String> seeFriendsPlanner(String friendId){
+        Account friend = accManager.findAccount(friendId);
+        ArrayList<String> friendAllPlanner = new ArrayList<>(((UserAccount)friend).getPlanner());
+        ArrayList<String> friendOnly = new ArrayList<>();
+        for (String i : friendAllPlanner){
+            if (plannerController.getPrivacyStatus(Integer.parseInt(i)).equals("friends-only")){
+                friendOnly.add(i);
+            }
+        }
+        return friendOnly;
+    }
+
+
+    public void sendMail(String senderId, String revivedId, String mail){
+        accManager.sendMail(senderId, revivedId,mail);
     }
 
     public HashMap<String, ArrayList<String>> getMailbox(String userId){

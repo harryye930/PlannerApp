@@ -60,7 +60,6 @@ public abstract class Planner implements Serializable {
         return this.privacyStatus;
     }
 
-
     /** @return a String representing of the planner author.
      */
     public String getAuthor() {
@@ -107,26 +106,16 @@ public abstract class Planner implements Serializable {
 
     /** Change the planner's privacy status
      *
-     * @param status : expected status of this planner: public or private
+     * @param status : expected status of this planner: public or private or friends-only
      * @return true iff the planner is correctly changed the privacy status
      */
     public boolean ChangePrivacyStatus(String status){
-        if (status.equals("public")) {
-            if (this.privacyStatus.equals("private")) {
-                this.privacyStatus = "public";
-                return true;
-            }
+        if (this.privacyStatus.equals(status)){
+            return false;
+        } else {
+            privacyStatus = status;
+            return true;
         }
-        else if (status.equals("private")){
-            if (this.privacyStatus.equals("public")){
-                this.privacyStatus = "private";
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        return false; // the current status is the same as input status
     }
 
 

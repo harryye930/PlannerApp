@@ -96,7 +96,7 @@ public class PlannerManager{
     public boolean edit(int id, String time, String newAgenda){
 
         if (this.findPlanner(id).getClass() == DailyPlanner.class){
-            ((DailyPlanner) this.findPlanner(id)).edit(time, newAgenda);
+            this.findPlanner(id).edit(time, newAgenda);
             return true;
         }
         else{
@@ -117,8 +117,8 @@ public class PlannerManager{
 
     /** Change privacy status of current planner
      *
-     * @param status "private" or "public"
-     * @return true iff the status is correctly changed (from "public to "private or vise versa)
+     * @param status "private" or "public" or "friends-only"
+     * @return true iff the status is correctly changed
      */
     public boolean changePrivacyStatus(int id, String status){
         return this.findPlanner(id).ChangePrivacyStatus(status);
@@ -179,10 +179,10 @@ public class PlannerManager{
      * @return the ArrayList of planners owned by the user
      */
     public ArrayList<Integer> getPlannersByAuthor(String author){
-        ArrayList<Integer> plannersByAuthor = new ArrayList<Integer>();
+        ArrayList<Integer> plannersByAuthor = new ArrayList<>();
         for (Planner planner : this.idToPlanner.values()) {
             if (planner.getAuthor().equals(author)){
-                Integer ID = (Integer) planner.getID();
+                Integer ID = planner.getID();
                 plannersByAuthor.add(ID);
             }
         }
@@ -194,7 +194,7 @@ public class PlannerManager{
      * @return all public planners
      */
     public ArrayList<Integer> getPublicPlanners(){
-        ArrayList<Integer> publicPlanners = new ArrayList<Integer>();
+        ArrayList<Integer> publicPlanners = new ArrayList<>();
         for (Planner planner : this.idToPlanner.values()) {
             if (planner.getPrivacyStatus().equals("public")){
                 publicPlanners.add(planner.getID());
