@@ -20,6 +20,7 @@ public class CreateAccountUI extends GeneralPresenter {
     private final JButton register = new JButton("Register");
     private final JButton back = new JButton("Go back");
     private final JPanel create = new JPanel();
+    private final JCheckBox temp = new JCheckBox("Register a temporary account");
     private JPanel grids;
     private final JButton goNext = new JButton("I see");
     JPanel messagePanel = new JPanel();
@@ -54,7 +55,7 @@ public class CreateAccountUI extends GeneralPresenter {
         create.add(createAccount);
 
         grids = new JPanel();
-        grids.setLayout(new GridLayout(5, 2));
+        grids.setLayout(new GridLayout(6, 2));
         grids.setBounds(70, 100, 500, 250);
         create.add(grids);
 
@@ -84,15 +85,23 @@ public class CreateAccountUI extends GeneralPresenter {
         
         grids.add(register);
         register.addActionListener(this);
+
+        grids.add(temp);
+
         grids.add(back);
         back.addActionListener(this);
     }
 
-    private void createNewAccount() {
-        if (!Objects.equals(password0.getText(), password0.getText())) {
+    private void createNewAccount(String type) {
+        if (!Objects.equals(password0.getText(), password1.getText())) {
             this.createAccount.setText("Incorrect password, please try again");
         } else {
-            String id = accessController.createAccount(email.getText(), userName.getText(), password0.getText());
+            String id;
+            if (type.equals("regular")) {
+                id = accessController.createAccount(email.getText(), userName.getText(), password0.getText());
+            } else{
+                id = accessController.createTemporaryAccount(email.getText(), userName.getText(), password0.getText());
+            }
 
             //messagePanel.setLayout(new GridLayout(2, 1));
             messagePanel.setLayout(null);
@@ -122,7 +131,11 @@ public class CreateAccountUI extends GeneralPresenter {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == register) {
-            createNewAccount();
+            if (temp.isSelected()) {
+                createNewAccount("temporary");
+            } else {
+                createNewAccount("regular");
+            }
         } else if (e.getSource() == back) {
             cl.show(main, "LoginPage");
         } else if (e.getSource() == goNext) {

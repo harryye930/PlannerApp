@@ -84,7 +84,8 @@ public class RegularAccountUI extends GeneralPresenter {
         }else if (e.getSource() == templateButton){
             this.templateOptionUI.run();
         } else if (e.getSource() == logOutButton){
-            cl.show(main, "LoginPage");
+            accessController.logOut();
+            cl.show(main, this.getParent());
         } else if (e.getSource() == accountButton) {
             this.accountOptionUI.run();
         }

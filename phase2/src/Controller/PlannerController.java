@@ -41,6 +41,7 @@ public class PlannerController {
     public PlannerController(){
         this.plannerManager = new PlannerManager();
         this.accGateway = new PlannerGateway(plannerManager);
+        this.load();
     }
 
     /**
@@ -204,8 +205,8 @@ public class PlannerController {
      * delete the planner corresponding to the given id.
      * @return true if successfully deleted, false if otherwise.
      */
-    public boolean deletePlanner(){
-        return this.plannerManager.deletePlanner(Integer.parseInt(currPlannerId));
+    public boolean deletePlanner(String plannerId){
+        return this.plannerManager.deletePlanner(Integer.parseInt(plannerId));
     }
 
     /**
