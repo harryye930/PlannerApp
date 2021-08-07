@@ -28,10 +28,10 @@ public class ReminderPlanner extends Planner{
      * @param dateHeadingPrompt the second column name of the reminder planner
      * @param completionStatusHeadingPrompt the third column name of the reminder planner
      */
-    public ReminderPlanner(String taskHeadingPrompt,
-                           String dateHeadingPrompt,
+    public ReminderPlanner(String plannerName, String taskHeadingPrompt, String dateHeadingPrompt,
                            String completionStatusHeadingPrompt){
         super();
+        this.plannerName = plannerName;
         this.taskHeadingPrompt = taskHeadingPrompt;
         this.dateHeadingPrompt = dateHeadingPrompt;
         this.completionStatusHeadingPrompt = completionStatusHeadingPrompt;

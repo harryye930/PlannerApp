@@ -3,6 +3,7 @@ package UseCase;
 import Entity.DailyPlanner;
 import Entity.Planner;
 import Entity.ProjectPlanner;
+import Entity.ReminderPlanner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,73 +13,78 @@ import java.util.HashMap;
 public class PlannerManager{
     private HashMap<Integer, Planner> idToPlanner;
 
-
     /**
-     * Initialize the PlannerManager.
+     * Initializes the PlannerManager.
      */
     public PlannerManager() {
         this.idToPlanner = new HashMap<>();
     }
 
-
-    /** Create new DailyPlanner -- default interval 60 mins
-     *
-     * @param plannerName name of the planner
-     * @param startTime start time of planner
-     * @param endTime end time of planner
-     * @return true iff a new DailyPlanner is created
+    /** Creates an empty Daily Planner -- default interval 60 mins.
+     * @param plannerName Name of the planner.
+     * @param startTime Start time of planner.
+     * @param endTime End time of planner.
+     * @return ID of the created Daily Planner.
      */
     public int newDailyPlanner(String plannerName, String startTime, String endTime, String interval){
-
         DailyPlanner dailyPlanner = new DailyPlanner(plannerName, startTime, endTime, Integer.parseInt(interval));
         this.idToPlanner.put(dailyPlanner.getID(), dailyPlanner);
         return dailyPlanner.getID();
     }
 
-
-    /** Create an empty Project Planner
-     *
-     * @param plannerName name of planner
-     * @return true iff a new ProjectPlanner.java is correctly created
+    /**
+     * Creates an empty Project Planner.
+     * @param plannerName The name of the planner.
+     * @param firstColumn The column heading for the first status column.
+     * @param secondColumn The column heading for the second status column.
+     * @param thirdColumn The column heading for the third status column.
+     * @return The ID of the created Project Planner.
      */
     public int newProjectPlanner(String plannerName, String firstColumn, String secondColumn, String thirdColumn){
-
         ProjectPlanner projectPlanner = new ProjectPlanner(plannerName, firstColumn, secondColumn, thirdColumn);
         this.idToPlanner.put(projectPlanner.getID(), projectPlanner);
         return projectPlanner.getID();
     }
 
+    /**
+     * Creates an empty Reminders Planner.
+     * @param plannerName The name of the planner.
+     * @param taskHeading The heading of the tasks column.
+     * @param dateHeading The heading of the dates (task deadlines) column.
+     * @param completionStatusHeading The heading of the completion status column.
+     * @return The ID of the created Reminders Planner.
+     */
+    public int newReminderPlanner(String plannerName, String taskHeading,
+                                  String dateHeading, String completionStatusHeading){
+        ReminderPlanner reminderPlanner = new ReminderPlanner(plannerName, taskHeading,
+                                                                dateHeading, completionStatusHeading);
+        this.idToPlanner.put(reminderPlanner.getID(), reminderPlanner);
+        return reminderPlanner.getID();
+    }
 
-    //TODO create a reminder planner
-
-    /** Create a string representation of planner tasks
-     *
-     * @param id A String representing the id number.
-     * @return a string representation of the planner
+    /** Creates a string representation of the planner with the specified id.
+     * @param id A String representing the id number of a planner.
+     * @return A string representation of the planner with the id.
      */
     public String toString(int id){ return this.findPlanner(id).toString(); }
 
-
-    /** Create a string representation of daily planner remain tasks
-     *
-     * @return a string representation of the remain tasks for the daily planners.
+    /** Creates a string representation of the remaining tasks of Daily Planner with the specified id.
+     * @param id A String representing the id number of a Daily Planner.
+     * @return A string representation of the remaining tasks of the Daily Planner with the id.
      */
-    public String dailyPlannerRemainTasks(int id){
+    public String getDailyPlannerRemainTasks(int id){
         if (this.findPlanner(id).getClass() == DailyPlanner.class) {
             return ((DailyPlanner) this.findPlanner(id)).remainTasks();
         }
         return null;
     }
 
-
-    /** Set the idToPlanner Attributes
-     *
-     * @param hm The HashMap object we want to assign.
+    /** Sets the idToPlanner attribute.
+     * @param hm A HashMap object we want to set the idToPlanner attribute to.
      */
     public void setIdToPlanner(HashMap<Integer, Planner> hm) {
         this.idToPlanner = hm;
     }
-
 
     //TODO the input of edit is changed, see on planner entity class
     /** Edit agenda on DailyPlanner base on time stamp
