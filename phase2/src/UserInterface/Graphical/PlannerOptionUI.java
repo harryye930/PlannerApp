@@ -21,7 +21,8 @@ public class PlannerOptionUI extends GeneralPresenter {
     //planner menu text
     private JLabel prompt;
 
-    private GeneralPresenter createPlanner = new CreatePlannerUI("plannerMenu");
+    private final GeneralPresenter createPlanner = new CreatePlannerUI("plannerMenu");
+    private final GeneralPresenter checkPlanner = new CheckPlannerUI("plannerMenu");
 
     public PlannerOptionUI(String parent) {
         this.setParent(parent);
@@ -80,18 +81,7 @@ public class PlannerOptionUI extends GeneralPresenter {
         } else if (e.getSource() == newPlannerButton) {
             this.createPlanner.run();
         } else if (e.getSource() == checkPlannerButton) {
-            temp.setLayout(null);
-            main.add(temp, "plannerInfo");
-
-            JScrollPane plannerInfo = data.getPlanners();
-            plannerInfo.setBounds(25, 25, 400, 500);
-            temp.add(plannerInfo);
-
-            back.setBounds(515, 250, 70, 40);
-            temp.add(back);
-            back.addActionListener(this);
-
-            cl.show(main, "plannerInfo");
+            this.checkPlanner.run();
         } else if (e.getSource() == back) {
             cl.show(main, "plannerMenu");
             main.remove(temp);

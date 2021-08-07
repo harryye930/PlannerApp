@@ -3,10 +3,10 @@ package Entity;
 /**
  * A instance of this class represents a trial account in this application.
  */
-public class TrialAccount extends Account{
+public class TrialAccount extends UserAccount{
 
     public TrialAccount() {
-        super();
+        super("");
         this.accountType = "trial";
     }
 

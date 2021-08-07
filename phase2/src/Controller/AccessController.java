@@ -109,22 +109,25 @@ public class AccessController{
         String id = accManager.createAccount(email);
         accManager.setPassword(id, passWord);
         accManager.setUserName(id, userName);
+        this.currUserId = id;
         return id;
     }
 
     /**
-     * Create a new temporary account.
-     * @param email A String representing the email of this account.
-     * @param userName A String representing the username of this account.
-     * @param passWord A String representing the password of this account.
-     * @return A String representing the unique user ID of this account.
+     * Create a temporary account that due 30 days later.
+     * @param email A String representing the email of the account.
+     * @param userName A String representing the username.
+     * @param password A String representing the password.
+     * @return
      */
-    public String createTemporaryAccount(String email, String userName, String passWord) {
+    public String createTemporaryAccount(String email, String userName, String password) {
         String id = accManager.createTempAcc(email);
-        accManager.setPassword(id, passWord);
+        accManager.setPassword(id, password);
         accManager.setUserName(id, userName);
+        this.currUserId = id;
         return id;
     }
+
 
     /**
      * Reset the password of given account, user needs to enter the correct original password to proceed.
@@ -191,6 +194,19 @@ public class AccessController{
         accManager.setUserName(retriever, userName);
     }
 
+    /**
+     * Log out the current account, delete the account if it's trial account or due temporary account.
+     */
+    public void logOut() {
+        if (isAdmin(currUserId).equals("trial")) {
+            for (String plannerId: getPlanners(currUserId)) {
+                plannerController.deletePlanner(plannerId);
+            }
+            accManager.removeAccount(currUserId);
+        } else if (isAdmin(currUserId).equals("temporary")) {
+            this.removeAccount(currUserId);
+        }
+    }
 
     /**
      * Remove an account. User can only remove an account after they logged in or when a trial account logged out.
@@ -200,7 +216,14 @@ public class AccessController{
     public boolean removeAccount(String retriever) {
         String accountType = accManager.findAccount(retriever).getAccountType();
         if(accountType.equals("temporary")){
-            return accManager.deleteTempAccount(retriever);
+             if (accManager.deleteTempAccount(retriever)) {
+                 for (String plannerId: getPlanners(currUserId)) {
+                     plannerController.deletePlanner(plannerId);
+                 }
+                 return true;
+             } else {
+                 return false;
+             }
         }
         else {
             return accManager.removeAccount(retriever);

@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public class ReminderPlanner extends Planner{
 
-    private HashMap<String, ArrayList<String>> reminderPlannerTask;
+    private final HashMap<String, ArrayList<String>> reminderPlannerTask;
     private ArrayList<String> TaskPromptTasks, DatePromptTasks, CompletionPromptTasks;
     private String taskHeadingPrompt, dateHeadingPrompt, completionStatusHeadingPrompt;
     private int NumAgendas;

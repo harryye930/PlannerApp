@@ -12,8 +12,10 @@ public class LoginUI extends GeneralPresenter {
     private JLabel prompt;
     private JTextField retriever;
     private JTextField password;
+
     private JButton login;
     private JButton createAccount;
+    private JButton guest;
 
     private final GeneralPresenter adminUI = new AdminUI("LoginPage");
     private final GeneralPresenter regularUserUI = new RegularAccountUI("LoginPage");
@@ -51,7 +53,7 @@ public class LoginUI extends GeneralPresenter {
 
         JPanel panel = new JPanel();
         panel.setBounds(100, 150, 400, 200);
-        panel.setLayout(new GridLayout(3, 2));
+        panel.setLayout(new GridLayout(4, 2));
         menu.add(panel);
 
         JLabel retrieverPrompt = new JLabel("User ID or Email:");
@@ -77,6 +79,10 @@ public class LoginUI extends GeneralPresenter {
         createAccount.addActionListener(this);
         panel.add(createAccount);
 
+        guest = new JButton("Login as guest");
+        guest.addActionListener(this);
+        panel.add(guest);
+
         //exit = new JButton("Exit");
         //exit.addActionListener(this);
         //panel.add(exit);
@@ -87,13 +93,16 @@ public class LoginUI extends GeneralPresenter {
      *
      * @param e
      */
-
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == login) {
             this.loginIdentifier();
             this.password.setText("");
         } else if (e.getSource() == createAccount) {
             this.createAccountUI.run();
+        } else if (e.getSource() == guest) {
+            accessController.createAccount("", "", "");
+            this.regularUserUI.run();
         }
     }
 

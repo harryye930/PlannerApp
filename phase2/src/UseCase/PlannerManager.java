@@ -13,6 +13,7 @@ import java.util.HashMap;
 public class PlannerManager{
     private HashMap<Integer, Planner> idToPlanner;
 
+
     /**
      * Initializes the PlannerManager.
      */
@@ -27,6 +28,7 @@ public class PlannerManager{
      * @return ID of the created Daily Planner.
      */
     public int newDailyPlanner(String plannerName, String startTime, String endTime, String interval){
+
         DailyPlanner dailyPlanner = new DailyPlanner(plannerName, startTime, endTime, Integer.parseInt(interval));
         this.idToPlanner.put(dailyPlanner.getID(), dailyPlanner);
         return dailyPlanner.getID();
@@ -41,6 +43,7 @@ public class PlannerManager{
      * @return The ID of the created Project Planner.
      */
     public int newProjectPlanner(String plannerName, String firstColumn, String secondColumn, String thirdColumn){
+
         ProjectPlanner projectPlanner = new ProjectPlanner(plannerName, firstColumn, secondColumn, thirdColumn);
         this.idToPlanner.put(projectPlanner.getID(), projectPlanner);
         return projectPlanner.getID();
@@ -89,19 +92,12 @@ public class PlannerManager{
     //TODO the input of edit is changed, see on planner entity class
     /** Edit agenda on DailyPlanner base on time stamp
      *
-     * @param time: time slot on DailyPlanner, HH:MM
-     * @param newAgenda: new agenda item
+     * @param timeOrName: time slot on DailyPlanner, HH:MM
+     * @param agenda: new agenda item
      * @return true iff is correctly edited
      */
-    public boolean edit(int id, String time, String newAgenda){
-
-        if (this.findPlanner(id).getClass() == DailyPlanner.class){
-            this.findPlanner(id).edit(time, newAgenda);
-            return true;
-        }
-        else{
-            return false;
-        }
+    public boolean edit(int id, String timeOrName, String agenda){
+        return this.findPlanner(id).edit(timeOrName, agenda);
     }
 
 
@@ -248,6 +244,4 @@ public class PlannerManager{
         }
         return res;
     }
-
-    //TODO Adding ChangeTaskStatus method, details in planner entity class
 }

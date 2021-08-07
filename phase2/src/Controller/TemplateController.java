@@ -39,6 +39,7 @@ public class TemplateController{
     public TemplateController() {
         templateManager = new TemplateManager();
         templateGateway = new TemplateGateway(templateManager);
+        this.load();
     }
 
     /**
