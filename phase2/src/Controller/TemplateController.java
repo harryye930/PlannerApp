@@ -67,7 +67,7 @@ public class TemplateController{
      * @return String that contains detailed representation of all Template objects stored in the system.
      */
     public String detailViewAllTemplates(boolean publishedTemplatesOnly){
-        return templateManager.previewAllTemplates(publishedTemplatesOnly);
+        return templateManager.detailViewAllTemplates(publishedTemplatesOnly);
     }
 
     /**
