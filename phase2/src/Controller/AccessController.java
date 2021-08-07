@@ -178,7 +178,7 @@ public class AccessController{
      */
     public boolean updateAndSaveTempPassword(String retriever){
         String tempPassword = this.generateTempPassword();
-        return accManager.setPassword(retriever, tempPassword) & accGateway.saveTempPassword(tempPassword);
+        return accManager.setPassword(retriever, tempPassword) && accGateway.saveTempPassword(tempPassword);
     }
 
     /**
