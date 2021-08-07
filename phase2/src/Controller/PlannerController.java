@@ -2,6 +2,7 @@ package Controller;
 
 import Gateway.PlannerGateway;
 import UseCase.PlannerManager;
+import UserInterface.Graphical.LoginUI;
 import com.sun.xml.internal.ws.util.StringUtils;
 
 import java.util.ArrayList;
@@ -76,18 +77,21 @@ public class PlannerController {
     public String createPlanner() {
         String type = this.templateController.getTemplateType(Integer.parseInt(templateController.getCurrTemplateId()));
         int id = 0;
-        if (type.equals("daily")) {
+        System.out.println(type);//TODO
+        if (type.equals("Daily")) {
             ArrayList<String> prompts = this.templateController.
                     getTemplatePrompts(Integer.parseInt(templateController.getCurrTemplateId()));
             id = this.plannerManager.newDailyPlanner(accessController.getCurrUserId(),
                     prompts.get(0), prompts.get(1), prompts.get(2));
             this.currPlannerId = Integer.toString(id);
-        } else if (type.equals("project")) {
+        } else if (type.equals("Project")) {
             ArrayList<String> prompts = this.templateController.
                     getTemplatePrompts(Integer.parseInt(templateController.getCurrTemplateId()));
-            //id = this.plannerController.createNewProjectPlanner(prompts.get(0), prompts.get(1), prompts.get(2));
+            //TODO: Add planner name.
+            id = this.plannerManager.newProjectPlanner("", prompts.get(0), prompts.get(1), prompts.get(2));
             this.currPlannerId = Integer.toString(id);
         }
+        accessController.setPlanner(accessController.getCurrUserId(), Integer.toString(id));
         return Integer.toString(id);
     }
 
@@ -263,4 +267,17 @@ public class PlannerController {
 
     //TODO the ChangeTaskStatus method, based on project type; daily always return false; project planner detail see
     //TODO in project planner entity class; reminder planner the second input parameter should be a default value(e.g. "")
+    public static void main(String[] args) {
+//        PlannerController x = new PlannerController();
+//        AccessController y = new AccessController();
+//        String userId = y.createAccount("123", "123", "Qazwsx");
+//        x.load();
+//        int id = x.plannerManager.newDailyPlanner("trial", "09:00", "20:00", "60");
+//        x.plannerManager.setPlannerAuthor(id, userId);
+//        y.setPlanner(userId, Integer.toString(id));
+//        x.save();
+//        y.save();
+        LoginUI f = new LoginUI();
+        f.run();
+    }
 }

@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class CheckPlannerUI extends GeneralPresenter {
-    private final String separator = "======================";
+    private final String separator = "\n======================";
     private boolean flag = false;
 
     private GeneralPresenter plannerEdit = new PlannerEditUI("checkPlanner");
@@ -33,10 +33,12 @@ public class CheckPlannerUI extends GeneralPresenter {
     @Override
     public void run() {
         if (flag) {
+            plannerInfo.setText(plannerController.viewUserPlanners() +
+                    separator + plannerController.viewPublicPlanners());
             cl.show(main, "checkPlanner");
         } else {
             this.showPlanners();
-            cl.show(main, "check Planner");
+            cl.show(main, "checkPlanner");
             frame.setVisible(true);
             flag = !flag;
         }
@@ -47,9 +49,10 @@ public class CheckPlannerUI extends GeneralPresenter {
         main.add(checkPlanner, "checkPlanner");
 
         plannerInfo.setBounds(25, 25, 400, 500);
-        plannerInfo.setText(plannerController.viewUserPlanners() + separator + plannerController.viewPublicPlanners());
+        plannerInfo.setText(plannerController.viewUserPlanners() +
+                separator + plannerController.viewPublicPlanners());
         plannerInfo.setEditable(false);
-        plannerInfo.setBackground(new Color(143, 141, 141));
+        plannerInfo.setBackground(new Color(213, 212, 212));
         checkPlanner.add(plannerInfo);
 
         prompt.setBounds(450, 50, 200, 50);

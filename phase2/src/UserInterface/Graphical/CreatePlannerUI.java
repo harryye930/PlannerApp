@@ -74,7 +74,7 @@ public class CreatePlannerUI extends GeneralPresenter {
                 this.message.setText("Invalid ID, please try again!");
             } else {
                 //TODO: finish this when the planner part is done.
-                //plannerController.createPlanner();
+                plannerController.createPlanner();
                 this.checkPlanner.run();
             }
         } else if (e.getSource() == back) {
