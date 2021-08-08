@@ -33,8 +33,10 @@ public class PlannerEditUI extends GeneralPresenter {
     private final JButton submit = new JButton("Submit");
     private final JButton changeButton = new JButton();
     private final JButton back = new JButton("Go back");
+    private final JButton changePrivacy = new JButton();
+    private final JButton delete = new JButton("Delete planner");
 
-    private CardLayout current = new CardLayout();
+    private final CardLayout current = new CardLayout();
 
     public PlannerEditUI(String parent) {
         this.setParent(parent);
@@ -71,6 +73,7 @@ public class PlannerEditUI extends GeneralPresenter {
         }
         editPlanner.add(currentPanel);
 
+        delete.setBounds(500, 300, 150, 30);
         submit.setBounds(500, 350, 150, 30);
         back.setBounds(500, 400, 150, 30);
         changeButton.setBounds(500, 250, 150, 30);
@@ -80,6 +83,8 @@ public class PlannerEditUI extends GeneralPresenter {
             changeButton.addActionListener(this);
         }
 
+        editPlanner.add(delete);
+        delete.addActionListener(this);
         editPlanner.add(submit);
         submit.addActionListener(this);
         editPlanner.add(back);
@@ -183,6 +188,9 @@ public class PlannerEditUI extends GeneralPresenter {
             text1.setText("");
             this.run();
         } else if (e.getSource() == back) {
+            cl.show(main, this.getParent());
+        } else if (e.getSource() == delete) {
+            plannerController.deletePlanner(plannerController.getCurrPlannerId());
             cl.show(main, this.getParent());
         }
     }

@@ -26,6 +26,9 @@ public class ProjectPlanner extends Planner{
     public String toString() {
         StringBuilder res = new StringBuilder();
         String separator = "====================\n";
+        res.append("Status: ").append(this.getPrivacyStatus()).append("\n");
+        res.append("Planner ID:").append(this.getID()).append("\n");
+        res.append("Planner name: ").append(this.plannerName).append("\n");
         for (String columnName: tasks.keySet()) {
             res.append("The \"").append(columnName).append("\" column has following tasks:\n");
             for (String task: tasks.get(columnName)) {
