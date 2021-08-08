@@ -26,6 +26,7 @@ public class EditTemplateUI extends GeneralPresenter {
     // Button
     private final JButton nameButton = new JButton("Name of the template");
     private final JButton statusButton = new JButton("Published Status of the template");
+    private final JButton backToTemplatesButton = new JButton("Go back");
     private final JButton submitButton = new JButton("Submit");
     private final JButton backButton = new JButton("Go back");
 
@@ -35,6 +36,14 @@ public class EditTemplateUI extends GeneralPresenter {
 
     @Override
     public void run() {
+        if (flag){
+            template = data.getTemplate(templateController.getCurrTemplateId());
+            cl.show(main, "editTemplate");
+        } else {
+            this.showEditUI();
+            cl.show(main, "editTemplate");
+            flag = !flag;
+        }
 
     }
 
@@ -43,21 +52,28 @@ public class EditTemplateUI extends GeneralPresenter {
         main.add(editTemplate, "editTemplate");
 
         template = data.getTemplate(templateController.getCurrTemplateId());
-        template.setBounds(20, 20, 450, 500);
+        template.setBounds(25, 25, 400, 500);
         template.setBackground(new Color(213, 212, 212));
         editTemplate.add(template);
 
-        selectionPrompt.setBounds(450, 50, 200, 50);
+        selectionPrompt.setBounds(450, 50, 225, 40);
         selectionPrompt.setEditable(false);
         editTemplate.add(selectionPrompt);
 
-        nameButton.setBounds(500, 200, 70, 40);
+        nameButton.setBounds(450, 150, 225, 40);
         nameButton.addActionListener(this);
         editTemplate.add(nameButton);
+        nameButton.addActionListener(this);
 
-        statusButton.setBounds(500, 280, 70, 40);
+        statusButton.setBounds(450, 200, 225, 40);
         statusButton.addActionListener(this);
         editTemplate.add(statusButton);
+        statusButton.addActionListener(this);
+
+        backToTemplatesButton.setBounds(450, 250, 225, 40);
+        backToTemplatesButton.addActionListener(this);
+        editTemplate.add(backToTemplatesButton);
+        backToTemplatesButton.addActionListener(this);
     }
 
     private JPanel getEditNamePanel(){
@@ -81,8 +97,8 @@ public class EditTemplateUI extends GeneralPresenter {
         // get the current published status of the template
         boolean isPublished = templateController.getTemplatePublishedStatus(
                 Integer.parseInt(templateController.getCurrTemplateId()));
-        String currStatus = null;
-        String newStatus = null;
+        String currStatus;
+        String newStatus;
         if (isPublished){
             currStatus = "published";
             newStatus = "unpublished";
@@ -108,15 +124,20 @@ public class EditTemplateUI extends GeneralPresenter {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        editTemplate.remove(selectionPrompt);
-        editTemplate.remove(nameButton);
-        editTemplate.remove(statusButton);
         if (e.getSource() == nameButton){
+            editTemplate.remove(selectionPrompt);
+            editTemplate.remove(nameButton);
+            editTemplate.remove(statusButton);
             currentPanel = this.getEditNamePanel();
             currentPanel.setBounds(450, 50, 200, 200);
         } else if (e.getSource() == statusButton) {
+            editTemplate.remove(selectionPrompt);
+            editTemplate.remove(nameButton);
+            editTemplate.remove(statusButton);
             currentPanel = this.getEditStatusPanel();
             currentPanel.setBounds(450, 50, 200, 200);
+        } else if (e.getSource() == backToTemplatesButton) {
+            cl.show(main, this.getParent());
         }
     }
 }
