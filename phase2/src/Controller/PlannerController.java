@@ -86,6 +86,7 @@ public class PlannerController {
             this.currPlannerId = Integer.toString(id);
         }
         accessController.setPlanner(accessController.getCurrUserId(), Integer.toString(id));
+        this.save();
         return Integer.toString(id);
     }
 

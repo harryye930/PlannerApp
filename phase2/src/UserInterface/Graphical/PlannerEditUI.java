@@ -5,6 +5,7 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class PlannerEditUI extends GeneralPresenter {
 //    private final String dailyMessage = "Please enter the time zone you \n" +
@@ -33,7 +34,7 @@ public class PlannerEditUI extends GeneralPresenter {
     private final JButton submit = new JButton("Submit");
     private final JButton changeButton = new JButton();
     private final JButton back = new JButton("Go back");
-    private final JButton changePrivacy = new JButton();
+    private final JList<String> changePrivacy = new JList<>();
     private final JButton delete = new JButton("Delete planner");
 
     private final CardLayout current = new CardLayout();
@@ -64,6 +65,8 @@ public class PlannerEditUI extends GeneralPresenter {
         editPlanner.setLayout(null);
         editPlanner.add(planner);
 
+        JLabel privacy = new JLabel("Please choose the privacy status you want to set");
+
         if (plannerController.getType(Integer.parseInt(plannerController.getCurrPlannerId())).equals("daily")) {
             currentPanel = this.getDailyPanel();
             currentPanel.setBounds(475, 25, 200, 200);
@@ -73,22 +76,27 @@ public class PlannerEditUI extends GeneralPresenter {
         }
         editPlanner.add(currentPanel);
 
-        delete.setBounds(500, 300, 150, 30);
-        submit.setBounds(500, 350, 150, 30);
-        back.setBounds(500, 400, 150, 30);
+        delete.setBounds(500, 400, 150, 30);
+        submit.setBounds(500, 450, 150, 30);
+        back.setBounds(500, 500, 150, 30);
         changeButton.setBounds(500, 250, 150, 30);
+        changePrivacy.setBounds(500, 300, 150, 60);
+        privacy.setBounds(475, 260, 200, 40);
 
         if (plannerController.getType(Integer.parseInt(plannerController.getCurrPlannerId())).equals("project")) {
             editPlanner.add(changeButton);
             changeButton.addActionListener(this);
         }
 
+        editPlanner.add(privacy);
         editPlanner.add(delete);
         delete.addActionListener(this);
         editPlanner.add(submit);
         submit.addActionListener(this);
         editPlanner.add(back);
         back.addActionListener(this);
+        editPlanner.add(changePrivacy);
+        changePrivacy.setListData(new String[]{"", "private", "public", "friends-only"});
     }
 
     private JPanel getDailyPanel() {
@@ -113,7 +121,6 @@ public class PlannerEditUI extends GeneralPresenter {
         add = new JPanel();
         projectPanel.add(edit, "editProject");
         projectPanel.add(add, "addProject");
-//        changeButton.addActionListener(this);
 
         //Add
         if (firstStatus) {
@@ -141,12 +148,7 @@ public class PlannerEditUI extends GeneralPresenter {
             edit.add(text0);
             edit.add(destinyColumn);
             edit.add(text1);
-
         }
-
-//        projectPanel.add(changeButton);
-        //changeButton.setBounds(600, 200, 150, 30);
-
         if (this.firstStatus) {
             changeButton.setText("Change to edit page");
             current.show(projectPanel, "addProject");
@@ -154,7 +156,6 @@ public class PlannerEditUI extends GeneralPresenter {
             changeButton.setText("Change to add page");
             current.show(projectPanel, "editProject");
         }
-
         return projectPanel;
     }
 
@@ -183,10 +184,24 @@ public class PlannerEditUI extends GeneralPresenter {
                 currentPanel = this.getProjectPanel();
             }
         } else if (e.getSource() == submit) {
-            plannerController.edit(text0.getText(), text1.getText());
-            text0.setText("");
-            text1.setText("");
-            this.run();
+            //TODO: trial account cannot create planner right now.
+            boolean runFlag = false;
+            String[] temp = text0.getText().split("");
+            if (changePrivacy.getSelectedIndex() != -1) {
+                plannerController.changePrivacyStatus(changePrivacy.getSelectedValue());
+                runFlag = true;
+            }
+            if (temp.length < 5 || !temp[2].equals(":")) {
+                text0.setText("Invalid input, please try again");
+            } else{
+                runFlag = true;
+                plannerController.edit(text0.getText(), text1.getText());
+            }
+            if (runFlag) {
+                text0.setText("");
+                text1.setText("");
+                this.run();
+            }
         } else if (e.getSource() == back) {
             cl.show(main, this.getParent());
         } else if (e.getSource() == delete) {
