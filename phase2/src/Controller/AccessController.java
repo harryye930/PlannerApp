@@ -110,6 +110,7 @@ public class AccessController{
         accManager.setPassword(id, passWord);
         accManager.setUserName(id, userName);
         this.currUserId = id;
+        this.save();
         return id;
     }
 
@@ -192,6 +193,7 @@ public class AccessController{
      */
     public void changeUserName(String retriever, String userName) {
         accManager.setUserName(retriever, userName);
+        this.save();
     }
 
     /**
@@ -206,6 +208,7 @@ public class AccessController{
         } else if (isAdmin(currUserId).equals("temporary")) {
             this.removeAccount(currUserId);
         }
+        this.save();
     }
 
     /**
@@ -220,13 +223,16 @@ public class AccessController{
                  for (String plannerId: getPlanners(currUserId)) {
                      plannerController.deletePlanner(plannerId);
                  }
+                 this.save();
                  return true;
              } else {
                  return false;
              }
         }
         else {
-            return accManager.removeAccount(retriever);
+            boolean flag =  accManager.removeAccount(retriever);
+            this.save();
+            return flag;
         }
     }
 
@@ -237,7 +243,9 @@ public class AccessController{
      * @return A boolean value representing whether the adding is successful or not.
      */
     public boolean setPlanner(String retriever, String  plannerId){
-        return this.accManager.setPlanners(retriever, plannerId);
+        boolean flag = this.accManager.setPlanners(retriever, plannerId);
+        this.save();
+        return flag;
     }
 
     /**
@@ -296,6 +304,7 @@ public class AccessController{
      */
     public void removePlanner(String retriever, String plannerId) {
         this.accManager.removePlanner(retriever, plannerId);
+        this.save();
     }
 
     /**
@@ -305,6 +314,7 @@ public class AccessController{
      */
     public void suspendUser(String retriever, long days){
         accManager.suspendUser(retriever, days);
+        this.save();
     }
 
     /**
@@ -313,6 +323,7 @@ public class AccessController{
      */
     public void unSuspendUser(String retriever){
         accManager.unSuspendUser(retriever);
+        this.save();
     }
 
     /**
