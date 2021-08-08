@@ -612,7 +612,9 @@ public class AccountManager implements Serializable{
         } else if (status.equals("admin")){
             HashSet<String> ids = new HashSet<>();
             for (String id: this.idToAccount.keySet()) {
-                ids.addAll(this.getPlanners(id));
+                if (!checkAccountRole(id).equals("admin")) {
+                    ids.addAll(this.getPlanners(id));
+                }
             }
             return new ArrayList<>(ids);
         }
