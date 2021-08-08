@@ -15,7 +15,6 @@ public class AdminTemplateOptionUI extends GeneralPresenter {
     // all buttons
     JButton editTemplate = new JButton("Edit Template");
     JButton returnToMainMenuButton= new JButton("Return to Main Menu");
-    JPanel temp = new JPanel();
 
     // panel
     private final JPanel templateMenu = new JPanel();
@@ -37,7 +36,7 @@ public class AdminTemplateOptionUI extends GeneralPresenter {
             this.buildTemplateMenu();
             cl.show(main, "templateMenu");
             frame.setVisible(true);
-            flag = !flag; // flag = false?
+            flag = !flag;
         }
     }
 

@@ -52,7 +52,6 @@ public class CheckTemplateUI extends GeneralPresenter {
 
         templateInfo = data.getTemplates();
         templateInfo.setBounds(25, 25, 400, 500);
-
         templateInfo.setBackground(new Color(213, 212, 212));
         checkTemplate.add(templateInfo);
 
