@@ -74,21 +74,15 @@ public class PlannerController {
      * Create a new planner based on the chosen template.
      * @return A String representing the planner id.
      */
-    public String createPlanner() {
+    public String createPlanner(String prompt0, String prompt1, String prompt2, String name) {
         String type = this.templateController.getTemplateType(Integer.parseInt(templateController.getCurrTemplateId()));
         int id = 0;
-        System.out.println(type);//TODO
         if (type.equals("Daily")) {
-            ArrayList<String> prompts = this.templateController.
-                    getTemplatePrompts(Integer.parseInt(templateController.getCurrTemplateId()));
-            id = this.plannerManager.newDailyPlanner(accessController.getCurrUserId(),
-                    prompts.get(0), prompts.get(1), prompts.get(2));
+            id = this.plannerManager.newDailyPlanner(name, prompt0, prompt1, prompt2);
             this.currPlannerId = Integer.toString(id);
         } else if (type.equals("Project")) {
-            ArrayList<String> prompts = this.templateController.
-                    getTemplatePrompts(Integer.parseInt(templateController.getCurrTemplateId()));
             //TODO: Add planner name.
-            id = this.plannerManager.newProjectPlanner("", prompts.get(0), prompts.get(1), prompts.get(2));
+            id = this.plannerManager.newProjectPlanner(name, prompt0, prompt1, prompt2);
             this.currPlannerId = Integer.toString(id);
         }
         accessController.setPlanner(accessController.getCurrUserId(), Integer.toString(id));
