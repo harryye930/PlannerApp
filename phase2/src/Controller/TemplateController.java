@@ -39,6 +39,7 @@ public class TemplateController{
     public TemplateController() {
         templateManager = new TemplateManager();
         templateGateway = new TemplateGateway(templateManager);
+        this.load();
     }
 
     /**
@@ -67,7 +68,17 @@ public class TemplateController{
      * @return String that contains detailed representation of all Template objects stored in the system.
      */
     public String detailViewAllTemplates(boolean publishedTemplatesOnly){
-        return templateManager.previewAllTemplates(publishedTemplatesOnly);
+        return templateManager.detailViewAllTemplates(publishedTemplatesOnly);
+    }
+
+    /**
+     * Returns a detailed string representation of a template with id.
+     * @param id ID of the template.
+     * @return String representation of the Template object corresponding to the id. String representation contains
+     * detailed representation of the Template, including name, type, number of prompts, and what those prompts are.
+     */
+    public String detailViewTemplate(int id){
+        return templateManager.detailViewTemplate(id);
     }
 
     /**
@@ -162,9 +173,19 @@ public class TemplateController{
 
     /**
      * Changes the published status of a given template (i.e., published to unpublished, vice versa).
-     * @param id A int representing the id of the template.
+     * @param id An int representing the id of the template.
      */
     public void switchPublishedStatus(int id) {
         this.templateManager.switchPublishedStatus(id);
     }
+
+    /**
+     * Changes the name of the Template with ID to newName.
+     * @param id ID of template being edited.
+     * @param newName New value to set the name of the Template to.
+     */
+    public void editTemplateName(int id, String newName){
+        this.templateManager.editTemplateName(id, newName);
+    }
+
 }

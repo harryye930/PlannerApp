@@ -6,8 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * GUI class for viewing all planners available to a regular user (all personal planners, all public planners,
+ * any friends-only planners if they are added to the friends list of another user)
+ */
+
+//TODO: show friends-only planners
 public class CheckPlannerUI extends GeneralPresenter {
-    private final String separator = "======================";
+    private final String separator = "\n======================";
     private boolean flag = false;
 
     private GeneralPresenter plannerEdit = new PlannerEditUI("checkPlanner");
@@ -16,8 +22,9 @@ public class CheckPlannerUI extends GeneralPresenter {
     JPanel checkPlanner = new JPanel();
 
     //TextArea/Field
-    JTextArea plannerInfo = new JTextArea();
-    JTextArea prompt = new JTextArea("Please enter the planner ID you want to operate on:");
+
+    JScrollPane plannerInfo;
+    JTextArea prompt = new JTextArea("Please enter the planner ID\n you want to operate on:");
     JTextField plannerId = new JTextField();
 
     //Button
@@ -33,10 +40,13 @@ public class CheckPlannerUI extends GeneralPresenter {
     @Override
     public void run() {
         if (flag) {
+//            plannerInfo.setText(plannerController.viewUserPlanners() +
+//                    separator + plannerController.viewPublicPlanners());
+            plannerInfo = data.getPlanners();
             cl.show(main, "checkPlanner");
         } else {
             this.showPlanners();
-            cl.show(main, "check Planner");
+            cl.show(main, "checkPlanner");
             frame.setVisible(true);
             flag = !flag;
         }
@@ -46,10 +56,10 @@ public class CheckPlannerUI extends GeneralPresenter {
         checkPlanner.setLayout(null);
         main.add(checkPlanner, "checkPlanner");
 
+        plannerInfo = data.getPlanners();
         plannerInfo.setBounds(25, 25, 400, 500);
-        plannerInfo.setText(plannerController.viewUserPlanners() + separator + plannerController.viewPublicPlanners());
-        plannerInfo.setEditable(false);
-        plannerInfo.setBackground(new Color(143, 141, 141));
+
+        plannerInfo.setBackground(new Color(213, 212, 212));
         checkPlanner.add(plannerInfo);
 
         prompt.setBounds(450, 50, 200, 50);

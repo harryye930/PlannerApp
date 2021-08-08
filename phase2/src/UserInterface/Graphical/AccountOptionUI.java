@@ -6,8 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/***
+ * GUI class for the account setting screen: displays account information and allows user to change account username
+ * and password.
+ */
 public class AccountOptionUI extends GeneralPresenter {
     private boolean flag = false;
+
+    private GeneralPresenter friendUI = new FriendUI("accountMenu");
 
     //Panel
     private final JPanel accountMenu = new JPanel();
@@ -18,6 +24,7 @@ public class AccountOptionUI extends GeneralPresenter {
     private final JButton changName = new JButton("Change User name");
     private final JButton changePassword = new JButton("Change Password");
     private final JButton back = new JButton("Go back");
+    private final JButton addFriend = new JButton("Add friend");
     private JButton submit0;
     private JButton submit1;
     private JButton goBack;
@@ -58,10 +65,13 @@ public class AccountOptionUI extends GeneralPresenter {
 
         changName.setBounds(515, 150, 150, 40);
         changePassword.setBounds(515, 200, 150, 40);
-        back.setBounds(515, 250, 70, 40);
+        addFriend.setBounds(515, 250, 150, 40);
+        back.setBounds(515, 300, 70, 40);
         accountMenu.add(changName);
         accountMenu.add(changePassword);
         accountMenu.add(back);
+        accountMenu.add(addFriend);
+        addFriend.addActionListener(this);
         changName.addActionListener(this);
         changePassword.addActionListener(this);
         back.addActionListener(this);
@@ -159,6 +169,8 @@ public class AccountOptionUI extends GeneralPresenter {
             //cl.show(main, "accountMenu");
             main.remove(changeMenu);
             this.run();
+        } else if (e.getSource() == addFriend) {
+            friendUI.run();
         }
     }
 }

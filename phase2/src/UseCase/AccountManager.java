@@ -93,7 +93,7 @@ public class AccountManager implements Serializable{
      */
     public boolean setPassword(String retriever, String password){
         Account account = this.findAccount(retriever);
-        if (checkPasswordComplexity(password)){
+        if (!Objects.equals(checkPasswordComplexity(password), "Too Weak")){
             account.setPassword(password);
             return true;
         } else {
@@ -109,6 +109,7 @@ public class AccountManager implements Serializable{
      */
     public boolean checkPasswordComplexity(String password){
         return !getPasswordComplexityLevel(getNumberOfCriteriaMet(password)).equals("Too Weak");
+        //return getPasswordComplexityLevel(getNumberOfCriteriaMet(password));
     }
 
     /**
@@ -491,7 +492,7 @@ public class AccountManager implements Serializable{
      * we think that it would be an admin. If the user has no email (email is empty), then we create
      * trial account. Else, it would be a regular account.
      * @param email: the email that user enters
-     * @return userId: the userId of the user so they can login in the future.
+     * @return userId: the userId of the user so they can log in the future.
      */
     public String createAccount(String email){
         String userId;
@@ -535,7 +536,7 @@ public class AccountManager implements Serializable{
 
         boolean isAfter = todayDate.isAfter(endDate);
 
-        if (this.getAllAccount().contains(account) & isAfter) {
+        if (this.getAllAccount().contains(account) && isAfter) {
             idToAccount.remove(account.getUserId());
             emailToAccount.remove(account.getEmail());
             return true; //Return true if the account object is deleted.
@@ -606,11 +607,18 @@ public class AccountManager implements Serializable{
         Account account = this.findAccount(retriever);
         String status = account.getAccountType();
 
-        if (status.equals("regular") | status.equals("temporary")){
+        if (status.equals("regular") || status.equals("temporary") || status.equals("trial") ){
             return ((UserAccount) account).getPlanner();
-        } else {
-            return null;
+        } else if (status.equals("admin")){
+            HashSet<String> ids = new HashSet<>();
+            for (String id: this.idToAccount.keySet()) {
+                if (!checkAccountRole(id).equals("admin")) {
+                    ids.addAll(this.getPlanners(id));
+                }
+            }
+            return new ArrayList<>(ids);
         }
+        return new ArrayList<>();
     }
 
     /**
@@ -730,4 +738,5 @@ public class AccountManager implements Serializable{
             return false;
         }
     }
+
 }

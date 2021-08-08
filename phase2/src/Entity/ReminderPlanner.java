@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public class ReminderPlanner extends Planner{
 
-    private HashMap<String, ArrayList<String>> reminderPlannerTask;
+    private final HashMap<String, ArrayList<String>> reminderPlannerTask;
     private ArrayList<String> TaskPromptTasks, DatePromptTasks, CompletionPromptTasks;
     private String taskHeadingPrompt, dateHeadingPrompt, completionStatusHeadingPrompt;
     private int NumAgendas;
@@ -28,10 +28,10 @@ public class ReminderPlanner extends Planner{
      * @param dateHeadingPrompt the second column name of the reminder planner
      * @param completionStatusHeadingPrompt the third column name of the reminder planner
      */
-    public ReminderPlanner(String taskHeadingPrompt,
-                           String dateHeadingPrompt,
+    public ReminderPlanner(String plannerName, String taskHeadingPrompt, String dateHeadingPrompt,
                            String completionStatusHeadingPrompt){
         super();
+        this.plannerName = plannerName;
         this.taskHeadingPrompt = taskHeadingPrompt;
         this.dateHeadingPrompt = dateHeadingPrompt;
         this.completionStatusHeadingPrompt = completionStatusHeadingPrompt;

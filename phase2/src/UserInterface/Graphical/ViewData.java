@@ -3,8 +3,6 @@ package UserInterface.Graphical;
 import Controller.AccessController;
 import Controller.PlannerController;
 import Controller.TemplateController;
-import Interface.IController;
-import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,10 +15,16 @@ public class ViewData {
     JTextArea templateInfo = new JTextArea();
     JTextArea plannerInfo = new JTextArea();
     JTextArea accountInfo = new JTextArea();
+    JTextArea singlePlannerInfo = new JTextArea();
+    JTextArea singleTemplateInfo = new JTextArea();
+    JTextArea friendsInfo = new JTextArea();
 
     JScrollPane planners = new JScrollPane(plannerInfo);
     JScrollPane templates = new JScrollPane(templateInfo);
     JScrollPane accounts = new JScrollPane(accountInfo);
+    JScrollPane planner = new JScrollPane(singlePlannerInfo);
+    JScrollPane template = new JScrollPane(singleTemplateInfo);
+    JScrollPane friends = new JScrollPane(friendsInfo);
 
     public ViewData(AccessController accessController, TemplateController templateController,
                     PlannerController plannerController) {
@@ -39,9 +43,24 @@ public class ViewData {
         return this.planners;
     }
 
+    public JScrollPane getPlanner(String id) {
+        this.updatePlanner(id);
+        return this.planner;
+    }
+
+    public JScrollPane getTemplate(String id){
+        this.updateTemplate(id);
+        return this.template;
+    }
+
     public JScrollPane getAccounts() {
         this.update();
         return this.accounts;
+    }
+
+    public JScrollPane getFriendsInfo() {
+        this.updateFriendList(accessController.getCurrUserId());
+        return this.friends;
     }
 
     private void update() {
@@ -66,6 +85,19 @@ public class ViewData {
         accountInfo.removeAll();
         accountInfo.setEditable(false);
         accountInfo.setLayout(null);
+    }
+
+    private void updatePlanner(String id) {
+        singlePlannerInfo.setText(plannerController.toString(Integer.parseInt(id)));
+    }
+
+    private void updateTemplate(String id) {
+        singleTemplateInfo.setText(templateController.detailViewTemplate(Integer.parseInt(id)));
+    }
+
+    private void updateFriendList(String id) {
+        friendsInfo.setEditable(false);
+        friendsInfo.setText(accessController.getFriendsInfo(accessController.getCurrUserId()));
     }
 
 }

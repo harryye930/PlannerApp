@@ -1,6 +1,7 @@
 package Controller;
 
 import Entity.Account;
+import Entity.UserAccount;
 import Gateway.AccountGateway;
 import UseCase.*;
 
@@ -84,7 +85,7 @@ public class AccessController{
     }
 
     /**
-     * Check whether a account is an admin account or not.
+     * Check whether an account is an admin account or not.
      * @param retriever A String representing the User ID or Email.
      * @return A String value representing whether the account is an admin account, regular
      * account or a trial account.
@@ -100,7 +101,7 @@ public class AccessController{
     /**
      * Create a new account.
      * @param email A String representing the email of this account.
-     * @param userName A String representing the user name of this account.
+     * @param userName A String representing the username of this account.
      * @param passWord A String representing the password of this account.
      * @return A String representing the unique user ID of this account.
      */
@@ -108,22 +109,26 @@ public class AccessController{
         String id = accManager.createAccount(email);
         accManager.setPassword(id, passWord);
         accManager.setUserName(id, userName);
+        this.currUserId = id;
+        this.save();
         return id;
     }
 
     /**
-     * Create a new temporary account.
-     * @param email A String representing the email of this account.
-     * @param userName A String representing the user name of this account.
-     * @param passWord A String representing the password of this account.
-     * @return A String representing the unique user ID of this account.
+     * Create a temporary account that due 30 days later.
+     * @param email A String representing the email of the account.
+     * @param userName A String representing the username.
+     * @param password A String representing the password.
+     * @return
      */
-    public String createTemporaryAccount(String email, String userName, String passWord) {
+    public String createTemporaryAccount(String email, String userName, String password) {
         String id = accManager.createTempAcc(email);
-        accManager.setPassword(id, passWord);
+        accManager.setPassword(id, password);
         accManager.setUserName(id, userName);
+        this.currUserId = id;
         return id;
     }
+
 
     /**
      * Reset the password of given account, user needs to enter the correct original password to proceed.
@@ -178,18 +183,33 @@ public class AccessController{
      */
     public boolean updateAndSaveTempPassword(String retriever){
         String tempPassword = this.generateTempPassword();
-        return accManager.setPassword(retriever, tempPassword) & accGateway.saveTempPassword(tempPassword);
+        return accManager.setPassword(retriever, tempPassword) && accGateway.saveTempPassword(tempPassword);
     }
 
     /**
-     * Reset the user name.
+     * Reset the username.
      * @param retriever A String representing the User ID or Email.
-     * @param userName A String representing the new user name.
+     * @param userName A String representing the new username.
      */
     public void changeUserName(String retriever, String userName) {
         accManager.setUserName(retriever, userName);
+        this.save();
     }
 
+    /**
+     * Log out the current account, delete the account if it's trial account or due temporary account.
+     */
+    public void logOut() {
+        if (isAdmin(currUserId).equals("trial")) {
+            for (String plannerId: getPlanners(currUserId)) {
+                plannerController.deletePlanner(plannerId);
+            }
+            accManager.removeAccount(currUserId);
+        } else if (isAdmin(currUserId).equals("temporary")) {
+            this.removeAccount(currUserId);
+        }
+        this.save();
+    }
 
     /**
      * Remove an account. User can only remove an account after they logged in or when a trial account logged out.
@@ -199,10 +219,20 @@ public class AccessController{
     public boolean removeAccount(String retriever) {
         String accountType = accManager.findAccount(retriever).getAccountType();
         if(accountType.equals("temporary")){
-            return accManager.deleteTempAccount(retriever);
+             if (accManager.deleteTempAccount(retriever)) {
+                 for (String plannerId: getPlanners(currUserId)) {
+                     plannerController.deletePlanner(plannerId);
+                 }
+                 this.save();
+                 return true;
+             } else {
+                 return false;
+             }
         }
         else {
-            return accManager.removeAccount(retriever);
+            boolean flag =  accManager.removeAccount(retriever);
+            this.save();
+            return flag;
         }
     }
 
@@ -210,17 +240,19 @@ public class AccessController{
      *
      * @param retriever A String representing the User ID or Email.
      * @param plannerId A planner id that need to be added to the account.
-     * @return A boolean value representing whether the adding is successful or not..
+     * @return A boolean value representing whether the adding is successful or not.
      */
     public boolean setPlanner(String retriever, String  plannerId){
-        return this.accManager.setPlanners(retriever, plannerId);
+        boolean flag = this.accManager.setPlanners(retriever, plannerId);
+        this.save();
+        return flag;
     }
 
     /**
      * Add new planner to a given account. return true if any one of the planners is added.
      * @param retriever A String representing the User ID or Email.
      * @param planner A planner id that need to be added to the account.
-     * @return A boolean value representing whether the adding is successful or not..
+     * @return A boolean value representing whether the adding is successful or not.
      */
     public boolean setPlanner(String retriever, ArrayList<String > planner){
         return this.accManager.setPlanners(retriever, planner);
@@ -272,6 +304,7 @@ public class AccessController{
      */
     public void removePlanner(String retriever, String plannerId) {
         this.accManager.removePlanner(retriever, plannerId);
+        this.save();
     }
 
     /**
@@ -281,6 +314,7 @@ public class AccessController{
      */
     public void suspendUser(String retriever, long days){
         accManager.suspendUser(retriever, days);
+        this.save();
     }
 
     /**
@@ -289,6 +323,7 @@ public class AccessController{
      */
     public void unSuspendUser(String retriever){
         accManager.unSuspendUser(retriever);
+        this.save();
     }
 
     /**
@@ -307,17 +342,32 @@ public class AccessController{
         return accManager.deleteFriend(selfId, friendId);
     }
 
-    public String getFriends(String selfId){
+    public String getFriendsInfo(String selfId){
         ArrayList<String> friends = accManager.getFriends(selfId);
         StringBuilder strFriends = new StringBuilder();
         for (String i : friends){
-            strFriends.append("\n").append(i);
+            strFriends.append(getInfo(i)).append("\n");
         }
         return strFriends.toString();
     }
 
-    public void sendMail(String senderId, String revieveId, String mail){
-        accManager.sendMail(senderId, revieveId,mail);
+
+
+    public ArrayList<String> seeFriendsPlanner(String friendId){
+        Account friend = accManager.findAccount(friendId);
+        ArrayList<String> friendAllPlanner = new ArrayList<>(((UserAccount)friend).getPlanner());
+        ArrayList<String> friendOnly = new ArrayList<>();
+        for (String i : friendAllPlanner){
+            if (plannerController.getPrivacyStatus(Integer.parseInt(i)).equals("friends-only")){
+                friendOnly.add(i);
+            }
+        }
+        return friendOnly;
+    }
+
+
+    public void sendMail(String senderId, String revivedId, String mail){
+        accManager.sendMail(senderId, revivedId,mail);
     }
 
     public HashMap<String, ArrayList<String>> getMailbox(String userId){

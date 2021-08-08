@@ -5,17 +5,33 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
+/**
+ * GUI class for the first planner creation screen.
+ * Displays a list of templates available, and asks the user to enter the ID of the template they would like to use.
+ */
 public class CreatePlannerUI extends GeneralPresenter {
-    private boolean flag = false;
+    private boolean menuFlag = false;
+    private boolean createPageFlag = false;
 
     private final GeneralPresenter checkPlanner = new CheckPlannerUI("createPlanner");
 
-    JPanel createPlanner = new JPanel();
-    JTextArea message = new JTextArea("Please enter the ID of template \nyou want to use:");
-    JTextField id = new JTextField();
-    JButton submit = new JButton("Submit");
-    JButton back = new JButton("Return to Planner Menu");
+    private final JPanel createPlanner = new JPanel();
+    private final JPanel inputPage = new JPanel();
+
+    private final JTextArea message = new JTextArea("Please enter the ID of template \nyou want to use:");
+    private final JTextField id = new JTextField();
+    private final JTextField p1 = new JTextField();
+    private final JTextField p2 = new JTextField();
+    private final JTextField p3 = new JTextField();
+    JTextField name = new JTextField();
+
+    private final JButton submit = new JButton("Submit");
+    private final JButton back = new JButton("Return to Planner Menu");
+    private final JButton confirm = new JButton("Confirm");
+    private final JButton back1 = new JButton("Go back");
+
 
     public CreatePlannerUI(String parent) {
         this.setParent(parent);
@@ -26,13 +42,13 @@ public class CreatePlannerUI extends GeneralPresenter {
      */
     @Override
     public void run() {
-        if (flag) {
+        if (menuFlag) {
             cl.show(main, "createPlanner");
         } else {
             this.showMenu();
             cl.show(main, "createPlanner");
             frame.setVisible(true);
-            flag = !flag;
+            menuFlag = !menuFlag;
         }
     }
 
@@ -57,9 +73,40 @@ public class CreatePlannerUI extends GeneralPresenter {
         submit.addActionListener(this);
         createPlanner.add(submit);
 
-        back.setBounds(515, 250, 70, 40);
+        back.setBounds(445, 250, 210, 40);
         back.addActionListener(this);
         createPlanner.add(back);
+    }
+
+    private void showCreatePage() {
+        ArrayList<String> prompts = templateController.
+                getTemplatePrompts(Integer.parseInt(templateController.getCurrTemplateId()));
+        JPanel curr = new JPanel();
+        curr.setLayout(new GridLayout(10, 1));
+        inputPage.add(curr);
+        curr.setBounds(50, 100, 400, 300);
+
+        main.add(inputPage, "inputPage");
+
+        JLabel prompt1 = new JLabel(prompts.get(0));
+        JLabel prompt2 = new JLabel(prompts.get(1));
+        JLabel prompt3 = new JLabel(prompts.get(2));
+        JLabel prompt4 = new JLabel(prompts.get(3));
+
+
+        curr.add(prompt1);
+        curr.add(name);
+        curr.add(prompt2);
+        curr.add(p1);
+        curr.add(prompt3);
+        curr.add(p2);
+        curr.add(prompt4);
+        curr.add(p3);
+        curr.add(confirm);
+        curr.add(back1);
+
+        confirm.addActionListener(this);
+        back1.addActionListener(this);
     }
 
     /**
@@ -73,11 +120,21 @@ public class CreatePlannerUI extends GeneralPresenter {
             if (!templateController.checkTemplate(id.getText())) {
                 this.message.setText("Invalid ID, please try again!");
             } else {
-                //TODO: finish this when the planner part is done.
-                //plannerController.createPlanner();
-                this.checkPlanner.run();
+                if (createPageFlag) {
+                    cl.show(main, "inputPage");
+                } else {
+                    this.showCreatePage();
+                    cl.show(main, "inputPage");
+                    createPageFlag = !createPageFlag;
+                }
+
             }
         } else if (e.getSource() == back) {
+            cl.show(main, this.getParent());
+        } else if (e.getSource() == confirm) {
+            plannerController.createPlanner(p1.getText(), p2.getText(), p3.getText(), name.getText());
+            this.checkPlanner.run();
+        } else if (e.getSource() == back1) {
             cl.show(main, this.getParent());
         }
     }

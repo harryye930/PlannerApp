@@ -6,8 +6,12 @@ import java.util.HashMap;
 public class ProjectPlanner extends Planner{
     private final HashMap<String, ArrayList<String>> tasks;
     private int numTasks = 0;
+    private final int ID;
 
     public ProjectPlanner(String plannerName, String firstColName, String secondColName, String thirdColName) {
+        super();
+        this.ID = super.getID();
+        this.plannerName = plannerName;
         this.tasks = new HashMap<>();
         tasks.put(firstColName, new ArrayList<>());
         tasks.put(secondColName, new ArrayList<>());
@@ -15,16 +19,18 @@ public class ProjectPlanner extends Planner{
     }
 
     /**
-     * Show the current planner
-     *
-     * @return a string represent this planner's content
+     * Returns a string representation of a Project Planner object.
+     * @return A string representing a Project Planner.
      */
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
         String separator = "====================\n";
+        res.append("Status: ").append(this.getPrivacyStatus()).append("\n");
+        res.append("Planner ID:").append(this.getID()).append("\n");
+        res.append("Planner name: ").append(this.plannerName).append("\n");
         for (String columnName: tasks.keySet()) {
-            res.append("The ").append(columnName).append("has following tasks:\n");
+            res.append("The \"").append(columnName).append("\" column has following tasks:\n");
             for (String task: tasks.get(columnName)) {
                 res.append(task).append("\n");
             }
@@ -34,7 +40,7 @@ public class ProjectPlanner extends Planner{
     }
 
     /**
-     * @return a String representing of the planner type.
+     * @return A String representing the type of the planner.
      */
     @Override
     public String getType() {
@@ -42,9 +48,8 @@ public class ProjectPlanner extends Planner{
     }
 
     /**
-     * Show the number of planner agendas.
-     *
-     * @return an int representing of the number of planner agendas.
+     * Returns the total number of agendas stored in a Project Planner object.
+     * @return An integer representing the total number of agendas.
      */
     @Override
     public int getNumAgendas() {
@@ -52,11 +57,10 @@ public class ProjectPlanner extends Planner{
     }
 
     /**
-     * Add agenda to current planner
-     *
-     * @param columnName the first input of the add method.
-     * @param agenda the second input of the add method.
-     * @return true iff the agenda is correctly added to current planner.
+     * Adds agenda to the column with columnName in a Project Planner.
+     * @param columnName The name of the column where the agenda will be added.
+     * @param agenda The agenda to be added.
+     * @return True iff the agenda is successfully added to the planner.
      */
     @Override
     public Boolean add(String columnName, String agenda) {
@@ -82,31 +86,32 @@ public class ProjectPlanner extends Planner{
     }
 
     /**
-     * @param agenda   the task name the user wants to change status
-     * @param columnName the status the user wants to change
-     * @return true iff the planner is correctly changed to the right status
+     * Moves the agenda from its current column to newColumn.
+     * @param newColumn The name of the column that the user wants to move agenda into.
+     * @param agenda The agenda to change status for.
+     * @return True iff the agenda is successfully moved to newColumn.
      */
     @Override
-    public Boolean ChangeTaskStatus(String columnName, String agenda) {
+    public Boolean ChangeTaskStatus(String newColumn, String agenda) {
         String currColumn = null;
         for (String columnN: tasks.keySet()) {
             if (tasks.get(columnN).contains(agenda)) {
                 currColumn = columnN;
             }
         }
-        if (currColumn == null || currColumn.equals(columnName) || !tasks.containsKey(columnName)) {
+        if (currColumn == null || currColumn.equals(newColumn) || !tasks.containsKey(newColumn)) {
             return false;
         } else {
-            tasks.get(columnName).add(agenda);
+            tasks.get(newColumn).add(agenda);
             tasks.get(currColumn).remove(agenda);
             return true;
         }
     }
 
     /**
-     * Delete the agenda in chosen column.
+     * Deletes the agenda from its current column.
      * @param agenda A String representing the agenda.
-     * @return A boolean value representing whether the delete is successful or not.
+     * @return A boolean value representing whether the deletion is successful or not.
      */
     public boolean delete(String agenda) {
         String currColumn = null;

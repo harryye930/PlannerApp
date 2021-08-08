@@ -6,16 +6,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * GUI class for the start of the program.
+ * Displays three options for the user to either log in, create a new account, or login as guest.
+ */
 public class LoginUI extends GeneralPresenter {
 
     private final JPanel menu = new JPanel();
     private JLabel prompt;
     private JTextField retriever;
     private JTextField password;
+
     private JButton login;
     private JButton createAccount;
+    private JButton guest;
 
-    private final GeneralPresenter adminUI = new AdminUI("LoginPage");
+    private final GeneralPresenter adminUI = new AdminAccountUI("LoginPage");
     private final GeneralPresenter regularUserUI = new RegularAccountUI("LoginPage");
     private final GeneralPresenter createAccountUI = new CreateAccountUI("LoginPage");
 
@@ -51,7 +57,7 @@ public class LoginUI extends GeneralPresenter {
 
         JPanel panel = new JPanel();
         panel.setBounds(100, 150, 400, 200);
-        panel.setLayout(new GridLayout(3, 2));
+        panel.setLayout(new GridLayout(4, 2));
         menu.add(panel);
 
         JLabel retrieverPrompt = new JLabel("User ID or Email:");
@@ -77,6 +83,10 @@ public class LoginUI extends GeneralPresenter {
         createAccount.addActionListener(this);
         panel.add(createAccount);
 
+        guest = new JButton("Login as guest");
+        guest.addActionListener(this);
+        panel.add(guest);
+
         //exit = new JButton("Exit");
         //exit.addActionListener(this);
         //panel.add(exit);
@@ -87,13 +97,16 @@ public class LoginUI extends GeneralPresenter {
      *
      * @param e
      */
-
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == login) {
             this.loginIdentifier();
             this.password.setText("");
         } else if (e.getSource() == createAccount) {
             this.createAccountUI.run();
+        } else if (e.getSource() == guest) {
+            accessController.createAccount("", "", "");
+            this.regularUserUI.run();
         }
     }
 

@@ -7,16 +7,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
- * GUI class for displaying template options for a regular user.
- * Options include: view all templates, return to main menu.
+ * GUI class for displaying template options for an admin user.
+ * Options include: edit template, return to main menu.
  */
-public class TemplateOptionUI extends GeneralPresenter {
+public class AdminTemplateOptionUI extends GeneralPresenter {
     private boolean flag = false;
     // all buttons
-    JButton viewAllTemplate = new JButton("View All Template");
+    JButton editTemplate = new JButton("Edit Template");
     JButton returnToMainMenuButton= new JButton("Return to Main Menu");
-    JButton back = new JButton("Go back");
-    JPanel temp = new JPanel();
 
     // panel
     private final JPanel templateMenu = new JPanel();
@@ -24,24 +22,24 @@ public class TemplateOptionUI extends GeneralPresenter {
     // menu text
     private JLabel prompt;
 
-    public TemplateOptionUI(String parent) {
+    private GeneralPresenter checkTemplate = new CheckTemplateUI("templateMenu");
+
+    public AdminTemplateOptionUI(String parent) {
         this.setParent(parent);
     }
 
-    /**
-     * run the presenter from the beginning.
-     */
     @Override
-    public void run() {
+    public void run(){
         if (flag) {
             cl.show(main, "templateMenu");
         } else {
             this.buildTemplateMenu();
             cl.show(main, "templateMenu");
             frame.setVisible(true);
-            flag = !flag; // flag = false?
+            flag = !flag;
         }
     }
+
     private void buildTemplateMenu(){
         main.add(templateMenu, "templateMenu");
         templateMenu.setLayout(null);
@@ -59,41 +57,20 @@ public class TemplateOptionUI extends GeneralPresenter {
         panel.setLayout(new GridLayout(4, 1));
         templateMenu.add(panel);
 
-        panel.add(viewAllTemplate);
+        panel.add(editTemplate);
         panel.add(returnToMainMenuButton);
 
+        editTemplate.addActionListener(this);
         returnToMainMenuButton.addActionListener(this);
-        viewAllTemplate.addActionListener(this);
 
     }
 
-    /**
-     * Invoked when an action occurs.
-     *
-     * @param e
-     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == returnToMainMenuButton){
-            cl.show(main, "regularUserMainMenu");
-        } else if (e.getSource() == viewAllTemplate) {
-            JPanel temp = new JPanel();
-            temp.setLayout(null);
-
-            JScrollPane templates = data.getTemplates();
-            templates.setBounds(25, 25, 400, 500);
-            temp.add(templates);
-            main.add(temp, "templateInfo");
-
-            back.addActionListener(this);
-            back.setBounds(515, 150, 70, 40);
-            temp.add(back);
-
-            cl.show(main, "templateInfo");
-        } else if (e.getSource() == back) {
-            main.remove(temp);
-            cl.show(main, "templateMenu");
+            cl.show(main, "adminUserMainMenu");
+        } else if (e.getSource() == editTemplate) {
+            this.checkTemplate.run();
         }
-
     }
 }

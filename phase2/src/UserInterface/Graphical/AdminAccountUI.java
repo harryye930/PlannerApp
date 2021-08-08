@@ -1,6 +1,5 @@
 package UserInterface.Graphical;
 
-import Entity.Template;
 import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
@@ -8,60 +7,64 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
- * GUI class for displaying the main menu for a regular user.
- * The main menu includes 4 options: planner option, template option, account setting, log out.
+ * GUI class for displaying the main menu for an admin user.
+ * The main menu includes: planner options, edit template, suspend account
+ * - Edit Template
+ * - Planner options
+ *  - change privacy setting
+ *  - interact with all planners
+ *  - delete planner
+ * - Suspend account
  */
-public class RegularAccountUI extends GeneralPresenter {
+public class AdminAccountUI extends GeneralPresenter {
     private boolean flag = false;
 
-    private final JPanel regularUserMainMenu = new JPanel();
+    private final JPanel adminUserMainMenu = new JPanel();
     private JLabel prompt;
-    private final JButton plannerButton = new JButton("Planner Option");
-    private final JButton templateButton = new JButton("Template Option");
-    private final JButton accountButton = new JButton("Account Setting");
-    private final JButton logOutButton = new JButton("Logout");
+    private final JButton plannerButton = new JButton("Planner Options");
+    private final JButton templateButton = new JButton("Template Options");
+    private final JButton accountButton = new JButton("Account Options");
+    private final JButton logOutButton = new JButton("Log out");
 
-    private final GeneralPresenter plannerOptionUI = new PlannerOptionUI("regularUserMainMenu");
-    private final GeneralPresenter templateOptionUI = new TemplateOptionUI("regularUserMainMenu");
-    private final GeneralPresenter accountOptionUI = new AccountOptionUI("regularUserMainMenu");
+    private final GeneralPresenter plannerOptionUI = new AdminPlannerOptionUI("adminUserMainMenu");
+    private final GeneralPresenter templateOptionUI = new AdminTemplateOptionUI("adminUserMainMenu");
+    private final GeneralPresenter accountOptionUI = new AdminAccountOptionUI("adminUserMainMenu");
 
-
-    public RegularAccountUI(String parent) {
+    public AdminAccountUI(String parent) {
         this.setParent(parent);
     }
-
     /**
      * run the presenter from the beginning.
      */
     @Override
     public void run() {
         if (flag) {
-            cl.show(main, "regularUserMainMenu");
+            cl.show(main, "adminUserMainMenu");
         } else {
             this.showMenu();
-            cl.show(main, "regularUserMainMenu");
+            cl.show(main, "adminUserMainMenu");
             frame.setVisible(true);
             flag = !flag;
         }
     }
 
     private void showMenu() {
-        main.add(regularUserMainMenu, "regularUserMainMenu");
+        main.add(adminUserMainMenu, "adminUserMainMenu");
 
-        regularUserMainMenu.setLayout(null);
+        adminUserMainMenu.setLayout(null);
 
-        prompt = new JLabel("Main Menu for Regular User");
+        prompt = new JLabel("Main Menu for Admin User");
         prompt.setHorizontalAlignment(JLabel.CENTER);
         prompt.setVerticalAlignment(JLabel.TOP);
         prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
         prompt.setBounds(0, 100, 700, 50);
         prompt.setOpaque(true);
-        regularUserMainMenu.add(prompt);
+        adminUserMainMenu.add(prompt);
 
         JPanel panel = new JPanel();
         panel.setBounds(150, 150, 400, 200);
         panel.setLayout(new GridLayout(4, 1));
-        regularUserMainMenu.add(panel);
+        adminUserMainMenu.add(panel);
 
         panel.add(plannerButton);
         panel.add(templateButton);
@@ -78,7 +81,6 @@ public class RegularAccountUI extends GeneralPresenter {
 
     /**
      * Invoked when an action occurs.
-     *
      * @param e
      */
     @Override
@@ -93,6 +95,6 @@ public class RegularAccountUI extends GeneralPresenter {
         } else if (e.getSource() == accountButton) {
             this.accountOptionUI.run();
         }
-    }
 
+    }
 }
