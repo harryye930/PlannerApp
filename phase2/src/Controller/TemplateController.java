@@ -173,9 +173,19 @@ public class TemplateController{
 
     /**
      * Changes the published status of a given template (i.e., published to unpublished, vice versa).
-     * @param id A int representing the id of the template.
+     * @param id An int representing the id of the template.
      */
     public void switchPublishedStatus(int id) {
         this.templateManager.switchPublishedStatus(id);
     }
+
+    /**
+     * Changes the name of the Template with ID to newName.
+     * @param id ID of template being edited.
+     * @param newName New value to set the name of the Template to.
+     */
+    public void editTemplateName(int id, String newName){
+        this.templateManager.editTemplateName(id, newName);
+    }
+
 }

@@ -103,7 +103,8 @@ public abstract class Template implements Serializable {
         String stringRep = "---------------------------------------------------------\n";
         stringRep += "ID: " + this.getId() + "\n";
         stringRep += "Name: " + this.getName() + "\n";
-        stringRep += "Type: " + this.isType() + "\n\n";
+        stringRep += "Type: " + this.isType() + "\n";
+        stringRep += "Published: " + this.getPublishedStatus() + "\n\n";
         stringRep += "Prompts: " + "\n";
         int i = 0;
         for (String p: retrievePrompts()){
