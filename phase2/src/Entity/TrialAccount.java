@@ -7,7 +7,7 @@ public class TrialAccount extends Account{
 
     public TrialAccount() {
         super();
-        this.accountType = "trial";
+        super.accountType = "trial";
     }
 
     /**
