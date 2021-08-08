@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 public class CheckTemplateUI extends GeneralPresenter {
     private boolean flag = false;
 
-    //private GeneralPresenter editTemplate = new EditTemplateUI("checkTemplate");
+    private GeneralPresenter editTemplate = new EditTemplateUI("checkTemplate");
 
     //JPanel
     JPanel checkTemplate = new JPanel();
@@ -56,11 +56,11 @@ public class CheckTemplateUI extends GeneralPresenter {
         templateInfo.setBackground(new Color(213, 212, 212));
         checkTemplate.add(templateInfo);
 
-        prompt.setBounds(450, 50, 200, 50);
+        prompt.setBounds(450, 50, 225, 50);
         prompt.setEditable(false);
         checkTemplate.add(prompt);
 
-        templateId.setBounds(500, 130, 100, 50);
+        templateId.setBounds(515, 110, 70, 40);
         checkTemplate.add(templateId);
 
         submit.setBounds(515, 200, 70, 40);
@@ -76,7 +76,7 @@ public class CheckTemplateUI extends GeneralPresenter {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submit){
             if (templateController.checkTemplate(templateId.getText())) {
-                //this.editTemplate.run();
+                this.editTemplate.run();
             } else {
                 this.prompt.setText("Invalid ID, please try again!");
             }
