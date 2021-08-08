@@ -65,7 +65,7 @@ public class AccountOptionUI extends GeneralPresenter {
 
         changName.setBounds(515, 150, 150, 40);
         changePassword.setBounds(515, 200, 150, 40);
-        addFriend.setBounds(525, 250, 150, 40);
+        addFriend.setBounds(515, 250, 150, 40);
         back.setBounds(515, 300, 70, 40);
         accountMenu.add(changName);
         accountMenu.add(changePassword);
@@ -170,7 +170,7 @@ public class AccountOptionUI extends GeneralPresenter {
             main.remove(changeMenu);
             this.run();
         } else if (e.getSource() == addFriend) {
-
+            friendUI.run();
         }
     }
 }

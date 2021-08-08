@@ -3,8 +3,6 @@ package UserInterface.Graphical;
 import Controller.AccessController;
 import Controller.PlannerController;
 import Controller.TemplateController;
-import Interface.IController;
-import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,12 +17,14 @@ public class ViewData {
     JTextArea accountInfo = new JTextArea();
     JTextArea singlePlannerInfo = new JTextArea();
     JTextArea singleTemplateInfo = new JTextArea();
+    JTextArea friendsInfo = new JTextArea();
 
     JScrollPane planners = new JScrollPane(plannerInfo);
     JScrollPane templates = new JScrollPane(templateInfo);
     JScrollPane accounts = new JScrollPane(accountInfo);
     JScrollPane planner = new JScrollPane(singlePlannerInfo);
     JScrollPane template = new JScrollPane(singleTemplateInfo);
+    JScrollPane friends = new JScrollPane(friendsInfo);
 
     public ViewData(AccessController accessController, TemplateController templateController,
                     PlannerController plannerController) {
@@ -58,6 +58,11 @@ public class ViewData {
         return this.accounts;
     }
 
+    public JScrollPane getFriendsInfo() {
+        this.updateFriendList(accessController.getCurrUserId());
+        return this.friends;
+    }
+
     private void update() {
 
         //templates.setBounds(25, 25, 400, 500);
@@ -88,6 +93,11 @@ public class ViewData {
 
     private void updateTemplate(String id) {
         singleTemplateInfo.setText(templateController.detailViewTemplate(Integer.parseInt(id)));
+    }
+
+    private void updateFriendList(String id) {
+        friendsInfo.setEditable(false);
+        friendsInfo.setText(accessController.getFriendsInfo(accessController.getCurrUserId()));
     }
 
 }

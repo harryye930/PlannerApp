@@ -342,14 +342,16 @@ public class AccessController{
         return accManager.deleteFriend(selfId, friendId);
     }
 
-    public String getFriends(String selfId){
+    public String getFriendsInfo(String selfId){
         ArrayList<String> friends = accManager.getFriends(selfId);
         StringBuilder strFriends = new StringBuilder();
         for (String i : friends){
-            strFriends.append("\n").append(i);
+            strFriends.append(getInfo(i)).append("\n");
         }
         return strFriends.toString();
     }
+
+
 
     public ArrayList<String> seeFriendsPlanner(String friendId){
         Account friend = accManager.findAccount(friendId);
