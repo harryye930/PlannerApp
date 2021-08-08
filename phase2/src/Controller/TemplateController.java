@@ -72,6 +72,16 @@ public class TemplateController{
     }
 
     /**
+     * Returns a detailed string representation of a template with id.
+     * @param id ID of the template.
+     * @return String representation of the Template object corresponding to the id. String representation contains
+     * detailed representation of the Template, including name, type, number of prompts, and what those prompts are.
+     */
+    public String detailViewTemplate(int id){
+        return templateManager.detailViewTemplate(id);
+    }
+
+    /**
      * Add Template t into TemplateManager.
      * @param t Template to be added to TemplateManager.
      */
