@@ -14,7 +14,7 @@ public class TemporaryAccount extends UserAccount {
 
     public TemporaryAccount(String email) {
         super(email);
-        this.accountType = "temporary";
+        super.accountType = "temporary";
         this.startDate = LocalDateTime.now();
     }
 
