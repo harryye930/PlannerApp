@@ -15,6 +15,7 @@ public class EditTemplateUI extends GeneralPresenter {
     private JScrollPane template;
     private JPanel editPanel = new JPanel();
     private JScrollPane templateInfo;
+    private final CardLayout editCardLayout = new CardLayout();
 
     // TextArea/Field
     private final JLabel selectionPrompt = new JLabel("<html>Select what you would like to edit:</html>");
@@ -30,8 +31,6 @@ public class EditTemplateUI extends GeneralPresenter {
     private final JButton submitStatusButton = new JButton("Yes");
     private final JButton backFromNameButton = new JButton("Go back");
     private final JButton backFromStatusButton = new JButton("Go back");
-
-    private final CardLayout editCardLayout = new CardLayout();
 
     public EditTemplateUI(String parent){
         this.setParent(parent);
