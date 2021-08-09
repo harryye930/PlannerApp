@@ -262,22 +262,24 @@ public class PlannerController {
 
     //TODO the ChangeTaskStatus method, based on project type; daily always return false; project planner detail see
     //TODO in project planner entity class; reminder planner the second input parameter should be a default value(e.g. "")
-    public static void main(String[] args) {
-        PlannerController x = new PlannerController();
-        AccessController y = new AccessController();
-        String userId = y.createAccount("nzy", "123", "qweasd");
-        x.load();
-        int id = x.plannerManager.newDailyPlanner("trial", "09:00", "20:00", "60");
-        x.plannerManager.setPlannerAuthor(id, userId);
-        y.setPlanner(userId, Integer.toString(id));
 
-        id = x.plannerManager.newProjectPlanner("trial" ,"todo", "doing", "done");
-        x.plannerManager.setPlannerAuthor(id, userId);
-        y.setPlanner(userId, Integer.toString(id));
-        x.save();
-        y.save();
+    /**
+     * Add new agenda or task to the planner
+     * @param i the first String input depending on the planner type
+     * @param j the second String input depending on the planner type.
+     * @return a boolean value representing whether the change is successful or not.
+     */
+    public boolean add(String i, String j) {
+        return this.plannerManager.add(Integer.parseInt(this.getCurrPlannerId()), i, j);
+    }
 
-        LoginUI f = new LoginUI();
-        f.run();
+    /**
+     * Change the status of the given task.
+     * @param taskName A String representing the task name.
+     * @param status A String representing the task status.
+     * @return a boolean value representing whether the change is successful or not.
+     */
+    public boolean changeTaskStatus(String taskName, String status) {
+        return plannerManager.changTaskStatus(Integer.parseInt(getCurrPlannerId()), taskName, status);
     }
 }

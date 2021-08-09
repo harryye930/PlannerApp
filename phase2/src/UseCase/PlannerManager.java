@@ -244,4 +244,26 @@ public class PlannerManager{
         }
         return res;
     }
+
+    /**
+     * Add new agenda or task to the planner
+     * @param id An integer representing the id of the planner
+     * @param i the first String input depending on the planner type
+     * @param j the second String input depending on the planner type.
+     * @return
+     */
+    public boolean add(int id, String i, String j) {
+        return this.findPlanner(id).add(i, j);
+    }
+
+    /**
+     * Change the status of the given task.
+     * @param id An integer representing the id of the planner.
+     * @param taskName A String representing the task name.
+     * @param status A String representing the task status.
+     * @return a boolean value representing whether the change is successful or not.
+     */
+    public boolean changTaskStatus(int id, String taskName, String status) {
+        return this.findPlanner(id).ChangeTaskStatus(taskName, status);
+    }
 }

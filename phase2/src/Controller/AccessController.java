@@ -345,8 +345,17 @@ public class AccessController{
     public String getFriendsInfo(String selfId){
         ArrayList<String> friends = accManager.getFriends(selfId);
         StringBuilder strFriends = new StringBuilder();
+        strFriends.append("Friend List:\n").append("===============\n");
         for (String i : friends){
             strFriends.append(getInfo(i)).append("\n");
+            strFriends.append("Available friends' planners:\n");
+            for (String plannerId: this.getPlanners(i)) {
+                if (!plannerController.getPrivacyStatus(Integer.parseInt(plannerId)).equals("private")) {
+                    strFriends.append(plannerController.toString(Integer.parseInt(plannerId)));
+                    strFriends.append("\n");
+                }
+            }
+            strFriends.append("\n\n");
         }
         return strFriends.toString();
     }

@@ -12,6 +12,8 @@ public class PlannerEditUI extends GeneralPresenter {
 //            "want to edit/add agenda to\n(in form of HH:MM)";
 //    private final String projectMessage = "Please enter the column you want to"
 
+    private GeneralPresenter editRemainder = new EditRemainder(this.getParent());
+
     private boolean flag = false;
     private boolean firstStatus;
 
@@ -51,6 +53,7 @@ public class PlannerEditUI extends GeneralPresenter {
             planner = data.getPlanner(plannerController.getCurrPlannerId());
             cl.show(main, "editPlanner");
         } else {
+            this.getProjectPanel();
             this.showEditUI();
             cl.show(main, "editPlanner");
             flag = !flag;
@@ -70,9 +73,11 @@ public class PlannerEditUI extends GeneralPresenter {
         if (plannerController.getType(Integer.parseInt(plannerController.getCurrPlannerId())).equals("daily")) {
             currentPanel = this.getDailyPanel();
             currentPanel.setBounds(475, 25, 200, 200);
-        } else { //Project
+        } else if (plannerController.getType(Integer.parseInt(plannerController.getCurrPlannerId())).equals("project")){
             currentPanel = this.getProjectPanel();
             currentPanel.setBounds(472, 25, 200, 200);
+        } else {
+            this.editRemainder.run();
         }
         editPlanner.add(currentPanel);
 
@@ -184,7 +189,6 @@ public class PlannerEditUI extends GeneralPresenter {
                 currentPanel = this.getProjectPanel();
             }
         } else if (e.getSource() == submit) {
-            //TODO: trial account cannot create planner right now.
             boolean runFlag = false;
             String[] temp = text0.getText().split("");
             if (changePrivacy.getSelectedIndex() != -1) {
@@ -195,7 +199,11 @@ public class PlannerEditUI extends GeneralPresenter {
                 text0.setText("Invalid input, please try again");
             } else{
                 runFlag = true;
-                plannerController.edit(text0.getText(), text1.getText());
+                if (firstStatus) { //Add
+                    plannerController.add(text0.getText(), text1.getText());
+                } else {
+                    plannerController.edit(text0.getText(), text1.getText());
+                }
             }
             if (runFlag) {
                 text0.setText("");
