@@ -74,6 +74,8 @@ public class FriendUI extends GeneralPresenter {
             accessController.addFriend(accessController.getCurrUserId(), text.getText());
         } else if (e.getSource() == deleteFriend) {
             accessController.deleteFriend(accessController.getCurrUserId(), text.getText());
+        } else if (e.getSource() == back) {
+            cl.show(main, this.getParent());
         }
     }
 }
