@@ -45,7 +45,7 @@ public class FriendUI extends GeneralPresenter {
         friendsInfo.setBounds(20, 20, 450, 500);
         friendUI.add(friendsInfo);
 
-        JLabel prompt = new JLabel("Please enter the user ID you want to operate on:");
+        JLabel prompt = new JLabel("<html>Please enter the user ID you want<br/> to operate on:</html>");
         prompt.setBounds(475, 50, 300, 50);
         text.setBounds(475, 100, 200, 40);
 

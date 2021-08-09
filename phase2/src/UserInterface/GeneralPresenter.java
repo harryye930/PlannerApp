@@ -49,11 +49,6 @@ public abstract class GeneralPresenter implements ActionListener{
     public abstract void run();
 
     /**
-     * run the presenter from the menu stage.
-     */
-    public void runMenu() {this.run();}
-
-    /**
      * set the child presenter of the current presenter.
      * @param child A GeneralPresenter representing the child presenter we want to set.
      */

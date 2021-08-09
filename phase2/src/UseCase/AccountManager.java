@@ -1,7 +1,6 @@
 package UseCase;
 
 import Entity.*;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import nl.flotsam.xeger.Xeger;
 
 import java.io.*;
@@ -154,7 +153,7 @@ public class AccountManager implements Serializable{
      * @param numberOfCriteriaMet number of criteria met by a password.
      * @return A string that's the complexity level of the password.
      */
-    private String getPasswordComplexityLevel(int numberOfCriteriaMet) {
+    public String getPasswordComplexityLevel(int numberOfCriteriaMet) {
         if (numberOfCriteriaMet <= 2) {
             return "Too Weak";
         } else if (numberOfCriteriaMet <= 3) {
@@ -630,7 +629,10 @@ public class AccountManager implements Serializable{
         Account account = this.findAccount(retriever);
         String status = account.getAccountType();
 
-        if (status.equals("regular") | status.equals("temporary")){
+//        if (status.equals("regular") | status.equals("temporary")){
+//            ((UserAccount) account).removePlanner(plannerId);
+//        }
+        if (!Objects.equals(status, "admin")) {
             ((UserAccount) account).removePlanner(plannerId);
         }
     }
