@@ -678,7 +678,8 @@ public class AccountManager implements Serializable{
     }
 
     public boolean addFriend(String selfId, String friendId){
-        if (getAllAccount().contains(findAccount(friendId))){
+        if (getAllAccount().contains(findAccount(friendId))
+                && !findAccount(selfId).getFriends().contains(findAccount(friendId))){
             findAccount(selfId).addFriend(findAccount(friendId));
             findAccount(friendId).addFriend(findAccount(selfId));
             return true;
