@@ -46,21 +46,25 @@ public class FriendUI extends GeneralPresenter {
         friendUI.add(friendsInfo);
 
         JLabel prompt = new JLabel("Please enter the user ID you want to operate on:");
-        prompt.setBounds(515, 150, 300, 50);
-        text.setBounds(515, 200, 200, 40);
+        prompt.setBounds(475, 50, 300, 50);
+        text.setBounds(475, 100, 200, 40);
 
         friendUI.add(prompt);
         friendUI.add(text);
 
-        addFriend.setBounds(515, 250, 70, 40);
-        deleteFriend.setBounds(515, 300, 70, 40);
-        back.setBounds(515, 350, 70, 40);
+        addFriend.setBounds(515, 150, 100, 40);
+        deleteFriend.setBounds(515, 200, 100, 40);
+        back.setBounds(515, 250, 100, 40);
         friendUI.add(addFriend);
         friendUI.add(deleteFriend);
         friendUI.add(back);
         addFriend.addActionListener(this);
         deleteFriend.addActionListener(this);
         back.addActionListener(this);
+    }
+
+    private void update() {
+        friendsInfo = data.getFriendsInfo();
     }
 
     /**
@@ -72,8 +76,10 @@ public class FriendUI extends GeneralPresenter {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addFriend) {
             accessController.addFriend(accessController.getCurrUserId(), text.getText());
+            update();
         } else if (e.getSource() == deleteFriend) {
             accessController.deleteFriend(accessController.getCurrUserId(), text.getText());
+            update();
         } else if (e.getSource() == back) {
             cl.show(main, this.getParent());
         }
