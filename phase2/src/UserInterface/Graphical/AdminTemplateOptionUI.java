@@ -8,11 +8,12 @@ import java.awt.event.ActionEvent;
 
 /**
  * GUI class for displaying template options for an admin user.
- * Options include: edit template, return to main menu.
+ * Options include: create template, edit template, return to main menu.
  */
 public class AdminTemplateOptionUI extends GeneralPresenter {
     private boolean flag = false;
     // all buttons
+    JButton createTemplate = new JButton("Create Template");
     JButton editTemplate = new JButton("Edit Template");
     JButton returnToMainMenuButton= new JButton("Return to Main Menu");
 
@@ -22,7 +23,8 @@ public class AdminTemplateOptionUI extends GeneralPresenter {
     // menu text
     private JLabel prompt;
 
-    private GeneralPresenter checkTemplate = new CheckTemplateUI("templateMenu");
+    private GeneralPresenter createTemplateUI = new CreateTemplateUI("adminTemplateMenu");
+    private GeneralPresenter checkTemplateUI = new CheckTemplateUI("adminTemplateMenu");
 
     public AdminTemplateOptionUI(String parent) {
         this.setParent(parent);
@@ -31,17 +33,17 @@ public class AdminTemplateOptionUI extends GeneralPresenter {
     @Override
     public void run(){
         if (flag) {
-            cl.show(main, "templateMenu");
+            cl.show(main, "adminTemplateMenu");
         } else {
             this.buildTemplateMenu();
-            cl.show(main, "templateMenu");
+            cl.show(main, "adminTemplateMenu");
             frame.setVisible(true);
             flag = !flag;
         }
     }
 
     private void buildTemplateMenu(){
-        main.add(templateMenu, "templateMenu");
+        main.add(templateMenu, "adminTemplateMenu");
         templateMenu.setLayout(null);
 
         prompt = new JLabel("Template Menu");
@@ -54,12 +56,14 @@ public class AdminTemplateOptionUI extends GeneralPresenter {
 
         JPanel panel = new JPanel();
         panel.setBounds(150, 150, 400, 200);
-        panel.setLayout(new GridLayout(4, 1));
+        panel.setLayout(new GridLayout(3, 1));
         templateMenu.add(panel);
 
+        panel.add(createTemplate);
         panel.add(editTemplate);
         panel.add(returnToMainMenuButton);
 
+        createTemplate.addActionListener(this);
         editTemplate.addActionListener(this);
         returnToMainMenuButton.addActionListener(this);
 
@@ -69,8 +73,10 @@ public class AdminTemplateOptionUI extends GeneralPresenter {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == returnToMainMenuButton){
             cl.show(main, "adminUserMainMenu");
-        } else if (e.getSource() == editTemplate) {
-            this.checkTemplate.run();
+        } else if (e.getSource() == editTemplate){
+            this.checkTemplateUI.run();
+        } else if (e.getSource() == createTemplate){
+            this.createTemplateUI.run();
         }
     }
 }

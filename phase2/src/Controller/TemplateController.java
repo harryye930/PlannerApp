@@ -5,7 +5,6 @@ import Entity.Template;
 import Gateway.TemplateGateway;
 import UseCase.TemplateManager;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -19,6 +18,12 @@ public class TemplateController{
     private PlannerController plannerController;
 
     private String currTemplateId;
+
+    public TemplateController() {
+        templateManager = new TemplateManager();
+        templateGateway = new TemplateGateway(templateManager);
+        this.load();
+    }
 
     /**
      * Set the access controller
@@ -34,12 +39,6 @@ public class TemplateController{
      */
     public void setPlannerController(PlannerController plannerController) {
         this.plannerController = plannerController;
-    }
-
-    public TemplateController() {
-        templateManager = new TemplateManager();
-        templateGateway = new TemplateGateway(templateManager);
-        this.load();
     }
 
     /**
@@ -107,10 +106,9 @@ public class TemplateController{
 
     /**
      * Check the template, similar to login so that the controller will
-     * remember the planner's id.
-     * @param id A String representing the planner id we want to check.
-     * @return A boolean value representing whether the planner is available to the current
-     * account.
+     * remember the template's id.
+     * @param id A String representing the template id we want to check.
+     * @return A boolean value representing whether the template is stored in the system.
      */
     // TODO: Same TODO as the one for viewTemplates() above. Please indicate whether you want to get ID of just published
     // TODO: templates (i.e., publishedTemplatesOnly = true) or IDs of all templates regardless of its published status
@@ -184,8 +182,38 @@ public class TemplateController{
      * @param id ID of template being edited.
      * @param newName New value to set the name of the Template to.
      */
-    public void editTemplateName(int id, String newName){
-        this.templateManager.editTemplateName(id, newName);
+    public void setTemplateName(int id, String newName){
+        this.templateManager.setTemplateName(id, newName);
+    }
+
+    /**
+     * Creates a template of Type = type.
+     * @param type Type of the template to be created.
+     * @param templateName Name of the template to be created.
+     * @param plannerNamePrompt String representing the prompt asking for planner name in the template to be created.
+     * @param firstPlannerPrompt String representing the first planner prompt required for the corresponding
+     *                           template type.
+     * @param secondPlannerPrompt String representing the second planner prompt required for the corresponding
+     *                            template type.
+     * @param thirdPlannerPrompt String representing the third planner prompt required for the corresponding
+     *                           template type.
+     */
+    public void createTemplate(String type, String templateName, String plannerNamePrompt,
+                               String firstPlannerPrompt, String secondPlannerPrompt, String thirdPlannerPrompt){
+        switch (type) {
+            case "daily":
+                this.templateManager.createDailyTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
+                        secondPlannerPrompt, thirdPlannerPrompt);
+                break;
+            case "project":
+                this.templateManager.createProjectTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
+                        secondPlannerPrompt, thirdPlannerPrompt);
+                break;
+            case "reminders":
+                this.templateManager.createRemindersTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
+                        secondPlannerPrompt, thirdPlannerPrompt);
+                break;
+        }
     }
 
 }

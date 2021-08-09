@@ -1,5 +1,8 @@
 package UseCase;
 
+import Entity.DailyTemplate;
+import Entity.ProjectTemplate;
+import Entity.RemindersTemplate;
 import Entity.Template;
 import java.io.*;
 import java.util.*;
@@ -36,6 +39,27 @@ public class TemplateManager implements Serializable {
         templates.put(t.getId(), t);
     }
 
+    public void createDailyTemplate(String name, String plannerNamePrompt, String startTimePrompt,
+                                    String endTimePrompt, String incrementPrompt){
+        DailyTemplate dailyTemplate = new DailyTemplate(name, plannerNamePrompt, startTimePrompt,
+                endTimePrompt, incrementPrompt);
+        this.addTemplate(dailyTemplate);
+    }
+
+    public void createProjectTemplate(String name, String plannerNamePrompt, String firstStatusPrompt,
+                                      String secondStatusPrompt, String thirdStatusPrompt){
+        ProjectTemplate projectTemplate = new ProjectTemplate(name, plannerNamePrompt, firstStatusPrompt,
+                                                                secondStatusPrompt, thirdStatusPrompt);
+        this.addTemplate(projectTemplate);
+    }
+
+    public void createRemindersTemplate(String name, String plannerNamePrompt, String taskHeadingPrompt,
+                                        String dateHeadingPrompt, String completionStatusHeadingPrompt){
+        RemindersTemplate remindersTemplate = new RemindersTemplate(name, plannerNamePrompt, taskHeadingPrompt,
+                                                                    dateHeadingPrompt, completionStatusHeadingPrompt);
+        this.addTemplate(remindersTemplate);
+    }
+
     /**
      * Removes a Template from TemplateManager.
      * @param t Template being removed from TemplateManager.
@@ -50,7 +74,7 @@ public class TemplateManager implements Serializable {
      * @param ID ID of template being edited.
      * @param newName New value to set the name of the Template to.
      */
-    public void editTemplateName(int ID, String newName) {
+    public void setTemplateName(int ID, String newName) {
         this.getTemplates().get(ID).setName(newName);
     }
 

@@ -1,7 +1,6 @@
 package UserInterface.Graphical;
 
 import UserInterface.GeneralPresenter;
-import sun.text.resources.et.JavaTimeSupplementary_et;
 
 import javax.swing.*;
 import java.awt.*;
@@ -176,7 +175,7 @@ public class EditTemplateUI extends GeneralPresenter {
             this.showEditUI();
             cl.show(main, "editTemplate");
         } else if (e.getSource() == submitNameButton) {
-            templateController.editTemplateName(Integer.parseInt(templateController.getCurrTemplateId()),
+            templateController.setTemplateName(Integer.parseInt(templateController.getCurrTemplateId()),
                                                 newNameField.getText());
             firstScreen = true;
             this.showEditUI();
