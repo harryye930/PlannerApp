@@ -1,3 +1,6 @@
+## How to run the program
+TBD
+
 ## Phase 2 Extensions
 ### Mandatory Extensions
 - Add an extra template
@@ -40,7 +43,11 @@ days, where x is a number decided by the admin user
 ## Project Specification
 ### Users
 #### Admin User
-- Select a template, and change the template name or template "published" status
+- Select a template, and change the template name, template "published" status, rephrase template prompts (what the 
+prompts are asking for should still be the same, they are only allowed to rephrase the prompts)
+- Create a new daily, project, or reminder template (same here, the prompts in a new template should be asking for a set
+of things in a set order for that type of template; however, users have the freedom to phrase the prompts the 
+way they want, as long as the prompts are asking for the required set of things)
 - Able to change any of the users' planners from private to public or public to private
   - can admin user revert change as well? QUESTION
 - Able to interact with every user's planners, even if they are private
@@ -95,5 +102,3 @@ It has the following prompts:
 #### Project Planner made from Project Template
 #### Reminders Planner made from Reminders Template
 
-## How to run the program
-TBD
