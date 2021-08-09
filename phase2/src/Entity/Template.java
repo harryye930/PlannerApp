@@ -13,7 +13,7 @@ public abstract class Template implements Serializable {
 
     protected String name; // name of this template
     protected String plannerNamePrompt; // name of the planner being created from this template
-    private static int id; // id of this template
+    private int id; // id of this template
     protected boolean publishedStatus; // published status of this template (if true, the template is published)
     private String templateType;
 
@@ -70,6 +70,14 @@ public abstract class Template implements Serializable {
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * Setter for changing the ID of this template.
+     * @param id New ID for this template.
+     */
+    public void setID(int id){
+        this.id = id;
     }
 
     /**

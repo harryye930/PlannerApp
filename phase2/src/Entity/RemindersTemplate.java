@@ -31,7 +31,7 @@ public class RemindersTemplate extends Template{
         this.taskHeadingPrompt = taskHeadingPrompt;
         this.dateHeadingPrompt = dateHeadingPrompt;
         this.completionStatusHeadingPrompt = completionStatusHeadingPrompt;
-        this.setTemplateType("reminders");
+        this.setTemplateType("Reminders");
     }
 
     /**
@@ -86,7 +86,7 @@ public class RemindersTemplate extends Template{
 
     @Override
     public String isType() {
-        return "reminders";
+        return "Reminders";
     }
 
     @Override

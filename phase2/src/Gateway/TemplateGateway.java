@@ -41,7 +41,7 @@ public class TemplateGateway extends Reader<HashMap<Integer, Template>> {
                 this.idToTemplate = hm;
             }
             for (Template temp: this.idToTemplate.values()) {
-                tm.addTemplate(temp);
+                tm.importTemplate(temp);
             }
             return true;
         } catch (Exception ex) {

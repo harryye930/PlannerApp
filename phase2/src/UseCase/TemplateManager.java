@@ -31,19 +31,33 @@ public class TemplateManager implements Serializable {
     }
 
     /**
-     * Adds a Template to TemplateManager.
-     * @param t Template being added to TemplateManager.
+     * Imports a Template to TemplateManager. Must not change anything in the Template t.
+     * This method is usually used for importing Templates from serialized files.
+     * @param t Template being imported to TemplateManager.
      */
-    public void addTemplate(Template t) {
+    public void importTemplate(Template t) {
         // Add template <t> to the collection of templates stored in this TemplateManager object.
+        templates.put(t.getId(), t);
+    }
+
+    /**
+     * Adds a new Template to TemplateManager. Ensures that the ID of the Template adds on to the ID of the last
+     * template already stored in the TemplateManager.
+     * @param t
+     */
+    public void addTemplate(Template t){
+        int originalID = t.getId();
+        t.setID(numberOfTemplates() + originalID);
         templates.put(t.getId(), t);
     }
 
     public void createDailyTemplate(String name, String plannerNamePrompt, String startTimePrompt,
                                     String endTimePrompt, String incrementPrompt){
+        System.out.println(detailViewAllTemplates(false));
         DailyTemplate dailyTemplate = new DailyTemplate(name, plannerNamePrompt, startTimePrompt,
                 endTimePrompt, incrementPrompt);
         this.addTemplate(dailyTemplate);
+        System.out.println(detailViewAllTemplates(false));
     }
 
     public void createProjectTemplate(String name, String plannerNamePrompt, String firstStatusPrompt,

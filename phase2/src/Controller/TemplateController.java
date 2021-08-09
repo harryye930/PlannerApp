@@ -80,13 +80,13 @@ public class TemplateController{
         return templateManager.detailViewTemplate(id);
     }
 
-    /**
-     * Add Template t into TemplateManager.
-     * @param t Template to be added to TemplateManager.
-     */
-    public void addTemplate(Template t){
-        templateManager.addTemplate(t);
-    }
+//    /**
+//     * Add Template t into TemplateManager.
+//     * @param t Template to be added to TemplateManager.
+//     */
+//    public void addTemplate(Template t){
+//        templateManager.importTemplate(t);
+//    }
 
     /**
      * Saves all templates stored in TemplateManager.
