@@ -272,13 +272,13 @@ public class AccessController{
      * Return the account information of every account.
      * @return An ArrayList of
      */
-    public ArrayList<String> viewAllAccount(){
+    public String viewAllAccount(){
         ArrayList<Account> acc = getAllAccount();
-        ArrayList<String> info = new ArrayList<>();
+        StringBuilder res = new StringBuilder();
         for (Account i : acc){
-            info.add(i.toString());
+            res.append(i.toString()).append("\n");
         }
-        return info;
+        return res.toString();
     }
 
     /**

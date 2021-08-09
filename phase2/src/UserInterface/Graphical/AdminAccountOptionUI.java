@@ -2,6 +2,7 @@ package UserInterface.Graphical;
 
 import UserInterface.GeneralPresenter;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 /**
@@ -9,6 +10,22 @@ import java.awt.event.ActionEvent;
  * Options include: suspend any account by any number of days.
  */
 public class AdminAccountOptionUI extends GeneralPresenter {
+    private boolean flag = false;
+
+    // Panel
+    private JScrollPane accountsInfo;
+    private final JPanel adminAccount = new JPanel();
+
+    // Label
+    private final JLabel prompt = new JLabel("<html>Please enter the user<br/> id you want to operate on:</html>");
+
+    // Text
+    private final JTextField text = new JTextField();
+
+    // Button
+    private  final JButton suspend = new JButton("Suspend Operation");
+    private final JButton checkPlanner = new JButton("Check Planner");
+    private final JButton back = new JButton("Go back");
 
     public AdminAccountOptionUI(String parent) {
         this.setParent(parent);
@@ -16,10 +33,51 @@ public class AdminAccountOptionUI extends GeneralPresenter {
 
     @Override
     public void run(){
+        if (flag) {
+            accountsInfo = data.getAccounts();
+            cl.show(main, "adminAccountOption");
+        } else {
+            this.showMenu();
+            cl.show(main, "adminAccountOption");
+            flag = !flag;
+        }
+    }
+
+    private void showMenu() {
+        adminAccount.setLayout(null);
+        main.add(adminAccount, "adminAccountOption");
+
+        accountsInfo = data.getAccounts();
+        accountsInfo.setBounds(25, 25, 400, 500);
+        adminAccount.add(accountsInfo);
+
+        prompt.setBounds(450, 50, 200, 50);
+        adminAccount.add(prompt);
+
+        text.setBounds(450, 100, 200, 30);
+        adminAccount.add(text);
+
+        suspend.setBounds(515, 150, 100, 40);
+        checkPlanner.setBounds(515, 200, 100, 40);
+        back.setBounds(515, 250, 100, 40);
+
+        adminAccount.add(suspend);
+        adminAccount.add(checkPlanner);
+        adminAccount.add(back);
+
+        suspend.addActionListener(this);
+        checkPlanner.addActionListener(this);
+        back.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == suspend) {
 
+        } else if (e.getSource() == checkPlanner) {
+
+        } else if (e.getSource() == back) {
+            cl.show(main, this.getParent());
+        }
     }
 }

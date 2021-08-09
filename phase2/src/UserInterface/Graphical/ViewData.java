@@ -18,6 +18,7 @@ public class ViewData {
     JTextArea singlePlannerInfo = new JTextArea();
     JTextArea singleTemplateInfo = new JTextArea();
     JTextArea friendsInfo = new JTextArea();
+    JTextArea accountsInfo = new JTextArea();
 
     JScrollPane planners = new JScrollPane(plannerInfo);
     JScrollPane templates = new JScrollPane(templateInfo);
@@ -25,6 +26,7 @@ public class ViewData {
     JScrollPane planner = new JScrollPane(singlePlannerInfo);
     JScrollPane template = new JScrollPane(singleTemplateInfo);
     JScrollPane friends = new JScrollPane(friendsInfo);
+    JScrollPane allAccounts = new JScrollPane(accountsInfo);
 
     public ViewData(AccessController accessController, TemplateController templateController,
                     PlannerController plannerController) {
@@ -98,6 +100,11 @@ public class ViewData {
     private void updateFriendList(String id) {
         friendsInfo.setEditable(false);
         friendsInfo.setText(accessController.getFriendsInfo(accessController.getCurrUserId()));
+    }
+
+    private void updateAccountsInfo() {
+        accountsInfo.setText(accessController.viewAllAccount());
+        accountsInfo.setEditable(false);
     }
 
 }
