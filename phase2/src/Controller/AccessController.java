@@ -209,6 +209,8 @@ public class AccessController{
             this.removeAccount(currUserId);
         }
         this.save();
+        plannerController.save();
+        templateController.save();
     }
 
     /**

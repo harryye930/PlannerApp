@@ -205,6 +205,7 @@ public class PlannerController {
      * @return true if successfully deleted, false if otherwise.
      */
     public boolean deletePlanner(String plannerId){
+        accessController.removePlanner(accessController.getCurrUserId(), plannerId);
         return this.plannerManager.deletePlanner(Integer.parseInt(plannerId));
     }
 

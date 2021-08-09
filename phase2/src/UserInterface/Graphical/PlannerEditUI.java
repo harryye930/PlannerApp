@@ -195,11 +195,13 @@ public class PlannerEditUI extends GeneralPresenter {
                 plannerController.changePrivacyStatus(changePrivacy.getSelectedValue());
                 runFlag = true;
             }
-            if (temp.length < 5 || !temp[2].equals(":")) {
+            if ((temp.length < 5 || !temp[2].equals(":")) &&
+                    plannerController.getType(Integer.parseInt(plannerController.getCurrPlannerId())).equals("daily")) {
                 text0.setText("Invalid input, please try again");
             } else{
                 runFlag = true;
                 if (firstStatus) { //Add
+                    System.out.println("here");
                     plannerController.add(text0.getText(), text1.getText());
                 } else {
                     plannerController.edit(text0.getText(), text1.getText());
