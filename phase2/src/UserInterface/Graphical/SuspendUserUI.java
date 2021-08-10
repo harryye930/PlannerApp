@@ -20,6 +20,10 @@ public class SuspendUserUI extends GeneralPresenter {
     // Text
     private final JTextField text = new JTextField();
 
+    // Label
+    private JLabel prompt = new JLabel("<html>Please enter the number of days<br/>" +
+                                                 " you want to suspend this user:</html>");
+
     public SuspendUserUI(String parent) {
         this.setParent(parent);
     }
@@ -34,8 +38,6 @@ public class SuspendUserUI extends GeneralPresenter {
     @Override
     public void run() {
         if (flag) {
-            menu.removeAll();
-            this.showMenu();
             cl.show(main, "suspendAccount");
         } else {
             this.showMenu();
@@ -46,6 +48,7 @@ public class SuspendUserUI extends GeneralPresenter {
 
     private void showMenu() {
         main.add(menu, "suspendAccount");
+        menu.setLayout(null);
 
         accountInfo = data.getAccount(userId);
         accountInfo.setBounds(25, 25, 400, 500);
@@ -54,8 +57,6 @@ public class SuspendUserUI extends GeneralPresenter {
         if (accessController.getSuspensionStatus(userId)) {
             suspend.setText("Unsuspend");
         } else {
-            JLabel prompt = new JLabel("<html>Please enter the number of days<br/>" +
-                    " you want to suspend this user:</html>");
             prompt.setBounds(450, 50, 200, 50);
             menu.add(prompt);
 
@@ -64,11 +65,27 @@ public class SuspendUserUI extends GeneralPresenter {
 
             suspend.setText("Suspend");
         }
+
+        suspend.setBounds(450, 150, 250, 50);
         menu.add(suspend);
+        suspend.addActionListener(this);
 
         back.setBounds(515, 250, 100, 40);
         menu.add(back);
         back.addActionListener(this);
+    }
+
+    private void update() {
+        this.accountInfo = data.getAccount(userId);
+        if (accessController.getSuspensionStatus(userId)) {
+            prompt.setVisible(false);
+            text.setVisible(false);
+            suspend.setText("Unsuspend");
+        } else {
+            prompt.setVisible(true);
+            text.setVisible(true);
+            suspend.setText("Suspend");
+        }
     }
 
     /**
@@ -81,7 +98,10 @@ public class SuspendUserUI extends GeneralPresenter {
         if (e.getSource() == suspend) {
             if (accessController.getSuspensionStatus(userId)) {
                 accessController.unSuspendUser(userId);
-                cl.show(main, this.getParent());
+                update();
+            } else {
+                accessController.suspendUser(userId, Integer.parseInt(text.getText()));
+                update();
             }
         } else if (e.getSource() == back) {
             menu.removeAll();

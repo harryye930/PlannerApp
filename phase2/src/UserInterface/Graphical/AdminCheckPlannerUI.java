@@ -48,6 +48,7 @@ public class AdminCheckPlannerUI extends GeneralPresenter {
 
     private void showMenu() {
         JPanel menu = new JPanel();
+        menu.setLayout(null);
         main.add(menu, "adminCheckPlanner");
 
         accountInfo = data.getAccount(userId);
