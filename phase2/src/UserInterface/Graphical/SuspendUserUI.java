@@ -60,7 +60,7 @@ public class SuspendUserUI extends GeneralPresenter {
             menu.add(prompt);
 
             text.setBounds(450, 100, 250, 50);
-            menu.add(prompt);
+            menu.add(text);
 
             suspend.setText("Suspend");
         }
@@ -78,6 +78,14 @@ public class SuspendUserUI extends GeneralPresenter {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() == suspend) {
+            if (accessController.getSuspensionStatus(userId)) {
+                accessController.unSuspendUser(userId);
+                cl.show(main, this.getParent());
+            }
+        } else if (e.getSource() == back) {
+            menu.removeAll();
+            cl.show(main, this.getParent());
+        }
     }
 }
