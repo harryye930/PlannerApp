@@ -32,6 +32,7 @@ public class AdminAccountOptionUI extends GeneralPresenter implements KeyListene
     private final JButton back = new JButton("Go back");
 
     private final SuspendUserUI adminSuspendAccount = new SuspendUserUI("adminAccountOption");
+    private final AdminCheckPlannerUI adminCheckPlannerUI = new AdminCheckPlannerUI("adminAccountOption");
 
     public AdminAccountOptionUI(String parent) {
         this.setParent(parent);
@@ -124,6 +125,7 @@ public class AdminAccountOptionUI extends GeneralPresenter implements KeyListene
         if (e.getSource() == text) {
             System.out.println(text.getText());
             adminSuspendAccount.setUserId(text.getText());
+            adminCheckPlannerUI.setUserId(text.getText());
         }
     }
 }
