@@ -1,5 +1,6 @@
 package Entity;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,13 +81,13 @@ public class UserAccount extends Account {
      * @return A String that contains the user name, id and email of this account.
      */
     @Override public String toString() {
-        String result;
-
-        result = "This is an Regular Account with following information available:\n" +
-                "User Name: " + this.userName + "\n" +
-                "User ID: " + this.userId + "\n" +
-                "User Email:" + this.email + "\n";
-        return result;
+        StringBuilder result = new StringBuilder();
+        if (this.suspendedTime.isAfter(LocalDateTime.now())) {
+            result.append("This  user is currently suspended till:\n");
+            result.append(this.suspendedTime.toString()).append("\n");
+        }
+        result.append("This is an Regular Account with following information available:\n" + "User Name: ").append(this.userName).append("\n").append("User ID: ").append(this.userId).append("\n").append("User Email:").append(this.email).append("\n");
+        return result.toString();
     }
 
     public void removePlanner(String plannerId) {

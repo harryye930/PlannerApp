@@ -22,7 +22,7 @@ public class ViewData {
 
     JScrollPane planners = new JScrollPane(plannerInfo);
     JScrollPane templates = new JScrollPane(templateInfo);
-    JScrollPane accounts = new JScrollPane(accountInfo);
+    JScrollPane account = new JScrollPane(accountInfo);
     JScrollPane planner = new JScrollPane(singlePlannerInfo);
     JScrollPane template = new JScrollPane(singleTemplateInfo);
     JScrollPane friends = new JScrollPane(friendsInfo);
@@ -56,8 +56,13 @@ public class ViewData {
     }
 
     public JScrollPane getAccounts() {
-        this.update();
-        return this.accounts;
+        this.updateAccountsInfo();
+        return this.allAccounts;
+    }
+
+    public JScrollPane getAccount(String id) {
+        this.updateAccountInfo(id);
+        return this.account;
     }
 
     public JScrollPane getFriendsInfo() {
@@ -81,12 +86,6 @@ public class ViewData {
         plannerInfo.removeAll();
         plannerInfo.setEditable(false);
         plannerInfo.setLayout(null);
-
-        accountInfo.setBackground(new Color(241, 241, 241));
-        accountInfo.setText(accessController.getInfo(accessController.getCurrUserId()));
-        accountInfo.removeAll();
-        accountInfo.setEditable(false);
-        accountInfo.setLayout(null);
     }
 
     private void updatePlanner(String id) {
@@ -105,6 +104,14 @@ public class ViewData {
     private void updateAccountsInfo() {
         accountsInfo.setText(accessController.viewAllAccount());
         accountsInfo.setEditable(false);
+    }
+
+    private void updateAccountInfo(String id) {
+        accountInfo.setBackground(new Color(241, 241, 241));
+        accountInfo.setText(accessController.getInfo(id));
+        accountInfo.removeAll();
+        accountInfo.setEditable(false);
+        accountInfo.setLayout(null);
     }
 
 }

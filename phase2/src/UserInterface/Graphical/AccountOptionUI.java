@@ -46,7 +46,7 @@ public class AccountOptionUI extends GeneralPresenter {
     @Override
     public void run() {
         if (this.flag) {
-            accounts = data.getAccounts();
+            accounts = data.getAccount(accessController.getCurrUserId());
             cl.show(main, "accountMenu");
         } else {
             this.showAccountMenu();
@@ -59,7 +59,7 @@ public class AccountOptionUI extends GeneralPresenter {
         accountMenu.setLayout(null);
         main.add(accountMenu, "accountMenu");
 
-        accounts = data.getAccounts();
+        accounts = data.getAccount(accessController.getCurrUserId());
         accounts.setBounds(75, 25, 450, 100);
         accountMenu.add(accounts);
 
