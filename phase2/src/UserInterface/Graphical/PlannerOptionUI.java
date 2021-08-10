@@ -70,7 +70,6 @@ public class PlannerOptionUI extends GeneralPresenter {
         newPlannerButton.addActionListener(this);
         checkPlannerButton.addActionListener(this);
         returnToMainMenuButton.addActionListener(this);
-
     }
 
     /**

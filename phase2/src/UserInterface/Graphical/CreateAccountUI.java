@@ -5,6 +5,8 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Objects;
 
 /**
@@ -13,18 +15,20 @@ import java.util.Objects;
  * If the temporary account checkbox is not selected, then either a regular account or an admin account will be
  * automatically created, based on the email domain that the user enters.
  */
-public class CreateAccountUI extends GeneralPresenter {
+public class CreateAccountUI extends GeneralPresenter implements KeyListener {
     private boolean flag = false;
     private final GeneralPresenter adminAccUI = new AdminAccountUI("createAccount");
     private final GeneralPresenter regularAccUI = new RegularAccountUI("createAccount");
 
     private final JLabel createAccount = new JLabel("Register your account!");
+    private final JLabel passwordPrompt0 = new JLabel("Password");
     private final JTextField email = new JTextField();
     private final JTextField userName = new JTextField();
     private final JPasswordField password0 = new JPasswordField();
     private final JPasswordField password1 = new JPasswordField();
     private final JButton register = new JButton("Register");
     private final JButton back = new JButton("Go back");
+    private final JButton generatePassword = new JButton("Generate");
     private final JPanel create = new JPanel();
     private final JCheckBox temp = new JCheckBox("Register a temporary account");
     private JPanel grids;
@@ -60,6 +64,10 @@ public class CreateAccountUI extends GeneralPresenter {
         createAccount.setOpaque(true);
         create.add(createAccount);
 
+        generatePassword.setBounds(580, 190, 100, 30);
+        create.add(generatePassword);
+        generatePassword.addActionListener(this);
+
         grids = new JPanel();
         grids.setLayout(new GridLayout(6, 2));
         grids.setBounds(70, 100, 500, 250);
@@ -77,7 +85,6 @@ public class CreateAccountUI extends GeneralPresenter {
 
         grids.add(userName);
 
-        JLabel passwordPrompt0 = new JLabel("Password");
         passwordPrompt0.setHorizontalAlignment(JLabel.RIGHT);
         grids.add(passwordPrompt0);
 
@@ -96,11 +103,14 @@ public class CreateAccountUI extends GeneralPresenter {
 
         grids.add(back);
         back.addActionListener(this);
+        password0.addKeyListener(this);
     }
 
     private void createNewAccount(String type) {
         if (!Objects.equals(password0.getText(), password1.getText())) {
             this.createAccount.setText("Incorrect password, please try again");
+        } else if (accessController.getPasswordStrength(password0.getText()).equals("Too Weak")) {
+            this.createAccount.setText("Password too weak, please try again.");
         } else {
             String id;
             if (type.equals("regular")) {
@@ -152,7 +162,51 @@ public class CreateAccountUI extends GeneralPresenter {
             } else {
                 this.regularAccUI.run();
             }
+        } else if (e.getSource() == generatePassword) {
+            password0.setEchoChar((char)0);
+            password1.setEchoChar((char)0);
+            String tempPassword = accessController.generateTempPassword();
+            password0.setText(tempPassword);
+            password1.setText(tempPassword);
         }
     }
 
+    /**
+     * Invoked when a key has been typed.
+     * See the class description for {@link KeyEvent} for a definition of
+     * a key typed event.
+     *
+     * @param e
+     */
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    /**
+     * Invoked when a key has been pressed.
+     * See the class description for {@link KeyEvent} for a definition of
+     * a key pressed event.
+     *
+     * @param e
+     */
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getSource() == password0) {
+            passwordPrompt0.setText("Complexity Level: " + accessController.getPasswordStrength(password0.getText()));
+            System.out.println(password0.getText());
+        }
+    }
+
+    /**
+     * Invoked when a key has been released.
+     * See the class description for {@link KeyEvent} for a definition of
+     * a key released event.
+     *
+     * @param e
+     */
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
 }

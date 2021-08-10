@@ -336,6 +336,15 @@ public class AccessController{
         return accManager.suspendedStatus(retriever);
     }
 
+    /**
+     * Return the strength of the password, Too Weak, Weak or Good.
+     * @param password A String representing the password.
+     * @return A String representing the complexity level of the password.
+     */
+    public String getPasswordStrength(String password) {
+        return accManager.getPasswordComplexityLevel(accManager.getNumberOfCriteriaMet(password));
+    }
+
     public boolean addFriend(String selfId, String friendId){
         return accManager.addFriend(selfId, friendId);
     }
