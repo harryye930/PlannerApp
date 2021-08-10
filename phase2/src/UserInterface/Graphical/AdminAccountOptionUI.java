@@ -83,7 +83,7 @@ public class AdminAccountOptionUI extends GeneralPresenter implements KeyListene
         if (e.getSource() == suspend) {
             this.adminSuspendAccount.run();
         } else if (e.getSource() == checkPlanner) {
-
+            this.adminCheckPlannerUI.run();
         } else if (e.getSource() == back) {
             cl.show(main, this.getParent());
         }
