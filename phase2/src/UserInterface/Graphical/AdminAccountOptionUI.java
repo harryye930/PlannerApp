@@ -109,9 +109,7 @@ public class AdminAccountOptionUI extends GeneralPresenter implements KeyListene
      */
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getSource() == text) {
-            adminSuspendAccount.setUserId(text.getText());
-        }
+
     }
 
     /**
@@ -123,6 +121,9 @@ public class AdminAccountOptionUI extends GeneralPresenter implements KeyListene
      */
     @Override
     public void keyReleased(KeyEvent e) {
-
+        if (e.getSource() == text) {
+            System.out.println(text.getText());
+            adminSuspendAccount.setUserId(text.getText());
+        }
     }
 }

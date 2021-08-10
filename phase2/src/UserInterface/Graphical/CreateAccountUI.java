@@ -192,10 +192,6 @@ public class CreateAccountUI extends GeneralPresenter implements KeyListener {
      */
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getSource() == password0) {
-            passwordPrompt0.setText("Complexity Level: " + accessController.getPasswordStrength(password0.getText()));
-            System.out.println(password0.getText());
-        }
     }
 
     /**
@@ -207,6 +203,9 @@ public class CreateAccountUI extends GeneralPresenter implements KeyListener {
      */
     @Override
     public void keyReleased(KeyEvent e) {
-
+        if (e.getSource() == password0) {
+            passwordPrompt0.setText("Complexity Level: " + accessController.getPasswordStrength(password0.getText()));
+            System.out.println(password0.getText());
+        }
     }
 }
