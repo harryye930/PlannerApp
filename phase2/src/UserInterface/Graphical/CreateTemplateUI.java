@@ -76,7 +76,7 @@ public class CreateTemplateUI extends GeneralPresenter {
     @Override
     public void run(){
         if (flag){
-            templateInfo = data.getTemplates();
+            templateInfo = data.getTemplates(createTemplatePanel);
             cl.show(main, "createTemplate");
         } else {
             this.showCreateMenu();
@@ -94,7 +94,7 @@ public class CreateTemplateUI extends GeneralPresenter {
         createTemplatePanel.add(existingTemplatesLabel);
 
         // Add JScrollPane showing templateInfo below the existingTemplatesLabel
-        templateInfo = data.getTemplates();
+        templateInfo = data.getTemplates(createTemplatePanel);
         templateInfo.setBounds(25, 50, 400, 500);
         templateInfo.setBackground(new Color(143, 141, 141));
         createTemplatePanel.add(templateInfo);
@@ -292,22 +292,22 @@ public class CreateTemplateUI extends GeneralPresenter {
             templateController.createTemplate("daily", templateNamePromptField.getText(),
                     plannerNamePromptField.getText(), firstPlannerPromptField.getText(),
                     secondPlannerPromptField.getText(), secondPlannerPromptField.getText());
-            templateInfo = data.getTemplates();
+            templateInfo = data.getTemplates(createTemplatePanel);
             cl.show(main, "createTemplate");
         } else if (e.getSource() == projectSubmitButton){
             templateController.createTemplate("project", templateNamePromptField.getText(),
                     plannerNamePromptField.getText(), firstPlannerPromptField.getText(),
                     secondPlannerPromptField.getText(), secondPlannerPromptField.getText());
-            templateInfo = data.getTemplates();
+            templateInfo = data.getTemplates(createTemplatePanel);
             cl.show(main, "createTemplate");
         } else if (e.getSource() == remindersSubmitButton){
             templateController.createTemplate("reminders", templateNamePromptField.getText(),
                     plannerNamePromptField.getText(), firstPlannerPromptField.getText(),
                     secondPlannerPromptField.getText(), secondPlannerPromptField.getText());
-            templateInfo = data.getTemplates();
+            templateInfo = data.getTemplates(createTemplatePanel);
             cl.show(main, "createTemplate");
         } else if (e.getSource() == backToOptionsButton){
-            templateInfo = data.getTemplates();
+            templateInfo = data.getTemplates(createTemplatePanel);
             cl.show(main, "createTemplate");
         } else if (e.getSource() == backToTemplateMenuButton){
             cl.show(main, this.getParent());

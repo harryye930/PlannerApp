@@ -51,7 +51,7 @@ public class PlannerEditUI extends GeneralPresenter {
     @Override
     public void run() {
         if (flag) {
-            planner = data.getPlanner(plannerController.getCurrPlannerId());
+            planner = data.getPlanner(plannerController.getCurrPlannerId(), editPlanner);
             cl.show(main, "editPlanner");
         } else {
             this.getProjectPanel();
@@ -64,7 +64,7 @@ public class PlannerEditUI extends GeneralPresenter {
 
     private void showEditUI() {
         main.add(editPlanner, "editPlanner");
-        planner = data.getPlanner(plannerController.getCurrPlannerId());
+        planner = data.getPlanner(plannerController.getCurrPlannerId(), editPlanner);
         planner.setBounds(20, 20, 450, 500);
         editPlanner.setLayout(null);
         editPlanner.add(planner);

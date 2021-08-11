@@ -37,7 +37,7 @@ public class CheckTemplateUI extends GeneralPresenter {
     @Override
     public void run(){
         if (flag) {
-            templateInfo = data.getTemplates();
+            templateInfo = data.getTemplates(checkTemplate);
             cl.show(main, "checkTemplate");
         } else {
             this.showTemplates();
@@ -52,10 +52,7 @@ public class CheckTemplateUI extends GeneralPresenter {
         checkTemplate.setLayout(null);
         main.add(checkTemplate, "checkTemplate");
 
-        templateInfo = data.getTemplates();
-        templateInfo.setBounds(25, 25, 400, 500);
-        templateInfo.setBackground(new Color(213, 212, 212));
-        checkTemplate.add(templateInfo);
+        templateInfo = data.getTemplates(checkTemplate);
 
         prompt.setBounds(450, 50, 225, 50);
         prompt.setEditable(false);

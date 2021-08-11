@@ -41,7 +41,7 @@ public class AdminAccountOptionUI extends GeneralPresenter implements KeyListene
     @Override
     public void run(){
         if (flag) {
-            accountsInfo = data.getAccounts();
+            accountsInfo = data.getAccounts(adminAccount);
             cl.show(main, "adminAccountOption");
         } else {
             this.showMenu();
@@ -54,9 +54,7 @@ public class AdminAccountOptionUI extends GeneralPresenter implements KeyListene
         adminAccount.setLayout(null);
         main.add(adminAccount, "adminAccountOption");
 
-        accountsInfo = data.getAccounts();
-        accountsInfo.setBounds(25, 25, 400, 500);
-        adminAccount.add(accountsInfo);
+        accountsInfo = data.getAccounts(adminAccount);
 
         prompt.setBounds(450, 50, 200, 50);
         adminAccount.add(prompt);

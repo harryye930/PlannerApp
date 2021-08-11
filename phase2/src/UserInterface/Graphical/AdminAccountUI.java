@@ -28,7 +28,7 @@ public class AdminAccountUI extends GeneralPresenter {
     private final JButton accountButton = new JButton("Account Options");
     private final JButton logOutButton = new JButton("Log out");
 
-    private final GeneralPresenter plannerOptionUI = new AdminPlannerOptionUI("adminUserMainMenu");
+    //private final GeneralPresenter plannerOptionUI = new AdminPlannerOptionUI("adminUserMainMenu");
     private final GeneralPresenter templateOptionUI = new AdminTemplateOptionUI("adminUserMainMenu");
     private final GeneralPresenter accountOptionUI = new AdminAccountOptionUI("adminUserMainMenu");
 
@@ -88,7 +88,7 @@ public class AdminAccountUI extends GeneralPresenter {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == plannerButton){
-            this.plannerOptionUI.run();
+            //this.plannerOptionUI.run();
         }else if (e.getSource() == templateButton){
             this.templateOptionUI.run();
         } else if (e.getSource() == logOutButton){

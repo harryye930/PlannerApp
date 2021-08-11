@@ -13,6 +13,7 @@ public class AdminCheckPlannerUI extends GeneralPresenter {
 
     // Panel
     private JScrollPane accountInfo;
+    JPanel menu = new JPanel();
 
     // Button
     private JButton delete = new JButton("Delete");
@@ -49,13 +50,10 @@ public class AdminCheckPlannerUI extends GeneralPresenter {
     }
 
     private void showMenu() {
-        JPanel menu = new JPanel();
         menu.setLayout(null);
         main.add(menu, "adminCheckPlanner");
 
-        accountInfo = data.getAccount(userId);
-        accountInfo.setBounds(25, 25, 400, 500);
-        menu.add(accountInfo);
+        accountInfo = data.getAccount(userId, menu);
 
         JLabel prompt = new JLabel("<html>Please enter the planner ID you<br/> want to operate on:</html>");
         prompt.setBounds(475, 100, 200, 40);
@@ -81,7 +79,7 @@ public class AdminCheckPlannerUI extends GeneralPresenter {
     }
 
     private void update() {
-        accountInfo = data.getAccount(userId);
+        accountInfo = data.getAccount(userId, menu);
     }
 
     /**

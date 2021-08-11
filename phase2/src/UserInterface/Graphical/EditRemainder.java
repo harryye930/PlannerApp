@@ -11,6 +11,7 @@ public class EditRemainder extends GeneralPresenter {
 
     //Panel
     private JScrollPane plannerInfo;
+    JPanel remainderEdit = new JPanel();
 
     //Button
     private final JButton changeButton = new JButton();
@@ -44,12 +45,9 @@ public class EditRemainder extends GeneralPresenter {
     }
 
     private void showEditPanel() {
-        JPanel remainderEdit = new JPanel();
         main.add(remainderEdit, "editRemainder");
 
-        plannerInfo = data.getPlanner(plannerController.getCurrPlannerId());
-        plannerInfo.setBounds(20, 20, 450, 500);
-        remainderEdit.add(plannerInfo);
+        plannerInfo = data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
 
         prompt1.setBounds(472, 25, 200, 30);
         prompt0.setBounds(472, 125, 200, 30);
@@ -78,7 +76,7 @@ public class EditRemainder extends GeneralPresenter {
             prompt1.setText("Please enter the status the user wants to change");
             changeButton.setText("Change to add task menu");
         }
-        plannerInfo = data.getPlanner(plannerController.getCurrPlannerId());
+        plannerInfo = data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
     }
 
     /**

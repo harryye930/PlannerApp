@@ -35,83 +35,94 @@ public class ViewData {
         this.templateController = templateController;
     }
 
-    public JScrollPane getTemplates() {
-        this.update();
+    public JScrollPane getTemplates(JPanel panel) {
+        this.updateTemplates(panel);
         return this.templates;
     }
 
-    public JScrollPane getPlanners() {
-        this.update();
+    public JScrollPane getPlanners(JPanel panel) {
+        this.updatePlanners(panel);
         return this.planners;
     }
 
-    public JScrollPane getPlanner(String id) {
-        this.updatePlanner(id);
+    public JScrollPane getPlanner(String id, JPanel panel) {
+        this.updatePlanner(id, panel);
         return this.planner;
     }
 
-    public JScrollPane getTemplate(String id){
-        this.updateTemplate(id);
+    public JScrollPane getTemplate(String id, JPanel panel){
+        this.updateTemplate(id, panel);
         return this.template;
     }
 
-    public JScrollPane getAccounts() {
-        this.updateAccountsInfo();
+    public JScrollPane getAccounts(JPanel panel) {
+        this.updateAccountsInfo(panel);
         return this.allAccounts;
     }
 
-    public JScrollPane getAccount(String id) {
-        this.updateAccountInfo(id);
+    public JScrollPane getAccount(String id, JPanel panel) {
+        this.updateAccountInfo(id, panel);
         return this.account;
     }
 
-    public JScrollPane getFriendsInfo() {
-        this.updateFriendList(accessController.getCurrUserId());
+    public JScrollPane getFriendsInfo(JPanel panel) {
+        this.updateFriendList(accessController.getCurrUserId(), panel);
         return this.friends;
     }
 
-    private void update() {
-
-        //templates.setBounds(25, 25, 400, 500);
-        templates.setBackground(new Color(143, 141, 141));
+    private void updateTemplates(JPanel panel) {
+        this.scrollPaneInit(templates, panel);
         templateInfo.setText(templateController.detailViewAllTemplates(false));
-        templateInfo.removeAll();
-        templateInfo.setLayout(null);
-        templateInfo.setEditable(false);
+        this.textAreaInit(templateInfo);
+    }
 
-        //plannerInfo.setBounds(25, 25, 400, 500);
+    private void updatePlanners(JPanel panel) {
         String separator = "\n===============\n";
-        planners.setBackground(new Color(143, 141, 141));
+        this.scrollPaneInit(planners, panel);
         plannerInfo.setText(plannerController.viewUserPlanners() + separator + plannerController.viewPublicPlanners());
-        plannerInfo.removeAll();
-        plannerInfo.setEditable(false);
-        plannerInfo.setLayout(null);
+        this.textAreaInit(plannerInfo);
     }
 
-    private void updatePlanner(String id) {
+    private void updatePlanner(String id, JPanel panel) {
+        this.scrollPaneInit(planner, panel);
         singlePlannerInfo.setText(plannerController.toString(Integer.parseInt(id)));
+        this.textAreaInit(singlePlannerInfo);
     }
 
-    private void updateTemplate(String id) {
+    private void updateTemplate(String id, JPanel panel) {
+        this.scrollPaneInit(template, panel);
         singleTemplateInfo.setText(templateController.detailViewTemplate(Integer.parseInt(id)));
+        this.textAreaInit(singleTemplateInfo);
     }
 
-    private void updateFriendList(String id) {
-        friendsInfo.setEditable(false);
+    private void updateFriendList(String id, JPanel panel) {
+        this.scrollPaneInit(friends, panel);
         friendsInfo.setText(accessController.getFriendsInfo(accessController.getCurrUserId()));
+        this.textAreaInit(friendsInfo);
     }
 
-    private void updateAccountsInfo() {
+    private void updateAccountsInfo(JPanel panel) {
+        this.scrollPaneInit(allAccounts, panel);
         accountsInfo.setText(accessController.viewAllAccount());
-        accountsInfo.setEditable(false);
+        this.textAreaInit(accountsInfo);
     }
 
-    private void updateAccountInfo(String id) {
-        accountInfo.setBackground(new Color(241, 241, 241));
+    private void updateAccountInfo(String id, JPanel panel) {
+        this.scrollPaneInit(account, panel);
         accountInfo.setText(accessController.getInfo(id));
-        accountInfo.removeAll();
-        accountInfo.setEditable(false);
-        accountInfo.setLayout(null);
+        this.textAreaInit(accountInfo);
+    }
+
+    private void scrollPaneInit(JScrollPane js, JPanel jp) {
+        js.setBounds(25, 25, 400, 500);
+        js.setBackground(new Color(143, 141, 141));
+        jp.add(js);
+    }
+
+    private void textAreaInit(JTextArea ta) {
+        ta.removeAll();
+        ta.setEditable(false);
+        ta.setLayout(null);
     }
 
 }

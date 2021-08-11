@@ -30,7 +30,7 @@ public class FriendUI extends GeneralPresenter {
     @Override
     public void run() {
         if (flag) {
-            friendsInfo = data.getFriendsInfo();
+            friendsInfo = data.getFriendsInfo(friendUI);
             cl.show(main, "friendPage");
         } else {
             this.showFriendUI();
@@ -42,9 +42,7 @@ public class FriendUI extends GeneralPresenter {
     private void showFriendUI() {
         friendUI.setLayout(null);
         main.add(friendUI, "friendPage");
-        friendsInfo = data.getFriendsInfo();
-        friendsInfo.setBounds(20, 20, 450, 500);
-        friendUI.add(friendsInfo);
+        friendsInfo = data.getFriendsInfo(friendUI);
 
         JLabel prompt = new JLabel("<html>Please enter the user ID you want<br/> to operate on:</html>");
         prompt.setBounds(475, 50, 300, 50);
@@ -65,7 +63,7 @@ public class FriendUI extends GeneralPresenter {
     }
 
     private void update() {
-        friendsInfo = data.getFriendsInfo();
+        friendsInfo = data.getFriendsInfo(friendUI);
     }
 
     /**

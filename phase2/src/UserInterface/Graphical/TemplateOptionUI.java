@@ -81,7 +81,7 @@ public class TemplateOptionUI extends GeneralPresenter {
             JPanel temp = new JPanel();
             temp.setLayout(null);
 
-            JScrollPane templates = data.getTemplates();
+            JScrollPane templates = data.getTemplates(temp);
             templates.setBounds(25, 25, 400, 500);
             temp.add(templates);
             main.add(temp, "templateInfo");

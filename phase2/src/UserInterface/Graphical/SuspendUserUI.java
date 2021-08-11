@@ -50,9 +50,7 @@ public class SuspendUserUI extends GeneralPresenter {
         main.add(menu, "suspendAccount");
         menu.setLayout(null);
 
-        accountInfo = data.getAccount(userId);
-        accountInfo.setBounds(25, 25, 400, 500);
-        menu.add(accountInfo);
+        accountInfo = data.getAccount(userId, menu);
 
         if (accessController.getSuspensionStatus(userId)) {
             suspend.setText("Unsuspend");
@@ -76,7 +74,7 @@ public class SuspendUserUI extends GeneralPresenter {
     }
 
     private void update() {
-        this.accountInfo = data.getAccount(userId);
+        this.accountInfo = data.getAccount(userId, menu);
         if (accessController.getSuspensionStatus(userId)) {
             prompt.setVisible(false);
             text.setVisible(false);

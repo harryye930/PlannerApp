@@ -12,6 +12,7 @@ public class EditTemplateUI extends GeneralPresenter {
     private String editOption;
 
     // Panel/Pane
+    private final JPanel editTemplate = new JPanel();
     private JScrollPane template;
     private JPanel editPanel = new JPanel();
     private JScrollPane templateInfo;
@@ -39,7 +40,7 @@ public class EditTemplateUI extends GeneralPresenter {
     @Override
     public void run() {
         if (flag){
-            template = data.getTemplate(templateController.getCurrTemplateId());
+            template = data.getTemplate(templateController.getCurrTemplateId(), editPanel);
             cl.show(main, "editTemplate");
         } else {
             this.buildEditPanel();
@@ -51,15 +52,11 @@ public class EditTemplateUI extends GeneralPresenter {
     }
 
     private void showEditUI(){
-        JPanel editTemplate = new JPanel();
         editTemplate.setLayout(null);
         main.add(editTemplate, "editTemplate");
 
         // Show template detail view on the left side of the panel
-        template = data.getTemplate(templateController.getCurrTemplateId());
-        template.setBounds(25, 25, 400, 500);
-        template.setBackground(new Color(213, 212, 212));
-        editTemplate.add(template);
+        template = data.getTemplate(templateController.getCurrTemplateId(), editPanel);
 
         JPanel editPanel = getEditPanel();
         editPanel.setBounds(450, 25, 225, 200);
@@ -189,7 +186,7 @@ public class EditTemplateUI extends GeneralPresenter {
             this.showEditUI();
             cl.show(main, "editTemplate");
         } else if (e.getSource() == backToTemplatesButton) {
-            templateInfo = data.getTemplates();
+            templateInfo = data.getTemplates(editPanel);
             cl.show(main, this.getParent());
         }
     }

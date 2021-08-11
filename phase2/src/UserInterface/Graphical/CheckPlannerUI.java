@@ -44,7 +44,7 @@ public class CheckPlannerUI extends GeneralPresenter {
         if (flag) {
 //            plannerInfo.setText(plannerController.viewUserPlanners() +
 //                    separator + plannerController.viewPublicPlanners());
-            plannerInfo = data.getPlanners();
+            plannerInfo = data.getPlanners(checkPlanner);
             cl.show(main, "checkPlanner");
         } else {
             this.showPlanners();
@@ -58,11 +58,7 @@ public class CheckPlannerUI extends GeneralPresenter {
         checkPlanner.setLayout(null);
         main.add(checkPlanner, "checkPlanner");
 
-        plannerInfo = data.getPlanners();
-        plannerInfo.setBounds(25, 25, 400, 500);
-
-        plannerInfo.setBackground(new Color(213, 212, 212));
-        checkPlanner.add(plannerInfo);
+        plannerInfo = data.getPlanners(checkPlanner);
 
         prompt.setBounds(450, 50, 200, 50);
         prompt.setEditable(false);

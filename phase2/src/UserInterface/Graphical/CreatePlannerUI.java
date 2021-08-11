@@ -56,11 +56,7 @@ public class CreatePlannerUI extends GeneralPresenter {
         createPlanner.setLayout(null);
 
         main.add(createPlanner, "createPlanner");
-        JScrollPane templateInfo = data.getTemplates();
-        createPlanner.add(templateInfo);
-
-        templateInfo.setBounds(25, 25, 400, 500);
-        templateInfo.setBackground(new Color(143, 141, 141));
+        JScrollPane templateInfo = data.getTemplates(createPlanner);
 
         message.setBounds(450, 50, 200, 50);
         message.setEditable(false);
