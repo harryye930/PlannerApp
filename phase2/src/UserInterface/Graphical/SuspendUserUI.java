@@ -4,7 +4,7 @@ import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-
+// TODO: Extract the left panel (the JScrollPane)
 public class SuspendUserUI extends GeneralPresenter {
     private boolean flag = false;
     private String userId;

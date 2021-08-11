@@ -267,7 +267,7 @@ public class CreateTemplateUI extends GeneralPresenter {
 //    }
 
 
-
+//TODO: these if statements are a bit repetitive, would we lose mark for this
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == dailyTemplateButton){

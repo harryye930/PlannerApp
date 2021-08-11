@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+//TODO: combine with CheckPlannerUI
+// TODO: Extract the left panel (the JScrollPane)
 /**
  * GUI class for showing all templates stored in the system to an admin user. Asks the admin user which template they
  * would like to edit.

@@ -5,6 +5,8 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
+//TODO: combine with CheckPlannerUI
+// TODO: Extract the left panel (the JScrollPane)
 public class AdminCheckPlannerUI extends GeneralPresenter {
     private boolean flag = false;
     private String  userId;

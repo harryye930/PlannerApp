@@ -6,7 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-
+// TODO: Extract the left panel (the JScrollPane)
+// TODO: double check for bugs
 public class PlannerEditUI extends GeneralPresenter {
 //    private final String dailyMessage = "Please enter the time zone you \n" +
 //            "want to edit/add agenda to\n(in form of HH:MM)";

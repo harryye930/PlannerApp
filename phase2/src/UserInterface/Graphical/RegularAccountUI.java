@@ -6,7 +6,7 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-
+//TODO: combine with AccountOptionUI
 /**
  * GUI class for displaying the main menu for a regular user.
  * The main menu includes 4 options: planner option, template option, account setting, log out.

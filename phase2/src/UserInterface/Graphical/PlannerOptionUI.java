@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+//TODO: combine with AccountOptionUI
 /**
  * GUI class for displaying planner options for a regular user.
  * Options include: create a new planner, view all planners available to the user, and return to the main menu.

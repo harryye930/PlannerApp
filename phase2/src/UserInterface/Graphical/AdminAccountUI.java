@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+
+//TODO: combine with AccountOptionUI
 /**
  * GUI class for displaying the main menu for an admin user.
  * The main menu includes: planner options, edit template, suspend account

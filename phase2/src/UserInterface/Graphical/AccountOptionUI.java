@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+//TODO: combine with AdminAccountUI
 /***
  * GUI class for the account setting screen: displays account information and allows user to change account username
  * and password.

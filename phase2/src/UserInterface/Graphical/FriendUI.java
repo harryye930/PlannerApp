@@ -5,6 +5,7 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
+// TODO: Extract the left panel (the JScrollPane)
 public class FriendUI extends GeneralPresenter {
     private boolean flag = false;
 

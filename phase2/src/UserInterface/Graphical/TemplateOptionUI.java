@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+//TODO: combine with AccountOptionUI
 /**
  * GUI class for displaying template options for a regular user.
  * Options include: view all templates, return to main menu.
