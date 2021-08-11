@@ -42,23 +42,24 @@ public class AccountManager implements Serializable{
      * @return A randomly generated string that satisfies the complexityLevel.
      */
     public String generatePassword(String complexityLevel){
-        // at least 4 characters that are NOT upper case letter / lower case letter / number
-        String atLeastFourChars = "[^a-zA-Z0-9]{4,}";
+        // two special chars, satisfies the "at least 4 characters" requirement when combined with any two of the other
+        // patterns
+        String twoSpecialChars = "[?+!@#]{2}";
         // includes at least one upper case letter
-        String atLeastOneUpperCase = "[A-Z]+";
+        String atLeastOneUpperCase = "[A-Z]{1,3}";
         // includes at least one lower case letter
-        String atLeastOneLowerCase = "[a-z]+";
+        String atLeastOneLowerCase = "[a-z]{1,3}";
         // includes at least one number
-        String atLeastOneNumber = "[0-9]+";
+        String atLeastOneNumber = "[0-9]{1,3}";
 
         List<String> meetThreeCriteria =  new ArrayList<>();
-        meetThreeCriteria.add(atLeastFourChars + atLeastOneUpperCase + atLeastOneLowerCase);
-        meetThreeCriteria.add(atLeastFourChars + atLeastOneUpperCase + atLeastOneNumber);
-        meetThreeCriteria.add(atLeastFourChars + atLeastOneLowerCase + atLeastOneNumber);
+        meetThreeCriteria.add(twoSpecialChars + atLeastOneUpperCase + atLeastOneLowerCase);
+        meetThreeCriteria.add(twoSpecialChars + atLeastOneUpperCase + atLeastOneNumber);
+        meetThreeCriteria.add(twoSpecialChars + atLeastOneLowerCase + atLeastOneNumber);
         meetThreeCriteria.add(atLeastOneUpperCase + atLeastOneLowerCase + atLeastOneNumber);
 
         List<String> meetFourCriteria = new ArrayList<>();
-        meetFourCriteria.add(atLeastFourChars + atLeastOneUpperCase + atLeastOneLowerCase + atLeastOneNumber);
+        meetFourCriteria.add(twoSpecialChars + atLeastOneUpperCase + atLeastOneLowerCase + atLeastOneNumber);
 
         List<String> chosenList = null;
         if (complexityLevel.equals("weak")) {
@@ -71,10 +72,28 @@ public class AccountManager implements Serializable{
         String selectedPattern = chosenList.get(0);
 
         Xeger generator = new Xeger(selectedPattern);
-        String output = generator.generate(); // the randomly created password
-        return output;
+        String generatedString = generator.generate(); // the randomly created password
+        return shuffleCharacters(generatedString); // randomly shuffle the characters in generatedString
+
     }
 
+    /**
+     * Randomly shuffles the characters in input to create and return a reordered string.
+     * @param input Input string whose characters will be shuffled.
+     * @return A string with shuffled characters from input string.
+     */
+    private String shuffleCharacters(String input){
+        List<Character> list = new ArrayList<>();
+        for(char c : input.toCharArray())
+            list.add(c);
+        Collections.shuffle(list);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for(char c : list)
+            stringBuilder.append(c);
+
+        return stringBuilder.toString();
+    }
 
     // set password for new account
     // - check that the password is complicated enough
@@ -92,7 +111,7 @@ public class AccountManager implements Serializable{
      */
     public boolean setPassword(String retriever, String password){
         Account account = this.findAccount(retriever);
-        if (!Objects.equals(checkPasswordComplexity(password), "Too Weak")){
+        if (checkPasswordComplexity(password)){
             account.setPassword(password);
             return true;
         } else {
