@@ -1,7 +1,7 @@
 package strategy.buttonGenerator;
 
 import UserInterface.GeneralPresenter;
-import strategy.IGUI;
+import strategy.IButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,25 +10,36 @@ import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class VerticalButtons implements IGUI, ActionListener {
+public class GridStyleButtons implements IButton, ActionListener {
     private final JPanel panel = new JPanel();
 
     private final LinkedHashMap<String, JButton> nameToButton = new LinkedHashMap<>();
     private final LinkedHashMap<String, GeneralPresenter> nameToUI = new LinkedHashMap<>();
 
+//    private final ArrayList<String> buttonName = new ArrayList<>();
+//    private final ArrayList<String> buttonPrompt = new ArrayList<>();
+//    private final ArrayList<GeneralPresenter> nextUI = new ArrayList<>();
 
-    public VerticalButtons(List<String> buttonNames, List<String> buttonPrompts, List<GeneralPresenter> uiList) {
+    public GridStyleButtons(List<String> buttonNames, List<String> buttonPrompts, List<GeneralPresenter> uiList) {
         assert  buttonNames.size() == buttonPrompts.size();
         for (int i = 0; i < buttonNames.size(); i++) {
             nameToButton.put(buttonNames.get(i), new JButton(buttonPrompts.get(i)));
             nameToUI.put(buttonNames.get(i), uiList.get(i));
             nameToButton.get(buttonNames.get(i)).addActionListener(this);
         }
-        this.generate();
+    }
+
+    public GridStyleButtons() {}
+
+    @Override
+    public void add(String name, String prompt, GeneralPresenter nextUI) {
+        nameToButton.put(name, new JButton(prompt));
+        nameToUI.put(name, nextUI);
     }
 
     @Override
     public JPanel getPanel() {
+        this.generate();
         return panel;
     }
 
