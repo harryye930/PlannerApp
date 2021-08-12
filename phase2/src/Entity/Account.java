@@ -58,20 +58,38 @@ public abstract class Account implements Serializable {
         throw new NotImplementedException();
     }
 
+    /**
+     * return the friends of the user.
+     * @return an ArrayList of Account representing the friends of the user.
+     */
     public ArrayList<Account> getFriends() {
         return friends;
     }
 
+    /**
+     * return whether the given account is a friend of the user or not
+     * @param acc Account of the friend
+     * @return boolean, whether the given account is a friend of the user or not
+     */
     public boolean findFriend(Account acc){
         return friends.contains(acc);
     }
 
+    /**
+     * add the given Account to the ArrayList of friends
+     * @param acc the account to be added
+     */
     public void addFriend(Account acc){
         friends.add(acc);
     }
 
+    /**
+     * delete the friend from the ArrayList
+     * @param acc the given Account, representing the friend
+     * @return whether the change is made in 'friends' or not
+     */
     public boolean removeFriend(Account acc){
-        if (friends.contains(acc)){
+        if (findFriend(acc)){
             friends.remove(acc);
             return true;
         } else {
@@ -79,18 +97,36 @@ public abstract class Account implements Serializable {
         }
     }
 
+    /**
+     * return the mailbox of the user
+     * @return HashMap<String, ArrayList<String>>, representing the mailbox
+     */
     public HashMap<String, ArrayList<String>> getMailbox() {
         return mailbox;
     }
 
+    /**
+     * add the message to mailbox
+     * @param id the String of userId representing the sender
+     * @param mail the String representing thr message
+     */
     public void receiveMail(String id, String mail){
         mailbox.get(id).add(mail);
     }
 
+    /**
+     * see all mail in the mailbox.
+     * @return the String representation of the mailbox
+     */
     public String seeAllMail(){
         return mailbox.toString();
     }
 
+    /**
+     * see all mails of one specific sender
+     * @param userId the sender's user id
+     * @return the string representation of all mails of the sender.
+     */
     public String seeOnesMail(String userId){
         return mailbox.get(userId).toString();
     }

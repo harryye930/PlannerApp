@@ -90,15 +90,28 @@ public class UserAccount extends Account {
         return result.toString();
     }
 
+    /**
+     * delete the planner, add it to the trashcan
+     * @param plannerId the id of the planner to be deleted
+     */
     public void removePlanner(String plannerId) {
         this.planners.remove(plannerId);
         trashPlanner.add(plannerId);
     }
 
+    /**
+     * return the trashed planners
+     * @return ArrayList<String> representing the trash can
+     */
     public ArrayList<String> getTrashPlanner(){
         return trashPlanner;
     }
 
+    /**
+     * remove the planner from trash
+     * @param plannerId the String id of the planner to be deleted
+     * @return whether the planner is removed or not
+     */
     public boolean removeFromTrash(String plannerId){
         if(trashPlanner.contains(plannerId)){
             trashPlanner.remove(plannerId);

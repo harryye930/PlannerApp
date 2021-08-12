@@ -300,7 +300,7 @@ public class AccessController{
     }
 
     /**
-     * remove planner from the user's planners
+     * remove planner from the user's planners, add it to the trashcan
      * @param retriever A String representing information of account
      * @param plannerId A String that identifies the planner
      */
@@ -345,14 +345,31 @@ public class AccessController{
         return accManager.getPasswordComplexityLevel(accManager.getNumberOfCriteriaMet(password));
     }
 
+    /**
+     * let 2 users add friends
+     * @param selfId id of the first user
+     * @param friendId id of the second user
+     * @return whether it's successful for 2 users to add friend
+     */
     public boolean addFriend(String selfId, String friendId){
         return accManager.addFriend(selfId, friendId);
     }
 
+    /**
+     * let 2 users stop being friends
+     * @param selfId id of the first user
+     * @param friendId id of the second user
+     * @return whether it's successful for 2 users to delete friend
+     */
     public boolean deleteFriend(String selfId, String friendId){
         return accManager.deleteFriend(selfId, friendId);
     }
 
+    /**
+     * return the friends's info and their planners of a user
+     * @param selfId the id of the user
+     * @return String representation of friends' info and planners
+     */
     public String getFriendsInfo(String selfId){
         ArrayList<String> friends = accManager.getFriends(selfId);
         StringBuilder strFriends = new StringBuilder();
@@ -371,41 +388,59 @@ public class AccessController{
         return strFriends.toString();
     }
 
-
-
-    public ArrayList<String> seeFriendsPlanner(String friendId){
-        Account friend = accManager.findAccount(friendId);
-        ArrayList<String> friendAllPlanner = new ArrayList<>(((UserAccount)friend).getPlanner());
-        ArrayList<String> friendOnly = new ArrayList<>();
-        for (String i : friendAllPlanner){
-            if (plannerController.getPrivacyStatus(Integer.parseInt(i)).equals("friends-only")){
-                friendOnly.add(i);
-            }
-        }
-        return friendOnly;
-    }
-
-
+    /**
+     * send a message from 1 user to the other
+     * @param senderId the id of the sender
+     * @param revivedId the id of the receiver
+     * @param mail the message to be sent
+     */
     public void sendMail(String senderId, String revivedId, String mail){
         accManager.sendMail(senderId, revivedId,mail);
     }
 
+    /**
+     * return the mailbox of a singe user
+     * @param userId the user's id
+     * @return the hashmap representing the user's mailbox
+     */
     public HashMap<String, ArrayList<String>> getMailbox(String userId){
         return accManager.getMailbox(userId);
     }
 
+    /**
+     * return all mails of a single sender in the user's mailbox
+     * @param selfId the user who owns the mailbox
+     * @param senderId the sender of the mails
+     * @return String representation of the mails
+     */
     public String seeOnesMail(String selfId, String senderId){
         return accManager.seeOnesMail(selfId, senderId);
     }
 
+    /**
+     * see all mails in the mailbox of the user
+     * @param userId the id of the user
+     * @return String representation of all mails of the user
+     */
     public String seeAllMail(String userId){
         return accManager.seeAllMail(userId);
     }
 
+    /**
+     * return the trashed planners of a user
+     * @param userId the user id of the user
+     * @return the ArrayList<String> representing the trashed planners of a user
+     */
     public ArrayList<String> getTrashPlanner(String userId){
         return accManager.getTrashPlanner(userId);
     }
 
+    /**
+     * remove a planner from trashcan, add it back to all planners the user has
+     * @param userId the id of the user
+     * @param plannerId the String id of the planner
+     * @return whether the removing and adding were successful
+     */
     public boolean unTrashPlanner(String userId, String plannerId){
         return accManager.unTrashPlanner(userId, plannerId);
     }

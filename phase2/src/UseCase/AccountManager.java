@@ -693,11 +693,23 @@ public class AccountManager implements Serializable{
         return acc.getSuspendedTime().isAfter(LocalDateTime.now());
     }
 
+    /**
+     * return whether the 2 users are friends or not
+     * @param selfId the id of the first user
+     * @param friendId the id of the 2nd user
+     * @return whether the 2 users are friends or not
+     */
     public boolean isFriend(String selfId, String friendId){
         return getAllAccount().contains(findAccount(friendId)) && getAllAccount().contains(findAccount(selfId))
                 && findAccount(selfId).findFriend(findAccount(friendId));
     }
 
+    /**
+     * add 2 users to friend of each other
+     * @param selfId the id of the first user
+     * @param friendId the id of the 2nd user
+     * @return whether adding friend is successful or not
+     */
     public boolean addFriend(String selfId, String friendId){
         if (getAllAccount().contains(findAccount(friendId))
                 && !findAccount(selfId).getFriends().contains(findAccount(friendId))){
@@ -709,6 +721,12 @@ public class AccountManager implements Serializable{
         }
     }
 
+    /**
+     * delete friends of both users
+     * @param selfId the id of the first user
+     * @param friendId the id of the 2nd user
+     * @return whether deleting friend is successful or not
+     */
     public boolean deleteFriend(String selfId, String friendId){
         if (getAllAccount().contains(findAccount(friendId)) && isFriend(selfId, friendId)){
             findAccount(selfId).removeFriend(findAccount(friendId));
@@ -719,6 +737,11 @@ public class AccountManager implements Serializable{
         }
     }
 
+    /**
+     * return the ArrayList of friend ids of a user
+     * @param selfId the user
+     * @return the ArrayList of friend ids (String) of the user
+     */
     public ArrayList<String> getFriends(String selfId){
         ArrayList<Account> friends = findAccount(selfId).getFriends();
         ArrayList<String> friendIds = new ArrayList<>();
@@ -728,28 +751,61 @@ public class AccountManager implements Serializable{
         return friendIds;
     }
 
+    /**
+     * send mail to the a user
+     * @param senderId the id of the sender
+     * @param revieveId the id of the receiver
+     * @param mail the String message to be sent
+     */
     public void sendMail(String senderId, String revieveId, String mail){
         Account acc = findAccount(revieveId);
         acc.receiveMail(senderId, mail);
     }
 
+    /**
+     * return the mailbox of a specific user
+     * @param userId the user id to be seen the mailbox
+     * @return the hashmap representing the mailbox
+     */
     public HashMap<String, ArrayList<String>> getMailbox(String userId){
         return findAccount(userId).getMailbox();
     }
 
+    /**
+     * see all the mail of one sender of one user's mailbox
+     * @param selfId the user who owns the mailbox
+     * @param senderId the sender of messages
+     * @return String of all mails of the sender sent to the user
+     */
     public String seeOnesMail(String selfId, String senderId){
         return findAccount(selfId).seeOnesMail(senderId);
     }
 
+    /**
+     * see all the mails of one user
+     * @param userId the user to be seen all mails
+     * @return the String representation of all mails of the user
+     */
     public String seeAllMail(String userId){
         return findAccount(userId).seeAllMail();
     }
 
+    /**
+     * return the trashed planners of the given user
+     * @param userId the user id of the user
+     * @return the ArrayList<String>, trashed planner of the user
+     */
     public ArrayList<String> getTrashPlanner(String userId){
         UserAccount acc = (UserAccount) findAccount(userId);
         return acc.getTrashPlanner();
     }
 
+    /**
+     * remove the planner from trash, add it to all the planners of the user
+     * @param userId the id of the user
+     * @param plannerId the id of the planner
+     * @return whether the removing and adding are successful or not
+     */
     public boolean unTrashPlanner(String userId, String plannerId){
         UserAccount acc = (UserAccount) findAccount(userId);
         if (acc.getTrashPlanner().contains(plannerId)){
