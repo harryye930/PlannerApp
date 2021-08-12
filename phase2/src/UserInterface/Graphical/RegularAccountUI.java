@@ -14,10 +14,6 @@ import java.awt.*;
 public class RegularAccountUI extends GeneralPresenter {
     private boolean flag = false;
 
-    // Components
-    private JPanel panel = new JPanel();
-    private JLabel prompt = new JLabel("Main Menu for Regular User");
-
     private final GeneralPresenter plannerOptionUI = new PlannerOptionUI(this);
     private final GeneralPresenter templateOptionUI = new TemplateOptionUI(this);
     private final GeneralPresenter accountOptionUI = new AccountOptionUI(this);
@@ -43,8 +39,14 @@ public class RegularAccountUI extends GeneralPresenter {
         }
     }
 
+    /**
+     * Initialize the UI with buttons and Label using GridStyleButtons strategy.
+     */
     private void showMenu() {
+        JPanel panel = new JPanel();
         panel.setLayout(null);
+
+        JLabel prompt = new JLabel("Main Menu for Regular User");
         prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
         prompt.setBounds(0, 100, 700, 50);
         prompt.setHorizontalAlignment(JLabel.CENTER);
