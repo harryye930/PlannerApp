@@ -4,7 +4,10 @@ import strategy.ILabel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class SingleLineLabelText implements ILabel {
 
@@ -33,10 +36,12 @@ public class SingleLineLabelText implements ILabel {
         nameToText.put(name, new JTextField());
     }
 
+    @Override
     public String getText(String name) {
         return nameToText.get(name).getText();
     }
 
+    @Override
     public void setPrompt(String name, String prompt) {
         this.nameToText.get(name).setText(prompt);
     }

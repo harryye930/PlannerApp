@@ -5,13 +5,14 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 //TODO: combine with AccountOptionUI
 /**
  * GUI class for displaying template options for a regular user.
  * Options include: view all templates, return to main menu.
  */
-public class TemplateOptionUI extends GeneralPresenter {
+public class TemplateOptionUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
     // all buttons
     JButton viewAllTemplate = new JButton("View All Template");
@@ -25,7 +26,7 @@ public class TemplateOptionUI extends GeneralPresenter {
     // menu text
     private JLabel prompt;
 
-    public TemplateOptionUI(String parent) {
+    public TemplateOptionUI(GeneralPresenter parent) {
         this.setParent(parent);
     }
 

@@ -5,16 +5,17 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 //TODO: combine with AdminAccountUI
 /***
  * GUI class for the account setting screen: displays account information and allows user to change account username
  * and password.
  */
-public class AccountOptionUI extends GeneralPresenter {
+public class AccountOptionUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
 
-    private GeneralPresenter friendUI = new FriendUI("accountMenu");
+    private GeneralPresenter friendUI = new FriendUI(this);
 
     //Panel
     private final JPanel accountMenu = new JPanel();
@@ -37,7 +38,7 @@ public class AccountOptionUI extends GeneralPresenter {
     //Label
     private JLabel message;
 
-    public AccountOptionUI(String parent) {
+    public AccountOptionUI(GeneralPresenter parent) {
         this.setParent(parent);
     }
 
@@ -147,7 +148,7 @@ public class AccountOptionUI extends GeneralPresenter {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == back) {
-            cl.show(main, this.getParent());
+            this.getParent().run();
         } else if (e.getSource() == changName) {
             this.changeName();
         } else if (e.getSource() == changePassword) {

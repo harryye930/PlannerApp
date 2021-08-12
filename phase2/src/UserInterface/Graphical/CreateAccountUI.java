@@ -5,6 +5,7 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Objects;
@@ -15,10 +16,10 @@ import java.util.Objects;
  * If the temporary account checkbox is not selected, then either a regular account or an admin account will be
  * automatically created, based on the email domain that the user enters.
  */
-public class CreateAccountUI extends GeneralPresenter implements KeyListener {
+public class CreateAccountUI extends GeneralPresenter implements KeyListener, ActionListener {
     private boolean flag = false;
-    private final GeneralPresenter adminAccUI = new AdminAccountUI("createAccount");
-    private final GeneralPresenter regularAccUI = new RegularAccountUI("createAccount");
+    private final GeneralPresenter adminAccUI = new AdminAccountUI(this);
+    private final GeneralPresenter regularAccUI = new RegularAccountUI(this);
 
     private final JLabel createAccount = new JLabel("Register your account!");
     private final JLabel passwordPrompt0 = new JLabel("Password");
@@ -36,7 +37,7 @@ public class CreateAccountUI extends GeneralPresenter implements KeyListener {
     JPanel messagePanel = new JPanel();
 
 
-    public CreateAccountUI(String parent) {
+    public CreateAccountUI(GeneralPresenter parent) {
         this.setParent(parent);
     }
 

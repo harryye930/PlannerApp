@@ -35,6 +35,7 @@ public class GridStyleButtons implements IButton, ActionListener {
     public void add(String name, String prompt, GeneralPresenter nextUI) {
         nameToButton.put(name, new JButton(prompt));
         nameToUI.put(name, nextUI);
+        nameToButton.get(name).addActionListener(this);
     }
 
     @Override
@@ -65,8 +66,12 @@ public class GridStyleButtons implements IButton, ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println("triggered");
         for (String name: nameToButton.keySet()) {
+            System.out.println(name);
+            System.out.println("1");
             if (e.getSource() == nameToButton.get(name)) {
+                System.out.println("2");
                 nameToUI.get(name).run();
             }
         }

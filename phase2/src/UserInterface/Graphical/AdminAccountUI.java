@@ -1,10 +1,12 @@
 package UserInterface.Graphical;
 
 import UserInterface.GeneralPresenter;
+import sun.jvm.hotspot.gc_interface.GCWhen;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 //TODO: combine with AccountOptionUI
@@ -18,7 +20,7 @@ import java.awt.event.ActionEvent;
  *  - delete planner
  * - Suspend account
  */
-public class AdminAccountUI extends GeneralPresenter {
+public class AdminAccountUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
 
     private final JPanel adminUserMainMenu = new JPanel();
@@ -29,10 +31,10 @@ public class AdminAccountUI extends GeneralPresenter {
     private final JButton logOutButton = new JButton("Log out");
 
     //private final GeneralPresenter plannerOptionUI = new AdminPlannerOptionUI("adminUserMainMenu");
-    private final GeneralPresenter templateOptionUI = new AdminTemplateOptionUI("adminUserMainMenu");
-    private final GeneralPresenter accountOptionUI = new AdminAccountOptionUI("adminUserMainMenu");
+    private final GeneralPresenter templateOptionUI = new AdminTemplateOptionUI(this);
+    private final GeneralPresenter accountOptionUI = new AdminAccountOptionUI(this);
 
-    public AdminAccountUI(String parent) {
+    public AdminAccountUI(GeneralPresenter parent) {
         this.setParent(parent);
     }
     /**
@@ -93,7 +95,7 @@ public class AdminAccountUI extends GeneralPresenter {
             this.templateOptionUI.run();
         } else if (e.getSource() == logOutButton){
             accessController.logOut();
-            cl.show(main, this.getParent());
+            this.getParent().run();
         } else if (e.getSource() == accountButton) {
             this.accountOptionUI.run();
         }

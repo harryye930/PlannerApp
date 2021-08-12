@@ -4,8 +4,10 @@ import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 // TODO: Extract the left panel (the JScrollPane)
-public class SuspendUserUI extends GeneralPresenter {
+public class SuspendUserUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
     private String userId;
 
@@ -24,7 +26,7 @@ public class SuspendUserUI extends GeneralPresenter {
     private JLabel prompt = new JLabel("<html>Please enter the number of days<br/>" +
                                                  " you want to suspend this user:</html>");
 
-    public SuspendUserUI(String parent) {
+    public SuspendUserUI(GeneralPresenter parent) {
         this.setParent(parent);
     }
 
@@ -103,7 +105,7 @@ public class SuspendUserUI extends GeneralPresenter {
             }
         } else if (e.getSource() == back) {
             menu.removeAll();
-            cl.show(main, this.getParent());
+            this.getParent().run();
         }
     }
 }

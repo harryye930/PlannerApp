@@ -4,6 +4,7 @@ import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -11,7 +12,7 @@ import java.awt.event.KeyListener;
  * GUI class for displaying account options for an admin user.
  * Options include: suspend any account by any number of days.
  */
-public class AdminAccountOptionUI extends GeneralPresenter implements KeyListener {
+public class AdminAccountOptionUI extends GeneralPresenter implements KeyListener, ActionListener {
     private String userId;
     private boolean flag = false;
 
@@ -31,10 +32,10 @@ public class AdminAccountOptionUI extends GeneralPresenter implements KeyListene
     private final JButton checkPlanner = new JButton("Check Planner");
     private final JButton back = new JButton("Go back");
 
-    private final SuspendUserUI adminSuspendAccount = new SuspendUserUI("adminAccountOption");
-    private final AdminCheckPlannerUI adminCheckPlannerUI = new AdminCheckPlannerUI("adminAccountOption");
+    private final SuspendUserUI adminSuspendAccount = new SuspendUserUI(this);
+    private final AdminCheckPlannerUI adminCheckPlannerUI = new AdminCheckPlannerUI(this);
 
-    public AdminAccountOptionUI(String parent) {
+    public AdminAccountOptionUI(GeneralPresenter parent) {
         this.setParent(parent);
     }
 
@@ -83,7 +84,7 @@ public class AdminAccountOptionUI extends GeneralPresenter implements KeyListene
         } else if (e.getSource() == checkPlanner) {
             this.adminCheckPlannerUI.run();
         } else if (e.getSource() == back) {
-            cl.show(main, this.getParent());
+            this.getParent().run();
         }
     }
 

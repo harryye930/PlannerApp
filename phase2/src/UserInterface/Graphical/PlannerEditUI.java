@@ -5,10 +5,11 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 // TODO: Extract the left panel (the JScrollPane)
 // TODO: double check for bugs
-public class PlannerEditUI extends GeneralPresenter {
+public class PlannerEditUI extends GeneralPresenter implements ActionListener {
 //    private final String dailyMessage = "Please enter the time zone you \n" +
 //            "want to edit/add agenda to\n(in form of HH:MM)";
 //    private final String projectMessage = "Please enter the column you want to"
@@ -42,7 +43,7 @@ public class PlannerEditUI extends GeneralPresenter {
 
     private final CardLayout current = new CardLayout();
 
-    public PlannerEditUI(String parent) {
+    public PlannerEditUI(GeneralPresenter parent) {
         this.setParent(parent);
     }
     /**
@@ -214,10 +215,10 @@ public class PlannerEditUI extends GeneralPresenter {
                 this.run();
             }
         } else if (e.getSource() == back) {
-            cl.show(main, this.getParent());
+            this.getParent().run();
         } else if (e.getSource() == delete) {
             plannerController.deletePlanner(plannerController.getCurrPlannerId());
-            cl.show(main, this.getParent());
+            this.getParent().run();
         }
     }
 }

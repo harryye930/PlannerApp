@@ -5,6 +5,7 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 //TODO: combine with AdminCheckPlannerUI
 // TODO: Extract the left panel (the JScrollPane)
@@ -14,11 +15,11 @@ import java.awt.event.ActionEvent;
  */
 
 //TODO: show friends-only planners
-public class CheckPlannerUI extends GeneralPresenter {
+public class CheckPlannerUI extends GeneralPresenter implements ActionListener {
     private final String separator = "\n======================";
     private boolean flag = false;
 
-    private GeneralPresenter plannerEdit = new PlannerEditUI("checkPlanner");
+    private GeneralPresenter plannerEdit = new PlannerEditUI(this);
 
     //JPanel
     JPanel checkPlanner = new JPanel();
@@ -33,7 +34,7 @@ public class CheckPlannerUI extends GeneralPresenter {
     JButton back = new JButton("Go back");
     JButton submit = new JButton("Submit");
 
-    public CheckPlannerUI(String parent) {
+    public CheckPlannerUI(GeneralPresenter parent) {
         this.setParent(parent);
     }
     /**
@@ -90,7 +91,7 @@ public class CheckPlannerUI extends GeneralPresenter {
                 this.prompt.setText("Invalid ID, please try again!");
             }
         } else if (e.getSource() == back) {
-            cl.show(main, this.getParent());
+            this.getParent().run();
         }
     }
 }

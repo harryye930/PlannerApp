@@ -5,17 +5,18 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
  * GUI class for the first planner creation screen.
  * Displays a list of templates available, and asks the user to enter the ID of the template they would like to use.
  */
-public class CreatePlannerUI extends GeneralPresenter {
+public class CreatePlannerUI extends GeneralPresenter implements ActionListener {
     private boolean menuFlag = false;
     private boolean createPageFlag = false;
 
-    private final GeneralPresenter checkPlanner = new CheckPlannerUI("createPlanner");
+    private final GeneralPresenter checkPlanner = new CheckPlannerUI(this);
 
     private final JPanel createPlanner = new JPanel();
     private final JPanel inputPage = new JPanel();
@@ -33,7 +34,7 @@ public class CreatePlannerUI extends GeneralPresenter {
     private final JButton back1 = new JButton("Go back");
 
 
-    public CreatePlannerUI(String parent) {
+    public CreatePlannerUI(GeneralPresenter parent) {
         this.setParent(parent);
     }
 
@@ -125,13 +126,11 @@ public class CreatePlannerUI extends GeneralPresenter {
                 }
 
             }
-        } else if (e.getSource() == back) {
-            cl.show(main, this.getParent());
+        } else if (e.getSource() == back || e.getSource() == back1) {
+            this.getParent().run();
         } else if (e.getSource() == confirm) {
             plannerController.createPlanner(p1.getText(), p2.getText(), p3.getText(), name.getText());
             this.checkPlanner.run();
-        } else if (e.getSource() == back1) {
-            cl.show(main, this.getParent());
         }
     }
 }

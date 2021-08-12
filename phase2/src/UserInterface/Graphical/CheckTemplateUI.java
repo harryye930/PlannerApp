@@ -6,6 +6,7 @@ import com.sun.tools.javac.comp.Check;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 //TODO: combine with CheckPlannerUI
 // TODO: Extract the left panel (the JScrollPane)
@@ -13,10 +14,10 @@ import java.awt.event.ActionEvent;
  * GUI class for showing all templates stored in the system to an admin user. Asks the admin user which template they
  * would like to edit.
  */
-public class CheckTemplateUI extends GeneralPresenter {
+public class CheckTemplateUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
 
-    private GeneralPresenter editTemplate = new EditTemplateUI("checkTemplate");
+    private GeneralPresenter editTemplate = new EditTemplateUI(this);
 
     //JPanel
     JPanel checkTemplate = new JPanel();
@@ -30,7 +31,7 @@ public class CheckTemplateUI extends GeneralPresenter {
     JButton back = new JButton("Go back");
     JButton submit = new JButton("Submit");
 
-    public CheckTemplateUI(String parent){
+    public CheckTemplateUI(GeneralPresenter parent){
         this.setParent(parent);
     }
 
@@ -79,7 +80,7 @@ public class CheckTemplateUI extends GeneralPresenter {
                 this.prompt.setText("Invalid ID, please try again!");
             }
         } else if (e.getSource() == back) {
-            cl.show(main, this.getParent());
+            this.getParent().run();
         }
     }
 }

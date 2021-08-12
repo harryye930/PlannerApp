@@ -5,13 +5,14 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 // TODO: combine with AccountOptionUI
 /**
  * GUI class for displaying template options for an admin user.
  * Options include: create template, edit template, return to main menu.
  */
-public class AdminTemplateOptionUI extends GeneralPresenter {
+public class AdminTemplateOptionUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
     // all buttons
     JButton createTemplate = new JButton("Create Template");
@@ -24,10 +25,10 @@ public class AdminTemplateOptionUI extends GeneralPresenter {
     // menu text
     private JLabel prompt;
 
-    private GeneralPresenter createTemplateUI = new CreateTemplateUI("adminTemplateMenu");
-    private GeneralPresenter checkTemplateUI = new CheckTemplateUI("adminTemplateMenu");
+    private GeneralPresenter createTemplateUI = new CreateTemplateUI(this);
+    private GeneralPresenter checkTemplateUI = new CheckTemplateUI(this);
 
-    public AdminTemplateOptionUI(String parent) {
+    public AdminTemplateOptionUI(GeneralPresenter parent) {
         this.setParent(parent);
     }
 

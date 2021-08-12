@@ -4,8 +4,9 @@ import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class EditRemainder extends GeneralPresenter {
+public class EditRemainder extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
     private boolean isAdd = true;
 
@@ -26,7 +27,7 @@ public class EditRemainder extends GeneralPresenter {
     JLabel prompt0 = new JLabel();
     JLabel prompt1 = new JLabel();
 
-    public EditRemainder(String parent) {
+    public EditRemainder(GeneralPresenter parent) {
         this.setParent(parent);
     }
 
@@ -96,7 +97,7 @@ public class EditRemainder extends GeneralPresenter {
                 plannerController.changeTaskStatus(text0.getText(), text1.getText());
             }
         }  else if (e.getSource() == back) {
-            cl.show(main, this.getParent());
+            this.getParent().run();
         }
     }
 }

@@ -5,12 +5,14 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * GUI class for the start of the program.
  * Displays three options for the user to either log in, create a new account, or login as guest.
  */
-public class LoginUI extends GeneralPresenter {
+public class LoginUI extends GeneralPresenter implements ActionListener {
+    private boolean flag = false;
 
     private final JPanel menu = new JPanel();
     private JLabel prompt;
@@ -21,14 +23,14 @@ public class LoginUI extends GeneralPresenter {
     private JButton createAccount;
     private JButton guest;
 
-    private final GeneralPresenter adminUI = new AdminAccountUI("LoginPage");
-    private final GeneralPresenter regularUserUI = new RegularAccountUI("LoginPage");
-    private final GeneralPresenter createAccountUI = new CreateAccountUI("LoginPage");
+    private final GeneralPresenter adminUI = new AdminAccountUI(this);
+    private final GeneralPresenter regularUserUI = new RegularAccountUI(this);
+    private final GeneralPresenter createAccountUI = new CreateAccountUI(this);
 
 
     public LoginUI() {}
 
-    public LoginUI(String parent) {
+    public LoginUI(GeneralPresenter parent) {
         this.setParent(parent);
     }
 
@@ -37,9 +39,14 @@ public class LoginUI extends GeneralPresenter {
      */
     @Override
     public void run() {
-        this.showLoginPage();
-        cl.show(main, "LoginPage");
-        frame.setVisible(true);
+        if (flag) {
+            cl.show(main, "LoginPage");
+        } else {
+            this.showLoginPage();
+            cl.show(main, "LoginPage");
+            frame.setVisible(true);
+            flag = !flag;
+        }
     }
 
     private void showLoginPage() {

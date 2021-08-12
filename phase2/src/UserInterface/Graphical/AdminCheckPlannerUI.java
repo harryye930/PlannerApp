@@ -4,10 +4,11 @@ import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 //TODO: combine with CheckPlannerUI
 // TODO: Extract the left panel (the JScrollPane)
-public class AdminCheckPlannerUI extends GeneralPresenter {
+public class AdminCheckPlannerUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
     private String  userId;
 
@@ -26,7 +27,7 @@ public class AdminCheckPlannerUI extends GeneralPresenter {
     // Text
     private final JTextField text = new JTextField();
 
-    public AdminCheckPlannerUI(String parent) {
+    public AdminCheckPlannerUI(GeneralPresenter parent) {
         this.setParent(parent);
     }
 
@@ -109,7 +110,7 @@ public class AdminCheckPlannerUI extends GeneralPresenter {
                 text.setText("Invalid input, please try again!");
             }
         } else if (e.getSource() == back) {
-            cl.show(main, this.getParent());
+            this.getParent().run();
         }
     }
 }

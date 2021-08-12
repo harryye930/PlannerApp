@@ -5,12 +5,13 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *  GUI class for displaying the options for creating a template, and displaying fields for user to fill out in order
  *  to create a template.
  */
-public class CreateTemplateUI extends GeneralPresenter {
+public class CreateTemplateUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
     private boolean createdDailyInputPanel = false;
     private boolean createdProjectInputPanel = false;
@@ -69,7 +70,7 @@ public class CreateTemplateUI extends GeneralPresenter {
     private final JButton backToTemplateMenuButton = new JButton("Return to Template Menu");
 
 
-    public CreateTemplateUI(String parent) {
+    public CreateTemplateUI(GeneralPresenter parent) {
         this.setParent(parent);
     }
 
@@ -310,7 +311,7 @@ public class CreateTemplateUI extends GeneralPresenter {
             templateInfo = data.getTemplates(createTemplatePanel);
             cl.show(main, "createTemplate");
         } else if (e.getSource() == backToTemplateMenuButton){
-            cl.show(main, this.getParent());
+            this.getParent().run();
         }
     }
 }

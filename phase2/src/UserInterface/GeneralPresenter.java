@@ -14,13 +14,13 @@ import java.awt.event.ActionListener;
 /**
  * A parent class for all presenters.
  */
-public abstract class GeneralPresenter implements ActionListener{
+public abstract class GeneralPresenter{
     protected static AccessController accessController = new AccessController();
     protected static TemplateController templateController = new TemplateController();
     protected static PlannerController plannerController = new PlannerController();
 
-    private String child;
-    private String parent;
+//    private String child;
+    private GeneralPresenter parent;
     protected static JPanel main = new JPanel();
     protected static CardLayout cl;
     protected static JFrame frame = new JFrame();
@@ -48,33 +48,33 @@ public abstract class GeneralPresenter implements ActionListener{
      */
     public abstract void run();
 
-    /**
-     * set the child presenter of the current presenter.
-     * @param child A GeneralPresenter representing the child presenter we want to set.
-     */
-    public void setChild(String child) {
-        this.child = child;
-    }
+//    /**
+//     * set the child presenter of the current presenter.
+//     * @param child A GeneralPresenter representing the child presenter we want to set.
+//     */
+//    public void setChild(String child) {
+//        this.child = child;
+//    }
 
     /**
      * Set the parent of the current presenter.
      * @param parent A GeneralPresenter representing the parent we want to assign.
      */
-    public void setParent(String parent) {
+    public void setParent(GeneralPresenter parent) {
         this.parent = parent;
     }
 
     /**
      * @return The Parent Presenter
      */
-    public String getParent() {
+    public GeneralPresenter getParent() {
         return this.parent;
     }
 
-    /**
-     * @return The child Presenter.
-     */
-    public String getChild() {
-        return this.child;
-    }
+//    /**
+//     * @return The child Presenter.
+//     */
+//    public String getChild() {
+//        return this.child;
+//    }
 }

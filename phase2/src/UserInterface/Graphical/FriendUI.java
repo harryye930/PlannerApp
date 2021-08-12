@@ -4,9 +4,10 @@ import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 // TODO: Extract the left panel (the JScrollPane)
-public class FriendUI extends GeneralPresenter {
+public class FriendUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
 
     // Pane/Panel
@@ -21,7 +22,7 @@ public class FriendUI extends GeneralPresenter {
     JButton deleteFriend = new JButton("Delete friend");
     JButton back = new JButton("Go back");
 
-    public FriendUI(String parent) {
+    public FriendUI(GeneralPresenter parent) {
         this.setParent(parent);
     }
     /**
@@ -80,7 +81,7 @@ public class FriendUI extends GeneralPresenter {
             accessController.deleteFriend(accessController.getCurrUserId(), text.getText());
             update();
         } else if (e.getSource() == back) {
-            cl.show(main, this.getParent());
+            this.getParent().run();
         }
     }
 }

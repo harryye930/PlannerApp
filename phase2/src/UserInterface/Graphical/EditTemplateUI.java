@@ -5,8 +5,9 @@ import UserInterface.GeneralPresenter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class EditTemplateUI extends GeneralPresenter {
+public class EditTemplateUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
     private boolean firstScreen = true;
     private String editOption;
@@ -33,7 +34,7 @@ public class EditTemplateUI extends GeneralPresenter {
     private final JButton backFromNameButton = new JButton("Go back");
     private final JButton backFromStatusButton = new JButton("Go back");
 
-    public EditTemplateUI(String parent){
+    public EditTemplateUI(GeneralPresenter parent){
         this.setParent(parent);
     }
 
@@ -187,7 +188,7 @@ public class EditTemplateUI extends GeneralPresenter {
             cl.show(main, "editTemplate");
         } else if (e.getSource() == backToTemplatesButton) {
             templateInfo = data.getTemplates(editPanel);
-            cl.show(main, this.getParent());
+            this.getParent().run();
         }
     }
 }
