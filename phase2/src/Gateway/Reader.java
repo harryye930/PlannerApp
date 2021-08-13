@@ -171,7 +171,7 @@ public class Reader<T> implements IGateWay<T> {
             while (scanner.hasNextLine()){
                 String line = scanner.nextLine();
                 String[] data = line.split(":", 2);
-                labelToString.put(data[0], data[1]);
+                labelToString.put(data[0].trim(), data[1].trim());
             }
             scanner.close();
             return labelToString;
