@@ -1,5 +1,6 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
@@ -8,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -18,22 +20,24 @@ import java.util.Objects;
  */
 public class CreateAccountUI extends GeneralPresenter implements KeyListener, ActionListener {
     private boolean flag = false;
+    private Map<String, String> labelToStrings = new UIGateway().loadCreateAccountUITexts();
+
     private final GeneralPresenter adminAccUI = new AdminAccountUI(this);
     private final GeneralPresenter regularAccUI = new RegularAccountUI(this);
 
-    private final JLabel createAccount = new JLabel("Register your account!");
-    private final JLabel passwordPrompt0 = new JLabel("Password");
+    private final JLabel createAccount = new JLabel(labelToStrings.get("createAccount"));
+    private final JLabel passwordPrompt0 = new JLabel(labelToStrings.get("passwordPrompt"));
     private final JTextField email = new JTextField();
     private final JTextField userName = new JTextField();
     private final JPasswordField password0 = new JPasswordField();
     private final JPasswordField password1 = new JPasswordField();
-    private final JButton register = new JButton("Register");
-    private final JButton back = new JButton("Go back");
-    private final JButton generatePassword = new JButton("Generate");
+    private final JButton register = new JButton(labelToStrings.get("register"));
+    private final JButton back = new JButton(labelToStrings.get("goBack"));
+    private final JButton generatePassword = new JButton(labelToStrings.get("generatePassword"));
     private final JPanel create = new JPanel();
-    private final JCheckBox temp = new JCheckBox("Register a temporary account");
+    private final JCheckBox registerTempAccount = new JCheckBox(labelToStrings.get("registerTempAccount"));
     private JPanel grids;
-    private final JButton goNext = new JButton("I see");
+    private final JButton goNext = new JButton(labelToStrings.get("goNext"));
     JPanel messagePanel = new JPanel();
 
 
@@ -74,13 +78,13 @@ public class CreateAccountUI extends GeneralPresenter implements KeyListener, Ac
         grids.setBounds(70, 100, 500, 250);
         create.add(grids);
 
-        JLabel emailPrompt = new JLabel("Please enter your email");
+        JLabel emailPrompt = new JLabel(labelToStrings.get("emailPrompt"));
         emailPrompt.setHorizontalAlignment(JLabel.RIGHT);
         grids.add(emailPrompt);
 
         grids.add(email);
 
-        JLabel userNamePrompt = new JLabel("User name:");
+        JLabel userNamePrompt = new JLabel(labelToStrings.get("userNamePrompt"));
         userNamePrompt.setHorizontalAlignment(JLabel.RIGHT);
         grids.add(userNamePrompt);
 
@@ -91,16 +95,16 @@ public class CreateAccountUI extends GeneralPresenter implements KeyListener, Ac
 
         grids.add(password0);
 
-        JLabel passwordPrompt1 = new JLabel("Reconfirm your Password");
-        passwordPrompt1.setHorizontalAlignment(JLabel.RIGHT);
-        grids.add(passwordPrompt1);
+        JLabel confirmPasswordPrompt = new JLabel(labelToStrings.get("confirmPasswordPrompt"));
+        confirmPasswordPrompt.setHorizontalAlignment(JLabel.RIGHT);
+        grids.add(confirmPasswordPrompt);
 
         grids.add(password1);
         
         grids.add(register);
         register.addActionListener(this);
 
-        grids.add(temp);
+        grids.add(registerTempAccount);
 
         grids.add(back);
         back.addActionListener(this);
@@ -109,9 +113,9 @@ public class CreateAccountUI extends GeneralPresenter implements KeyListener, Ac
 
     private void createNewAccount(String type) {
         if (!Objects.equals(password0.getText(), password1.getText())) {
-            this.createAccount.setText("Incorrect password, please try again");
+            this.createAccount.setText(labelToStrings.get("incorrectPassword"));
         } else if (accessController.getPasswordStrength(password0.getText()).equals("Too Weak")) {
-            this.createAccount.setText("Password too weak, please try again.");
+            this.createAccount.setText(labelToStrings.get("weakPassword"));
         } else {
             String id;
             if (type.equals("regular")) {
@@ -124,7 +128,7 @@ public class CreateAccountUI extends GeneralPresenter implements KeyListener, Ac
             messagePanel.setLayout(null);
             //messagePanel.setBounds(100, 100, 200, 200);
 
-            JLabel message = new JLabel("Please remember your ID: " + id);
+            JLabel message = new JLabel(labelToStrings.get("rememberID") + id);
             message.setBounds(50, 0, 600, 300);
             message.setFont(new Font("MV Boli", Font.PLAIN, 15));
             message.setHorizontalAlignment(JLabel.CENTER);
@@ -148,7 +152,7 @@ public class CreateAccountUI extends GeneralPresenter implements KeyListener, Ac
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == register) {
-            if (temp.isSelected()) {
+            if (registerTempAccount.isSelected()) {
                 createNewAccount("temporary");
             } else {
                 createNewAccount("regular");
@@ -205,7 +209,7 @@ public class CreateAccountUI extends GeneralPresenter implements KeyListener, Ac
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getSource() == password0) {
-            passwordPrompt0.setText("Complexity Level: " + accessController.getPasswordStrength(password0.getText()));
+            passwordPrompt0.setText(labelToStrings.get("complexityLevel") + accessController.getPasswordStrength(password0.getText()));
             System.out.println(password0.getText());
         }
     }

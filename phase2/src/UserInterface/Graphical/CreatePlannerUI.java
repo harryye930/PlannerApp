@@ -1,5 +1,6 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
@@ -7,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * GUI class for the first planner creation screen.
@@ -15,23 +17,24 @@ import java.util.ArrayList;
 public class CreatePlannerUI extends GeneralPresenter implements ActionListener {
     private boolean menuFlag = false;
     private boolean createPageFlag = false;
+    private Map<String, String> labelToStrings = new UIGateway().loadCreatePlannerUITexts();
 
     private final GeneralPresenter checkPlanner = new CheckPlannerUI(this);
 
     private final JPanel createPlanner = new JPanel();
     private final JPanel inputPage = new JPanel();
 
-    private final JTextArea message = new JTextArea("Please enter the ID of template \nyou want to use:");
+    private final JLabel message = new JLabel(labelToStrings.get("message"));
     private final JTextField id = new JTextField();
     private final JTextField p1 = new JTextField();
     private final JTextField p2 = new JTextField();
     private final JTextField p3 = new JTextField();
     JTextField name = new JTextField();
 
-    private final JButton submit = new JButton("Submit");
-    private final JButton back = new JButton("Return to Planner Menu");
-    private final JButton confirm = new JButton("Confirm");
-    private final JButton back1 = new JButton("Go back");
+    private final JButton submit = new JButton(labelToStrings.get("submit"));
+    private final JButton returnToPlannerMenu = new JButton(labelToStrings.get("returnToPlannerMenu"));
+    private final JButton confirm = new JButton(labelToStrings.get("confirm"));
+    private final JButton back = new JButton(labelToStrings.get("goBack"));
 
 
     public CreatePlannerUI(GeneralPresenter parent) {
@@ -60,7 +63,6 @@ public class CreatePlannerUI extends GeneralPresenter implements ActionListener 
         JScrollPane templateInfo = data.getTemplates(createPlanner);
 
         message.setBounds(450, 50, 200, 50);
-        message.setEditable(false);
         createPlanner.add(message);
 
         id.setBounds(500, 130, 100, 50);
@@ -70,9 +72,9 @@ public class CreatePlannerUI extends GeneralPresenter implements ActionListener 
         submit.addActionListener(this);
         createPlanner.add(submit);
 
-        back.setBounds(445, 250, 210, 40);
-        back.addActionListener(this);
-        createPlanner.add(back);
+        returnToPlannerMenu.setBounds(445, 250, 210, 40);
+        returnToPlannerMenu.addActionListener(this);
+        createPlanner.add(returnToPlannerMenu);
     }
 
     private void showCreatePage() {
@@ -100,10 +102,10 @@ public class CreatePlannerUI extends GeneralPresenter implements ActionListener 
         curr.add(prompt4);
         curr.add(p3);
         curr.add(confirm);
-        curr.add(back1);
+        curr.add(back);
 
         confirm.addActionListener(this);
-        back1.addActionListener(this);
+        back.addActionListener(this);
     }
 
     /**
@@ -115,7 +117,7 @@ public class CreatePlannerUI extends GeneralPresenter implements ActionListener 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submit) {
             if (!templateController.checkTemplate(id.getText())) {
-                this.message.setText("Invalid ID, please try again!");
+                this.message.setText(labelToStrings.get("invalidInput"));
             } else {
                 if (createPageFlag) {
                     cl.show(main, "inputPage");
@@ -126,7 +128,7 @@ public class CreatePlannerUI extends GeneralPresenter implements ActionListener 
                 }
 
             }
-        } else if (e.getSource() == back || e.getSource() == back1) {
+        } else if (e.getSource() == returnToPlannerMenu || e.getSource() == back) {
             this.getParent().run();
         } else if (e.getSource() == confirm) {
             plannerController.createPlanner(p1.getText(), p2.getText(), p3.getText(), name.getText());

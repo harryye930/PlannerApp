@@ -6,15 +6,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+
 // TODO: Extract the left panel (the JScrollPane)
 // TODO: double check for bugs
-public class PlannerEditUI extends GeneralPresenter implements ActionListener {
+public class EditPlannerUI extends GeneralPresenter implements ActionListener {
 //    private final String dailyMessage = "Please enter the time zone you \n" +
 //            "want to edit/add agenda to\n(in form of HH:MM)";
 //    private final String projectMessage = "Please enter the column you want to"
 
-    private GeneralPresenter editRemainder = new EditRemainder(this.getParent());
+    private GeneralPresenter editRemainder = new EditReminder(this.getParent());
 
     private boolean flag = false;
     private boolean firstStatus;
@@ -43,7 +43,7 @@ public class PlannerEditUI extends GeneralPresenter implements ActionListener {
 
     private final CardLayout current = new CardLayout();
 
-    public PlannerEditUI(GeneralPresenter parent) {
+    public EditPlannerUI(GeneralPresenter parent) {
         this.setParent(parent);
     }
     /**

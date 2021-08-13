@@ -1,5 +1,6 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 import com.sun.tools.javac.comp.Check;
 
@@ -7,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 //TODO: combine with CheckPlannerUI
 // TODO: Extract the left panel (the JScrollPane)
@@ -16,6 +18,7 @@ import java.awt.event.ActionListener;
  */
 public class CheckTemplateUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
+    private Map<String, String> labelToStrings = new UIGateway().loadCheckTemplateUITexts();
 
     private GeneralPresenter editTemplate = new EditTemplateUI(this);
 
@@ -24,12 +27,12 @@ public class CheckTemplateUI extends GeneralPresenter implements ActionListener 
 
     //TextArea/Field
     JScrollPane templateInfo;
-    JTextArea prompt = new JTextArea("Please enter the ID of the template\n you would like to edit:");
+    JLabel prompt = new JLabel(labelToStrings.get("prompt"));
     JTextField templateId = new JTextField();
 
     //Button
-    JButton back = new JButton("Go back");
-    JButton submit = new JButton("Submit");
+    JButton back = new JButton(labelToStrings.get("goBack"));
+    JButton submit = new JButton(labelToStrings.get("submit"));
 
     public CheckTemplateUI(GeneralPresenter parent){
         this.setParent(parent);
@@ -56,7 +59,6 @@ public class CheckTemplateUI extends GeneralPresenter implements ActionListener 
         templateInfo = data.getTemplates(checkTemplate);
 
         prompt.setBounds(450, 50, 225, 50);
-        prompt.setEditable(false);
         checkTemplate.add(prompt);
 
         templateId.setBounds(515, 110, 70, 40);
@@ -77,7 +79,7 @@ public class CheckTemplateUI extends GeneralPresenter implements ActionListener 
             if (templateController.checkTemplate(templateId.getText())) {
                 this.editTemplate.run();
             } else {
-                this.prompt.setText("Invalid ID, please try again!");
+                this.prompt.setText(labelToStrings.get("invalidInput"));
             }
         } else if (e.getSource() == back) {
             this.getParent().run();

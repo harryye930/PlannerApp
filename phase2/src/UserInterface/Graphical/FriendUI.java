@@ -1,14 +1,17 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 // TODO: Extract the left panel (the JScrollPane)
 public class FriendUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
+    private Map<String, String> labelToStrings = new UIGateway().loadFriendUITexts();
 
     // Pane/Panel
     JScrollPane friendsInfo;
@@ -18,9 +21,9 @@ public class FriendUI extends GeneralPresenter implements ActionListener {
     JTextField text = new JTextField();
 
     // Button
-    JButton addFriend = new JButton("Add friend");
-    JButton deleteFriend = new JButton("Delete friend");
-    JButton back = new JButton("Go back");
+    JButton addFriend = new JButton(labelToStrings.get("addFriend"));
+    JButton deleteFriend = new JButton(labelToStrings.get("deleteFriend"));
+    JButton back = new JButton(labelToStrings.get("goBack"));
 
     public FriendUI(GeneralPresenter parent) {
         this.setParent(parent);
@@ -45,7 +48,7 @@ public class FriendUI extends GeneralPresenter implements ActionListener {
         main.add(friendUI, "friendPage");
         friendsInfo = data.getFriendsInfo(friendUI);
 
-        JLabel prompt = new JLabel("<html>Please enter the user ID you want<br/> to operate on:</html>");
+        JLabel prompt = new JLabel(labelToStrings.get("prompt"));
         prompt.setBounds(475, 50, 300, 50);
         text.setBounds(475, 100, 200, 40);
 

@@ -1,11 +1,13 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 /**
  * GUI class for the start of the program.
@@ -13,6 +15,7 @@ import java.awt.event.ActionListener;
  */
 public class LoginUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
+    private Map<String, String> labelToStrings = new UIGateway().loadLoginUITexts();
 
     private final JPanel menu = new JPanel();
     private JLabel prompt;
@@ -54,7 +57,7 @@ public class LoginUI extends GeneralPresenter implements ActionListener {
         menu.setLayout(null);
         main.add(menu, "LoginPage");
 
-        prompt = new JLabel("Welcome!");
+        prompt = new JLabel(labelToStrings.get("prompt"));
         prompt.setHorizontalAlignment(JLabel.CENTER);
         prompt.setVerticalAlignment(JLabel.TOP);
         prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
@@ -67,7 +70,7 @@ public class LoginUI extends GeneralPresenter implements ActionListener {
         panel.setLayout(new GridLayout(4, 2));
         menu.add(panel);
 
-        JLabel retrieverPrompt = new JLabel("User ID or Email:");
+        JLabel retrieverPrompt = new JLabel(labelToStrings.get("retrieverPrompt"));
         retrieverPrompt.setHorizontalAlignment(JLabel.RIGHT);
         panel.add(retrieverPrompt);
 
@@ -75,22 +78,22 @@ public class LoginUI extends GeneralPresenter implements ActionListener {
         //retriever.setVisible(false);
         panel.add(retriever);
 
-        JLabel passwordPrompt = new JLabel("Password:");
+        JLabel passwordPrompt = new JLabel(labelToStrings.get("passwordPrompt"));
         passwordPrompt.setHorizontalAlignment(JLabel.RIGHT);
         panel.add(passwordPrompt);
 
         password = new JPasswordField();
         panel.add(password);
 
-        login = new JButton("Login");
+        login = new JButton(labelToStrings.get("login"));
         login.addActionListener(this);
         panel.add(login);
 
-        createAccount = new JButton("Create new Account");
+        createAccount = new JButton(labelToStrings.get("createAccount"));
         createAccount.addActionListener(this);
         panel.add(createAccount);
 
-        guest = new JButton("Login as guest");
+        guest = new JButton(labelToStrings.get("guest"));
         guest.addActionListener(this);
         panel.add(guest);
 
@@ -125,7 +128,7 @@ public class LoginUI extends GeneralPresenter implements ActionListener {
                 this.regularUserUI.run();
             }
         } else {
-            this.prompt.setText("Invalid input, please try again!");
+            this.prompt.setText(labelToStrings.get("invalidInput"));
         }
     }
 

@@ -1,15 +1,18 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 //TODO: combine with CheckPlannerUI
 // TODO: Extract the left panel (the JScrollPane)
 public class AdminCheckPlannerUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
+    private Map<String, String> labelToStrings = new UIGateway().loadAdminCheckPlannerUITexts();
     private String  userId;
 
     // Panel
@@ -17,12 +20,12 @@ public class AdminCheckPlannerUI extends GeneralPresenter implements ActionListe
     JPanel menu = new JPanel();
 
     // Button
-    private JButton delete = new JButton("Delete");
-    private JButton back = new JButton("Go back");
-    private JButton submit = new JButton("Submit");
+    private JButton delete = new JButton(labelToStrings.get("delete"));
+    private JButton back = new JButton(labelToStrings.get("goBack"));
+    private JButton submit = new JButton(labelToStrings.get("submit"));
 
     // List
-    private final JList<String> changePrivacy = new JList<String>(new String[]{"private", "public", "friends-only"});
+    private final JList<String> changePrivacy = new JList<>(new String[]{"private", "public", "friends-only"});
 
     // Text
     private final JTextField text = new JTextField();
@@ -56,7 +59,7 @@ public class AdminCheckPlannerUI extends GeneralPresenter implements ActionListe
 
         accountInfo = data.getAccount(userId, menu);
 
-        JLabel prompt = new JLabel("<html>Please enter the planner ID you<br/> want to operate on:</html>");
+        JLabel prompt = new JLabel(labelToStrings.get("prompt"));
         prompt.setBounds(475, 100, 200, 40);
         menu.add(prompt);
 
@@ -96,7 +99,7 @@ public class AdminCheckPlannerUI extends GeneralPresenter implements ActionListe
                 text.setText("");
                 update();
             } else {
-                text.setText("Invalid input, please try again!");
+                text.setText(labelToStrings.get("invalidInput"));
             }
         } else if (e.getSource() == submit) {
             if (plannerController.checkPlanner(text.getText())) {
@@ -107,7 +110,7 @@ public class AdminCheckPlannerUI extends GeneralPresenter implements ActionListe
                     update();
                 }
             } else {
-                text.setText("Invalid input, please try again!");
+                text.setText(labelToStrings.get("invalidInput"));
             }
         } else if (e.getSource() == back) {
             this.getParent().run();

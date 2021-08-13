@@ -1,11 +1,13 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 import strategy.IButton;
 import strategy.buttonGenerator.GridStyleButtons;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Map;
 
 /**
  * GUI class for displaying planner options for a regular user.
@@ -13,12 +15,13 @@ import java.awt.*;
  */
 public class PlannerOptionUI extends GeneralPresenter{
     private boolean flag = false;
+    private Map<String, String> labelToStrings = new UIGateway().loadPlannerOptionUITexts();
 
     private final IButton buttons = new GridStyleButtons();
 
     // JComponent
     private final JPanel panel = new JPanel();
-    JLabel prompt = new JLabel("Planner Menu");
+    JLabel prompt = new JLabel(labelToStrings.get("prompt"));
 
     private final GeneralPresenter createPlanner = new CreatePlannerUI(this);
     private final GeneralPresenter checkPlanner = new CheckPlannerUI(this);
@@ -50,9 +53,9 @@ public class PlannerOptionUI extends GeneralPresenter{
         prompt.setBounds(0, 100, 700, 50);
         panel.add(prompt);
 
-        buttons.add("newPlanner", "Create new Planner", createPlanner);
-        buttons.add("checkPlanner", "Check planner", checkPlanner);
-        buttons.add("back", "Return to menu", this.getParent());
+        buttons.add("newPlanner", labelToStrings.get("createPlannerButton"), createPlanner);
+        buttons.add("checkPlanner", labelToStrings.get("checkPlannerButton"), checkPlanner);
+        buttons.add("back", labelToStrings.get("back"), this.getParent());
         buttons.setBounds(150, 150, 400, 200);
 
         panel.add(buttons.getPanel());

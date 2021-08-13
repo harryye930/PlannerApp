@@ -1,5 +1,6 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
@@ -7,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Map;
 
 /**
  * GUI class for displaying account options for an admin user.
@@ -15,6 +17,7 @@ import java.awt.event.KeyListener;
 public class AdminAccountOptionUI extends GeneralPresenter implements KeyListener, ActionListener {
     private String userId;
     private boolean flag = false;
+    private Map<String, String> labelToStrings = new UIGateway().loadAdminAccountOptionUITexts();
 
 
     // Panel
@@ -22,15 +25,15 @@ public class AdminAccountOptionUI extends GeneralPresenter implements KeyListene
     private final JPanel adminAccount = new JPanel();
 
     // Label
-    private final JLabel prompt = new JLabel("<html>Please enter the user<br/> id you want to operate on:</html>");
+    private final JLabel prompt = new JLabel(labelToStrings.get("prompt"));
 
     // Text
     private final JTextField text = new JTextField();
 
     // Button
-    private  final JButton suspend = new JButton("Suspend Operation");
-    private final JButton checkPlanner = new JButton("Check Planner");
-    private final JButton back = new JButton("Go back");
+    private  final JButton suspend = new JButton(labelToStrings.get("suspend"));
+    private final JButton checkPlanner = new JButton(labelToStrings.get("checkPlanner"));
+    private final JButton back = new JButton(labelToStrings.get("goBack"));
 
     private final SuspendUserUI adminSuspendAccount = new SuspendUserUI(this);
     private final AdminCheckPlannerUI adminCheckPlannerUI = new AdminCheckPlannerUI(this);

@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class EditRemainder extends GeneralPresenter implements ActionListener {
+public class EditReminder extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
     private boolean isAdd = true;
 
@@ -27,7 +27,7 @@ public class EditRemainder extends GeneralPresenter implements ActionListener {
     JLabel prompt0 = new JLabel();
     JLabel prompt1 = new JLabel();
 
-    public EditRemainder(GeneralPresenter parent) {
+    public EditReminder(GeneralPresenter parent) {
         this.setParent(parent);
     }
 

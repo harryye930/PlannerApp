@@ -1,11 +1,13 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 //TODO: combine with AccountOptionUI
 /**
@@ -14,10 +16,12 @@ import java.awt.event.ActionListener;
  */
 public class TemplateOptionUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
+    private Map<String, String> labelToStrings = new UIGateway().loadTemplateOptionUITexts();
+
     // all buttons
-    JButton viewAllTemplate = new JButton("View All Template");
-    JButton returnToMainMenuButton= new JButton("Return to Main Menu");
-    JButton back = new JButton("Go back");
+    JButton viewAllTemplateButton = new JButton(labelToStrings.get("viewAllTemplateButton"));
+    JButton returnToMainMenuButton= new JButton(labelToStrings.get("returnToMainMenuButton"));
+    JButton back = new JButton(labelToStrings.get("goBack"));
     JPanel temp = new JPanel();
 
     // panel
@@ -48,7 +52,7 @@ public class TemplateOptionUI extends GeneralPresenter implements ActionListener
         main.add(templateMenu, "templateMenu");
         templateMenu.setLayout(null);
 
-        prompt = new JLabel("Template Menu");
+        prompt = new JLabel(labelToStrings.get("prompt"));
         prompt.setHorizontalAlignment(JLabel.CENTER);
         prompt.setVerticalAlignment(JLabel.TOP);
         prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
@@ -61,11 +65,11 @@ public class TemplateOptionUI extends GeneralPresenter implements ActionListener
         panel.setLayout(new GridLayout(4, 1));
         templateMenu.add(panel);
 
-        panel.add(viewAllTemplate);
+        panel.add(viewAllTemplateButton);
         panel.add(returnToMainMenuButton);
 
         returnToMainMenuButton.addActionListener(this);
-        viewAllTemplate.addActionListener(this);
+        viewAllTemplateButton.addActionListener(this);
 
     }
 
@@ -78,7 +82,7 @@ public class TemplateOptionUI extends GeneralPresenter implements ActionListener
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == returnToMainMenuButton){
             cl.show(main, "regularUserMainMenu");
-        } else if (e.getSource() == viewAllTemplate) {
+        } else if (e.getSource() == viewAllTemplateButton) {
             JPanel temp = new JPanel();
             temp.setLayout(null);
 

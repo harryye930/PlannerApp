@@ -1,11 +1,13 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 //TODO: combine with AdminAccountUI
 /***
@@ -16,6 +18,7 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
     private boolean flag = false;
 
     private GeneralPresenter friendUI = new FriendUI(this);
+    private Map<String, String> labelToStrings = new UIGateway().loadAccountOptionUITexts();
 
     //Panel
     private final JPanel accountMenu = new JPanel();
@@ -23,10 +26,11 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
     JScrollPane accounts;
 
     //Button
-    private final JButton changName = new JButton("Change User name");
-    private final JButton changePassword = new JButton("Change Password");
-    private final JButton back = new JButton("Go back");
-    private final JButton addFriend = new JButton("Add friend");
+    private final JButton changeUsername = new JButton(labelToStrings.get("changeUsername"));
+    private final JButton changePassword = new JButton(labelToStrings.get("changePassword"));
+    private final JButton back = new JButton(labelToStrings.get("back"));
+    private final JButton addFriend = new JButton(labelToStrings.get("addFriend"));
+
     private JButton submit0;
     private JButton submit1;
     private JButton goBack;
@@ -63,16 +67,16 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
 
         accounts = data.getAccount(accessController.getCurrUserId(), accountMenu);
 
-        changName.setBounds(515, 150, 150, 40);
+        changeUsername.setBounds(515, 150, 150, 40);
         changePassword.setBounds(515, 200, 150, 40);
         addFriend.setBounds(515, 250, 150, 40);
         back.setBounds(515, 300, 70, 40);
-        accountMenu.add(changName);
+        accountMenu.add(changeUsername);
         accountMenu.add(changePassword);
         accountMenu.add(back);
         accountMenu.add(addFriend);
         addFriend.addActionListener(this);
-        changName.addActionListener(this);
+        changeUsername.addActionListener(this);
         changePassword.addActionListener(this);
         back.addActionListener(this);
     }
@@ -82,7 +86,7 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
         changeMenu.setLayout(null);
         main.add(changeMenu, "changeMenu");
 
-        message = new JLabel("Please enter your new user name:");
+        message = new JLabel(labelToStrings.get("changeUsernameMessage"));
         message.setBounds(125, 100, 500, 50);
         message.setFont(new Font("MV Boli", Font.PLAIN, 20));
         changeMenu.add(message);
@@ -91,12 +95,12 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
         text0.setBounds(125, 175, 400, 40);
         changeMenu.add(text0);
 
-        submit0 = new JButton("Submit");
+        submit0 = new JButton(labelToStrings.get("submit"));
         submit0.setBounds(275, 275, 100, 40);
         submit0.addActionListener(this);
         changeMenu.add(submit0);
 
-        goBack = new JButton("Go back");
+        goBack = new JButton(labelToStrings.get("goBack"));
         goBack.setBounds(275, 325, 100, 40);
         goBack.addActionListener(this);
         changeMenu.add(goBack);
@@ -109,7 +113,7 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
         changeMenu.setLayout(null);
         main.add(changeMenu, "changeMenu");
 
-        message = new JLabel("Please enter your original password:");
+        message = new JLabel(labelToStrings.get("enterOriginalPassword"));
         message.setBounds(125, 50, 500, 50);
         message.setFont(new Font("MV Boli", Font.PLAIN, 20));
         changeMenu.add(message);
@@ -118,7 +122,7 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
         text0.setBounds(125, 100, 400, 40);
         changeMenu.add(text0);
 
-        JLabel message0 = new JLabel("Please enter your new password:");
+        JLabel message0 = new JLabel(labelToStrings.get("enterNewPassword"));
         message0.setBounds(125, 150, 500, 50);
         message0.setFont(new Font("MV Boli", Font.PLAIN, 20));
         changeMenu.add(message0);
@@ -127,12 +131,12 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
         text1.setBounds(125, 200, 400, 40);
         changeMenu.add(text1);
 
-        submit1 = new JButton("Submit");
+        submit1 = new JButton(labelToStrings.get("submit"));
         submit1.setBounds(275, 300, 100, 40);
         submit1.addActionListener(this);
         changeMenu.add(submit1);
 
-        goBack = new JButton("Go back");
+        goBack = new JButton(labelToStrings.get("goBack"));
         goBack.setBounds(275, 350, 100, 40);
         goBack.addActionListener(this);
         changeMenu.add(goBack);
@@ -149,7 +153,7 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == back) {
             this.getParent().run();
-        } else if (e.getSource() == changName) {
+        } else if (e.getSource() == changeUsername) {
             this.changeName();
         } else if (e.getSource() == changePassword) {
             this.changePassword();

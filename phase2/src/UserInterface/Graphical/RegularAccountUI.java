@@ -1,11 +1,13 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 import strategy.IButton;
 import strategy.buttonGenerator.GridStyleButtons;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Map;
 
 /**
  * GUI class for displaying the main menu for a regular user.
@@ -13,6 +15,7 @@ import java.awt.*;
  */
 public class RegularAccountUI extends GeneralPresenter {
     private boolean flag = false;
+    private Map<String, String> labelToStrings = new UIGateway().loadRegularAccountUITexts();
 
     private final GeneralPresenter plannerOptionUI = new PlannerOptionUI(this);
     private final GeneralPresenter templateOptionUI = new TemplateOptionUI(this);
@@ -46,16 +49,16 @@ public class RegularAccountUI extends GeneralPresenter {
         JPanel panel = new JPanel();
         panel.setLayout(null);
 
-        JLabel prompt = new JLabel("Main Menu for Regular User");
+        JLabel prompt = new JLabel(labelToStrings.get("prompt"));
         prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
         prompt.setBounds(0, 100, 700, 50);
         prompt.setHorizontalAlignment(JLabel.CENTER);
         panel.add(prompt);
 
-        buttons.add("plannerOption", "Planner Option", plannerOptionUI);
-        buttons.add("templateOption", "Template Option", templateOptionUI);
-        buttons.add("accountOption", "Account Setting", accountOptionUI);
-        buttons.add("logOut", "Log out", this.getParent());
+        buttons.add("plannerOption", labelToStrings.get("plannerOptionButton"), plannerOptionUI);
+        buttons.add("templateOption", labelToStrings.get("templateOptionButton"), templateOptionUI);
+        buttons.add("accountOption", labelToStrings.get("accountOptionButton"), accountOptionUI);
+        buttons.add("logOut", labelToStrings.get("logOutButton"), this.getParent());
         buttons.setBounds(150, 150, 400, 200);
         panel.add(buttons.getPanel());
 

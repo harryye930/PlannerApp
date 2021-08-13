@@ -4,10 +4,7 @@ import Interface.IGateWay;
 
 import java.io.*;
 import java.nio.Buffer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * Data reader gateway.
@@ -156,5 +153,32 @@ public class Reader<T> implements IGateWay<T> {
             return false;
         }
         return false;
+    }
+
+    /**
+     * Reads data from a text file at filePath, and saves the data in a hashmap.
+     * Precondition: each line in the text file is formatted like this: "variable name: variable info", i.e., the name
+     * of what's stored in that line and what's actually stored are separated by a colon.
+     * @param filePath The location where the text file is stored.
+     * @return Map object containing the data read from the text file. Each line in the text file is stored as a
+     * key-value pair, the key is the name of what's stored (i.e., variable name), the value is the information that's
+     * actually stored (i.e., variable info).
+     */
+    public Map<String, String> readTextFile(String filePath){
+        Map<String, String> labelToString = new HashMap<>();
+        try{
+            Scanner scanner = new Scanner(new File(filePath));
+            while (scanner.hasNextLine()){
+                String line = scanner.nextLine();
+                String[] data = line.split(":", 2);
+                labelToString.put(data[0], data[1]);
+            }
+            scanner.close();
+            return labelToString;
+        } catch (FileNotFoundException e){
+            System.out.printf("File %s is missing.", filePath);
+            e.printStackTrace();
+            return null;
+        }
     }
 }

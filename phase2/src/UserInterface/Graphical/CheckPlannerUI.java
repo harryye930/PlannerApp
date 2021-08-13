@@ -1,11 +1,12 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 //TODO: combine with AdminCheckPlannerUI
 // TODO: Extract the left panel (the JScrollPane)
@@ -16,10 +17,10 @@ import java.awt.event.ActionListener;
 
 //TODO: show friends-only planners
 public class CheckPlannerUI extends GeneralPresenter implements ActionListener {
-    private final String separator = "\n======================";
     private boolean flag = false;
+    private Map<String, String> labelToStrings = new UIGateway().loadCheckPlannerUITexts();
 
-    private GeneralPresenter plannerEdit = new PlannerEditUI(this);
+    private GeneralPresenter plannerEdit = new EditPlannerUI(this);
 
     //JPanel
     JPanel checkPlanner = new JPanel();
@@ -27,12 +28,12 @@ public class CheckPlannerUI extends GeneralPresenter implements ActionListener {
     //TextArea/Field
 
     JScrollPane plannerInfo;
-    JTextArea prompt = new JTextArea("Please enter the planner ID\n you want to operate on:");
+    JLabel prompt = new JLabel(labelToStrings.get("prompt"));
     JTextField plannerId = new JTextField();
 
     //Button
-    JButton back = new JButton("Go back");
-    JButton submit = new JButton("Submit");
+    JButton back = new JButton(labelToStrings.get("goBack"));
+    JButton submit = new JButton(labelToStrings.get("submit"));
 
     public CheckPlannerUI(GeneralPresenter parent) {
         this.setParent(parent);
@@ -62,7 +63,6 @@ public class CheckPlannerUI extends GeneralPresenter implements ActionListener {
         plannerInfo = data.getPlanners(checkPlanner);
 
         prompt.setBounds(450, 50, 200, 50);
-        prompt.setEditable(false);
         checkPlanner.add(prompt);
 
         plannerId.setBounds(500, 130, 100, 50);
@@ -88,7 +88,7 @@ public class CheckPlannerUI extends GeneralPresenter implements ActionListener {
             if (plannerController.checkPlanner(plannerId.getText())) {
                 this.plannerEdit.run();
             } else {
-                this.prompt.setText("Invalid ID, please try again!");
+                this.prompt.setText(labelToStrings.get("invalidInput"));
             }
         } else if (e.getSource() == back) {
             this.getParent().run();

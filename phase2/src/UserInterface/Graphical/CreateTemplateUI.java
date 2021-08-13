@@ -1,11 +1,13 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 /**
  *  GUI class for displaying the options for creating a template, and displaying fields for user to fill out in order
@@ -16,24 +18,25 @@ public class CreateTemplateUI extends GeneralPresenter implements ActionListener
     private boolean createdDailyInputPanel = false;
     private boolean createdProjectInputPanel = false;
     private boolean createdRemindersInputPanel = false;
+    private Map<String, String> labelToStrings = new UIGateway().loadCreateTemplateUITexts();
 
     // Strings
-    private final String promptPrefix = "<html>Please enter a template prompt message that asks for<br>";
-    private final String plannerNamePromptStr = "the name of the planner";
+    private final String promptPrefix = labelToStrings.get("promptPrefix");
+    private final String plannerNamePromptStr = labelToStrings.get("plannerNamePromptStr");
     // daily planner prompt strings
-    private final String startTimePromptStr = "the start time of the planner";
-    private final String endTimePromptStr = "the end time of the planner";
-    private final String timeIncrementPromptStr = "the time increment of the planner";
+    private final String startTimePromptStr = labelToStrings.get("startTimePromptStr");
+    private final String endTimePromptStr = labelToStrings.get("endTimePromptStr");
+    private final String timeIncrementPromptStr = labelToStrings.get("timeIncrementPromptStr");
     // project planner prompt strings
-    private final String firstStatusPromptStr = "the first status column of the planner";
-    private final String secondStatusPromptStr = "the second status column of the planner";
-    private final String thirdStatusPromptStr = "the third status column of the planner";
+    private final String firstStatusPromptStr = labelToStrings.get("firstStatusPromptStr");
+    private final String secondStatusPromptStr = labelToStrings.get("secondStatusPromptStr");
+    private final String thirdStatusPromptStr = labelToStrings.get("thirdStatusPromptStr");
     // reminder planner prompt strings
-    private final String taskHeadingPromptStr = "name of the column representing tasks in the planner";
-    private final String dateHeadingPromptStr = "name of the column representing deadlines in the planner";
-    private final String completionHeadingPromptStr = "name of the column representing completion status in the planner";
+    private final String taskHeadingPromptStr = labelToStrings.get("taskHeadingPromptStr");
+    private final String dateHeadingPromptStr = labelToStrings.get("dateHeadingPromptStr");
+    private final String completionHeadingPromptStr = labelToStrings.get("completionHeadingPromptStr");
     // suffix
-    private final String promptSuffix = "<br>that's created from this template:</html>";
+    private final String promptSuffix = labelToStrings.get("promptSuffix");
 
     // Panel/Pane
     private final JPanel createTemplatePanel = new JPanel();
@@ -44,10 +47,10 @@ public class CreateTemplateUI extends GeneralPresenter implements ActionListener
     private JPanel remindersInputPanel;
 
     // TextArea/Field
-    private final JLabel existingTemplatesLabel = new JLabel("Here are the existing templates:");
+    private final JLabel existingTemplatesLabel = new JLabel(labelToStrings.get("existingTemplatesLabel"));
     private final JLabel createTemplatePrompt = new JLabel(
-            "<html>Select the type of template you would like to create:</html>");
-    private final JLabel templateNamePrompt = new JLabel("<html>Please enter the name of the template:</html>");
+            labelToStrings.get("createTemplatePrompt"));
+    private final JLabel templateNamePrompt = new JLabel(labelToStrings.get("templateNamePrompt"));
     private JLabel plannerNamePrompt = new JLabel(promptPrefix + " " + plannerNamePromptStr + " " + promptSuffix);
     private JLabel firstPlannerPrompt = new JLabel();
     private JLabel secondPlannerPrompt = new JLabel();
@@ -59,15 +62,14 @@ public class CreateTemplateUI extends GeneralPresenter implements ActionListener
     private final JTextField thirdPlannerPromptField = new JTextField();
 
     // Button
-    private final JButton dailyTemplateButton = new JButton("Daily Template");
-    private final JButton projectTemplateButton = new JButton("Project Template");
-    private final JButton remindersTemplateButton = new JButton("Reminders Template");
-//    private final JButton submitButton = new JButton("Submit");
-    private final JButton dailySubmitButton = new JButton("Submit");
-    private final JButton projectSubmitButton = new JButton("Submit");
-    private final JButton remindersSubmitButton = new JButton("Submit");
-    private final JButton backToOptionsButton = new JButton("Go back");
-    private final JButton backToTemplateMenuButton = new JButton("Return to Template Menu");
+    private final JButton dailyTemplateButton = new JButton(labelToStrings.get("dailyTemplateButton"));
+    private final JButton projectTemplateButton = new JButton(labelToStrings.get("projectTemplateButton"));
+    private final JButton remindersTemplateButton = new JButton(labelToStrings.get("remindersTemplateButton"));
+    private final JButton dailySubmitButton = new JButton(labelToStrings.get("submit"));
+    private final JButton projectSubmitButton = new JButton(labelToStrings.get("submit"));
+    private final JButton remindersSubmitButton = new JButton(labelToStrings.get("submit"));
+    private final JButton backToOptionsButton = new JButton(labelToStrings.get("goBack"));
+    private final JButton backToTemplateMenuButton = new JButton(labelToStrings.get("backToTemplateMenuButton"));
 
 
     public CreateTemplateUI(GeneralPresenter parent) {

@@ -1,11 +1,13 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 // TODO: combine with AccountOptionUI
 /**
@@ -14,10 +16,12 @@ import java.awt.event.ActionListener;
  */
 public class AdminTemplateOptionUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
+    private Map<String, String> labelToStrings = new UIGateway().loadAdminTemplateOptionUITexts();
+
     // all buttons
-    JButton createTemplate = new JButton("Create Template");
-    JButton editTemplate = new JButton("Edit Template");
-    JButton returnToMainMenuButton= new JButton("Return to Main Menu");
+    JButton createTemplate = new JButton(labelToStrings.get("createTemplate"));
+    JButton editTemplate = new JButton(labelToStrings.get("editTemplate"));
+    JButton returnToMainMenuButton = new JButton(labelToStrings.get("returnToMainMenuButton"));
 
     // panel
     private final JPanel templateMenu = new JPanel();
@@ -48,7 +52,7 @@ public class AdminTemplateOptionUI extends GeneralPresenter implements ActionLis
         main.add(templateMenu, "adminTemplateMenu");
         templateMenu.setLayout(null);
 
-        prompt = new JLabel("Template Menu");
+        prompt = new JLabel(labelToStrings.get("prompt"));
         prompt.setHorizontalAlignment(JLabel.CENTER);
         prompt.setVerticalAlignment(JLabel.TOP);
         prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));

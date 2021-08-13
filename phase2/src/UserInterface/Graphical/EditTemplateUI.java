@@ -1,16 +1,19 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class EditTemplateUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
     private boolean firstScreen = true;
     private String editOption;
+    private Map<String, String> labelToStrings = new UIGateway().loadEditTemplateUITexts();
 
     // Panel/Pane
     private final JPanel editTemplate = new JPanel();
@@ -20,19 +23,19 @@ public class EditTemplateUI extends GeneralPresenter implements ActionListener {
     private final CardLayout editCardLayout = new CardLayout();
 
     // TextArea/Field
-    private final JLabel selectionPrompt = new JLabel("<html>Select what you would like to edit:</html>");
-    private final JLabel newNamePrompt = new JLabel("<html>Please enter the new name <br/>for the template:</html>");
+    private final JLabel selectionPrompt = new JLabel(labelToStrings.get("selectionPrompt"));
+    private final JLabel newNamePrompt = new JLabel(labelToStrings.get("newNamePrompt"));
 
     private final JTextField newNameField = new JTextField();
 
     // Button
-    private final JButton nameButton = new JButton("Name of the template");
-    private final JButton statusButton = new JButton("Published Status of the template");
-    private final JButton backToTemplatesButton = new JButton("Go back");
-    private final JButton submitNameButton = new JButton("Submit");
-    private final JButton submitStatusButton = new JButton("Yes");
-    private final JButton backFromNameButton = new JButton("Go back");
-    private final JButton backFromStatusButton = new JButton("Go back");
+    private final JButton nameButton = new JButton(labelToStrings.get("nameButton"));
+    private final JButton statusButton = new JButton(labelToStrings.get("statusButton"));
+    private final JButton backToTemplatesButton = new JButton(labelToStrings.get("goBack"));
+    private final JButton submitNameButton = new JButton(labelToStrings.get("submit"));
+    private final JButton submitStatusButton = new JButton(labelToStrings.get("submitStatusButton"));
+    private final JButton backFromNameButton = new JButton(labelToStrings.get("goBack"));
+    private final JButton backFromStatusButton = new JButton(labelToStrings.get("goBack"));
 
     public EditTemplateUI(GeneralPresenter parent){
         this.setParent(parent);
@@ -147,7 +150,7 @@ public class EditTemplateUI extends GeneralPresenter implements ActionListener {
         editStatusPanel.setLayout(new GridLayout(3, 1));
 
         JLabel setStatusPrompt = new JLabel(
-                "<html>Are you sure you would like to <br/>change the published status?</html>");
+                labelToStrings.get("setStatusPrompt"));
 
         editStatusPanel.add(setStatusPrompt);
         editStatusPanel.add(submitStatusButton);

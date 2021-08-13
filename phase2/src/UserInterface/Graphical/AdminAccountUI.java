@@ -1,5 +1,6 @@
 package UserInterface.Graphical;
 
+import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
 import sun.jvm.hotspot.gc_interface.GCWhen;
 
@@ -7,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 
 //TODO: combine with AccountOptionUI
@@ -22,13 +24,14 @@ import java.awt.event.ActionListener;
  */
 public class AdminAccountUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
+    private Map<String, String> labelToStrings = new UIGateway().loadAdminAccountUITexts();
 
     private final JPanel adminUserMainMenu = new JPanel();
     private JLabel prompt;
-    private final JButton plannerButton = new JButton("Planner Options");
-    private final JButton templateButton = new JButton("Template Options");
-    private final JButton accountButton = new JButton("Account Options");
-    private final JButton logOutButton = new JButton("Log out");
+    private final JButton plannerButton = new JButton(labelToStrings.get("plannerButton"));
+    private final JButton templateButton = new JButton(labelToStrings.get("templateButton"));
+    private final JButton accountButton = new JButton(labelToStrings.get("accountButton"));
+    private final JButton logOutButton = new JButton(labelToStrings.get("logOutButton"));
 
     //private final GeneralPresenter plannerOptionUI = new AdminPlannerOptionUI("adminUserMainMenu");
     private final GeneralPresenter templateOptionUI = new AdminTemplateOptionUI(this);
@@ -57,7 +60,7 @@ public class AdminAccountUI extends GeneralPresenter implements ActionListener {
 
         adminUserMainMenu.setLayout(null);
 
-        prompt = new JLabel("Main Menu for Admin User");
+        prompt = new JLabel(labelToStrings.get("prompt"));
         prompt.setHorizontalAlignment(JLabel.CENTER);
         prompt.setVerticalAlignment(JLabel.TOP);
         prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
