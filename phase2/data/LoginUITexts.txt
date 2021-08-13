@@ -1,0 +1,7 @@
+prompt: Welcome!
+retrieverPrompt: User ID or Email:
+passwordPrompt: Password:
+login: Login
+createAccount: Create new Account
+guest: Login as guest
+invalidInput: Invalid input, please try again!

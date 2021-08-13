@@ -1,0 +1,5 @@
+prompt: Main Menu for Regular User
+plannerOptionButton: Planner Option
+templateOptionButton: Template Option
+accountOptionButton: Account Setting
+logOutButton: Log out

@@ -1,0 +1,5 @@
+plannerButton: Planner Options
+templateButton: Template Options
+accountButton: Account Options
+logOutButton: Log out
+prompt: Main Menu for Admin User

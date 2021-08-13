@@ -1,0 +1,4 @@
+prompt: <html>Please enter the user<br/> id you want to operate on:</html>
+suspend: Suspend Operation
+checkPlanner: Check Planner
+goBack: Go back

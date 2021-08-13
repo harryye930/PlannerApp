@@ -1,0 +1,21 @@
+promptPrefix: <html>Please enter a template prompt message that asks for<br>
+plannerNamePromptStr: the name of the planner
+startTimePromptStr: the start time of the planner
+endTimePromptStr: the end time of the planner
+timeIncrementPromptStr: the time increment of the planner
+firstStatusPromptStr: the first status column of the planner
+secondStatusPromptStr: the second status column of the planner
+thirdStatusPromptStr: the third status column of the planner
+taskHeadingPromptStr: name of the column representing tasks in the planner
+dateHeadingPromptStr: name of the column representing deadlines in the planner
+completionHeadingPromptStr: name of the column representing completion status in the planner
+promptSuffix: <br>that's created from this template:</html>
+existingTemplatesLabel: Here are the existing templates:
+createTemplatePrompt: <html>Select the type of template you would like to create:</html>
+templateNamePrompt: <html>Please enter the name of the template:</html>
+dailyTemplateButton: Daily Template
+projectTemplateButton: Project Template
+remindersTemplateButton: Reminders Template
+submit: Submit
+goBack: Go back
+backToTemplateMenuButton: Return to Template Menu

@@ -1,0 +1,5 @@
+delete: Delete
+goBack: Go back
+submit: Submit
+prompt: <html>Please enter the planner ID you<br/> want to operate on:</html>
+invalidInput: Invalid input, please try again!

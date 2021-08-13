@@ -1,0 +1,8 @@
+selectionPrompt: <html>Select what you would like to edit:</html>
+newNamePrompt: <html>Please enter the new name <br/>for the template:</html>
+nameButton: Name of the template
+statusButton: Published Status of the template
+submitStatusButton: Yes
+submit: Submit
+goBack: Go back
+setStatusPrompt: <html>Are you sure you would like to <br/>change the published status?</html>

@@ -1,0 +1,4 @@
+createTemplate: Create Template
+editTemplate: Edit Template
+returnToMainMenuButton: Return to Main Menu
+prompt: Template Menu

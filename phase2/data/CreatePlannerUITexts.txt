@@ -1,0 +1,6 @@
+message: <html>Please enter the ID of template<br/> you want to use:<html/>
+submit: Submit
+returnToPlannerMenu: Return to Planner Menu
+confirm: Confirm
+goBack: Go back
+invalidInput: Invalid ID, please try again!

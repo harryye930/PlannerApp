@@ -1,0 +1,9 @@
+changeUsername: Change User Name
+changePassword: Change Password
+back: Go back
+addFriend: Add friend
+changeUsernameMessage: Please enter your new user name:
+submit: Submit
+goBack: Go back
+enterOriginalPassword: Please enter your original password:
+enterNewPassword: Please enter your new password:

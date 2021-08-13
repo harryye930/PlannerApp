@@ -1,0 +1,4 @@
+prompt: <html>Please enter the planner ID<br/> you want to operate on:</html>
+goBack: Go back
+submit: Submit
+invalidInput: Invalid ID, please try again!
