@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// TODO: Extract the left panel (the JScrollPane)
+// TODO: Extract the left panel (the JScrollPane) Done
 // TODO: double check for bugs
 public class EditPlannerUI extends GeneralPresenter implements ActionListener {
 //    private final String dailyMessage = "Please enter the time zone you \n" +

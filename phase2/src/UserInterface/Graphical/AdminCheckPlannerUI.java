@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.util.Map;
 
 //TODO: combine with CheckPlannerUI
-// TODO: Extract the left panel (the JScrollPane)
 public class AdminCheckPlannerUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
     private Map<String, String> labelToStrings = new UIGateway().loadAdminCheckPlannerUITexts();

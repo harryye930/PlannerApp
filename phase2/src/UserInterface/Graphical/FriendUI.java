@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
-// TODO: Extract the left panel (the JScrollPane)
+// TODO: Extract the left panel (the JScrollPane) Done
 public class FriendUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
     private Map<String, String> labelToStrings = new UIGateway().loadFriendUITexts();

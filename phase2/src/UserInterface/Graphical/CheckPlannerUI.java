@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.Map;
 
 //TODO: combine with AdminCheckPlannerUI
-// TODO: Extract the left panel (the JScrollPane)
+// TODO: Extract the left panel (the JScrollPane) Done
 /**
  * GUI class for viewing all planners available to a regular user (all personal planners, all public planners,
  * any friends-only planners if they are added to the friends list of another user)
@@ -18,15 +18,14 @@ import java.util.Map;
 //TODO: show friends-only planners
 public class CheckPlannerUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
-    private Map<String, String> labelToStrings = new UIGateway().loadCheckPlannerUITexts();
+    private final Map<String, String> labelToStrings = new UIGateway().loadCheckPlannerUITexts();
 
-    private GeneralPresenter plannerEdit = new EditPlannerUI(this);
+    private final GeneralPresenter plannerEdit = new EditPlannerUI(this);
 
     //JPanel
     JPanel checkPlanner = new JPanel();
 
     //TextArea/Field
-
     JScrollPane plannerInfo;
     JLabel prompt = new JLabel(labelToStrings.get("prompt"));
     JTextField plannerId = new JTextField();
@@ -44,8 +43,6 @@ public class CheckPlannerUI extends GeneralPresenter implements ActionListener {
     @Override
     public void run() {
         if (flag) {
-//            plannerInfo.setText(plannerController.viewUserPlanners() +
-//                    separator + plannerController.viewPublicPlanners());
             plannerInfo = data.getPlanners(checkPlanner);
             cl.show(main, "checkPlanner");
         } else {

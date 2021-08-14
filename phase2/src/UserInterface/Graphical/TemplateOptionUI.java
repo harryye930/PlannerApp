@@ -2,6 +2,8 @@ package UserInterface.Graphical;
 
 import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
+import strategy.IButton;
+import strategy.buttonGenerator.GridStyleButtons;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +16,7 @@ import java.util.Map;
  * GUI class for displaying template options for a regular user.
  * Options include: view all templates, return to main menu.
  */
-public class TemplateOptionUI extends GeneralPresenter implements ActionListener {
+public class TemplateOptionUI extends GeneralPresenter implements ActionListener{
     private boolean flag = false;
     private Map<String, String> labelToStrings = new UIGateway().loadTemplateOptionUITexts();
 

@@ -68,10 +68,7 @@ public class GridStyleButtons implements IButton, ActionListener {
     public void actionPerformed(ActionEvent e) {
         System.out.println("triggered");
         for (String name: nameToButton.keySet()) {
-            System.out.println(name);
-            System.out.println("1");
             if (e.getSource() == nameToButton.get(name)) {
-                System.out.println("2");
                 nameToUI.get(name).run();
             }
         }

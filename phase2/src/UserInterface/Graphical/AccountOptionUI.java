@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
-//TODO: combine with AdminAccountUI
+//TODO: JScroll panel refine.
 /***
  * GUI class for the account setting screen: displays account information and allows user to change account username
  * and password.

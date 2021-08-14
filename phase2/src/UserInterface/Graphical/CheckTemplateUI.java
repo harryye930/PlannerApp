@@ -20,7 +20,7 @@ public class CheckTemplateUI extends GeneralPresenter implements ActionListener 
     private boolean flag = false;
     private Map<String, String> labelToStrings = new UIGateway().loadCheckTemplateUITexts();
 
-    private GeneralPresenter editTemplate = new EditTemplateUI(this);
+    private final GeneralPresenter editTemplate = new EditTemplateUI(this);
 
     //JPanel
     JPanel checkTemplate = new JPanel();
