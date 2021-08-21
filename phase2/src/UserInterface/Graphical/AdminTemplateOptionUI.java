@@ -2,13 +2,10 @@ package UserInterface.Graphical;
 
 import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
-import strategy.IButton;
-import strategy.buttonGenerator.GridStyleButtons;
+import strategy.IForm;
+import strategy.formGenerator.FormBuilder;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Map;
 
 // TODO: combine with AccountOptionUI
@@ -18,15 +15,15 @@ import java.util.Map;
  */
 public class AdminTemplateOptionUI extends GeneralPresenter{
     private boolean flag = false;
-    private Map<String, String> labelToStrings = new UIGateway().loadAdminTemplateOptionUITexts();
-    private final IButton buttons = new GridStyleButtons();
+    private final Map<String, String> labelToStrings = new UIGateway().loadAdminTemplateOptionUITexts();
 
-    private GeneralPresenter createTemplateUI = new CreateTemplateUI(this);
-    private GeneralPresenter checkTemplateUI = new CheckTemplateUI(this);
+    private IForm form;
+
+    private final GeneralPresenter createTemplateUI = new CreateTemplateUI(this);
+    private final GeneralPresenter checkTemplateUI = new CheckTemplateUI(this);
 
     // JComponents
-    private JPanel panel = new JPanel();
-    private JLabel prompt;
+    private final JPanel panel = new JPanel();
 
     public AdminTemplateOptionUI(GeneralPresenter parent) {
         this.setParent(parent);
@@ -50,18 +47,22 @@ public class AdminTemplateOptionUI extends GeneralPresenter{
         main.add(panel, "adminTemplateMenu");
         panel.setLayout(null);
 
-        prompt.setText(labelToStrings.get("prompt"));
-        prompt.setHorizontalAlignment(JLabel.CENTER);
-        prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
-        prompt.setBounds(0, 100, 700, 50);
-        panel.add(prompt);
+        FormBuilder buttons = new FormBuilder();
 
-        buttons.add("createTemplate", labelToStrings.get("createTemplate"), createTemplateUI);
-        buttons.add("editTemplate", labelToStrings.get("editTemplate"), checkTemplateUI);
-        buttons.add("returnToMainMenuButton", labelToStrings.get("returnToMainMenuButton"), this.getParent());
-        buttons.setBounds(150, 150, 400, 200);
+//        prompt.setText(labelToStrings.get("prompt"));
+//        prompt.setHorizontalAlignment(JLabel.CENTER);
+//        prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
+//        prompt.setBounds(0, 100, 700, 50);
+//        panel.add(prompt);
 
-        panel.add(buttons.getPanel());
+        buttons.addLabel("prompt", labelToStrings.get("prompt"));
+        buttons.addSuperButton("createTemplate", labelToStrings.get("createTemplate"), createTemplateUI);
+        buttons.addSuperButton("editTemplate", labelToStrings.get("editTemplate"), checkTemplateUI);
+        buttons.addSuperButton("returnToMainMenuButton", labelToStrings.get("returnToMainMenuButton"), this.getParent());
+        buttons.setBounds(150, 100, 400, 250);
+
+        form = buttons.getForm();
+        panel.add(form.getPanel());
     }
 }
 

@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
-//TODO: combine with CheckPlannerUI
+//TODO: cannot integrate JList right now.
 public class AdminCheckPlannerUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
     private Map<String, String> labelToStrings = new UIGateway().loadAdminCheckPlannerUITexts();
