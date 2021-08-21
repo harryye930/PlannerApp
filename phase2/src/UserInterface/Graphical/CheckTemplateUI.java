@@ -2,37 +2,31 @@ package UserInterface.Graphical;
 
 import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
-import com.sun.tools.javac.comp.Check;
+import strategy.IForm;
+import strategy.formGenerator.FormBuilder;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
-//TODO: combine with CheckPlannerUI
-// TODO: Extract the left panel (the JScrollPane)
+
 /**
  * GUI class for showing all templates stored in the system to an admin user. Asks the admin user which template they
  * would like to edit.
  */
 public class CheckTemplateUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
-    private Map<String, String> labelToStrings = new UIGateway().loadCheckTemplateUITexts();
+    private final Map<String, String> labelToStrings = new UIGateway().loadCheckTemplateUITexts();
+
+    private IForm form;
 
     private final GeneralPresenter editTemplate = new EditTemplateUI(this);
 
     //JPanel
     JPanel checkTemplate = new JPanel();
-
-    //TextArea/Field
     JScrollPane templateInfo;
-    JLabel prompt = new JLabel(labelToStrings.get("prompt"));
-    JTextField templateId = new JTextField();
 
-    //Button
-    JButton back = new JButton(labelToStrings.get("goBack"));
-    JButton submit = new JButton(labelToStrings.get("submit"));
 
     public CheckTemplateUI(GeneralPresenter parent){
         this.setParent(parent);
@@ -58,31 +52,26 @@ public class CheckTemplateUI extends GeneralPresenter implements ActionListener 
 
         templateInfo = data.getTemplates(checkTemplate);
 
-        prompt.setBounds(450, 50, 225, 50);
-        checkTemplate.add(prompt);
+        FormBuilder fb = new FormBuilder();
+        fb.setBounds(450, 50, 225, 240);
+        fb.addLabel("prompt", labelToStrings.get("prompt"));
+        fb.addTextField("templateId");
+        fb.addSubmitButton("submit", labelToStrings.get("prompt"));
+        fb.addSuperButton("goBack", labelToStrings.get("goBack"), this.getParent());
+        fb.addListener(this);
 
-        templateId.setBounds(515, 110, 70, 40);
-        checkTemplate.add(templateId);
-
-        submit.setBounds(515, 200, 70, 40);
-        submit.addActionListener(this);
-        checkTemplate.add(submit);
-
-        back.setBounds(515, 250, 70, 40);
-        back.addActionListener(this);
-        checkTemplate.add(back);
+        form = fb.getForm();
+        checkTemplate.add(form.getPanel());
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == submit){
-            if (templateController.checkTemplate(templateId.getText())) {
+        if (e.getSource() == form.get("submit")){
+            if (templateController.checkTemplate(((JTextField)form.get("templateId")).getText())) {
                 this.editTemplate.run();
             } else {
-                this.prompt.setText(labelToStrings.get("invalidInput"));
+                ((JLabel) this.form.get("prompt")).setText(labelToStrings.get("invalidInput"));
             }
-        } else if (e.getSource() == back) {
-            this.getParent().run();
         }
-    }
+        }
 }
