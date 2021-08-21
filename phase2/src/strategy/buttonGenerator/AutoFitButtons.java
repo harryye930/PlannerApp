@@ -4,11 +4,17 @@ import UserInterface.GeneralPresenter;
 import strategy.IButton;
 
 import javax.swing.*;
+import java.util.LinkedHashMap;
 
 public class AutoFitButtons implements IButton {
+    private final JPanel panel = new JPanel();
+
+    private final LinkedHashMap<String, JButton> nameToButton = new LinkedHashMap<>();
+    private final LinkedHashMap<String, GeneralPresenter> nameToUI = new LinkedHashMap<>();
+
     @Override
     public JPanel getPanel() {
-        return null;
+        return panel;
     }
 
     @Override

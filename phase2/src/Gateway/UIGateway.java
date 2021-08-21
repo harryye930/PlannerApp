@@ -1,10 +1,27 @@
 package Gateway;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 public class UIGateway extends Reader{
 
-    private final String folderPath = "data/";
+    private String folderPath;
+    private final String originalFolderPath = "data/";
+    private final String alternativePath = "phase2/Data/";
+
+    public UIGateway() {
+        File file = new File(originalFolderPath);
+        try {
+            if (file.createNewFile() && file.delete()) {
+                folderPath = alternativePath;
+            } else {
+                folderPath = originalFolderPath;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public Map<String, String> loadAccountOptionUITexts(){
         String accountOptionUIFilePath = folderPath + "AccountOptionUITexts.txt";
