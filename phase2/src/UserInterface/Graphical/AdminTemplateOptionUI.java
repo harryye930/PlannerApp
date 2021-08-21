@@ -8,7 +8,6 @@ import strategy.formGenerator.FormBuilder;
 import javax.swing.*;
 import java.util.Map;
 
-// TODO: combine with AccountOptionUI
 /**
  * GUI class for displaying template options for an admin user.
  * Options include: create template, edit template, return to main menu.

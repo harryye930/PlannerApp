@@ -2,14 +2,14 @@ package UserInterface.Graphical;
 
 import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
+import strategy.IForm;
+import strategy.formGenerator.FormBuilder;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
-//TODO: combine with AdminCheckPlannerUI
-// TODO: Extract the left panel (the JScrollPane) Done
 /**
  * GUI class for viewing all planners available to a regular user (all personal planners, all public planners,
  * any friends-only planners if they are added to the friends list of another user)
@@ -20,6 +20,8 @@ public class CheckPlannerUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
     private final Map<String, String> labelToStrings = new UIGateway().loadCheckPlannerUITexts();
 
+    private IForm form;
+
     private final GeneralPresenter plannerEdit = new EditPlannerUI(this);
 
     //JPanel
@@ -27,12 +29,6 @@ public class CheckPlannerUI extends GeneralPresenter implements ActionListener {
 
     //TextArea/Field
     JScrollPane plannerInfo;
-    JLabel prompt = new JLabel(labelToStrings.get("prompt"));
-    JTextField plannerId = new JTextField();
-
-    //Button
-    JButton back = new JButton(labelToStrings.get("goBack"));
-    JButton submit = new JButton(labelToStrings.get("submit"));
 
     public CheckPlannerUI(GeneralPresenter parent) {
         this.setParent(parent);
@@ -59,19 +55,30 @@ public class CheckPlannerUI extends GeneralPresenter implements ActionListener {
 
         plannerInfo = data.getPlanners(checkPlanner);
 
-        prompt.setBounds(450, 50, 200, 50);
-        checkPlanner.add(prompt);
+        FormBuilder fb = new FormBuilder();
+        fb.setBounds(450, 50, 200, 200);
+        fb.addLabel("prompt", labelToStrings.get("prompt"));
+        fb.addTextField("plannerId");
+        fb.addSubmitButton("submit", labelToStrings.get("submit"));
+        fb.addSuperButton("goBack", labelToStrings.get("goBack"), this.getParent());
+        fb.addListener(this);
 
-        plannerId.setBounds(500, 130, 100, 50);
-        checkPlanner.add(plannerId);
+        form = fb.getForm();
+        checkPlanner.add(form.getPanel());
 
-        submit.setBounds(515, 200, 70, 40);
-        submit.addActionListener(this);
-        checkPlanner.add(submit);
-
-        back.setBounds(515, 250, 70, 40);
-        back.addActionListener(this);
-        checkPlanner.add(back);
+//        prompt.setBounds(450, 50, 200, 50);
+//        checkPlanner.add(prompt);
+//
+//        plannerId.setBounds(500, 130, 100, 50);
+//        checkPlanner.add(plannerId);
+//
+//        submit.setBounds(515, 200, 70, 40);
+//        submit.addActionListener(this);
+//        checkPlanner.add(submit);
+//
+//        back.setBounds(515, 250, 70, 40);
+//        back.addActionListener(this);
+//        checkPlanner.add(back);
     }
 
     /**
@@ -81,14 +88,12 @@ public class CheckPlannerUI extends GeneralPresenter implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == submit) {
-            if (plannerController.checkPlanner(plannerId.getText())) {
+        if (e.getSource() == form.get("submit")) {
+            if (plannerController.checkPlanner(((JTextField) form.get("plannerId")).getText())) {
                 this.plannerEdit.run();
             } else {
-                this.prompt.setText(labelToStrings.get("invalidInput"));
+                ((JLabel)(this.form.get("prompt"))).setText(labelToStrings.get("invalidInput"));
             }
-        } else if (e.getSource() == back) {
-            this.getParent().run();
         }
     }
 }
