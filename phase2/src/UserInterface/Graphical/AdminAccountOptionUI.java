@@ -2,6 +2,8 @@ package UserInterface.Graphical;
 
 import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
+import strategy.IForm;
+import strategy.formGenerator.FormBuilder;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,25 +16,14 @@ import java.util.Map;
  * GUI class for displaying account options for an admin user.
  * Options include: suspend any account by any number of days.
  */
-public class AdminAccountOptionUI extends GeneralPresenter implements KeyListener, ActionListener {
+public class AdminAccountOptionUI extends GeneralPresenter implements KeyListener {
     private String userId;
     private boolean flag = false;
-    private Map<String, String> labelToStrings = new UIGateway().loadAdminAccountOptionUITexts();
+    private final Map<String, String> labelToStrings = new UIGateway().loadAdminAccountOptionUITexts();
 
-    // Panel
     private JScrollPane accountsInfo;
     private final JPanel adminAccount = new JPanel();
-
-    // Label
-    private final JLabel prompt = new JLabel(labelToStrings.get("prompt"));
-
-    // Text
-    private final JTextField text = new JTextField();
-
-    // Button
-    private  final JButton suspend = new JButton(labelToStrings.get("suspend"));
-    private final JButton checkPlanner = new JButton(labelToStrings.get("checkPlanner"));
-    private final JButton back = new JButton(labelToStrings.get("goBack"));
+    private IForm form;
 
     private final SuspendUserUI adminSuspendAccount = new SuspendUserUI(this);
     private final AdminCheckPlannerUI adminCheckPlannerUI = new AdminCheckPlannerUI(this);
@@ -58,36 +49,39 @@ public class AdminAccountOptionUI extends GeneralPresenter implements KeyListene
         main.add(adminAccount, "adminAccountOption");
 
         accountsInfo = data.getAccounts(adminAccount);
+        adminAccount.add(accountsInfo);
 
-        prompt.setBounds(450, 50, 200, 50);
-        adminAccount.add(prompt);
+        FormBuilder fb = new FormBuilder();
+        fb.setBounds(450, 50, 200, 200);
+        fb.addLabel("prompt", labelToStrings.get("prompt"));
+        fb.addTextField("accountId");
+        fb.addSuperButton("suspend", labelToStrings.get("suspend"), adminSuspendAccount);
+        fb.addSuperButton("checkPlanner", labelToStrings.get("checkPlanner"), adminCheckPlannerUI);
+        fb.addSuperButton("goBack", labelToStrings.get("goBack"), this.getParent());
 
-        text.setBounds(450, 100, 200, 30);
-        text.addKeyListener(this);
-        adminAccount.add(text);
+        this.form = fb.getForm();
+        adminAccount.add(form.getPanel());
 
-        suspend.setBounds(515, 150, 100, 40);
-        checkPlanner.setBounds(515, 200, 100, 40);
-        back.setBounds(515, 250, 100, 40);
+        form.get("accountId").addKeyListener(this);
 
-        adminAccount.add(suspend);
-        adminAccount.add(checkPlanner);
-        adminAccount.add(back);
-
-        suspend.addActionListener(this);
-        checkPlanner.addActionListener(this);
-        back.addActionListener(this);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == suspend) {
-            this.adminSuspendAccount.run();
-        } else if (e.getSource() == checkPlanner) {
-            this.adminCheckPlannerUI.run();
-        } else if (e.getSource() == back) {
-            this.getParent().run();
-        }
+//        prompt.setBounds(450, 50, 200, 50);
+//        adminAccount.add(prompt);
+//
+//        text.setBounds(450, 100, 200, 30);
+//        text.addKeyListener(this);
+//        adminAccount.add(text);
+//
+//        suspend.setBounds(515, 150, 100, 40);
+//        checkPlanner.setBounds(515, 200, 100, 40);
+//        back.setBounds(515, 250, 100, 40);
+//
+//        adminAccount.add(suspend);
+//        adminAccount.add(checkPlanner);
+//        adminAccount.add(back);
+//
+//        suspend.addActionListener(this);
+//        checkPlanner.addActionListener(this);
+//        back.addActionListener(this);
     }
 
     /**
@@ -123,8 +117,9 @@ public class AdminAccountOptionUI extends GeneralPresenter implements KeyListene
      */
     @Override
     public void keyReleased(KeyEvent e) {
-        if (e.getSource() == text) {
-            System.out.println(text.getText());
+        if (e.getSource() == form.get("accountId")) {
+            JTextField text = (JTextField) form.get("accountId");
+
             adminSuspendAccount.setUserId(text.getText());
             adminCheckPlannerUI.setUserId(text.getText());
         }
