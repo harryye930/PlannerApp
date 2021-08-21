@@ -2,26 +2,24 @@ package UserInterface.Graphical;
 
 import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
-import strategy.IButton;
-import strategy.buttonGenerator.GridStyleButtons;
+import strategy.IForm;
+import strategy.formGenerator.FormBuilder;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Map;
 
 /**
  * GUI class for displaying planner options for a regular user.
  * Options include: create a new planner, view all planners available to the user, and return to the main menu.
  */
-public class PlannerOptionUI extends GeneralPresenter{
+public class PlannerOptionUI extends GeneralPresenter {
     private boolean flag = false;
-    private Map<String, String> labelToStrings = new UIGateway().loadPlannerOptionUITexts();
+    private final Map<String, String> labelToStrings = new UIGateway().loadPlannerOptionUITexts();
 
-    private final IButton buttons = new GridStyleButtons();
+    private IForm form;
 
     // JComponent
     private final JPanel panel = new JPanel();
-    JLabel prompt = new JLabel(labelToStrings.get("prompt"));
 
     private final GeneralPresenter createPlanner = new CreatePlannerUI(this);
     private final GeneralPresenter checkPlanner = new CheckPlannerUI(this);
@@ -48,17 +46,28 @@ public class PlannerOptionUI extends GeneralPresenter{
         main.add(panel, "plannerMenu");
         panel.setLayout(null);
 
-        prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
-        prompt.setHorizontalAlignment(JLabel.CENTER);
-        prompt.setBounds(0, 100, 700, 50);
-        panel.add(prompt);
+        FormBuilder fb = new FormBuilder();
+        fb.setBounds(150, 100, 600, 250);
+        fb.addLabel("prompt", labelToStrings.get("prompt"));
+        fb.addSuperButton("newPlanner", labelToStrings.get("createPlannerButton"), createPlanner);
+        fb.addSuperButton("checkPlanner", labelToStrings.get("checkPlannerButton"), checkPlanner);
+        fb.addSuperButton("back", labelToStrings.get("back"), this.getParent());
 
-        buttons.add("newPlanner", labelToStrings.get("createPlannerButton"), createPlanner);
-        buttons.add("checkPlanner", labelToStrings.get("checkPlannerButton"), checkPlanner);
-        buttons.add("back", labelToStrings.get("back"), this.getParent());
-        buttons.setBounds(150, 150, 400, 200);
+        form = fb.getForm();
+        panel.add(form.getPanel());
 
-        panel.add(buttons.getPanel());
+
+//        prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
+//        prompt.setHorizontalAlignment(JLabel.CENTER);
+//        prompt.setBounds(0, 100, 700, 50);
+//        panel.add(prompt);
+//
+//        buttons.add("newPlanner", labelToStrings.get("createPlannerButton"), createPlanner);
+//        buttons.add("checkPlanner", labelToStrings.get("checkPlannerButton"), checkPlanner);
+//        buttons.add("back", labelToStrings.get("back"), this.getParent());
+//        buttons.setBounds(150, 150, 400, 200);
+//
+//        panel.add(buttons.getPanel());
     }
 }
 //    private boolean flag = false;

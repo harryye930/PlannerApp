@@ -2,9 +2,7 @@ package UserInterface.Graphical;
 
 import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
-import strategy.IButton;
 import strategy.IForm;
-import strategy.buttonGenerator.GridStyleButtons;
 import strategy.formGenerator.FormBuilder;
 
 import javax.swing.*;
@@ -21,10 +19,6 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
 
     private final GeneralPresenter friendUI = new FriendUI(this);
     private final Map<String, String> labelToStrings = new UIGateway().loadAccountOptionUITexts();
-
-    private final FormBuilder menuButtons = new FormBuilder();
-    private final FormBuilder changeNameForm = new FormBuilder();
-    private final FormBuilder changePasswordForm = new FormBuilder();
 
     private IForm menuForm;
     private IForm passwordForm;
@@ -55,6 +49,8 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
     }
 
     private void showAccountMenu() {
+        FormBuilder menuButtons = new FormBuilder();
+
         this.changeName();
         this.changePassword();
 
@@ -75,6 +71,8 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
     }
 
     private void changeName() {
+        FormBuilder changeNameForm = new FormBuilder();
+
         changeMenu = new JPanel();
         changeMenu.setLayout(null);
         main.add(changeMenu, "changeNameMenu");
@@ -92,6 +90,8 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
     }
 
     private void changePassword() {
+        FormBuilder changePasswordForm = new FormBuilder();
+
         changeMenu = new JPanel();
         changeMenu.setLayout(null);
         main.add(changeMenu, "changePasswordMenu");

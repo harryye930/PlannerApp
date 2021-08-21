@@ -82,6 +82,9 @@ public class FormBuilder implements ActionListener{
         for (JComponent component: this.nameToComponent.values()) {
             this.panel.add(component);
         }
+        for (JButton button: this.nameToSuperButtons.values()) {
+            this.panel.add(button);
+        }
         return this.panel;
     }
 

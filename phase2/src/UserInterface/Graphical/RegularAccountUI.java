@@ -2,8 +2,8 @@ package UserInterface.Graphical;
 
 import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
-import strategy.IButton;
-import strategy.buttonGenerator.GridStyleButtons;
+import strategy.IForm;
+import strategy.formGenerator.FormBuilder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,13 +15,13 @@ import java.util.Map;
  */
 public class RegularAccountUI extends GeneralPresenter {
     private boolean flag = false;
-    private Map<String, String> labelToStrings = new UIGateway().loadRegularAccountUITexts();
+    private final Map<String, String> labelToStrings = new UIGateway().loadRegularAccountUITexts();
 
     private final GeneralPresenter plannerOptionUI = new PlannerOptionUI(this);
     private final GeneralPresenter templateOptionUI = new TemplateOptionUI(this);
     private final GeneralPresenter accountOptionUI = new AccountOptionUI(this);
 
-    private final IButton buttons = new GridStyleButtons();
+    private IForm form;
 
     public RegularAccountUI(GeneralPresenter parent) {
         this.setParent(parent);
@@ -47,7 +47,10 @@ public class RegularAccountUI extends GeneralPresenter {
      */
     private void showMenu() {
         JPanel panel = new JPanel();
+        main.add(panel, "regularUserMainMenu");
         panel.setLayout(null);
+
+        FormBuilder buttons = new FormBuilder();
 
         JLabel prompt = new JLabel(labelToStrings.get("prompt"));
         prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
@@ -55,14 +58,15 @@ public class RegularAccountUI extends GeneralPresenter {
         prompt.setHorizontalAlignment(JLabel.CENTER);
         panel.add(prompt);
 
-        buttons.add("plannerOption", labelToStrings.get("plannerOptionButton"), plannerOptionUI);
-        buttons.add("templateOption", labelToStrings.get("templateOptionButton"), templateOptionUI);
-        buttons.add("accountOption", labelToStrings.get("accountOptionButton"), accountOptionUI);
-        buttons.add("logOut", labelToStrings.get("logOutButton"), this.getParent());
+        buttons.addLabel("prompt", labelToStrings.get("prompt"));
+        buttons.addSuperButton("plannerOption", labelToStrings.get("plannerOptionButton"), plannerOptionUI);
+        buttons.addSuperButton("templateOption", labelToStrings.get("templateOptionButton"), templateOptionUI);
+        buttons.addSuperButton("accountOption", labelToStrings.get("accountOptionButton"), accountOptionUI);
+        buttons.addSuperButton("logOut", labelToStrings.get("logOutButton"), this.getParent());
         buttons.setBounds(150, 150, 400, 200);
-        panel.add(buttons.getPanel());
 
-        main.add(panel, "regularUserMainMenu");
+        form = buttons.getForm();
+        panel.add(form.getPanel());
     }
 }
 

@@ -2,17 +2,11 @@ package UserInterface.Graphical;
 
 import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
-import strategy.IButton;
 import strategy.IForm;
-import strategy.buttonGenerator.GridStyleButtons;
-import strategy.formGenerator.Form;
 import strategy.formGenerator.FormBuilder;
-import sun.jvm.hotspot.gc_interface.GCWhen;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Map;
 
 /**

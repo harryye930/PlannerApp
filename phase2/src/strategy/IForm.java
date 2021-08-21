@@ -1,9 +1,7 @@
 package strategy;
 
-import UserInterface.GeneralPresenter;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public interface IForm {
