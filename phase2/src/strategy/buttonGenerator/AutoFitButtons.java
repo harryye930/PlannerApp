@@ -4,6 +4,7 @@ import UserInterface.GeneralPresenter;
 import strategy.IButton;
 
 import javax.swing.*;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class AutoFitButtons implements IButton {
@@ -25,5 +26,10 @@ public class AutoFitButtons implements IButton {
     @Override
     public void add(String name, String prompt, GeneralPresenter nextUI) {
 
+    }
+
+    @Override
+    public HashMap<String, JButton> getButtons() {
+        return null;
     }
 }

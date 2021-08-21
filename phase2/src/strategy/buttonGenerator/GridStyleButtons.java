@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -34,8 +35,15 @@ public class GridStyleButtons implements IButton, ActionListener {
     @Override
     public void add(String name, String prompt, GeneralPresenter nextUI) {
         nameToButton.put(name, new JButton(prompt));
-        nameToUI.put(name, nextUI);
         nameToButton.get(name).addActionListener(this);
+        if (nextUI != null) {
+            nameToUI.put(name, nextUI);
+        }
+    }
+
+    @Override
+    public HashMap<String, JButton> getButtons() {
+        return this.nameToButton;
     }
 
     @Override
@@ -68,7 +76,7 @@ public class GridStyleButtons implements IButton, ActionListener {
     public void actionPerformed(ActionEvent e) {
         System.out.println("triggered");
         for (String name: nameToButton.keySet()) {
-            if (e.getSource() == nameToButton.get(name)) {
+            if (e.getSource() == nameToButton.get(name) && nameToUI.containsKey(name)) {
                 nameToUI.get(name).run();
             }
         }

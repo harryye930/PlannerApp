@@ -2,14 +2,16 @@ package UserInterface.Graphical;
 
 import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
+import strategy.IButton;
+import strategy.IForm;
+import strategy.buttonGenerator.GridStyleButtons;
+import strategy.formGenerator.GridStyleForm;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
-//TODO: JScroll panel refine.
 /***
  * GUI class for the account setting screen: displays account information and allows user to change account username
  * and password.
@@ -17,30 +19,17 @@ import java.util.Map;
 public class AccountOptionUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
 
-    private GeneralPresenter friendUI = new FriendUI(this);
-    private Map<String, String> labelToStrings = new UIGateway().loadAccountOptionUITexts();
+    private final GeneralPresenter friendUI = new FriendUI(this);
+    private final Map<String, String> labelToStrings = new UIGateway().loadAccountOptionUITexts();
+
+    private final IButton menuButtons = new GridStyleButtons();
+    private final IForm changeNameForm = new GridStyleForm();
+    private final IForm changePasswordForm = new GridStyleForm();
 
     //Panel
     private final JPanel accountMenu = new JPanel();
     private JPanel changeMenu;
     JScrollPane accounts;
-
-    //Button
-    private final JButton changeUsername = new JButton(labelToStrings.get("changeUsername"));
-    private final JButton changePassword = new JButton(labelToStrings.get("changePassword"));
-    private final JButton back = new JButton(labelToStrings.get("back"));
-    private final JButton addFriend = new JButton(labelToStrings.get("addFriend"));
-
-    private JButton submit0;
-    private JButton submit1;
-    private JButton goBack;
-
-    //Text
-    private JTextField text0;
-    private JPasswordField text1;
-
-    //Label
-    private JLabel message;
 
     public AccountOptionUI(GeneralPresenter parent) {
         this.setParent(parent);
@@ -67,81 +56,55 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
 
         accounts = data.getAccount(accessController.getCurrUserId(), accountMenu);
 
-        changeUsername.setBounds(515, 150, 150, 40);
-        changePassword.setBounds(515, 200, 150, 40);
-        addFriend.setBounds(515, 250, 150, 40);
-        back.setBounds(515, 300, 70, 40);
-        accountMenu.add(changeUsername);
-        accountMenu.add(changePassword);
-        accountMenu.add(back);
-        accountMenu.add(addFriend);
-        addFriend.addActionListener(this);
-        changeUsername.addActionListener(this);
-        changePassword.addActionListener(this);
-        back.addActionListener(this);
+        menuButtons.setBounds(515, 190, 150, 150);
+        menuButtons.add("changeUserName", labelToStrings.get("changeUsername"), null);
+        menuButtons.add("changePassword", labelToStrings.get("changePassword"), null);
+        menuButtons.add("addFriend", labelToStrings.get("addFriend"), null);
+        menuButtons.add("back", labelToStrings.get("back"), null);
+
+        accountMenu.add(menuButtons.getPanel());
+        for (JButton button: menuButtons.getButtons().values()) {
+            button.addActionListener(this);
+        }
+
     }
 
     private void changeName() {
         changeMenu = new JPanel();
         changeMenu.setLayout(null);
-        main.add(changeMenu, "changeMenu");
+        main.add(changeMenu, "changeNameMenu");
 
-        message = new JLabel(labelToStrings.get("changeUsernameMessage"));
-        message.setBounds(125, 100, 500, 50);
-        message.setFont(new Font("MV Boli", Font.PLAIN, 20));
-        changeMenu.add(message);
+        changeNameForm.setBounds(125, 100, 500, 250);
+        changeNameForm.addLabel("changeUsernameMessage", labelToStrings.get("changeUsernameMessage"));
+        changeNameForm.addTextField("name");
+        changeNameForm.addSubmitButton("submit", labelToStrings.get("submit"));
+        changeNameForm.addSubmitButton("back", labelToStrings.get("back"));
+        changeNameForm.setLayout(4, 1);
+        changeMenu.add(changeNameForm.getPanel());
+        changeNameForm.addListener(this);
 
-        text0 = new JTextField();
-        text0.setBounds(125, 175, 400, 40);
-        changeMenu.add(text0);
+        cl.show(main, "changeNameMenu");
 
-        submit0 = new JButton(labelToStrings.get("submit"));
-        submit0.setBounds(275, 275, 100, 40);
-        submit0.addActionListener(this);
-        changeMenu.add(submit0);
-
-        goBack = new JButton(labelToStrings.get("goBack"));
-        goBack.setBounds(275, 325, 100, 40);
-        goBack.addActionListener(this);
-        changeMenu.add(goBack);
-
-        cl.show(main, "changeMenu");
     }
 
     private void changePassword() {
         changeMenu = new JPanel();
         changeMenu.setLayout(null);
-        main.add(changeMenu, "changeMenu");
+        main.add(changeMenu, "changePasswordMenu");
 
-        message = new JLabel(labelToStrings.get("enterOriginalPassword"));
-        message.setBounds(125, 50, 500, 50);
-        message.setFont(new Font("MV Boli", Font.PLAIN, 20));
-        changeMenu.add(message);
+        changePasswordForm.addLabel("enterOriginalPassword", labelToStrings.get("enterOriginalPassword"));
+        changePasswordForm.addTextField("originalPassword");
+        changePasswordForm.addLabel("enterNewPassword", labelToStrings.get("enterNewPassword"));
+        changePasswordForm.addTextField("newPassword");
+        changePasswordForm.addSubmitButton("submit", labelToStrings.get("submit"));
+        changePasswordForm.addSubmitButton("back", labelToStrings.get("back"));
+        changePasswordForm.setBounds(125, 50, 500, 300);
+        changePasswordForm.addListener(this);
+        changePasswordForm.setLayout(6, 1);
+        changeMenu.add(changePasswordForm.getPanel());
 
-        text0 = new JTextField();
-        text0.setBounds(125, 100, 400, 40);
-        changeMenu.add(text0);
+        cl.show(main, "changePasswordMenu");
 
-        JLabel message0 = new JLabel(labelToStrings.get("enterNewPassword"));
-        message0.setBounds(125, 150, 500, 50);
-        message0.setFont(new Font("MV Boli", Font.PLAIN, 20));
-        changeMenu.add(message0);
-
-        text1 = new JPasswordField();
-        text1.setBounds(125, 200, 400, 40);
-        changeMenu.add(text1);
-
-        submit1 = new JButton(labelToStrings.get("submit"));
-        submit1.setBounds(275, 300, 100, 40);
-        submit1.addActionListener(this);
-        changeMenu.add(submit1);
-
-        goBack = new JButton(labelToStrings.get("goBack"));
-        goBack.setBounds(275, 350, 100, 40);
-        goBack.addActionListener(this);
-        changeMenu.add(goBack);
-
-        cl.show(main, "changeMenu");
     }
 
     /**
@@ -151,29 +114,33 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == back) {
+        if (e.getSource() == menuButtons.getButtons().get("back")) {
             this.getParent().run();
-        } else if (e.getSource() == changeUsername) {
+        } else if (e.getSource() == menuButtons.getButtons().get("changeUserName")) {
             this.changeName();
-        } else if (e.getSource() == changePassword) {
+        } else if (e.getSource() == menuButtons.getButtons().get("changePassword")) {
             this.changePassword();
-        } else if (e.getSource() == submit0) {
-            accessController.changeUserName(accessController.getCurrUserId(), text0.getText());
+        } else if (e.getSource() == changeNameForm.getComponents().get("submit")) {
+            accessController.changeUserName(accessController.getCurrUserId(),
+                    ((JTextField)changeNameForm.getComponents().get("name")).getText());
             main.remove(changeMenu);
             this.run();
             //cl.show(main, "accountMenu");
-        } else if (e.getSource() == submit1) {
-            String message = accessController.changePassword(accessController.getCurrUserId(), text0.getText(), text1.getText());
+        } else if (e.getSource() == changePasswordForm.getComponents().get("submit")) {
+            String message = accessController.changePassword(accessController.getCurrUserId(),
+                    ((JTextField)changePasswordForm.getComponents().get("originalPassword")).getText(),
+                    ((JTextField) changePasswordForm.getComponents().get("newPassword")).getText());
             main.remove(changeMenu);
             //cl.show(main, "accountMenu");
-            text0.setText("");
-            text0.setText(message);
+            ((JTextField)changePasswordForm.getComponents().get("originalPassword")).setText("");
+            ((JTextField) changePasswordForm.getComponents().get("newPassword")).setText(message);
 
-        } else if (e.getSource() == goBack) {
+        } else if (e.getSource() == changeNameForm.getComponents().get("back") ||
+                e.getSource() == changePasswordForm.getComponents().get("back")) {
             //cl.show(main, "accountMenu");
-            main.remove(changeMenu);
+            //main.remove(changeMenu);
             this.run();
-        } else if (e.getSource() == addFriend) {
+        } else if (e.getSource() == menuButtons.getButtons().get("addFriend")) {
             friendUI.run();
         }
     }

@@ -1,9 +1,11 @@
 package strategy.formGenerator;
 
+import UserInterface.GeneralPresenter;
 import strategy.IForm;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -65,5 +67,14 @@ public class GridStyleForm implements IForm {
     public void setLayout(int row, int column) {
         this.row = row;
         this.column = column;
+    }
+
+    @Override
+    public void addListener(ActionListener gp) {
+        for (JComponent component: nameToComponent.values()) {
+            if (component.getClass() == JButton.class) {
+                ((JButton)component).addActionListener(gp);
+            }
+        }
     }
 }

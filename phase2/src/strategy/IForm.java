@@ -1,6 +1,9 @@
 package strategy;
 
+import UserInterface.GeneralPresenter;
+
 import javax.swing.*;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public interface IForm {
@@ -12,4 +15,5 @@ public interface IForm {
     public void setBounds(int x, int y, int width, int height);
     public JPanel getPanel();
     public void setLayout(int row, int column);
+    public void addListener(ActionListener gp);
 }
