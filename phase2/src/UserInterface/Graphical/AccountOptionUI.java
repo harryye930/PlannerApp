@@ -134,6 +134,7 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
             //cl.show(main, "accountMenu");
             ((JTextField)changePasswordForm.getComponents().get("originalPassword")).setText("");
             ((JTextField) changePasswordForm.getComponents().get("newPassword")).setText(message);
+            this.run();
 
         } else if (e.getSource() == changeNameForm.getComponents().get("back") ||
                 e.getSource() == changePasswordForm.getComponents().get("back")) {
