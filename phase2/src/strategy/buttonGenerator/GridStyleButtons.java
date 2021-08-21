@@ -74,7 +74,6 @@ public class GridStyleButtons implements IButton, ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("triggered");
         for (String name: nameToButton.keySet()) {
             if (e.getSource() == nameToButton.get(name) && nameToUI.containsKey(name)) {
                 nameToUI.get(name).run();

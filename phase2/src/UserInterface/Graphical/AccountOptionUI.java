@@ -5,7 +5,7 @@ import UserInterface.GeneralPresenter;
 import strategy.IButton;
 import strategy.IForm;
 import strategy.buttonGenerator.GridStyleButtons;
-import strategy.formGenerator.GridStyleForm;
+import strategy.formGenerator.FormBuilder;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -22,9 +22,13 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
     private final GeneralPresenter friendUI = new FriendUI(this);
     private final Map<String, String> labelToStrings = new UIGateway().loadAccountOptionUITexts();
 
-    private final IButton menuButtons = new GridStyleButtons();
-    private final IForm changeNameForm = new GridStyleForm();
-    private final IForm changePasswordForm = new GridStyleForm();
+    private final FormBuilder menuButtons = new FormBuilder();
+    private final FormBuilder changeNameForm = new FormBuilder();
+    private final FormBuilder changePasswordForm = new FormBuilder();
+
+    private IForm menuForm;
+    private IForm passwordForm;
+    private IForm nameForm;
 
     //Panel
     private final JPanel accountMenu = new JPanel();
@@ -51,22 +55,23 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
     }
 
     private void showAccountMenu() {
+        this.changeName();
+        this.changePassword();
+
         accountMenu.setLayout(null);
         main.add(accountMenu, "accountMenu");
 
         accounts = data.getAccount(accessController.getCurrUserId(), accountMenu);
 
         menuButtons.setBounds(515, 190, 150, 150);
-        menuButtons.add("changeUserName", labelToStrings.get("changeUsername"), null);
-        menuButtons.add("changePassword", labelToStrings.get("changePassword"), null);
-        menuButtons.add("addFriend", labelToStrings.get("addFriend"), null);
-        menuButtons.add("back", labelToStrings.get("back"), null);
+        menuButtons.addSubmitButton("changeUserName", labelToStrings.get("changeUsername"));
+        menuButtons.addSubmitButton("changePassword", labelToStrings.get("changePassword"));
+        menuButtons.addSubmitButton("addFriend", labelToStrings.get("addFriend"));
+        menuButtons.addSuperButton("back", labelToStrings.get("back"), this.getParent());
 
-        accountMenu.add(menuButtons.getPanel());
-        for (JButton button: menuButtons.getButtons().values()) {
-            button.addActionListener(this);
-        }
-
+        menuButtons.addListener(this);
+        menuForm = menuButtons.getForm();
+        accountMenu.add(menuForm.getPanel());
     }
 
     private void changeName() {
@@ -79,12 +84,11 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
         changeNameForm.addTextField("name");
         changeNameForm.addSubmitButton("submit", labelToStrings.get("submit"));
         changeNameForm.addSubmitButton("back", labelToStrings.get("back"));
-        changeNameForm.setLayout(4, 1);
-        changeMenu.add(changeNameForm.getPanel());
+
+        nameForm = changeNameForm.getForm();
         changeNameForm.addListener(this);
-
-        cl.show(main, "changeNameMenu");
-
+        changeMenu.add(nameForm.getPanel());
+//        cl.show(main, "changeNameMenu");
     }
 
     private void changePassword() {
@@ -99,12 +103,11 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
         changePasswordForm.addSubmitButton("submit", labelToStrings.get("submit"));
         changePasswordForm.addSubmitButton("back", labelToStrings.get("back"));
         changePasswordForm.setBounds(125, 50, 500, 300);
+
+        passwordForm = changePasswordForm.getForm();
         changePasswordForm.addListener(this);
-        changePasswordForm.setLayout(6, 1);
-        changeMenu.add(changePasswordForm.getPanel());
-
-        cl.show(main, "changePasswordMenu");
-
+        changeMenu.add(passwordForm.getPanel());
+//        cl.show(main, "changePasswordMenu");
     }
 
     /**
@@ -114,34 +117,32 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == menuButtons.getButtons().get("back")) {
-            this.getParent().run();
-        } else if (e.getSource() == menuButtons.getButtons().get("changeUserName")) {
-            this.changeName();
-        } else if (e.getSource() == menuButtons.getButtons().get("changePassword")) {
-            this.changePassword();
-        } else if (e.getSource() == changeNameForm.getComponents().get("submit")) {
+        if (e.getSource() == menuForm.get("changeUserName")) {
+            cl.show(main, "changeNameMenu");
+
+        } else if (e.getSource() == menuForm.get("changePassword")) {
+            cl.show(main, "changePasswordMenu");
+
+        } else if (e.getSource() == nameForm.get("submit")) {
             accessController.changeUserName(accessController.getCurrUserId(),
-                    ((JTextField)changeNameForm.getComponents().get("name")).getText());
+                    ((JTextField)nameForm.get("name")).getText());
             main.remove(changeMenu);
-            this.run();
-            //cl.show(main, "accountMenu");
-        } else if (e.getSource() == changePasswordForm.getComponents().get("submit")) {
-            String message = accessController.changePassword(accessController.getCurrUserId(),
-                    ((JTextField)changePasswordForm.getComponents().get("originalPassword")).getText(),
-                    ((JTextField) changePasswordForm.getComponents().get("newPassword")).getText());
-            main.remove(changeMenu);
-            //cl.show(main, "accountMenu");
-            ((JTextField)changePasswordForm.getComponents().get("originalPassword")).setText("");
-            ((JTextField) changePasswordForm.getComponents().get("newPassword")).setText(message);
             this.run();
 
-        } else if (e.getSource() == changeNameForm.getComponents().get("back") ||
-                e.getSource() == changePasswordForm.getComponents().get("back")) {
-            //cl.show(main, "accountMenu");
-            //main.remove(changeMenu);
+        } else if (e.getSource() == passwordForm.get("submit")) {
+            String message = accessController.changePassword(accessController.getCurrUserId(),
+                    ((JTextField)passwordForm.get("originalPassword")).getText(),
+                    ((JTextField) passwordForm.get("newPassword")).getText());
+            main.remove(changeMenu);
+            ((JTextField)passwordForm.get("originalPassword")).setText("");
+            ((JTextField) passwordForm.get("newPassword")).setText(message);
             this.run();
-        } else if (e.getSource() == menuButtons.getButtons().get("addFriend")) {
+
+        } else if (e.getSource() == nameForm.get("back") ||
+                e.getSource() == passwordForm.get("back")) {
+            this.run();
+
+        } else if (e.getSource() == menuForm.get("addFriend")) {
             friendUI.run();
         }
     }

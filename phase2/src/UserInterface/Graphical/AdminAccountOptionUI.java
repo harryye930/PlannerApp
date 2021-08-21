@@ -19,7 +19,6 @@ public class AdminAccountOptionUI extends GeneralPresenter implements KeyListene
     private boolean flag = false;
     private Map<String, String> labelToStrings = new UIGateway().loadAdminAccountOptionUITexts();
 
-
     // Panel
     private JScrollPane accountsInfo;
     private final JPanel adminAccount = new JPanel();
