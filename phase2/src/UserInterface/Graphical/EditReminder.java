@@ -1,11 +1,14 @@
 package UserInterface.Graphical;
 
 import UserInterface.GeneralPresenter;
+import strategy.IForm;
+import strategy.formGenerator.FormBuilder;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//TODO: To be merged later.
 public class EditReminder extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
     private boolean isAdd = true;

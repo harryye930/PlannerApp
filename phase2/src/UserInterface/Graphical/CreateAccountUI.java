@@ -2,6 +2,8 @@ package UserInterface.Graphical;
 
 import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
+import strategy.IForm;
+import strategy.formGenerator.FormBuilder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +14,8 @@ import java.awt.event.KeyListener;
 import java.util.Map;
 import java.util.Objects;
 
+
+// TODO: To be merged later
 /**
  * GUI class for creating a new account by entering email, username, password, and confirmed password.
  * Allows user to create a temporary account by checking a box for creating temporary account.

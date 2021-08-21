@@ -2,28 +2,24 @@ package UserInterface.Graphical;
 
 import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
+import strategy.IForm;
+import strategy.formGenerator.FormBuilder;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
-// TODO: Extract the left panel (the JScrollPane) Done
 public class FriendUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
-    private Map<String, String> labelToStrings = new UIGateway().loadFriendUITexts();
+    private final Map<String, String> labelToStrings = new UIGateway().loadFriendUITexts();
+
+    private IForm form;
 
     // Pane/Panel
     JScrollPane friendsInfo;
     JPanel friendUI = new JPanel();
 
-    // Text
-    JTextField text = new JTextField();
-
-    // Button
-    JButton addFriend = new JButton(labelToStrings.get("addFriend"));
-    JButton deleteFriend = new JButton(labelToStrings.get("deleteFriend"));
-    JButton back = new JButton(labelToStrings.get("goBack"));
 
     public FriendUI(GeneralPresenter parent) {
         this.setParent(parent);
@@ -48,22 +44,17 @@ public class FriendUI extends GeneralPresenter implements ActionListener {
         main.add(friendUI, "friendPage");
         friendsInfo = data.getFriendsInfo(friendUI);
 
-        JLabel prompt = new JLabel(labelToStrings.get("prompt"));
-        prompt.setBounds(475, 50, 300, 50);
-        text.setBounds(475, 100, 200, 40);
+        FormBuilder fb = new FormBuilder();
+        fb.setBounds(475, 50, 300, 240);
+        fb.addLabel("prompt", labelToStrings.get("prompt"));
+        fb.addTextField("id");
+        fb.addSubmitButton("addFriend", labelToStrings.get("addFriend"));
+        fb.addSubmitButton("deleteFriend", labelToStrings.get("deleteFriend"));
+        fb.addSuperButton("goBack", labelToStrings.get("goBack"), this.getParent());
+        fb.addListener(this);
 
-        friendUI.add(prompt);
-        friendUI.add(text);
-
-        addFriend.setBounds(515, 150, 100, 40);
-        deleteFriend.setBounds(515, 200, 100, 40);
-        back.setBounds(515, 250, 100, 40);
-        friendUI.add(addFriend);
-        friendUI.add(deleteFriend);
-        friendUI.add(back);
-        addFriend.addActionListener(this);
-        deleteFriend.addActionListener(this);
-        back.addActionListener(this);
+        form = fb.getForm();
+        friendUI.add(form.getPanel());
     }
 
     private void update() {
@@ -77,14 +68,14 @@ public class FriendUI extends GeneralPresenter implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == addFriend) {
-            accessController.addFriend(accessController.getCurrUserId(), text.getText());
+        if (e.getSource() == form.get("addFriend")) {
+            accessController.addFriend(accessController.getCurrUserId(),
+                    ((JTextField) form.get("id")).getText());
             update();
-        } else if (e.getSource() == deleteFriend) {
-            accessController.deleteFriend(accessController.getCurrUserId(), text.getText());
+        } else if (e.getSource() == form.get("deleteFriend")) {
+            accessController.deleteFriend(accessController.getCurrUserId(),
+                    ((JTextField) form.get("id")).getText());
             update();
-        } else if (e.getSource() == back) {
-            this.getParent().run();
         }
     }
 }

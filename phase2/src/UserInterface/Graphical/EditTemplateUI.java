@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
+//TODO: Tobe merged later
 public class EditTemplateUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
     private boolean firstScreen = true;
