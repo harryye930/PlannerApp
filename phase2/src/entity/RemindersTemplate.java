@@ -14,6 +14,7 @@ public class RemindersTemplate extends Template{
 //     * completionStatusHeadingPrompt: the prompt for the completion status heading (e.g., Completed (Y/N))
 //     */
     private String taskHeadingPrompt, dateHeadingPrompt, completionStatusHeadingPrompt;
+    private String type;
     private int id;
 
     /**
@@ -29,7 +30,8 @@ public class RemindersTemplate extends Template{
         this.taskHeadingPrompt = taskHeadingPrompt;
         this.dateHeadingPrompt = dateHeadingPrompt;
         this.completionStatusHeadingPrompt = completionStatusHeadingPrompt;
-        this.setTemplateType("Reminders");
+        this.type = "reminders";
+//        this.setTemplateType("Reminders");
     }
 
     /**
@@ -84,7 +86,7 @@ public class RemindersTemplate extends Template{
 
     @Override
     public String isType() {
-        return "Reminders";
+        return this.type;
     }
 
     @Override
