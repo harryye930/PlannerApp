@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class LoginUI extends GeneralPresenter implements ActionListener {
     private boolean flag = false;
-    private Map<String, String> labelToStrings = new UIGateway().loadLoginUITexts();
+    private final Map<String, String> labelToStrings = new UIGateway().loadLoginUITexts();
 
     private final JPanel menu = new JPanel();
     private JLabel prompt;

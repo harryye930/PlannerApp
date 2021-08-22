@@ -61,25 +61,6 @@ public class AdminAccountOptionUI extends GeneralPresenter implements KeyListene
         adminAccount.add(form.getPanel());
 
         form.get("accountId").addKeyListener(this);
-
-//        prompt.setBounds(450, 50, 200, 50);
-//        adminAccount.add(prompt);
-//
-//        text.setBounds(450, 100, 200, 30);
-//        text.addKeyListener(this);
-//        adminAccount.add(text);
-//
-//        suspend.setBounds(515, 150, 100, 40);
-//        checkPlanner.setBounds(515, 200, 100, 40);
-//        back.setBounds(515, 250, 100, 40);
-//
-//        adminAccount.add(suspend);
-//        adminAccount.add(checkPlanner);
-//        adminAccount.add(back);
-//
-//        suspend.addActionListener(this);
-//        checkPlanner.addActionListener(this);
-//        back.addActionListener(this);
     }
 
     /**

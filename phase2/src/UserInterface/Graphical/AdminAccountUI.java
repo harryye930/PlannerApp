@@ -22,7 +22,7 @@ import java.util.Map;
 public class AdminAccountUI extends GeneralPresenter {
     private boolean flag = false;
 
-    private Map<String, String> labelToStrings = new UIGateway().loadAdminAccountUITexts();
+    private final Map<String, String> labelToStrings = new UIGateway().loadAdminAccountUITexts();
 
     // GeneralPresenters
     private final GeneralPresenter plannerOptionUI = new AdminCheckPlannerUI(this);
@@ -31,7 +31,6 @@ public class AdminAccountUI extends GeneralPresenter {
 
     // Components
     private final JPanel panel = new JPanel();
-    private JLabel prompt = new JLabel();
 
     private IForm form;
 
@@ -57,13 +56,8 @@ public class AdminAccountUI extends GeneralPresenter {
         panel.setLayout(null);
         main.add(panel, "adminUserMainMenu");
 
-        prompt.setText(labelToStrings.get("prompt"));
-        prompt.setHorizontalAlignment(JLabel.CENTER);
-        prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
-        prompt.setBounds(0, 100, 700, 50);
-        panel.add(prompt);
-
         FormBuilder buttons = new FormBuilder();
+        buttons.addTitleLabel("prompt", labelToStrings.get("prompt"));
         buttons.addSuperButton("plannerButton", labelToStrings.get("plannerButton"), plannerOptionUI);
         buttons.addSuperButton("templateButton", labelToStrings.get("templateButton"), templateOptionUI);
         buttons.addSuperButton("accountButton", labelToStrings.get("accountButton"), accountOptionUI);

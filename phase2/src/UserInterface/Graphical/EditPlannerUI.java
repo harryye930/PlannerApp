@@ -7,7 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// TODO: double check for bugs
 public class EditPlannerUI extends GeneralPresenter implements ActionListener {
 //    private final String dailyMessage = "Please enter the time zone you \n" +
 //            "want to edit/add agenda to\n(in form of HH:MM)";

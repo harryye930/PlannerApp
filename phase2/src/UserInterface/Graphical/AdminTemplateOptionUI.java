@@ -48,12 +48,6 @@ public class AdminTemplateOptionUI extends GeneralPresenter{
 
         FormBuilder buttons = new FormBuilder();
 
-//        prompt.setText(labelToStrings.get("prompt"));
-//        prompt.setHorizontalAlignment(JLabel.CENTER);
-//        prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
-//        prompt.setBounds(0, 100, 700, 50);
-//        panel.add(prompt);
-
         buttons.addLabel("prompt", labelToStrings.get("prompt"));
         buttons.addSuperButton("createTemplate", labelToStrings.get("createTemplate"), createTemplateUI);
         buttons.addSuperButton("editTemplate", labelToStrings.get("editTemplate"), checkTemplateUI);
@@ -64,72 +58,4 @@ public class AdminTemplateOptionUI extends GeneralPresenter{
         panel.add(form.getPanel());
     }
 }
-
-//    // all buttons
-//    JButton createTemplate = new JButton(labelToStrings.get("createTemplate"));
-//    JButton editTemplate = new JButton(labelToStrings.get("editTemplate"));
-//    JButton returnToMainMenuButton = new JButton(labelToStrings.get("returnToMainMenuButton"));
-//
-//    // panel
-//    private final JPanel templateMenu = new JPanel();
-//
-//    // menu text
-//    private JLabel prompt;
-//
-//    private GeneralPresenter createTemplateUI = new CreateTemplateUI(this);
-//    private GeneralPresenter checkTemplateUI = new CheckTemplateUI(this);
-//
-//    public AdminTemplateOptionUI(GeneralPresenter parent) {
-//        this.setParent(parent);
-//    }
-//
-//    @Override
-//    public void run(){
-//        if (flag) {
-//            cl.show(main, "adminTemplateMenu");
-//        } else {
-//            this.buildTemplateMenu();
-//            cl.show(main, "adminTemplateMenu");
-//            frame.setVisible(true);
-//            flag = !flag;
-//        }
-//    }
-//
-//    private void buildTemplateMenu(){
-//        main.add(templateMenu, "adminTemplateMenu");
-//        templateMenu.setLayout(null);
-//
-//        prompt = new JLabel(labelToStrings.get("prompt"));
-//        prompt.setHorizontalAlignment(JLabel.CENTER);
-//        prompt.setVerticalAlignment(JLabel.TOP);
-//        prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
-//        prompt.setBounds(0, 100, 700, 50);
-//        prompt.setOpaque(true);
-//        templateMenu.add(prompt);
-//
-//        JPanel panel = new JPanel();
-//        panel.setBounds(150, 150, 400, 200);
-//        panel.setLayout(new GridLayout(3, 1));
-//        templateMenu.add(panel);
-//
-//        panel.add(createTemplate);
-//        panel.add(editTemplate);
-//        panel.add(returnToMainMenuButton);
-//
-//        createTemplate.addActionListener(this);
-//        editTemplate.addActionListener(this);
-//        returnToMainMenuButton.addActionListener(this);
-//
-//    }
-//
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        if (e.getSource() == returnToMainMenuButton){
-//            cl.show(main, "adminUserMainMenu");
-//        } else if (e.getSource() == editTemplate){
-//            this.checkTemplateUI.run();
-//        } else if (e.getSource() == createTemplate){
-//            this.createTemplateUI.run();
-//        }
-//    }
 

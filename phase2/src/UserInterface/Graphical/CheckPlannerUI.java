@@ -65,20 +65,6 @@ public class CheckPlannerUI extends GeneralPresenter implements ActionListener {
 
         form = fb.getForm();
         checkPlanner.add(form.getPanel());
-
-//        prompt.setBounds(450, 50, 200, 50);
-//        checkPlanner.add(prompt);
-//
-//        plannerId.setBounds(500, 130, 100, 50);
-//        checkPlanner.add(plannerId);
-//
-//        submit.setBounds(515, 200, 70, 40);
-//        submit.addActionListener(this);
-//        checkPlanner.add(submit);
-//
-//        back.setBounds(515, 250, 70, 40);
-//        back.addActionListener(this);
-//        checkPlanner.add(back);
     }
 
     /**

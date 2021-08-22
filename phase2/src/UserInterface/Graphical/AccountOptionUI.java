@@ -86,7 +86,6 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
         nameForm = changeNameForm.getForm();
         changeNameForm.addListener(this);
         changeMenu.add(nameForm.getPanel());
-//        cl.show(main, "changeNameMenu");
     }
 
     private void changePassword() {
@@ -107,7 +106,6 @@ public class AccountOptionUI extends GeneralPresenter implements ActionListener 
         passwordForm = changePasswordForm.getForm();
         changePasswordForm.addListener(this);
         changeMenu.add(passwordForm.getPanel());
-//        cl.show(main, "changePasswordMenu");
     }
 
     /**

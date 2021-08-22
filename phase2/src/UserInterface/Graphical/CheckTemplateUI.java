@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
-
 /**
  * GUI class for showing all templates stored in the system to an admin user. Asks the admin user which template they
  * would like to edit.
@@ -73,5 +72,5 @@ public class CheckTemplateUI extends GeneralPresenter implements ActionListener 
                 ((JLabel) this.form.get("prompt")).setText(labelToStrings.get("invalidInput"));
             }
         }
-        }
+    }
 }
