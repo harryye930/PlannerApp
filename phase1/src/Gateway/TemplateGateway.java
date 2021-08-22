@@ -1,6 +1,6 @@
-package Gateway;
+package gateway;
 
-import Entity.Template;
+import entity.Template;
 import UseCase.TemplateManager;
 
 import java.util.HashMap;

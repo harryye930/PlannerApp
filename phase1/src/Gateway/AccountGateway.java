@@ -1,6 +1,6 @@
-package Gateway;
+package gateway;
 
-import Entity.Account;
+import entity.Account;
 import UseCase.AccountManager;
 
 import javax.swing.text.html.parser.Entity;

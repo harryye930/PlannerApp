@@ -1,7 +1,7 @@
-package Gateway;
+package gateway;
 
-import Entity.Account;
-import Entity.Planner;
+import entity.Account;
+import entity.Planner;
 import UseCase.PlannerManager;
 
 import java.util.HashMap;

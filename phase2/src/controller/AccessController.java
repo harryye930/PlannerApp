@@ -6,7 +6,6 @@ import use_case.*;
 
 import java.util.ArrayList;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 
 /**
  * Account accessibility controller.
@@ -254,16 +253,6 @@ public class AccessController{
         boolean flag = this.accPlanner.setPlanners(retriever, plannerId);
         this.save();
         return flag;
-    }
-
-    /**
-     * Add new planner to a given account. return true if any one of the planners is added.
-     * @param retriever A String representing the User ID or Email.
-     * @param planner A planner id that need to be added to the account.
-     * @return A boolean value representing whether the adding is successful or not.
-     */
-    public boolean setPlanner(String retriever, ArrayList<String > planner){
-        return this.accManager.setPlanners(retriever, planner);
     }
 
     /**

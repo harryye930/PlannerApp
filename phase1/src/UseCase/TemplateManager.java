@@ -1,7 +1,7 @@
 package UseCase;
 
-import Controller.TemplateController;
-import Entity.Template;
+import controller.TemplateController;
+import entity.Template;
 import java.io.*;
 import java.util.*;
 

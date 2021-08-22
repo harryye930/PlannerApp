@@ -1,4 +1,4 @@
-package Entity;
+package entity;
 
 /**
  * A instance of this class represents a admin account in this application.

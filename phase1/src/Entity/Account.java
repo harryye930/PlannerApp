@@ -1,4 +1,4 @@
-package Entity;
+package entity;
 
 import UseCase.AccountManager;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;

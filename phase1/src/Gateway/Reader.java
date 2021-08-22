@@ -1,4 +1,4 @@
-package Gateway;
+package gateway;
 
 import Interface.IGateWay;
 

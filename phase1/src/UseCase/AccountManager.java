@@ -1,7 +1,7 @@
 package UseCase;
 
-import Controller.AccessController;
-import Entity.*;
+import controller.AccessController;
+import entity.*;
 
 import java.io.*;
 import java.util.ArrayList;

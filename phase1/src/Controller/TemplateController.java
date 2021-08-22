@@ -1,8 +1,8 @@
-package Controller;
+package controller;
 
 
-import Entity.Template;
-import Gateway.TemplateGateway;
+import entity.Template;
+import gateway.TemplateGateway;
 import Presenter.Presenter;
 import UseCase.TemplateManager;
 

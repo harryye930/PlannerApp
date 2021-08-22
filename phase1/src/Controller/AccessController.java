@@ -1,9 +1,9 @@
-package Controller;
+package controller;
 
-import Entity.Account;
-import Gateway.AccountGateway;
+import entity.Account;
+import gateway.AccountGateway;
 import UseCase.*;
-import Entity.*;
+import entity.*;
 
 import java.util.ArrayList;
 

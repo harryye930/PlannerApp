@@ -1,7 +1,7 @@
 package Tests;
 
-import Entity.DailyPlanner;
-import Entity.ProjectPlanner;
+import entity.DailyPlanner;
+import entity.ProjectPlanner;
 import UseCase.PlannerManager;
 
 public class PlannerTests {

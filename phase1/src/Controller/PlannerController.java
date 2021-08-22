@@ -1,6 +1,6 @@
-package Controller;
+package controller;
 
-import Gateway.PlannerGateway;
+import gateway.PlannerGateway;
 import Presenter.Presenter;
 import UseCase.PlannerManager;
 import com.sun.xml.internal.ws.util.StringUtils;

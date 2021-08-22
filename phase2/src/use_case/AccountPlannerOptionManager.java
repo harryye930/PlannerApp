@@ -1,7 +1,7 @@
-package UseCase;
+package use_case;
 
-import Entity.Account;
-import Entity.UserAccount;
+import entity.Account;
+import entity.UserAccount;
 
 import java.util.ArrayList;
 import java.util.HashSet;

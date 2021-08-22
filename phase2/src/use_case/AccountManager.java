@@ -1,6 +1,6 @@
-package UseCase;
+package use_case;
 
-import Entity.*;
+import entity.*;
 
 import java.io.*;
 import java.time.LocalDateTime;
