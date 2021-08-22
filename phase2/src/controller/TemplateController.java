@@ -186,8 +186,8 @@ public class TemplateController{
     }
 
     /**
-     * Creates a template of Type = type.
-     * @param type Type of the template to be created.
+     * Creates a template of Type templateType.
+     * @param templateType Type of the template to be created.
      * @param templateName Name of the template to be created.
      * @param plannerNamePrompt String representing the prompt asking for planner name in the template to be created.
      * @param firstPlannerPrompt String representing the first planner prompt required for the corresponding
@@ -197,22 +197,10 @@ public class TemplateController{
      * @param thirdPlannerPrompt String representing the third planner prompt required for the corresponding
      *                           template type.
      */
-    public void createTemplate(String type, String templateName, String plannerNamePrompt,
+    public void createTemplate(String templateType, String templateName, String plannerNamePrompt,
                                String firstPlannerPrompt, String secondPlannerPrompt, String thirdPlannerPrompt){
-        switch (type) {
-            case "daily":
-                this.templateManager.createDailyTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
-                        secondPlannerPrompt, thirdPlannerPrompt);
-                break;
-            case "project":
-                this.templateManager.createProjectTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
-                        secondPlannerPrompt, thirdPlannerPrompt);
-                break;
-            case "reminders":
-                this.templateManager.createRemindersTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
-                        secondPlannerPrompt, thirdPlannerPrompt);
-                break;
-        }
+        this.templateManager.createTemplate(templateType, templateName, plannerNamePrompt, firstPlannerPrompt,
+                secondPlannerPrompt, thirdPlannerPrompt);
     }
 
 }

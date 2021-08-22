@@ -43,7 +43,7 @@ public class TemplateManager implements Serializable {
     /**
      * Adds a new Template to TemplateManager. Ensures that the ID of the Template adds on to the ID of the last
      * template already stored in the TemplateManager.
-     * @param t
+     * @param t Template to be added.
      */
     public void addTemplate(Template t){
         int originalID = t.getId();
@@ -51,27 +51,59 @@ public class TemplateManager implements Serializable {
         templates.put(t.getId(), t);
     }
 
-    public void createDailyTemplate(String name, String plannerNamePrompt, String startTimePrompt,
-                                    String endTimePrompt, String incrementPrompt){
-        System.out.println(detailViewAllTemplates(false));
-        DailyTemplate dailyTemplate = new DailyTemplate(name, plannerNamePrompt, startTimePrompt,
-                endTimePrompt, incrementPrompt);
-        this.addTemplate(dailyTemplate);
-        System.out.println(detailViewAllTemplates(false));
+    /**
+     * Creates a Template object of type templateType, and stores it in the Template Manager.
+     * @param templateType Type of the template to create. Must be one of: "daily", "project", "reminders".
+     * @param templateName Name for the template.
+     * @param plannerNamePrompt Prompt asking for the name of the planner to be created from this template.
+     * @param firstPlannerPrompt First planner prompt, varies based on type of template.
+     * @param secondPlannerPrompt Second planner prompt, varies based on type of template.
+     * @param thirdPlannerPrompt Third planner prompt, varies based on type of template.
+     */
+    public void createTemplate(String templateType,
+                               String templateName,
+                               String plannerNamePrompt,
+                               String firstPlannerPrompt,
+                               String secondPlannerPrompt,
+                               String thirdPlannerPrompt){
+        Template template = getTemplate(templateType, templateName, plannerNamePrompt, firstPlannerPrompt,
+                secondPlannerPrompt, thirdPlannerPrompt);
+        if (template == null){
+            System.out.printf("Template of type %s cannot be created.", templateType);
+        } else {
+            this.addTemplate(template);
+        }
     }
 
-    public void createProjectTemplate(String name, String plannerNamePrompt, String firstStatusPrompt,
-                                      String secondStatusPrompt, String thirdStatusPrompt){
-        ProjectTemplate projectTemplate = new ProjectTemplate(name, plannerNamePrompt, firstStatusPrompt,
-                                                                secondStatusPrompt, thirdStatusPrompt);
-        this.addTemplate(projectTemplate);
-    }
-
-    public void createRemindersTemplate(String name, String plannerNamePrompt, String taskHeadingPrompt,
-                                        String dateHeadingPrompt, String completionStatusHeadingPrompt){
-        RemindersTemplate remindersTemplate = new RemindersTemplate(name, plannerNamePrompt, taskHeadingPrompt,
-                                                                    dateHeadingPrompt, completionStatusHeadingPrompt);
-        this.addTemplate(remindersTemplate);
+    /**
+     * Factory method for creating a Template.
+     * @param templateType Type of the template to create. Must be one of: "daily", "project", "reminders".
+     * @param templateName Name for the template.
+     * @param plannerNamePrompt Prompt asking for the name of the planner to be created from this template.
+     * @param firstPlannerPrompt First planner prompt, varies based on type of template.
+     * @param secondPlannerPrompt Second planner prompt, varies based on type of template.
+     * @param thirdPlannerPrompt Third planner prompt, varies based on type of template.
+     * @return A Template object.
+     */
+    private Template getTemplate(String templateType,
+                                String templateName,
+                                String plannerNamePrompt,
+                                String firstPlannerPrompt,
+                                String secondPlannerPrompt,
+                                String thirdPlannerPrompt){
+        if (templateType.equals("daily")){
+            return new DailyTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
+                    secondPlannerPrompt, thirdPlannerPrompt);
+        } else if (templateType.equals("project")){
+            return new ProjectTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
+                    secondPlannerPrompt, thirdPlannerPrompt);
+        } else if (templateType.equals("reminders")){
+            return new RemindersTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
+                    secondPlannerPrompt, thirdPlannerPrompt);
+        } else {
+            System.out.printf("Template type %s is undefined for this program.", templateType);
+            return null;
+        }
     }
 
     /**

@@ -10,11 +10,17 @@ import java.util.Map;
  * implemented as subclasses.
  */
 public abstract class Template implements Serializable {
-
-    protected String name; // name of this template
-    protected String plannerNamePrompt; // name of the planner being created from this template
-    private static int id; // id of this template
-    protected boolean publishedStatus; // published status of this template (if true, the template is published)
+    /**
+     * name: Name of this template.
+     * plannerNamePrompt: Prompt for the planner name that can be created based on this template.
+     * id: ID of this template.
+     * publishedStatus: Published status of this template (if true, the template is published).
+     * templateType: Type of this template.
+     */
+    protected String name;
+    protected String plannerNamePrompt;
+    private static int id;
+    protected boolean publishedStatus;
     private String templateType;
 
     public Template(String name, String plannerNamePrompt) {

@@ -15,9 +15,6 @@ import java.util.Map;
  */
 public class CreateTemplateUI extends GeneralUI implements ActionListener {
     private boolean flag = false;
-    private boolean createdDailyInputPanel = false;
-    private boolean createdProjectInputPanel = false;
-    private boolean createdRemindersInputPanel = false;
     private Map<String, String> labelToStrings = new UIGateway().loadCreateTemplateUITexts();
 
     //Forms
@@ -61,7 +58,7 @@ public class CreateTemplateUI extends GeneralUI implements ActionListener {
             templateInfo = data.getTemplates(createTemplatePanel);
             cl.show(main, "createTemplate");
         } else {
-            this.showCreateMenu();
+            showCreateMenu();
             showDailyInputPanel();
             showProjectInputPanel();
             showRemindersInputPanel();
@@ -97,7 +94,6 @@ public class CreateTemplateUI extends GeneralUI implements ActionListener {
         optionsFormBuilder.addListener(this);
         optionsForm = optionsFormBuilder.getForm();
         createTemplatePanel.add(optionsForm.getPanel());
-
     }
 
     private IForm createInputForm(String submitButtonName, String firstPlannerPromptStr, String secondPlannerPromptStr,

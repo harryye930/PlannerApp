@@ -8,10 +8,10 @@ import java.util.ArrayList;
  */
 public class ProjectTemplate extends Template{
     /**
-     * Prompts that are unique to this template.
-     * firstStatusPrompt: the prompt for the first status heading (e.g., To Do)
-     * secondStatusPrompt: the prompt for the second status heading (e.g., Doing)
-     * thirdStatusPrompt: the prompt for the third status heading (e.g., Completed)
+     * Prompts that are unique to this template:
+     * firstStatusPrompt: Prompt for the first status heading (e.g., To Do).
+     * secondStatusPrompt: Prompt for the second status heading (e.g., Doing).
+     * thirdStatusPrompt: Prompt for the third status heading (e.g., Completed).
      */
     private String firstStatusPrompt, secondStatusPrompt, thirdStatusPrompt;
     private final int id;
