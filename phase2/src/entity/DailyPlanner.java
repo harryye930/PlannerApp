@@ -19,10 +19,11 @@ public class DailyPlanner extends Planner {
 
     /**
      * initialize DailyPlanner
+     *
      * @param plannerName: the name of the planner
-     * @param startTime: the start time of the current planner, "HH:MM"
-     * @param endTime:   the end time of the current planner, "HH:MM"
-     * @param Interval:  time interval between each calendar time, in minutes
+     * @param startTime:   the start time of the current planner, "HH:MM"
+     * @param endTime:     the end time of the current planner, "HH:MM"
+     * @param Interval:    time interval between each calendar time, in minutes
      */
     public DailyPlanner(String plannerName, String startTime, String endTime, int Interval) {
         // generate hashmap with given time interval with empty content
@@ -55,97 +56,43 @@ public class DailyPlanner extends Planner {
     }
 
 
-//    public DailyPlanner(){
-//        super();
-//        timesList = new ArrayList<>();
-//        dailyPlannerTask = new HashMap<>();
-//    }
-
-
-    /** Show the planner type is daily planner
+    /**
+     * Show the planner type is daily planner
      *
      * @return a string represent this planner is daily planner
      */
-    public String getType(){
+    public String getType() {
         return "daily";
     }
 
 
-    /** Set the time interval of the daily planner representing by integer
-     *
+    /**
+     * Set a name for the daily planner representing in String.
      */
-    public void setInterval(int interval) {
-        this.interval = interval;
-    }
-
-    /** Set a start time for the daily planner in HH:MM.
-     *
-     */
-    public void setStartTime(int startHour, int startMins){
-        this.startHour = startHour;
-        this.startMins = startMins;
-    }
-
-
-    /** Set a end time for the daily planner in HH:MM.
-     *
-     */
-    public void setEndTime(int endHour, int endMins){
-        this.endHour = endHour;
-        this.endMins = endMins;
-    }
-
-
-    /** Set a name for the daily planner representing in String.
-     *
-     */
-    public void setPlannerName(String PlannerName){
+    public void setPlannerName(String PlannerName) {
         this.plannerName = PlannerName;
     }
 
 
-    /** Set a start time list for the daily planner.
-     *
-     */
-    public void setTimesList(){
-        String timeFormat;
-        for (int h = this.startHour; h < this.endHour; h++) {
-            for (int m = this.startMins; m < 60; ) {
-                timeFormat = String.format("%02d:%02d", h, m);
-                timesList.add(timeFormat);
-                m = m + interval;
-            }
-        }
-    }
-
-
-    /** Show the current time based on the system time
+    /**
+     * Show the current time based on the system time
      *
      * @return a string representation of the current time
      */
-    public String CurrentTime(){
+    public String CurrentTime() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
         LocalDateTime now = LocalDateTime.now();
         return dtf.format(now);
     }
 
 
-    /** Get the number of agendas the daily planner has
+    /**
+     * Get the number of agendas the daily planner has
      *
      * @return a integer representation of the number of agendas
      */
-    public int getNumAgendas(){
+    public int getNumAgendas() {
         return this.NumAgendas;
-    }
-
-
-    /** Show the daily planner tasks
-     *
-     */
-    public void setDailyPlannerTask(ArrayList<String> timesList){
-        for (String time : timesList) {
-            dailyPlannerTask.put(time, "N/A");
-        }
     }
 
 
@@ -175,6 +122,7 @@ public class DailyPlanner extends Planner {
 
     /**
      * add agenda to current planner, if the user does not give a time.
+     *
      * @param time: the timeslot of the new agenda.
      * @return true iff the agenda is correctly added to current planner
      */
@@ -184,7 +132,7 @@ public class DailyPlanner extends Planner {
 //        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 //        LocalDateTime now = LocalDateTime.now();
 //        String currTime = dtf.format(now);
-        this.NumAgendas ++;
+        this.NumAgendas++;
         int newStartHour = Integer.parseInt(time.substring(0, 2));
 //        int newStartMins = Integer.parseInt(time.substring(3, 5));
         String hourIndex;
@@ -207,7 +155,7 @@ public class DailyPlanner extends Planner {
                 int currH = endHour + i + 1;
                 String hour = String.format("%02d", currH);
                 this.dailyPlannerTask.put(hour + ":00", "N/A");
-                this.timesList.add( hour + ":00");
+                this.timesList.add(hour + ":00");
             }
             this.dailyPlannerTask.put(String.format("%02d", newStartHour) + ":00", agenda);
             this.endHour = newStartHour;
@@ -217,61 +165,16 @@ public class DailyPlanner extends Planner {
         }
         System.out.println(this.dailyPlannerTask);
 
-        this.NumAgendas ++;
+        this.NumAgendas++;
         return true;
 
     }
 
 
-//    /**
-//     * add agenda to current planner, if the user give a time newStartTime
-//     * @param time: start time for new agenda item
-//     * @param agenda:            content of new agenda item
-//     * @return true iff the new agenda is successfully added
-//     */
-//    public Boolean add(String time, String agenda) {
-//        // assume start time and duration on whole clock (10:00, 10:15 ... if interval for daily planner is 15 mins)
-//        // check if time slots already occupied, check if start time and end time is within legal time frame
-//        // (for phase 2) add warning for double booking
-//        // add to agenda
-//        int newStartHour = Integer.parseInt(time.substring(0, 2));
-//        int newStartMins = Integer.parseInt(time.substring(3, 5));
-//        String hourIndex;
-//        String minIndex;
-//        if (newStartHour < this.startHour || newStartHour > this.endHour || newStartMins < 0 || newStartMins > 60) {
-//            return false;
-//        } else {
-//            newStartMins = getClosestMins(newStartMins, this.interval);
-//            if (newStartHour<10){
-//                hourIndex = String.format("0%d", newStartHour);
-//            }
-//            else{
-//                hourIndex = String.format("%d", newStartHour);
-//            }
-//            if (newStartMins<10){
-//                minIndex = String.format("0%d", newStartMins);
-//            }
-//            else{
-//                minIndex = String.format("%d", newStartMins);
-//            }
-//            String newTime = hourIndex + ":" + minIndex;
-//            if (this.dailyPlannerTask.get(newTime).equals("N/A")){
-//                this.dailyPlannerTask.replace(newTime, agenda);
-//            }
-//            else {
-//                String updatedTasks = this.dailyPlannerTask.get(newTime) + ", " + agenda;
-//                this.dailyPlannerTask.put(newTime, updatedTasks);
-//            }
-//            this.NumAgendas ++;
-//            return true;
-//        }
-//    }
-
-
     /**
      * edit agenda to current planner (given index)
      *
-     * @param time index of the agenda user wish to edit
+     * @param time   index of the agenda user wish to edit
      * @param agenda content of the agenda user wish to edit
      * @return true iff the agenda is correctly edited on current planner
      */
@@ -305,11 +208,12 @@ public class DailyPlanner extends Planner {
     }
 
 
-    /** for Phase 2
+    /**
+     * for Phase 2
      * take the new agenda start time to the closest minutes based on the interval
      *
      * @param NewStartMins the start time for a agenda
-     * @param Interval the time interval set by the user
+     * @param Interval     the time interval set by the user
      * @return the closest time the user may reach
      */
     public int getClosestMins(int NewStartMins, int Interval) {
@@ -336,9 +240,8 @@ public class DailyPlanner extends Planner {
      * get the remaining tasks the user need to do
      *
      * @return a int iff the agenda is not passed.
-     *
      */
-    public String remainTasks(){
+    public String remainTasks() {
         //get the current time from the system.
         String current_time = CurrentTime();
         //make to the current time toString, and find the substring of the current hour and current mins.
@@ -373,46 +276,4 @@ public class DailyPlanner extends Planner {
         return RemainTaskSb.toString();
     }
 
-
-    public HashMap<String, String> getDailyPlannerTask() {
-        return dailyPlannerTask;
-    }
-
-    //
-//    public int getInterval() {
-//        return interval;
-//    }
-//
-//    public int getStartHour() {
-//        return startHour;
-//    }
-//
-//    public void setStartHour(int startHour) {
-//        this.startHour = startHour;
-//    }
-//
-//    public int getStartMins() {
-//        return startMins;
-//    }
-//
-//    public void setStartMins(int startMins) {
-//        this.startMins = startMins;
-//    }
-//
-//    public int getEndHour() {
-//        return endHour;
-//    }
-//
-//    public void setEndHour(int endHour) {
-//        this.endHour = endHour;
-//    }
-//
-//    public int getEndMins() {
-//        return endMins;
-//    }
-//
-//    public void setEndMins(int endMins) {
-//        this.endMins = endMins;
-//    }
 }
-
