@@ -22,9 +22,9 @@ public class TemplateManager implements Serializable {
     }
 
     /**
-     * Getter for HashMap of Template objects stored in TemplateManager, keys are Template ID's, values are the Template
+     * Getter for Map of Template objects stored in TemplateManager, keys are Template ID's, values are the Template
      * object corresponding to the ID.
-     * @return HashMap of Template objects stored in TemplateManager.
+     * @return Map of Template objects stored in TemplateManager.
      */
     public Map<Integer, Template> getTemplates() {
         return templates;

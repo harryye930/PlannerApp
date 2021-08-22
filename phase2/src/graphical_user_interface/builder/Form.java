@@ -2,13 +2,14 @@ package graphical_user_interface.builder;
 
 import javax.swing.*;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Form implements IForm {
-    private final HashMap<String, JComponent> components;
-    private final HashMap<String, JButton> superButtons;
+    private final Map<String, JComponent> components;
+    private final Map<String, JButton> superButtons;
     private final JPanel panel;
 
-    public Form(HashMap<String, JComponent> components, HashMap<String, JButton> superButtons, JPanel panel) {
+    public Form(Map<String, JComponent> components, Map<String, JButton> superButtons, JPanel panel) {
         this.components = components;
         this.superButtons = superButtons;
         this.panel = panel;
@@ -20,12 +21,12 @@ public class Form implements IForm {
     }
 
     @Override
-    public HashMap<String, JComponent> getComponents() {
+    public Map<String, JComponent> getComponents() {
         return components;
     }
 
     @Override
-    public HashMap<String, JButton> getSuperButtons() {
+    public Map<String, JButton> getSuperButtons() {
         return superButtons;
     }
 

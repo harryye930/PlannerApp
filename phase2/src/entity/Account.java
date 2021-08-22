@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A instance of this class represent an account in this application.
@@ -19,7 +20,7 @@ public abstract class Account implements Serializable {
     protected String password;
     protected LocalDateTime suspendedTime;
     protected List<Account> friends;
-    protected HashMap<String, List<String>> mailbox;
+    protected Map<String, List<String>> mailbox;
 
     public Account() {
         this.accountType = "regular";

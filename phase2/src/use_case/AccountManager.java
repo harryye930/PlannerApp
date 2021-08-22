@@ -11,8 +11,8 @@ import java.util.*;
  * Manages Accounts.
  */
 public class AccountManager implements Serializable{
-    private final HashMap<String, Account> idToAccount;
-    private final HashMap<String, Account> emailToAccount;
+    private final Map<String, Account> idToAccount;
+    private final Map<String, Account> emailToAccount;
 
     private final PasswordCalculator passwordCalculator = new PasswordCalculator();
 
@@ -52,8 +52,8 @@ public class AccountManager implements Serializable{
     }
 
     /**
-     * Add an Account object to the HashMaps.
-     * @param acc A Account object we want to assign.
+     * Add an Account object to the Maps.
+     * @param acc An Account object we want to assign.
      */
     public void addAccount(Account acc) {
         this.idToAccount.put(acc.getUserId(), acc);
@@ -87,7 +87,7 @@ public class AccountManager implements Serializable{
     }
 
     /**
-     * create a regular account, add it to all accounts and the hashmaps.
+     * create a regular account, add it to all accounts and the Maps.
      * @return the userId of the new account.
      */
     private String createRegAcc(String email){
@@ -97,7 +97,7 @@ public class AccountManager implements Serializable{
     }
 
     /**
-     * create a admin account, add it to all accounts and the hashmaps.
+     * create an admin account, add it to all accounts and the Maps.
      * @return the userId of the new account.
      */
     private String createAdminAcc(String email){
@@ -118,7 +118,7 @@ public class AccountManager implements Serializable{
     }
 
     /**
-     * create a temporary account, add it to all accounts and the hashmaps.
+     * create a temporary account, add it to all accounts and the Maps.
      * @return the userId of the new account.
      */
     public String createTempAcc(String email){

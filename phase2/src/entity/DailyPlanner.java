@@ -1,14 +1,14 @@
 package entity;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public class DailyPlanner extends Planner {
-    private final HashMap<String, String> dailyPlannerTask;
+    private final Map<String, String> dailyPlannerTask;
     private final List<String> timesList; // time array
     private final int ID;
     private int interval;  //minutes interval
@@ -28,7 +28,7 @@ public class DailyPlanner extends Planner {
      */
     public DailyPlanner(String plannerName, String startTime, String endTime, int Interval) {
         // generate hashmap with given time interval with empty content
-        // and an arraylist of time for reference since hashmap don't have order per se
+        // and an arraylist of time for reference since hashmap doesn't have order per se
         // https://facingissuesonit.com/2019/05/10/java-generate-15-minute-time-interval-am-pm/
         super();
         this.plannerName = plannerName;

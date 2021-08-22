@@ -3,9 +3,10 @@ package entity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProjectPlanner extends Planner{
-    private final HashMap<String, List<String>> tasks;
+    private final Map<String, List<String>> tasks;
     private int numTasks = 0;
     private final int ID;
 

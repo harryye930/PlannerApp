@@ -4,10 +4,7 @@ package entity;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 /**
@@ -15,7 +12,7 @@ import java.util.Objects;
  */
 public class ReminderPlanner extends Planner{
 
-    private final HashMap<String, List<String>> reminderPlannerTask;
+    private final Map<String, List<String>> reminderPlannerTask;
     private List<String> TaskPromptTasks, DatePromptTasks, CompletionPromptTasks;
     private String taskHeading, dateHeading, completionStatusHeading;
     private int NumAgendas;

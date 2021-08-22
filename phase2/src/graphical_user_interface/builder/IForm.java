@@ -3,14 +3,15 @@ package graphical_user_interface.builder;
 
 import javax.swing.*;
 import java.util.HashMap;
+import java.util.Map;
 
 public interface IForm {
 
     JPanel getPanel();
 
-    HashMap<String, JComponent> getComponents();
+    Map<String, JComponent> getComponents();
 
-    HashMap<String, JButton> getSuperButtons();
+    Map<String, JButton> getSuperButtons();
 
     JComponent get(String name);
 }

@@ -6,17 +6,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class FormBuilder implements ActionListener{
     private JPanel panel = new JPanel();
     private int row = 0;
     private int column = 0;
 
-    private final LinkedHashMap<String, JComponent> nameToComponent = new LinkedHashMap<>();
-    private final HashMap<String, JButton> nameToSuperButtons = new LinkedHashMap<>();
-    private final HashMap<String, GeneralUI> nameToUI = new LinkedHashMap<>();
+    private final Map<String, JComponent> nameToComponent = new LinkedHashMap<>();
+    private final Map<String, JButton> nameToSuperButtons = new LinkedHashMap<>();
+    private final Map<String, GeneralUI> nameToUI = new LinkedHashMap<>();
 
 //    public GridStyleForm() {
 //        this.panel.setLayout(null);

@@ -57,7 +57,7 @@ public class Reader<T> implements IGateWay<T> {
     /**
      * Read .ser file into an object of given type T.
      * @param filePath A String representing the file path you want to read in.
-     * @return A Object of object type T, return null if failed to load in file.
+     * @return An object of object type T, return null if failed to load in file.
      */
     @Override
     public T readSer(String filePath) {
@@ -108,7 +108,7 @@ public class Reader<T> implements IGateWay<T> {
     }
 
     /**
-     * Reads data from a text file at filePath, and saves the data in a hashmap.
+     * Reads data from a text file at filePath, and saves the data in a Map.
      * Precondition: each line in the text file is formatted like this: "variable name: variable info", i.e., the name
      * of what's stored in that line and what's actually stored are separated by a colon.
      * @param filePath The location where the text file is stored.

@@ -8,9 +8,10 @@ import entity.ReminderPlanner;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PlannerManager{
-    private HashMap<Integer, Planner> idToPlanner;
+    private Map<Integer, Planner> idToPlanner;
 
 
     /**
