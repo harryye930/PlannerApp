@@ -161,17 +161,18 @@ public class Reader<T> implements IGateWay<T> {
     public boolean writeTextFile(String filePath, List<String> lines){
         try {
             File file = new File(filePath);
-            FileWriter fileWriter = new FileWriter(file);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            file.delete();
+            FileWriter myWriter = new FileWriter(file);
+//            myWriter.write("Files in Java might be tricky, but it is fun enough!");
             for (String line : lines) {
-                bufferedWriter.write(line); // write each line in lines to text file
-                return true;
+                myWriter.write(line); // write each line in lines to text file
             }
+            myWriter.close();
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
-        return false;
     }
 
     /**

@@ -13,8 +13,8 @@ public class TemplateGateway extends Reader<HashMap<Integer, Template>> {
     private final TemplateManager tm;
 
     public TemplateGateway(TemplateManager tm) {
-        super("data/idToTemplate.ser", "phase2/data/idToTemplate.ser");
-        this.filePath = this.folderPath;
+        super("data", "phase2/data");
+        this.filePath = this.folderPath + "/idToTemplate.ser";
         this.tm = tm;
     }
 

@@ -18,8 +18,8 @@ public class PlannerGateway extends Reader<HashMap<Integer, Planner>> {
      * @param pm A PlannerManager object.
      */
     public PlannerGateway(PlannerManager pm) {
-        super("data/idToPlannerMap.ser", "phase2/data/idToPlannerMap.ser");
-        filePath = this.folderPath;
+        super("data", "phase2/data");
+        filePath = this.folderPath + "/idToPlannerMap.ser";
         this.pm = pm;
     }
 

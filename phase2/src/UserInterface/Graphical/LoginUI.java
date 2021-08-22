@@ -25,6 +25,7 @@ public class LoginUI extends GeneralPresenter implements ActionListener {
     private JButton login;
     private JButton createAccount;
     private JButton guest;
+    private JButton forgetPassword;
 
     private final GeneralPresenter adminUI = new AdminAccountUI(this);
     private final GeneralPresenter regularUserUI = new RegularAccountUI(this);
@@ -97,9 +98,10 @@ public class LoginUI extends GeneralPresenter implements ActionListener {
         guest.addActionListener(this);
         panel.add(guest);
 
-        //exit = new JButton("Exit");
-        //exit.addActionListener(this);
-        //panel.add(exit);
+        forgetPassword = new JButton(labelToStrings.get("forgetPassword"));
+        forgetPassword.addActionListener(this);
+        panel.add(forgetPassword);
+
     }
 
     /**
@@ -117,6 +119,12 @@ public class LoginUI extends GeneralPresenter implements ActionListener {
         } else if (e.getSource() == guest) {
             accessController.createAccount("", "", "");
             this.regularUserUI.run();
+        } else if (e.getSource() == forgetPassword) {
+            if (accessController.updateAndSaveTempPassword(this.retriever.getText())) {
+                prompt.setText("A Text file has been created which contains the temporary password");
+            } else {
+                prompt.setText("Invalid ID or email!");
+            }
         }
     }
 

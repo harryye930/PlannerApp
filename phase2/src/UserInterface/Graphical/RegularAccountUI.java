@@ -52,11 +52,11 @@ public class RegularAccountUI extends GeneralPresenter {
 
         FormBuilder buttons = new FormBuilder();
 
-        JLabel prompt = new JLabel(labelToStrings.get("prompt"));
-        prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
-        prompt.setBounds(0, 100, 700, 50);
-        prompt.setHorizontalAlignment(JLabel.CENTER);
-        panel.add(prompt);
+//        JLabel prompt = new JLabel(labelToStrings.get("prompt"));
+//        prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
+//        prompt.setBounds(0, 100, 700, 50);
+//        prompt.setHorizontalAlignment(JLabel.CENTER);
+//        panel.add(prompt);
 
         buttons.addLabel("prompt", labelToStrings.get("prompt"));
         buttons.addSuperButton("plannerOption", labelToStrings.get("plannerOptionButton"), plannerOptionUI);

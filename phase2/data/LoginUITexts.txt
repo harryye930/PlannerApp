@@ -5,3 +5,4 @@ login: Login
 createAccount: Create new Account
 guest: Login as guest
 invalidInput: Invalid input, please try again!
+forgetPassword: Forget password

@@ -27,8 +27,8 @@ public class AccountGateway extends Reader<HashMap<String, Account>> {
      * @param am An AccountManager object.
      */
     public AccountGateway(AccountManager am) {
-        super("data/idToAccountMap.ser", "phase2/data/idToAccountMap.ser");
-        this.idMapPath = this.folderPath;
+        super("data", "phase2/data");
+        this.idMapPath = this.folderPath + "/idToAccountMap.ser";
         this.am = am;
     }
 
