@@ -49,38 +49,12 @@ public class PlannerManager{
         return projectPlanner.getID();
     }
 
-    /**
-     * Creates an empty Reminders Planner.
-     * @param plannerName The name of the planner.
-     * @param taskHeading The heading of the tasks column.
-     * @param dateHeading The heading of the dates (task deadlines) column.
-     * @param completionStatusHeading The heading of the completion status column.
-     * @return The ID of the created Reminders Planner.
-     */
-    public int newReminderPlanner(String plannerName, String taskHeading,
-                                  String dateHeading, String completionStatusHeading){
-        ReminderPlanner reminderPlanner = new ReminderPlanner(plannerName, taskHeading,
-                                                                dateHeading, completionStatusHeading);
-        this.idToPlanner.put(reminderPlanner.getID(), reminderPlanner);
-        return reminderPlanner.getID();
-    }
 
     /** Creates a string representation of the planner with the specified id.
      * @param id A String representing the id number of a planner.
      * @return A string representation of the planner with the id.
      */
     public String toString(int id){ return this.findPlanner(id).toString(); }
-
-    /** Creates a string representation of the remaining tasks of Daily Planner with the specified id.
-     * @param id A String representing the id number of a Daily Planner.
-     * @return A string representation of the remaining tasks of the Daily Planner with the id.
-     */
-    public String getDailyPlannerRemainTasks(int id){
-        if (this.findPlanner(id).getClass() == DailyPlanner.class) {
-            return ((DailyPlanner) this.findPlanner(id)).remainTasks();
-        }
-        return null;
-    }
 
     /** Sets the idToPlanner attribute.
      * @param hm A HashMap object we want to set the idToPlanner attribute to.
@@ -89,7 +63,7 @@ public class PlannerManager{
         this.idToPlanner = hm;
     }
 
-    //TODO the input of edit is changed, see on planner entity class
+
     /** Edit agenda on DailyPlanner base on time stamp
      *
      * @param timeOrName: time slot on DailyPlanner, HH:MM
@@ -250,7 +224,7 @@ public class PlannerManager{
      * @param id An integer representing the id of the planner
      * @param i the first String input depending on the planner type
      * @param j the second String input depending on the planner type.
-     * @return
+     * @return true if the planner is correctly added
      */
     public boolean add(int id, String i, String j) {
         return this.findPlanner(id).add(i, j);

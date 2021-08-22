@@ -90,14 +90,6 @@ public class PlannerController {
         return Integer.toString(id);
     }
 
-    /**
-     * Set the author of the planner (a user)
-     * @param id the id of the planner
-     * @param userRetriever The userId of the user
-     */
-    public void setPlannerAuthor(int id, String userRetriever){
-        plannerManager.setPlannerAuthor(id, userRetriever);
-    }
 
     /** Pass on request to get a string representation of a planner
      *
@@ -162,25 +154,7 @@ public class PlannerController {
         }
     }
 
-//    /** Pass on request to get a string representation of the daily planner remain tasks
-//     *
-//     * @return a string of the daily planner remain tasks.
-//     */
-//    public String DailyPlannerRemainTasks(int id){
-//        return plannerManager.dailyPlannerRemainTasks(id);
-//    }
 
-//    /** Pass on request to edit planner
-//     *
-//     * @param i index of the agenda user wish to edit
-//     * @param agenda content of the agenda user wish to edit
-//     * @return true iff the agenda is correctly requested to change based on current planner
-//     */
-//    public boolean edit(int id, int i, String agenda){
-//        return plannerManager.edit(id, i, agenda);
-//    }
-
-    // TODO double check the edit method whether is ok
     /** Pass on request to edit daily planner.
      *
      * @param time: time slot on DailyPlanner, HH:MM
@@ -209,13 +183,6 @@ public class PlannerController {
         return this.plannerManager.deletePlanner(Integer.parseInt(plannerId));
     }
 
-    /**
-     * print all planners to the screen.
-     * @return String representation of all planners.
-     */
-    public String showAllPlanners (){
-        return plannerManager.showAllPlanners();
-    }
 
     /**
      * Show all the planners id of one author.
