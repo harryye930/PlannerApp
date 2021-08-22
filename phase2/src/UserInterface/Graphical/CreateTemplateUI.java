@@ -64,6 +64,9 @@ public class CreateTemplateUI extends GeneralPresenter implements ActionListener
             cl.show(main, "createTemplate");
         } else {
             this.showCreateMenu();
+            showDailyInputPanel();
+            showProjectInputPanel();
+            showRemindersInputPanel();
             cl.show(main, "createTemplate");
             flag = !flag;
         }
@@ -161,22 +164,10 @@ public class CreateTemplateUI extends GeneralPresenter implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == optionsForm.get("dailyTemplateButton")){
-            if (!createdDailyInputPanel){
-                this.showDailyInputPanel();
-                createdDailyInputPanel = true;
-            }
             cl.show(main, "daily");
         } else if (e.getSource() == optionsForm.get("projectTemplateButton")){
-            if (!createdProjectInputPanel){
-                this.showProjectInputPanel();
-                createdProjectInputPanel = true;
-            }
             cl.show(main, "project");
         } else if (e.getSource() == optionsForm.get("remindersTemplateButton")){
-            if (!createdRemindersInputPanel){
-                this.showRemindersInputPanel();
-                createdRemindersInputPanel = true;
-            }
             cl.show(main, "reminders");
         } else if (e.getSource() == dailyInputForm.get("dailySubmitButton")){
             templateController.createTemplate("daily",
