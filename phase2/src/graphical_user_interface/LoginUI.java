@@ -137,9 +137,4 @@ public class LoginUI extends GeneralUI implements ActionListener {
             this.prompt.setText(labelToStrings.get("invalidInput"));
         }
     }
-
-    public static void main(String[] args) {
-        LoginUI x = new LoginUI();
-        x.run();
-    }
 }
