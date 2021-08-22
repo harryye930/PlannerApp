@@ -10,7 +10,7 @@ import java.util.List;
 public class UserAccount extends Account {
 
     private ArrayList<String> planners = new ArrayList<>();
-    private ArrayList<String> trashPlanner = new ArrayList<>();
+    private final ArrayList<String> trashPlanner = new ArrayList<>();
 
     /**
      * @param email represent the email of this user account.
@@ -94,9 +94,14 @@ public class UserAccount extends Account {
      * delete the planner, add it to the trashcan
      * @param plannerId the id of the planner to be deleted
      */
-    public void removePlanner(String plannerId) {
-        this.planners.remove(plannerId);
-        trashPlanner.add(plannerId);
+    public boolean removePlanner(String plannerId) {
+        if (planners.contains(plannerId)) {
+            this.planners.remove(plannerId);
+            trashPlanner.add(plannerId);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

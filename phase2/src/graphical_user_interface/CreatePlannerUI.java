@@ -17,7 +17,7 @@ import java.util.Map;
 public class CreatePlannerUI extends GeneralUI implements ActionListener {
     private boolean menuFlag = false;
     private boolean createPageFlag = false;
-    private Map<String, String> labelToStrings = new UIGateway().loadCreatePlannerUITexts();
+    private final Map<String, String> labelToStrings = new UIGateway().loadCreatePlannerUITexts();
 
     private final GeneralUI checkPlanner = new CheckPlannerUI(this);
 

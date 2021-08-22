@@ -19,6 +19,7 @@ public class ViewData {
     JTextArea singleTemplateInfo = new JTextArea();
     JTextArea friendsInfo = new JTextArea();
     JTextArea accountsInfo = new JTextArea();
+    JTextArea trashBinInfo = new JTextArea();
 
     JScrollPane planners = new JScrollPane(plannerInfo);
     JScrollPane templates = new JScrollPane(templateInfo);
@@ -27,6 +28,7 @@ public class ViewData {
     JScrollPane template = new JScrollPane(singleTemplateInfo);
     JScrollPane friends = new JScrollPane(friendsInfo);
     JScrollPane allAccounts = new JScrollPane(accountsInfo);
+    JScrollPane trashBin = new JScrollPane(trashBinInfo);
 
     public ViewData(AccessController accessController, TemplateController templateController,
                     PlannerController plannerController) {
@@ -70,6 +72,11 @@ public class ViewData {
         return this.friends;
     }
 
+    public JScrollPane getTrashBin(String id, JPanel panel) {
+        this.updateTrashBinInfo(id, panel);
+        return this.trashBin;
+    }
+
     private void updateTemplates(JPanel panel) {
         this.scrollPaneInit(templates, panel);
         templateInfo.setText(templateController.detailViewAllTemplates(false));
@@ -111,6 +118,12 @@ public class ViewData {
         this.scrollPaneInit(account, panel);
         accountInfo.setText(accessController.getInfo(id));
         this.textAreaInit(accountInfo);
+    }
+
+    public void updateTrashBinInfo(String id, JPanel panel) {
+        this.scrollPaneInit(trashBin, panel);
+        trashBinInfo.setText(accessController.getTrashPlanner(id));
+        this.textAreaInit(trashBinInfo);
     }
 
     private void scrollPaneInit(JScrollPane js, JPanel jp) {

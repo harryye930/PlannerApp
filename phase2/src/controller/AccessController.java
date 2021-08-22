@@ -299,9 +299,10 @@ public class AccessController{
      * @param retriever A String representing information of account
      * @param plannerId A String that identifies the planner
      */
-    public void removePlanner(String retriever, String plannerId) {
-        this.accPlanner.removePlanner(retriever, plannerId);
+    public boolean removePlanner(String retriever, String plannerId) {
+        boolean flag = this.accPlanner.removePlanner(retriever, plannerId);
         this.save();
+        return flag;
     }
 
     /**
@@ -388,8 +389,12 @@ public class AccessController{
      * @param userId the user id of the user
      * @return the ArrayList<String> representing the trashed planners of a user
      */
-    public ArrayList<String> getTrashPlanner(String userId){
-        return accPlanner.getTrashPlanner(userId);
+    public String getTrashPlanner(String userId){
+        StringBuilder sb = new StringBuilder();
+        for (String plannerId: accPlanner.getTrashPlanner(userId)) {
+            sb.append(plannerController.toString(Integer.parseInt(plannerId))).append("\n");
+        }
+        return sb.toString();
     }
 
     /**
@@ -400,5 +405,15 @@ public class AccessController{
      */
     public boolean unTrashPlanner(String userId, String plannerId){
         return accPlanner.unTrashPlanner(userId, plannerId);
+    }
+
+    /**
+     * Delete a planner permanently.
+     * @param userId A String representing the user id.
+     * @param plannerId A String representing the planner id.
+     * @returnwhether the removing is successful
+     */
+    public boolean permanentTrashPlanner(String userId, String plannerId) {
+        return accPlanner.permanentTrashPlanner(userId, plannerId);
     }
 }
