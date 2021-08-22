@@ -49,6 +49,49 @@ public class PlannerManager{
         return projectPlanner.getID();
     }
 
+    /**
+     * Creates an empty planner of type plannerType.
+     * @param plannerType Type of the planner to be created.
+     * @param plannerName The name of the planner.
+     * @param firstInput The first input needed to create a planner.
+     * @param secondInput The second input needed to create a planner.
+     * @param thirdInput The third input needed to create a planner.
+     * @return The ID of the created planner.
+     */
+    public Integer createPlanner(String plannerType,
+                                             String plannerName, String firstInput, String secondInput, String thirdInput){
+        Planner planner = getPlanner(plannerType, plannerName, firstInput, secondInput, thirdInput);
+        if (planner == null){
+            System.out.printf("Planner of type %s cannot be created.", plannerType);
+            return null;
+        } else {
+            this.idToPlanner.put(planner.getID(), planner);
+            return planner.getID();
+        }
+    }
+
+    /**
+     * Factory method for creating a Planner.
+     * @param plannerType Type of the planner to create. Must be one of: "daily", "project", "reminders".
+     * @param plannerName Name for the planner.
+     * @param firstInput The first input needed to create a planner.
+     * @param secondInput The second input needed to create a planner.
+     * @param thirdInput The third input needed to create a planner.
+     * @return A Planner object.
+     */
+    private Planner getPlanner(String plannerType,
+                               String plannerName, String firstInput, String secondInput, String thirdInput){
+        if (plannerType.equals("daily")){
+            return new DailyPlanner(plannerName, firstInput, secondInput, Integer.parseInt(thirdInput));
+        } else if (plannerType.equals("project")){
+            return new ProjectPlanner(plannerName, firstInput, secondInput, thirdInput);
+        } else if (plannerType.equals("reminders")){
+            return new ReminderPlanner(plannerName, firstInput, secondInput, thirdInput);
+        } else {
+            System.out.printf("Planner type %s is undefined for this program.", plannerType);
+            return null;
+        }
+    }
 
     /** Creates a string representation of the planner with the specified id.
      * @param id A String representing the id number of a planner.
@@ -237,7 +280,7 @@ public class PlannerManager{
      * @param status A String representing the task status.
      * @return a boolean value representing whether the change is successful or not.
      */
-    public boolean changTaskStatus(int id, String taskName, String status) {
+    public boolean changeTaskStatus(int id, String taskName, String status) {
         return this.findPlanner(id).ChangeTaskStatus(taskName, status);
     }
 }

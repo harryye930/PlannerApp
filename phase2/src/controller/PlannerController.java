@@ -71,22 +71,22 @@ public class PlannerController {
      * Create a new planner based on the chosen template.
      * @return A String representing the planner id.
      */
-    public String createPlanner(String prompt0, String prompt1, String prompt2, String name) {
-        String type = this.templateController.getTemplateType(Integer.parseInt(templateController.getCurrTemplateId()));
-        int id = 0;
-        if (type.equals("Daily")) {
-            id = this.plannerManager.newDailyPlanner(name, prompt0, prompt1, prompt2);
+    public String createPlanner(String firstInput, String secondInput, String thirdInput, String name) {
+        String type = this.templateController.getTemplateType(
+                Integer.parseInt(templateController.getCurrTemplateId()));
+        int id;
+        Integer createdPlannerID = this.plannerManager.createPlanner(type, name, firstInput, secondInput, thirdInput);
+        if (createdPlannerID == null){
+            System.out.printf("Planner of type %s cannot be created.", type);
+            return null;
+        } else {
+            id = this.plannerManager.createPlanner(type, name, firstInput, secondInput, thirdInput);
             this.currPlannerId = Integer.toString(id);
-        } else if (type.equals("Project")) {
-            //TODO: Add planner name.
-            id = this.plannerManager.newProjectPlanner(name, prompt0, prompt1, prompt2);
-            this.currPlannerId = Integer.toString(id);
+            accessController.setPlanner(accessController.getCurrUserId(), this.currPlannerId);
+            this.save();
+            return this.currPlannerId;
         }
-        accessController.setPlanner(accessController.getCurrUserId(), Integer.toString(id));
-        this.save();
-        return Integer.toString(id);
     }
-
 
     /** Pass on request to get a string representation of a planner
      *
@@ -245,6 +245,6 @@ public class PlannerController {
      * @return a boolean value representing whether the change is successful or not.
      */
     public boolean changeTaskStatus(String taskName, String status) {
-        return plannerManager.changTaskStatus(Integer.parseInt(getCurrPlannerId()), taskName, status);
+        return plannerManager.changeTaskStatus(Integer.parseInt(getCurrPlannerId()), taskName, status);
     }
 }
