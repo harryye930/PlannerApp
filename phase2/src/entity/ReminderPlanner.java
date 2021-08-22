@@ -16,30 +16,30 @@ public class ReminderPlanner extends Planner{
 
     private final HashMap<String, ArrayList<String>> reminderPlannerTask;
     private ArrayList<String> TaskPromptTasks, DatePromptTasks, CompletionPromptTasks;
-    private String taskHeadingPrompt, dateHeadingPrompt, completionStatusHeadingPrompt;
+    private String taskHeading, dateHeading, completionStatusHeading;
     private int NumAgendas;
     private int ID;
 
     /**
      *
-     * @param taskHeadingPrompt the first column name of the reminder planner
-     * @param dateHeadingPrompt the second column name of the reminder planner
-     * @param completionStatusHeadingPrompt the third column name of the reminder planner
+     * @param taskHeading the first column name of the reminder planner
+     * @param dateHeading the second column name of the reminder planner
+     * @param completionStatusHeading the third column name of the reminder planner
      */
-    public ReminderPlanner(String plannerName, String taskHeadingPrompt, String dateHeadingPrompt,
-                           String completionStatusHeadingPrompt){
+    public ReminderPlanner(String plannerName, String taskHeading, String dateHeading,
+                           String completionStatusHeading){
         super();
         this.plannerName = plannerName;
-        this.taskHeadingPrompt = taskHeadingPrompt;
-        this.dateHeadingPrompt = dateHeadingPrompt;
-        this.completionStatusHeadingPrompt = completionStatusHeadingPrompt;
+        this.taskHeading = taskHeading;
+        this.dateHeading = dateHeading;
+        this.completionStatusHeading = completionStatusHeading;
         this.TaskPromptTasks = new ArrayList<>();
         this.DatePromptTasks = new ArrayList<>();
         this.CompletionPromptTasks = new ArrayList<>();
         this.reminderPlannerTask = new HashMap<>();
-        this.reminderPlannerTask.put(this.taskHeadingPrompt, this.TaskPromptTasks);
-        this.reminderPlannerTask.put(this.dateHeadingPrompt, this.DatePromptTasks);
-        this.reminderPlannerTask.put(this.completionStatusHeadingPrompt, this.CompletionPromptTasks);
+        this.reminderPlannerTask.put(this.taskHeading, this.TaskPromptTasks);
+        this.reminderPlannerTask.put(this.dateHeading, this.DatePromptTasks);
+        this.reminderPlannerTask.put(this.completionStatusHeading, this.CompletionPromptTasks);
         this.ID = super.getID();
         this.NumAgendas = 0;
     }
@@ -55,16 +55,16 @@ public class ReminderPlanner extends Planner{
         int TaskNums = this.TaskPromptTasks.size();
         for(int i = 0; i < TaskNums - 1; i++){
             // get the task name of the reminder
-            sb.append(this.taskHeadingPrompt).append(": ");
-            sb.append(this.reminderPlannerTask.get(this.taskHeadingPrompt).get(i)).append("\n");
+            sb.append(this.taskHeading).append(": ");
+            sb.append(this.reminderPlannerTask.get(this.taskHeading).get(i)).append("\n");
 
             // get the task deadline date of the reminder
-            sb.append(this.dateHeadingPrompt).append(": ");
-            sb.append(this.reminderPlannerTask.get(this.dateHeadingPrompt).get(i)).append("\n");
+            sb.append(this.dateHeading).append(": ");
+            sb.append(this.reminderPlannerTask.get(this.dateHeading).get(i)).append("\n");
 
             // get the task completion status of the reminder
-            sb.append(this.completionStatusHeadingPrompt).append(": ");
-            sb.append(this.reminderPlannerTask.get(this.completionStatusHeadingPrompt).get(i)).append("\n");
+            sb.append(this.completionStatusHeading).append(": ");
+            sb.append(this.reminderPlannerTask.get(this.completionStatusHeading).get(i)).append("\n");
 
             sb.append("\n");
         }
@@ -78,7 +78,7 @@ public class ReminderPlanner extends Planner{
      */
     @Override
     public String getType(){
-        return "Reminder";
+        return "reminder";
     }
 
     /**
@@ -117,9 +117,9 @@ public class ReminderPlanner extends Planner{
         if (!isValid(s2)){
             return false;
         } else {
-            this.reminderPlannerTask.get(this.taskHeadingPrompt).add(s1);
-            this.reminderPlannerTask.get(this.dateHeadingPrompt).add(s2);
-            this.reminderPlannerTask.get(this.completionStatusHeadingPrompt).add("incomplete");
+            this.reminderPlannerTask.get(this.taskHeading).add(s1);
+            this.reminderPlannerTask.get(this.dateHeading).add(s2);
+            this.reminderPlannerTask.get(this.completionStatusHeading).add("incomplete");
             this.NumAgendas ++;
             return true;
         }
@@ -134,10 +134,10 @@ public class ReminderPlanner extends Planner{
      */
     @Override
     public Boolean edit(String OldAgenda, String NewAgenda){
-        if (this.reminderPlannerTask.get(this.taskHeadingPrompt).contains(OldAgenda)){
-            int TaskIndex = this.reminderPlannerTask.get(this.taskHeadingPrompt).indexOf(OldAgenda);
-            this.reminderPlannerTask.get(this.taskHeadingPrompt).remove(OldAgenda);
-            this.reminderPlannerTask.get(this.taskHeadingPrompt).add(TaskIndex, NewAgenda);
+        if (this.reminderPlannerTask.get(this.taskHeading).contains(OldAgenda)){
+            int TaskIndex = this.reminderPlannerTask.get(this.taskHeading).indexOf(OldAgenda);
+            this.reminderPlannerTask.get(this.taskHeading).remove(OldAgenda);
+            this.reminderPlannerTask.get(this.taskHeading).add(TaskIndex, NewAgenda);
             return true;
         } else {
             return false;
@@ -152,16 +152,16 @@ public class ReminderPlanner extends Planner{
      */
     @Override
     public Boolean ChangeTaskStatus(String TaskName, String TaskStatus){
-        if (this.reminderPlannerTask.get(this.taskHeadingPrompt).contains(TaskName)){
-            int TaskIndex = this.reminderPlannerTask.get(this.taskHeadingPrompt).indexOf(TaskName);
+        if (this.reminderPlannerTask.get(this.taskHeading).contains(TaskName)){
+            int TaskIndex = this.reminderPlannerTask.get(this.taskHeading).indexOf(TaskName);
             if (Objects.equals(this.reminderPlannerTask.
-                    get(this.completionStatusHeadingPrompt).get(TaskIndex), "incomplete")){
-                this.reminderPlannerTask.get(completionStatusHeadingPrompt).remove(TaskIndex);
-                this.reminderPlannerTask.get(this.taskHeadingPrompt).add(TaskIndex, "completed");
+                    get(this.completionStatusHeading).get(TaskIndex), "incomplete")){
+                this.reminderPlannerTask.get(completionStatusHeading).remove(TaskIndex);
+                this.reminderPlannerTask.get(this.taskHeading).add(TaskIndex, "completed");
             } else if (Objects.equals(this.reminderPlannerTask.
-                    get(this.completionStatusHeadingPrompt).get(TaskIndex), "completed")){
-                this.reminderPlannerTask.get(completionStatusHeadingPrompt).remove(TaskIndex);
-                this.reminderPlannerTask.get(this.taskHeadingPrompt).add(TaskIndex, "incomplete");
+                    get(this.completionStatusHeading).get(TaskIndex), "completed")){
+                this.reminderPlannerTask.get(completionStatusHeading).remove(TaskIndex);
+                this.reminderPlannerTask.get(this.taskHeading).add(TaskIndex, "incomplete");
             }
             return true;
             } else{

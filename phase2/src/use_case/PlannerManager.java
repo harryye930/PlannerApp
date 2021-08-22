@@ -217,17 +217,12 @@ public class PlannerManager{
     }
 
     /**
-     * Return the type of the planner
-     * @param id the integer id of the planner
-     * @return the String representing the planner
+     * Return the type of the planner.
+     * @param id the integer id of the planner.
+     * @return the String representing the type of the planner.
      */
     public String plannerType(int id){
-        if (this.idToPlanner.get(id).getType().equals("daily")){
-            return "daily";
-        }
-        else {
-            return "project";
-        }
+        return this.idToPlanner.get(id).getType();
     }
 
     /**
