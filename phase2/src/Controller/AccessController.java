@@ -18,11 +18,17 @@ public class AccessController{
     private TemplateController templateController;
     private PlannerController plannerController;
 
+    private final PasswordCalculator passwordCalculator = new PasswordCalculator();
+    private final AccountPlannerOptionManager accPlanner;
+    private final AccountFriendManager accFriendManager;
+
     private String currUserId;
 
     public AccessController(){
         accManager = new AccountManager();
         accGateway = new AccountGateway(accManager);
+        this.accPlanner = new AccountPlannerOptionManager(accManager);
+        this.accFriendManager = new AccountFriendManager(accManager);
         this.accGateway.load();
     }
 
@@ -154,7 +160,7 @@ public class AccessController{
             return "repeatingPassword"; // new password cannot be the same as the old password
         }
 
-        if (!accManager.checkPasswordComplexity(newPassWord)){
+        if (!passwordCalculator.getPasswordComplexityLevel(newPassWord).equals("Too Weak")){
             return "passwordTooWeak"; // new password is not complex enough
         }
 
@@ -171,7 +177,7 @@ public class AccessController{
      * @return A string representing a randomly generated password.
      */
     public String generateTempPassword(){
-        return accManager.generatePassword("good");
+        return passwordCalculator.randomPasswordGenerator(true);
     }
 
     /**
@@ -245,7 +251,7 @@ public class AccessController{
      * @return A boolean value representing whether the adding is successful or not.
      */
     public boolean setPlanner(String retriever, String  plannerId){
-        boolean flag = this.accManager.setPlanners(retriever, plannerId);
+        boolean flag = this.accPlanner.setPlanners(retriever, plannerId);
         this.save();
         return flag;
     }
@@ -277,7 +283,7 @@ public class AccessController{
      * @return An ArrayList of Planner that owned by this account.
      */
     public ArrayList<String> getPlanners(String retriever){
-        return accManager.getPlanners(retriever);
+        return accPlanner.getPlanners(retriever);
     }
 
     /**
@@ -295,7 +301,7 @@ public class AccessController{
      * @param plannerId A String that identifies the planner
      */
     public void removePlanner(String retriever, String plannerId) {
-        this.accManager.removePlanner(retriever, plannerId);
+        this.accPlanner.removePlanner(retriever, plannerId);
         this.save();
     }
 
@@ -332,7 +338,7 @@ public class AccessController{
      * @return A String representing the complexity level of the password.
      */
     public String getPasswordStrength(String password) {
-        return accManager.getPasswordComplexityLevel(accManager.getNumberOfCriteriaMet(password));
+        return passwordCalculator.getPasswordComplexityLevel(password);
     }
 
     /**
@@ -342,7 +348,7 @@ public class AccessController{
      * @return whether it's successful for 2 users to add friend
      */
     public boolean addFriend(String selfId, String friendId){
-        return accManager.addFriend(selfId, friendId);
+        return accFriendManager.addFriend(selfId, friendId);
     }
 
     /**
@@ -352,7 +358,7 @@ public class AccessController{
      * @return whether it's successful for 2 users to delete friend
      */
     public boolean deleteFriend(String selfId, String friendId){
-        return accManager.deleteFriend(selfId, friendId);
+        return accFriendManager.deleteFriend(selfId, friendId);
     }
 
     /**
@@ -361,7 +367,7 @@ public class AccessController{
      * @return String representation of friends' info and planners
      */
     public String getFriendsInfo(String selfId){
-        ArrayList<String> friends = accManager.getFriends(selfId);
+        ArrayList<String> friends = accFriendManager.getFriends(selfId);
         StringBuilder strFriends = new StringBuilder();
         strFriends.append("Friend List:\n").append("===============\n");
         for (String i : friends){
@@ -379,50 +385,12 @@ public class AccessController{
     }
 
     /**
-     * send a message from 1 user to the other
-     * @param senderId the id of the sender
-     * @param revivedId the id of the receiver
-     * @param mail the message to be sent
-     */
-    public void sendMail(String senderId, String revivedId, String mail){
-        accManager.sendMail(senderId, revivedId,mail);
-    }
-
-    /**
-     * return the mailbox of a singe user
-     * @param userId the user's id
-     * @return the hashmap representing the user's mailbox
-     */
-    public HashMap<String, ArrayList<String>> getMailbox(String userId){
-        return accManager.getMailbox(userId);
-    }
-
-    /**
-     * return all mails of a single sender in the user's mailbox
-     * @param selfId the user who owns the mailbox
-     * @param senderId the sender of the mails
-     * @return String representation of the mails
-     */
-    public String seeOnesMail(String selfId, String senderId){
-        return accManager.seeOnesMail(selfId, senderId);
-    }
-
-    /**
-     * see all mails in the mailbox of the user
-     * @param userId the id of the user
-     * @return String representation of all mails of the user
-     */
-    public String seeAllMail(String userId){
-        return accManager.seeAllMail(userId);
-    }
-
-    /**
      * return the trashed planners of a user
      * @param userId the user id of the user
      * @return the ArrayList<String> representing the trashed planners of a user
      */
     public ArrayList<String> getTrashPlanner(String userId){
-        return accManager.getTrashPlanner(userId);
+        return accPlanner.getTrashPlanner(userId);
     }
 
     /**
@@ -432,6 +400,6 @@ public class AccessController{
      * @return whether the removing and adding were successful
      */
     public boolean unTrashPlanner(String userId, String plannerId){
-        return accManager.unTrashPlanner(userId, plannerId);
+        return accPlanner.unTrashPlanner(userId, plannerId);
     }
 }

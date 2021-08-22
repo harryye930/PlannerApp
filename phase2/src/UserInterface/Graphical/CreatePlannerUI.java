@@ -48,11 +48,11 @@ public class CreatePlannerUI extends GeneralPresenter implements ActionListener 
     @Override
     public void run() {
         if (menuFlag) {
+            data.getTemplates(createPlanner);
             cl.show(main, "createPlanner");
         } else {
             this.showMenu();
             cl.show(main, "createPlanner");
-            frame.setVisible(true);
             menuFlag = !menuFlag;
         }
     }
@@ -92,7 +92,6 @@ public class CreatePlannerUI extends GeneralPresenter implements ActionListener 
         JLabel prompt2 = new JLabel(prompts.get(1));
         JLabel prompt3 = new JLabel(prompts.get(2));
         JLabel prompt4 = new JLabel(prompts.get(3));
-
 
         curr.add(prompt1);
         curr.add(name);
