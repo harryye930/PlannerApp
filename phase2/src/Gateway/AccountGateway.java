@@ -15,7 +15,7 @@ import java.util.List;
 public class AccountGateway extends Reader<HashMap<String, Account>> {
 
     //Assign the file path of data.
-    private final String idMapPath = "idToAccountMap.ser";
+    private final String idMapPath;
     private final String tempPasswordPath = "tempPassword.txt";
 
     private HashMap<String, Account> idToAccount = new HashMap<String, Account>();
@@ -27,6 +27,8 @@ public class AccountGateway extends Reader<HashMap<String, Account>> {
      * @param am An AccountManager object.
      */
     public AccountGateway(AccountManager am) {
+        super("data/idToAccountMap.ser", "phase2/data/idToAccountMap.ser");
+        this.idMapPath = this.folderPath;
         this.am = am;
     }
 

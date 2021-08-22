@@ -6,21 +6,8 @@ import java.util.Map;
 
 public class UIGateway extends Reader{
 
-    private String folderPath;
-    private final String originalFolderPath = "data/";
-    private final String alternativePath = "phase2/Data/";
-
     public UIGateway() {
-        File file = new File(originalFolderPath);
-        try {
-            if (file.createNewFile() && file.delete()) {
-                folderPath = alternativePath;
-            } else {
-                folderPath = originalFolderPath;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        super("data/", "phase2/data/");
     }
 
     public Map<String, String> loadAccountOptionUITexts(){

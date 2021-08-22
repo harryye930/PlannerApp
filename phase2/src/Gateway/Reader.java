@@ -10,6 +10,25 @@ import java.util.*;
  * Data reader gateway.
  */
 public class Reader<T> implements IGateWay<T> {
+    protected String folderPath;
+
+    /**
+     * Initialize the Reader with two file paths。
+     * @param originalFolderPath A string representing one possible file path.
+     * @param alternativePath A String representing another possible file path.
+     */
+    public Reader(String originalFolderPath, String alternativePath) {
+        File file = new File(originalFolderPath);
+        try {
+            if (file.createNewFile() && file.delete()) {
+                folderPath = alternativePath;
+            } else {
+                folderPath = originalFolderPath;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Store an object into a .ser file.

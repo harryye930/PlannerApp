@@ -1,6 +1,5 @@
 package Gateway;
 
-import Entity.Account;
 import Entity.Planner;
 import UseCase.PlannerManager;
 
@@ -8,7 +7,7 @@ import java.util.HashMap;
 
 public class PlannerGateway extends Reader<HashMap<Integer, Planner>> {
 
-    private final String filePath = "idToPlannerMap.ser";
+    private final String filePath;
     private HashMap<Integer, Planner> idToPlanner = new HashMap<Integer, Planner>();
 
     private final PlannerManager pm;
@@ -19,6 +18,8 @@ public class PlannerGateway extends Reader<HashMap<Integer, Planner>> {
      * @param pm A PlannerManager object.
      */
     public PlannerGateway(PlannerManager pm) {
+        super("data/idToPlannerMap.ser", "phase2/data/idToPlannerMap.ser");
+        filePath = this.folderPath;
         this.pm = pm;
     }
 
