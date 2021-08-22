@@ -3,6 +3,7 @@ package entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -161,7 +162,7 @@ public abstract class Template implements Serializable {
      * @return a boolean that represents the presence or absence of the given prompt.
      */
     protected boolean hasPrompt(String prompt) {
-        ArrayList<String> templatePrompts = retrievePrompts();
+        List<String> templatePrompts = retrievePrompts();
         return templatePrompts.contains(prompt);
     }
 
@@ -173,10 +174,10 @@ public abstract class Template implements Serializable {
 
     /**
      * Returns all the prompts of this template.
-     * @return ArrayList<String> that contains prompts of the template.
+     * @return List<String> that contains prompts of the template.
      */
-    public ArrayList<String> retrievePrompts() {
-        ArrayList<String> prompts = new ArrayList<>();
+    public List<String> retrievePrompts() {
+        List<String> prompts = new ArrayList<>();
         prompts.add(plannerNamePrompt);
         return prompts;
     }
@@ -199,8 +200,8 @@ public abstract class Template implements Serializable {
      * @return Map with unique integers as keys (i.e., prompt numbers) and prompts as values.
      */
     private Map<Integer, String> assignPromptNumberToPrompts() {
-        // Numbers assigned to prompts corresponds to the index of the prompt in the ArrayList prompts.
-        ArrayList<String> templatePrompts = retrievePrompts();
+        // Numbers assigned to the prompts correspond to the index of the prompt in the ArrayList prompts.
+        List<String> templatePrompts = retrievePrompts();
         Map<Integer, String> promptsToNumbers = new HashMap<>();
         int i = 0;
         for (String prompt: templatePrompts) {

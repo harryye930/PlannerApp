@@ -7,8 +7,7 @@ import entity.ReminderPlanner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-
+import java.util.List;
 
 public class PlannerManager{
     private HashMap<Integer, Planner> idToPlanner;
@@ -140,9 +139,9 @@ public class PlannerManager{
 
     /** Return all the planner in a Array List.
      *
-     * @return An ArrayList containing all the Planners.
+     * @return List containing all the Planners.
      */
-    public ArrayList<Planner> getAllPlanner() {
+    public List<Planner> getAllPlanner() {
         return new ArrayList<>(this.idToPlanner.values());
     }
 
@@ -152,7 +151,7 @@ public class PlannerManager{
      * @return String representation of all planners
      */
     public String showAllPlanners (){
-        ArrayList<Planner> allPlanners = getAllPlanner();
+        List<Planner> allPlanners = getAllPlanner();
         StringBuilder allPlannersStringBuilder= new StringBuilder();
         for (Planner planner : allPlanners){
             allPlannersStringBuilder.append(toString(planner.getID()));
@@ -189,10 +188,10 @@ public class PlannerManager{
     /**
      * Get all planners of one author
      * @param author the identifier of a user
-     * @return the ArrayList of planners owned by the user
+     * @return List of planners owned by the user
      */
-    public ArrayList<Integer> getPlannersByAuthor(String author){
-        ArrayList<Integer> plannersByAuthor = new ArrayList<>();
+    public List<Integer> getPlannersByAuthor(String author){
+        List<Integer> plannersByAuthor = new ArrayList<>();
         for (Planner planner : this.idToPlanner.values()) {
             if (planner.getAuthor().equals(author)){
                 Integer ID = planner.getID();
@@ -206,8 +205,8 @@ public class PlannerManager{
      * return all public planners
      * @return all public planners
      */
-    public ArrayList<Integer> getPublicPlanners(){
-        ArrayList<Integer> publicPlanners = new ArrayList<>();
+    public List<Integer> getPublicPlanners(){
+        List<Integer> publicPlanners = new ArrayList<>();
         for (Planner planner : this.idToPlanner.values()) {
             if (planner.getPrivacyStatus().equals("public")){
                 publicPlanners.add(planner.getID());
@@ -247,10 +246,10 @@ public class PlannerManager{
 
     /**
      * Return a collection of the planner ids.
-     * @return An arraylist representing the planner ids.
+     * @return List representing the planner ids.
      */
-    public ArrayList<String> getAllPlannerId() {
-        ArrayList<String> res = new ArrayList<>();
+    public List<String> getAllPlannerId() {
+        List<String> res = new ArrayList<>();
         for (Integer id: this.idToPlanner.keySet()) {
             res.add(id.toString());
         }

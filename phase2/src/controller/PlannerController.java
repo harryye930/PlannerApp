@@ -3,7 +3,7 @@ package controller;
 import gateway.PlannerGateway;
 import use_case.PlannerManager;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *  the Planner controller.
@@ -102,7 +102,7 @@ public class PlannerController {
      */
     public String viewUserPlanners() {
         StringBuilder res = new StringBuilder();
-        ArrayList<String> plannerIds = this.accessController.getPlanners(this.accessController.getCurrUserId());
+        List<String> plannerIds = this.accessController.getPlanners(this.accessController.getCurrUserId());
         System.out.println(plannerIds.toString());
         if (plannerIds.size() == 0) {
             return "No personal planners available yet.";
@@ -121,7 +121,7 @@ public class PlannerController {
      */
     public String viewPublicPlanners() {
         StringBuilder res = new StringBuilder();
-        ArrayList<Integer> publicPlanners = this.getPublicPlanners();
+        List<Integer> publicPlanners = this.getPublicPlanners();
         for (int plannerId: publicPlanners) {
             res.append(this.toString(plannerId));
             res.append("==================================");
@@ -136,13 +136,13 @@ public class PlannerController {
      * user or not.
      */
     public boolean checkPlanner(String id) {
-        ArrayList<String> plannerIds;
+        List<String> plannerIds;
         if (this.accessController.isAdmin(this.accessController.getCurrUserId()).equals("admin")) {
             plannerIds = this.plannerManager.getAllPlannerId();
         } else {
             plannerIds = this.accessController.getPlanners(accessController.getCurrUserId());
         }
-        ArrayList<Integer> publicIds = this.getPublicPlanners();
+        List<Integer> publicIds = this.getPublicPlanners();
         if (plannerIds.contains(id) || publicIds.contains(Integer.parseInt(id))) {
             this.currPlannerId = id;
             return true;
@@ -184,17 +184,17 @@ public class PlannerController {
     /**
      * Show all the planners id of one author.
      * @param author the userId of the author.
-     * @return the ArrayList of integer id of planners.
+     * @return the List of integer id of planners.
      */
-    public ArrayList<Integer> getPlannerByAuthor(String author){
+    public List<Integer> getPlannerByAuthor(String author){
         return plannerManager.getPlannersByAuthor(author);
     }
 
     /**
-     * return an ArrayList of all integer id of all planners made public by all authors.
-     * @return the ArrayList of all public planner's id
+     * return a List of all integer id of all planners made public by all authors.
+     * @return the List of all public planner's id
      */
-    public ArrayList<Integer> getPublicPlanners(){
+    public List<Integer> getPublicPlanners(){
         return plannerManager.getPublicPlanners();
     }
 

@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 // TODO: To be merged later.
@@ -78,7 +78,7 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
     }
 
     private void showCreatePage() {
-        ArrayList<String> prompts = templateController.
+        List<String> prompts = templateController.
                 getTemplatePrompts(Integer.parseInt(templateController.getCurrTemplateId()));
         JPanel curr = new JPanel();
         curr.setLayout(new GridLayout(10, 1));

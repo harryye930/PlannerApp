@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -14,8 +15,8 @@ import java.util.Objects;
  */
 public class ReminderPlanner extends Planner{
 
-    private final HashMap<String, ArrayList<String>> reminderPlannerTask;
-    private ArrayList<String> TaskPromptTasks, DatePromptTasks, CompletionPromptTasks;
+    private final HashMap<String, List<String>> reminderPlannerTask;
+    private List<String> TaskPromptTasks, DatePromptTasks, CompletionPromptTasks;
     private String taskHeading, dateHeading, completionStatusHeading;
     private int NumAgendas;
     private int ID;

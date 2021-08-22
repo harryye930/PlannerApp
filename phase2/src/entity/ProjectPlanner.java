@@ -2,9 +2,10 @@ package entity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ProjectPlanner extends Planner{
-    private final HashMap<String, ArrayList<String>> tasks;
+    private final HashMap<String, List<String>> tasks;
     private int numTasks = 0;
     private final int ID;
 

@@ -194,7 +194,7 @@ public class AccountManager implements Serializable{
      * return the list of all accounts
      * @return allAccount: the list that contains all accounts.
      */
-    public ArrayList<Account> getAllAccount() {
+    public List<Account> getAllAccount() {
         return new ArrayList<>(this.idToAccount.values());
     }
 

@@ -9,8 +9,8 @@ import java.util.List;
  */
 public class UserAccount extends Account {
 
-    private ArrayList<String> planners = new ArrayList<>();
-    private final ArrayList<String> trashPlanner = new ArrayList<>();
+    private List<String> planners = new ArrayList<>();
+    private final List<String> trashPlanner = new ArrayList<>();
 
     /**
      * @param email represent the email of this user account.
@@ -28,13 +28,13 @@ public class UserAccount extends Account {
     public UserAccount(List<String> planners) {
         super();
         this.accountType = "regular";
-        this.planners = (ArrayList<String>) planners;
+        this.planners = planners;
     }
 
     /**
      * @return A List containing all planners of this user.
      */
-    public ArrayList<String> getPlanner() {
+    public List<String> getPlanner() {
         return this.planners;
     }
 
@@ -56,7 +56,7 @@ public class UserAccount extends Account {
      * @param planners the planners id that need to be added.
      * @return Return true if any one of the planner is successfully added.
      */
-    public boolean setPlanners(ArrayList<String> planners) {
+    public boolean setPlanners(List<String> planners) {
         boolean flag = false;
         for (String planner : planners) {
             if (!this.planners.contains(planner)) {
@@ -106,9 +106,9 @@ public class UserAccount extends Account {
 
     /**
      * return the trashed planners
-     * @return ArrayList<String> representing the trash can
+     * @return List<String> representing the trash can
      */
-    public ArrayList<String> getTrashPlanner(){
+    public List<String> getTrashPlanner(){
         return trashPlanner;
     }
 

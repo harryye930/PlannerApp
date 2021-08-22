@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents one type of Template in the program - a Reminder Template, which allows users to create a Planner
@@ -96,11 +96,11 @@ public class RemindersTemplate extends Template{
 
     /**
      * Returns all the prompts of this template.
-     * @return ArrayList<String> that contains prompts of the template.
+     * @return List<String> that contains prompts of the template.
      */
     @Override
-    public ArrayList<String> retrievePrompts() {
-        ArrayList<String> prompts = super.retrievePrompts();
+    public List<String> retrievePrompts() {
+        List<String> prompts = super.retrievePrompts();
         prompts.add(taskHeadingPrompt);
         prompts.add(dateHeadingPrompt);
         prompts.add(completionStatusHeadingPrompt);

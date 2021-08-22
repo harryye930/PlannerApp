@@ -3,6 +3,7 @@ package use_case;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -40,7 +41,7 @@ public class PasswordCalculator {
      */
     public String randomPasswordGenerator(boolean isGood) {
         StringBuilder randomPassword = new StringBuilder();
-        ArrayList<String> temporaryRandomPassword = new ArrayList<>();
+        List<String> temporaryRandomPassword = new ArrayList<>();
         int passwordLength, randomCriterionToBeNotMet;
 
         // First, if the password is weak then a criterion that should not be meet is selected at random; otherwise,

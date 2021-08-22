@@ -5,6 +5,7 @@ import entity.UserAccount;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 
 public class AccountPlannerOptionManager {
@@ -34,10 +35,10 @@ public class AccountPlannerOptionManager {
     /**
      * Get all planners created by the given user
      * @param retriever A String representing the User ID or Email.
-     * @return An ArrayList of Planner that owned by this account, if the account is regular. Else, return
+     * @return List of Planner that owned by this account, if the account is regular. Else, return
      * null.
      */
-    public ArrayList<String> getPlanners(String retriever) {
+    public List<String> getPlanners(String retriever) {
         Account account = this.accountManager.findAccount(retriever);
         String status = account.getAccountType();
 
@@ -74,9 +75,9 @@ public class AccountPlannerOptionManager {
     /**
      * return the trashed planners of the given user
      * @param userId the user id of the user
-     * @return the ArrayList<String>, trashed planner of the user
+     * @return List<String> that contains trashed planners of the user
      */
-    public ArrayList<String> getTrashPlanner(String userId){
+    public List<String> getTrashPlanner(String userId){
         UserAccount acc = (UserAccount) accountManager.findAccount(userId);
         return acc.getTrashPlanner();
     }
