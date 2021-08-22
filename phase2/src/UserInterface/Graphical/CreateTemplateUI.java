@@ -2,6 +2,8 @@ package UserInterface.Graphical;
 
 import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
+import builder.IForm;
+import builder.formBuilder.FormBuilder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,8 +22,16 @@ public class CreateTemplateUI extends GeneralPresenter implements ActionListener
     private boolean createdRemindersInputPanel = false;
     private Map<String, String> labelToStrings = new UIGateway().loadCreateTemplateUITexts();
 
+    //Forms
+    IForm optionsForm;
+    IForm dailyInputForm;
+    IForm projectInputForm;
+    IForm remindersInputForm;
+
     // Strings
+    // general strings: prefix, suffix, and planner name prompt
     private final String promptPrefix = labelToStrings.get("promptPrefix");
+    private final String promptSuffix = labelToStrings.get("promptSuffix");
     private final String plannerNamePromptStr = labelToStrings.get("plannerNamePromptStr");
     // daily planner prompt strings
     private final String startTimePromptStr = labelToStrings.get("startTimePromptStr");
@@ -35,42 +45,13 @@ public class CreateTemplateUI extends GeneralPresenter implements ActionListener
     private final String taskHeadingPromptStr = labelToStrings.get("taskHeadingPromptStr");
     private final String dateHeadingPromptStr = labelToStrings.get("dateHeadingPromptStr");
     private final String completionHeadingPromptStr = labelToStrings.get("completionHeadingPromptStr");
-    // suffix
-    private final String promptSuffix = labelToStrings.get("promptSuffix");
 
     // Panel/Pane
     private final JPanel createTemplatePanel = new JPanel();
-    private final JPanel optionsPanel = new JPanel();
     private JScrollPane templateInfo;
     private JPanel dailyInputPanel;
     private JPanel projectInputPanel;
     private JPanel remindersInputPanel;
-
-    // TextArea/Field
-    private final JLabel existingTemplatesLabel = new JLabel(labelToStrings.get("existingTemplatesLabel"));
-    private final JLabel createTemplatePrompt = new JLabel(
-            labelToStrings.get("createTemplatePrompt"));
-    private final JLabel templateNamePrompt = new JLabel(labelToStrings.get("templateNamePrompt"));
-    private JLabel plannerNamePrompt = new JLabel(promptPrefix + " " + plannerNamePromptStr + " " + promptSuffix);
-    private JLabel firstPlannerPrompt = new JLabel();
-    private JLabel secondPlannerPrompt = new JLabel();
-    private JLabel thirdPlannerPrompt = new JLabel();
-    private final JTextField templateNamePromptField = new JTextField();
-    private final JTextField plannerNamePromptField = new JTextField();
-    private final JTextField firstPlannerPromptField = new JTextField();
-    private final JTextField secondPlannerPromptField = new JTextField();
-    private final JTextField thirdPlannerPromptField = new JTextField();
-
-    // Button
-    private final JButton dailyTemplateButton = new JButton(labelToStrings.get("dailyTemplateButton"));
-    private final JButton projectTemplateButton = new JButton(labelToStrings.get("projectTemplateButton"));
-    private final JButton remindersTemplateButton = new JButton(labelToStrings.get("remindersTemplateButton"));
-    private final JButton dailySubmitButton = new JButton(labelToStrings.get("submit"));
-    private final JButton projectSubmitButton = new JButton(labelToStrings.get("submit"));
-    private final JButton remindersSubmitButton = new JButton(labelToStrings.get("submit"));
-    private final JButton backToOptionsButton = new JButton(labelToStrings.get("goBack"));
-    private final JButton backToTemplateMenuButton = new JButton(labelToStrings.get("backToTemplateMenuButton"));
-
 
     public CreateTemplateUI(GeneralPresenter parent) {
         this.setParent(parent);
@@ -93,6 +74,7 @@ public class CreateTemplateUI extends GeneralPresenter implements ActionListener
         main.add(createTemplatePanel, "createTemplate");
 
         // Add existingTemplatesLabel
+        JLabel existingTemplatesLabel = new JLabel(labelToStrings.get("existingTemplatesLabel"));
         existingTemplatesLabel.setBounds(25, 25, 400, 25);
         createTemplatePanel.add(existingTemplatesLabel);
 
@@ -102,217 +84,133 @@ public class CreateTemplateUI extends GeneralPresenter implements ActionListener
         templateInfo.setBackground(new Color(143, 141, 141));
         createTemplatePanel.add(templateInfo);
 
-        // Add prompt asking user to select the type of template to create
-        createTemplatePrompt.setBounds(450, 75, 200, 50);
-        createTemplatePanel.add(createTemplatePrompt);
+        FormBuilder optionsFormBuilder = new FormBuilder();
 
-        // Create options panel consisting of types of template user can create
-        optionsPanel.setLayout(new GridLayout(4, 1));
-        optionsPanel.add(dailyTemplateButton);
-        optionsPanel.add(projectTemplateButton);
-        optionsPanel.add(remindersTemplateButton);
-        optionsPanel.add(backToTemplateMenuButton);
+        optionsFormBuilder.setBounds(450, 75, 200, 300);
+        optionsFormBuilder.addLabel("createTemplatePrompt", labelToStrings.get("createTemplatePrompt"));
+        optionsFormBuilder.addSubmitButton("dailyTemplateButton", labelToStrings.get("dailyTemplateButton"));
+        optionsFormBuilder.addSubmitButton("projectTemplateButton", labelToStrings.get("projectTemplateButton"));
+        optionsFormBuilder.addSubmitButton("remindersTemplateButton", labelToStrings.get("remindersTemplateButton"));
+        optionsFormBuilder.addSubmitButton("backToTemplateMenuButton", labelToStrings.get("backToTemplateMenuButton"));
 
-        dailyTemplateButton.addActionListener(this);
-        projectTemplateButton.addActionListener(this);
-        remindersTemplateButton.addActionListener(this);
-        backToTemplateMenuButton.addActionListener(this);
+        optionsFormBuilder.addListener(this);
+        optionsForm = optionsFormBuilder.getForm();
+        createTemplatePanel.add(optionsForm.getPanel());
 
-        // Add optionsPanel to the createPagePanel
-        optionsPanel.setBounds(450, 150, 200, 200);
-        createTemplatePanel.add(optionsPanel);
     }
 
-    private JPanel createInputGrid(String firstPlannerPromptStr, String secondPlannerPromptStr, String thirdPlannerPromptStr){
-        firstPlannerPrompt.setText(promptPrefix + " " + firstPlannerPromptStr + " " + promptSuffix);
-        secondPlannerPrompt.setText(promptPrefix + " " + secondPlannerPromptStr + " " + promptSuffix);
-        thirdPlannerPrompt.setText(promptPrefix + " " + thirdPlannerPromptStr + " " + promptSuffix);
+    private IForm createInputForm(String submitButtonName, String firstPlannerPromptStr, String secondPlannerPromptStr,
+                                  String thirdPlannerPromptStr){
 
-        JPanel inputGrid = new JPanel();
-        inputGrid.setLayout(new GridLayout(12, 1));
+        FormBuilder inputFormBuilder = new FormBuilder();
+        inputFormBuilder.setBounds(50, 50, 400, 500);
 
-        inputGrid.add(templateNamePrompt);
-        inputGrid.add(templateNamePromptField);
-        inputGrid.add(plannerNamePrompt);
-        inputGrid.add(plannerNamePromptField);
-        inputGrid.add(firstPlannerPrompt);
-        inputGrid.add(firstPlannerPromptField);
-        inputGrid.add(secondPlannerPrompt);
-        inputGrid.add(secondPlannerPromptField);
-        inputGrid.add(thirdPlannerPrompt);
-        inputGrid.add(thirdPlannerPromptField);
-        inputGrid.add(backToOptionsButton);
+        inputFormBuilder.addLabel("templateNamePrompt", labelToStrings.get("templateNamePrompt"));
+        inputFormBuilder.addTextField("templateNamePromptField");
+        inputFormBuilder.addLabel("plannerNamePrompt",
+                promptPrefix + " " + plannerNamePromptStr + " " + promptSuffix);
+        inputFormBuilder.addTextField("plannerNamePromptField");
+        inputFormBuilder.addLabel("firstPlannerPrompt",
+                promptPrefix + " " + firstPlannerPromptStr + " " + promptSuffix);
+        inputFormBuilder.addTextField("firstPlannerPromptField");
+        inputFormBuilder.addLabel("secondPlannerPrompt",
+                promptPrefix + " " + secondPlannerPromptStr + " " + promptSuffix);
+        inputFormBuilder.addTextField("secondPlannerPromptField");
+        inputFormBuilder.addLabel("thirdPlannerPrompt",
+                promptPrefix + " " + thirdPlannerPromptStr + " " + promptSuffix);
+        inputFormBuilder.addTextField("thirdPlannerPromptField");
 
-        backToOptionsButton.addActionListener(this);
+        inputFormBuilder.addSubmitButton(submitButtonName, labelToStrings.get("submit"));
+        inputFormBuilder.addSubmitButton("backToOptionsButton", labelToStrings.get("goBack"));
 
-        return inputGrid;
+        inputFormBuilder.addListener(this);
+
+        return inputFormBuilder.getForm();
     }
 
     private void showDailyInputPanel(){
         dailyInputPanel = new JPanel();
-        JPanel dailyInputGrid = createInputGrid(startTimePromptStr, endTimePromptStr, timeIncrementPromptStr);
-        dailyInputGrid.add(dailySubmitButton);
-        dailySubmitButton.addActionListener(this);
-        dailyInputGrid.setBounds(50, 50, 400, 500);
 
-        dailyInputPanel.add(dailyInputGrid);
+        dailyInputForm = createInputForm("dailySubmitButton",
+                startTimePromptStr, endTimePromptStr, timeIncrementPromptStr);
+
+        dailyInputPanel.add(dailyInputForm.getPanel());
         main.add(dailyInputPanel, "daily");
     }
 
     private void showProjectInputPanel(){
         projectInputPanel = new JPanel();
-        JPanel projectInputGrid = createInputGrid(firstStatusPromptStr, secondStatusPromptStr, thirdStatusPromptStr);
-        projectInputGrid.add(projectSubmitButton);
-        projectSubmitButton.addActionListener(this);
-        projectInputGrid.setBounds(50, 50, 400, 500);
 
-        projectInputPanel.add(projectInputGrid);
+        projectInputForm = createInputForm("projectSubmitButton",
+                firstStatusPromptStr, secondStatusPromptStr, thirdStatusPromptStr);
+
+        projectInputPanel.add(projectInputForm.getPanel());
         main.add(projectInputPanel, "project");
     }
 
     private void showRemindersInputPanel(){
         remindersInputPanel = new JPanel();
-        JPanel remindersInputGrid = createInputGrid(taskHeadingPromptStr, dateHeadingPromptStr, completionHeadingPromptStr);
-        remindersInputGrid.add(remindersSubmitButton);
-        remindersSubmitButton.addActionListener(this);
-        remindersInputGrid.setBounds(50, 50, 400, 500);
 
-        remindersInputPanel.add(remindersInputGrid);
+        remindersInputForm = createInputForm("remindersSubmitButton",
+                taskHeadingPromptStr, dateHeadingPromptStr, completionHeadingPromptStr);
+
+        remindersInputPanel.add(remindersInputForm.getPanel());
         main.add(remindersInputPanel, "reminders");
     }
 
-//    private void buildInputPanel(){
-//        inputPanel = new JPanel();
-//        inputPanel.setLayout(inputPanelLayout);
-//
-//        JPanel dailyTemplateInputPanel = createInputGrid(startTimePromptStr, endTimePromptStr, timeIncrementPromptStr);
-//        dailyTemplateInputPanel.setBounds(50, 50, 400, 500);
-//        inputPanel.add(dailyTemplateInputPanel, "daily");
-//
-//        JPanel projectTemplateInputPanel = createInputGrid(firstStatusPromptStr, secondStatusPromptStr, thirdStatusPromptStr);
-//        dailyTemplateInputPanel.setBounds(50, 50, 400, 500);
-//        inputPanel.add(projectTemplateInputPanel, "project");
-//
-//        JPanel remindersTemplateInputPanel = createInputGrid(taskHeadingPromptStr, dateHeadingPromptStr, completionHeadingPromptStr);
-//        dailyTemplateInputPanel.setBounds(50, 50, 400, 500);
-//        inputPanel.add(remindersTemplateInputPanel, "reminders");
-//    }
-//
-//    private void getInputPanel(){
-//        if (plannerType.equals("daily")){
-//            inputPanelLayout.show(inputPanel, "daily");
-//        } else if (plannerType.equals("project")){
-//            inputPanelLayout.show(inputPanel, "project");
-//        } else if (plannerType.equals("reminders")){
-//            inputPanelLayout.show(inputPanel, "reminders");
-//        }
-////        return inputPanel;
-//    }
-
-//    public void showInputPanel(){
-//        JPanel inputScreen = new JPanel();
-//        inputScreen.setLayout(null);
-//        main.add(inputScreen, "inputScreen");
-//        inputPanel.setBounds(50, 50, 400, 500);
-//        inputScreen.add(inputPanel);
-//
-//        if (!firstScreen){
-//
-//        }
-//    }
-
-
-
-//    private void showCreatePage(String templateType){
-//        switch (templateType) {
-//            case "daily":
-//                firstPlannerPromptStr = startTimePromptStr;
-//                secondPlannerPromptStr = endTimePromptStr;
-//                thirdPlannerPromptStr = timeIncrementPromptStr;
-//                break;
-//            case "project":
-//                firstPlannerPromptStr = firstStatusPromptStr;
-//                secondPlannerPromptStr = secondStatusPromptStr;
-//                thirdPlannerPromptStr = thirdStatusPromptStr;
-//                break;
-//            case "reminders":
-//                firstPlannerPromptStr = taskHeadingPromptStr;
-//                secondPlannerPromptStr = dateHeadingPromptStr;
-//                thirdPlannerPromptStr = completionHeadingPromptStr;
-//                break;
-//        }
-//        firstPlannerPrompt.setText(promptPrefix + " " + firstPlannerPromptStr + " " + promptSuffix);
-//        secondPlannerPrompt.setText(promptPrefix + " " + secondPlannerPromptStr + " " + promptSuffix);
-//        thirdPlannerPrompt.setText(promptPrefix + " " + thirdPlannerPromptStr + " " + promptSuffix);
-//
-//        JPanel inputPagePanel = new JPanel();
-//        JPanel inputGrid = new JPanel();
-//        inputGrid.setLayout(new GridLayout(12, 1));
-//        inputGrid.setBounds(50, 50, 400, 500);
-//        inputPagePanel.add(inputGrid);
-//        main.add(inputPagePanel, "inputPage");
-//
-//        inputGrid.add(templateNamePrompt);
-//        inputGrid.add(templateNamePromptField);
-//        inputGrid.add(plannerNamePrompt);
-//        inputGrid.add(plannerNamePromptField);
-//        inputGrid.add(firstPlannerPrompt);
-//        inputGrid.add(firstPlannerPromptField);
-//        inputGrid.add(secondPlannerPrompt);
-//        inputGrid.add(secondPlannerPromptField);
-//        inputGrid.add(thirdPlannerPrompt);
-//        inputGrid.add(thirdPlannerPromptField);
-//        inputGrid.add(submitButton);
-//        inputGrid.add(backToOptionsButton);
-//
-//        submitButton.addActionListener(this);
-//        backToOptionsButton.addActionListener(this);
-//    }
-
-
-//TODO: these if statements are a bit repetitive, would we lose mark for this
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == dailyTemplateButton){
+        if (e.getSource() == optionsForm.get("dailyTemplateButton")){
             if (!createdDailyInputPanel){
                 this.showDailyInputPanel();
                 createdDailyInputPanel = true;
             }
             cl.show(main, "daily");
-        } else if (e.getSource() == projectTemplateButton){
+        } else if (e.getSource() == optionsForm.get("projectTemplateButton")){
             if (!createdProjectInputPanel){
                 this.showProjectInputPanel();
                 createdProjectInputPanel = true;
             }
             cl.show(main, "project");
-        } else if (e.getSource() == remindersTemplateButton){
+        } else if (e.getSource() == optionsForm.get("remindersTemplateButton")){
             if (!createdRemindersInputPanel){
                 this.showRemindersInputPanel();
                 createdRemindersInputPanel = true;
             }
             cl.show(main, "reminders");
-        } else if (e.getSource() == dailySubmitButton){
-            templateController.createTemplate("daily", templateNamePromptField.getText(),
-                    plannerNamePromptField.getText(), firstPlannerPromptField.getText(),
-                    secondPlannerPromptField.getText(), secondPlannerPromptField.getText());
+        } else if (e.getSource() == dailyInputForm.get("dailySubmitButton")){
+            templateController.createTemplate("daily",
+                    ((JTextField)dailyInputForm.get("templateNamePromptField")).getText(),
+                    ((JTextField)dailyInputForm.get("plannerNamePromptField")).getText(),
+                    ((JTextField)dailyInputForm.get("firstPlannerPromptField")).getText(),
+                    ((JTextField)dailyInputForm.get("secondPlannerPromptField")).getText(),
+                    ((JTextField)dailyInputForm.get("thirdPlannerPromptField")).getText());
             templateInfo = data.getTemplates(createTemplatePanel);
             cl.show(main, "createTemplate");
-        } else if (e.getSource() == projectSubmitButton){
-            templateController.createTemplate("project", templateNamePromptField.getText(),
-                    plannerNamePromptField.getText(), firstPlannerPromptField.getText(),
-                    secondPlannerPromptField.getText(), secondPlannerPromptField.getText());
+        } else if (e.getSource() == projectInputForm.get("projectSubmitButton")){
+            templateController.createTemplate("project",
+                    ((JTextField)projectInputForm.get("templateNamePromptField")).getText(),
+                    ((JTextField)projectInputForm.get("plannerNamePromptField")).getText(),
+                    ((JTextField)projectInputForm.get("firstPlannerPromptField")).getText(),
+                    ((JTextField)projectInputForm.get("secondPlannerPromptField")).getText(),
+                    ((JTextField)projectInputForm.get("thirdPlannerPromptField")).getText());
             templateInfo = data.getTemplates(createTemplatePanel);
             cl.show(main, "createTemplate");
-        } else if (e.getSource() == remindersSubmitButton){
-            templateController.createTemplate("reminders", templateNamePromptField.getText(),
-                    plannerNamePromptField.getText(), firstPlannerPromptField.getText(),
-                    secondPlannerPromptField.getText(), secondPlannerPromptField.getText());
+        } else if (e.getSource() == remindersInputForm.get("remindersSubmitButton")){
+            templateController.createTemplate("reminders",
+                    ((JTextField)remindersInputForm.get("templateNamePromptField")).getText(),
+                    ((JTextField)remindersInputForm.get("plannerNamePromptField")).getText(),
+                    ((JTextField)remindersInputForm.get("firstPlannerPromptField")).getText(),
+                    ((JTextField)remindersInputForm.get("secondPlannerPromptField")).getText(),
+                    ((JTextField)remindersInputForm.get("thirdPlannerPromptField")).getText());
             templateInfo = data.getTemplates(createTemplatePanel);
             cl.show(main, "createTemplate");
-        } else if (e.getSource() == backToOptionsButton){
+        } else if (e.getSource() == dailyInputForm.get("backToOptionsButton") ||
+                e.getSource() == projectInputForm.get("backToOptionsButton") ||
+                e.getSource() == remindersInputForm.get("backToOptionsButton")){
             templateInfo = data.getTemplates(createTemplatePanel);
             cl.show(main, "createTemplate");
-        } else if (e.getSource() == backToTemplateMenuButton){
+        } else if (e.getSource() == optionsForm.get("backToTemplateMenuButton")){
             this.getParent().run();
         }
     }
