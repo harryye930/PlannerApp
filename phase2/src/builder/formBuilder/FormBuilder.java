@@ -1,7 +1,7 @@
-package strategy.formGenerator;
+package builder.formBuilder;
 
 import UserInterface.GeneralPresenter;
-import strategy.IForm;
+import builder.IForm;
 
 import javax.swing.*;
 import java.awt.*;

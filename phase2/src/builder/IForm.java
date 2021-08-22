@@ -1,4 +1,4 @@
-package strategy;
+package builder;
 
 
 import javax.swing.*;

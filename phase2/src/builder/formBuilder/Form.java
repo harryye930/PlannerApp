@@ -1,6 +1,6 @@
-package strategy.formGenerator;
+package builder.formBuilder;
 
-import strategy.IForm;
+import builder.IForm;
 
 import javax.swing.*;
 import java.util.HashMap;

@@ -2,8 +2,6 @@ package UserInterface.Graphical;
 
 import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
-import strategy.IForm;
-import strategy.formGenerator.FormBuilder;
 
 import javax.swing.*;
 import java.awt.*;

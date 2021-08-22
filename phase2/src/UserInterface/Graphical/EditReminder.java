@@ -1,8 +1,6 @@
 package UserInterface.Graphical;
 
 import UserInterface.GeneralPresenter;
-import strategy.IForm;
-import strategy.formGenerator.FormBuilder;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
