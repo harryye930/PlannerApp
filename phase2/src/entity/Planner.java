@@ -1,6 +1,5 @@
 package entity;
 
-
 import java.io.Serializable;
 
 /** the planner entity

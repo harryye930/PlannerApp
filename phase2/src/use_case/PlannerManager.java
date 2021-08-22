@@ -7,8 +7,7 @@ import entity.ReminderPlanner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-
+import java.util.List;
 
 public class PlannerManager{
     private HashMap<Integer, Planner> idToPlanner;
@@ -49,6 +48,49 @@ public class PlannerManager{
         return projectPlanner.getID();
     }
 
+    /**
+     * Creates an empty planner of type plannerType.
+     * @param plannerType Type of the planner to be created.
+     * @param plannerName The name of the planner.
+     * @param firstInput The first input needed to create a planner.
+     * @param secondInput The second input needed to create a planner.
+     * @param thirdInput The third input needed to create a planner.
+     * @return The ID of the created planner.
+     */
+    public Integer createPlanner(String plannerType,
+                                             String plannerName, String firstInput, String secondInput, String thirdInput){
+        Planner planner = getPlanner(plannerType, plannerName, firstInput, secondInput, thirdInput);
+        if (planner == null){
+            System.out.printf("Planner of type %s cannot be created.", plannerType);
+            return null;
+        } else {
+            this.idToPlanner.put(planner.getID(), planner);
+            return planner.getID();
+        }
+    }
+
+    /**
+     * Factory method for creating a Planner.
+     * @param plannerType Type of the planner to create. Must be one of: "daily", "project", "reminders".
+     * @param plannerName Name for the planner.
+     * @param firstInput The first input needed to create a planner.
+     * @param secondInput The second input needed to create a planner.
+     * @param thirdInput The third input needed to create a planner.
+     * @return A Planner object.
+     */
+    private Planner getPlanner(String plannerType,
+                               String plannerName, String firstInput, String secondInput, String thirdInput){
+        if (plannerType.equals("daily")){
+            return new DailyPlanner(plannerName, firstInput, secondInput, Integer.parseInt(thirdInput));
+        } else if (plannerType.equals("project")){
+            return new ProjectPlanner(plannerName, firstInput, secondInput, thirdInput);
+        } else if (plannerType.equals("reminders")){
+            return new ReminderPlanner(plannerName, firstInput, secondInput, thirdInput);
+        } else {
+            System.out.printf("Planner type %s is undefined for this program.", plannerType);
+            return null;
+        }
+    }
 
     /** Creates a string representation of the planner with the specified id.
      * @param id A String representing the id number of a planner.
@@ -97,9 +139,9 @@ public class PlannerManager{
 
     /** Return all the planner in a Array List.
      *
-     * @return An ArrayList containing all the Planners.
+     * @return List containing all the Planners.
      */
-    public ArrayList<Planner> getAllPlanner() {
+    public List<Planner> getAllPlanner() {
         return new ArrayList<>(this.idToPlanner.values());
     }
 
@@ -109,7 +151,7 @@ public class PlannerManager{
      * @return String representation of all planners
      */
     public String showAllPlanners (){
-        ArrayList<Planner> allPlanners = getAllPlanner();
+        List<Planner> allPlanners = getAllPlanner();
         StringBuilder allPlannersStringBuilder= new StringBuilder();
         for (Planner planner : allPlanners){
             allPlannersStringBuilder.append(toString(planner.getID()));
@@ -146,10 +188,10 @@ public class PlannerManager{
     /**
      * Get all planners of one author
      * @param author the identifier of a user
-     * @return the ArrayList of planners owned by the user
+     * @return List of planners owned by the user
      */
-    public ArrayList<Integer> getPlannersByAuthor(String author){
-        ArrayList<Integer> plannersByAuthor = new ArrayList<>();
+    public List<Integer> getPlannersByAuthor(String author){
+        List<Integer> plannersByAuthor = new ArrayList<>();
         for (Planner planner : this.idToPlanner.values()) {
             if (planner.getAuthor().equals(author)){
                 Integer ID = planner.getID();
@@ -163,8 +205,8 @@ public class PlannerManager{
      * return all public planners
      * @return all public planners
      */
-    public ArrayList<Integer> getPublicPlanners(){
-        ArrayList<Integer> publicPlanners = new ArrayList<>();
+    public List<Integer> getPublicPlanners(){
+        List<Integer> publicPlanners = new ArrayList<>();
         for (Planner planner : this.idToPlanner.values()) {
             if (planner.getPrivacyStatus().equals("public")){
                 publicPlanners.add(planner.getID());
@@ -174,17 +216,12 @@ public class PlannerManager{
     }
 
     /**
-     * Return the type of the planner
-     * @param id the integer id of the planner
-     * @return the String representing the planner
+     * Return the type of the planner.
+     * @param id the integer id of the planner.
+     * @return the String representing the type of the planner.
      */
     public String plannerType(int id){
-        if (this.idToPlanner.get(id).getType().equals("daily")){
-            return "daily";
-        }
-        else {
-            return "project";
-        }
+        return this.idToPlanner.get(id).getType();
     }
 
     /**
@@ -209,10 +246,10 @@ public class PlannerManager{
 
     /**
      * Return a collection of the planner ids.
-     * @return An arraylist representing the planner ids.
+     * @return List representing the planner ids.
      */
-    public ArrayList<String> getAllPlannerId() {
-        ArrayList<String> res = new ArrayList<>();
+    public List<String> getAllPlannerId() {
+        List<String> res = new ArrayList<>();
         for (Integer id: this.idToPlanner.keySet()) {
             res.add(id.toString());
         }
@@ -237,7 +274,7 @@ public class PlannerManager{
      * @param status A String representing the task status.
      * @return a boolean value representing whether the change is successful or not.
      */
-    public boolean changTaskStatus(int id, String taskName, String status) {
+    public boolean changeTaskStatus(int id, String taskName, String status) {
         return this.findPlanner(id).ChangeTaskStatus(taskName, status);
     }
 }

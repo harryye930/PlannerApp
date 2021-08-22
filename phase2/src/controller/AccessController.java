@@ -4,8 +4,8 @@ import entity.Account;
 import gateway.AccountGateway;
 import use_case.*;
 
-import java.util.ArrayList;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Account accessibility controller.
@@ -123,7 +123,7 @@ public class AccessController{
      * @param email A String representing the email of the account.
      * @param userName A String representing the username.
      * @param password A String representing the password.
-     * @return
+     * @return ID of the temporary account.
      */
     public String createTemporaryAccount(String email, String userName, String password) {
         String id = accManager.createTempAcc(email);
@@ -259,16 +259,16 @@ public class AccessController{
      * return the list of all accounts
      * @return allAccount: the list that contains all accounts.
      */
-    public ArrayList<Account> getAllAccount() {
+    public List<Account> getAllAccount() {
         return this.accManager.getAllAccount();
     }
 
     /**
      * Return the account information of every account.
-     * @return An ArrayList of
+     * @return A string representation of all accounts stored in the program.
      */
     public String viewAllAccount(){
-        ArrayList<Account> acc = getAllAccount();
+        List<Account> acc = getAllAccount();
         StringBuilder res = new StringBuilder();
         for (Account i : acc){
             res.append(i.toString()).append("\n");
@@ -279,9 +279,9 @@ public class AccessController{
     /**
      *
      * @param retriever A String representing the User ID or Email.
-     * @return An ArrayList of Planner that owned by this account.
+     * @return A List of Planner that owned by this account.
      */
-    public ArrayList<String> getPlanners(String retriever){
+    public List<String> getPlanners(String retriever){
         return accPlanner.getPlanners(retriever);
     }
 
@@ -367,7 +367,7 @@ public class AccessController{
      * @return String representation of friends' info and planners
      */
     public String getFriendsInfo(String selfId){
-        ArrayList<String> friends = accFriendManager.getFriends(selfId);
+        List<String> friends = accFriendManager.getFriends(selfId);
         StringBuilder strFriends = new StringBuilder();
         strFriends.append("Friend List:\n").append("===============\n");
         for (String i : friends){
@@ -387,7 +387,7 @@ public class AccessController{
     /**
      * return the trashed planners of a user
      * @param userId the user id of the user
-     * @return the ArrayList<String> representing the trashed planners of a user
+     * @return A string representing the trashed planners of a user
      */
     public String getTrashPlanner(String userId){
         StringBuilder sb = new StringBuilder();
@@ -411,7 +411,7 @@ public class AccessController{
      * Delete a planner permanently.
      * @param userId A String representing the user id.
      * @param plannerId A String representing the planner id.
-     * @returnwhether the removing is successful
+     * @return whether the removing is successful
      */
     public boolean permanentTrashPlanner(String userId, String plannerId) {
         return accPlanner.permanentTrashPlanner(userId, plannerId);

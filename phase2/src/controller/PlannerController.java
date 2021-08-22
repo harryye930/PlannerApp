@@ -3,7 +3,7 @@ package controller;
 import gateway.PlannerGateway;
 import use_case.PlannerManager;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *  the Planner controller.
@@ -71,22 +71,22 @@ public class PlannerController {
      * Create a new planner based on the chosen template.
      * @return A String representing the planner id.
      */
-    public String createPlanner(String prompt0, String prompt1, String prompt2, String name) {
-        String type = this.templateController.getTemplateType(Integer.parseInt(templateController.getCurrTemplateId()));
-        int id = 0;
-        if (type.equals("Daily")) {
-            id = this.plannerManager.newDailyPlanner(name, prompt0, prompt1, prompt2);
+    public String createPlanner(String firstInput, String secondInput, String thirdInput, String name) {
+        String type = this.templateController.getTemplateType(
+                Integer.parseInt(templateController.getCurrTemplateId()));
+        int id;
+        Integer createdPlannerID = this.plannerManager.createPlanner(type, name, firstInput, secondInput, thirdInput);
+        if (createdPlannerID == null){
+            System.out.printf("Planner of type %s cannot be created.", type);
+            return null;
+        } else {
+            id = this.plannerManager.createPlanner(type, name, firstInput, secondInput, thirdInput);
             this.currPlannerId = Integer.toString(id);
-        } else if (type.equals("Project")) {
-            //TODO: Add planner name.
-            id = this.plannerManager.newProjectPlanner(name, prompt0, prompt1, prompt2);
-            this.currPlannerId = Integer.toString(id);
+            accessController.setPlanner(accessController.getCurrUserId(), this.currPlannerId);
+            this.save();
+            return this.currPlannerId;
         }
-        accessController.setPlanner(accessController.getCurrUserId(), Integer.toString(id));
-        this.save();
-        return Integer.toString(id);
     }
-
 
     /** Pass on request to get a string representation of a planner
      *
@@ -102,7 +102,7 @@ public class PlannerController {
      */
     public String viewUserPlanners() {
         StringBuilder res = new StringBuilder();
-        ArrayList<String> plannerIds = this.accessController.getPlanners(this.accessController.getCurrUserId());
+        List<String> plannerIds = this.accessController.getPlanners(this.accessController.getCurrUserId());
         System.out.println(plannerIds.toString());
         if (plannerIds.size() == 0) {
             return "No personal planners available yet.";
@@ -121,7 +121,7 @@ public class PlannerController {
      */
     public String viewPublicPlanners() {
         StringBuilder res = new StringBuilder();
-        ArrayList<Integer> publicPlanners = this.getPublicPlanners();
+        List<Integer> publicPlanners = this.getPublicPlanners();
         for (int plannerId: publicPlanners) {
             res.append(this.toString(plannerId));
             res.append("==================================");
@@ -136,13 +136,13 @@ public class PlannerController {
      * user or not.
      */
     public boolean checkPlanner(String id) {
-        ArrayList<String> plannerIds;
+        List<String> plannerIds;
         if (this.accessController.isAdmin(this.accessController.getCurrUserId()).equals("admin")) {
             plannerIds = this.plannerManager.getAllPlannerId();
         } else {
             plannerIds = this.accessController.getPlanners(accessController.getCurrUserId());
         }
-        ArrayList<Integer> publicIds = this.getPublicPlanners();
+        List<Integer> publicIds = this.getPublicPlanners();
         if (plannerIds.contains(id) || publicIds.contains(Integer.parseInt(id))) {
             this.currPlannerId = id;
             return true;
@@ -184,17 +184,17 @@ public class PlannerController {
     /**
      * Show all the planners id of one author.
      * @param author the userId of the author.
-     * @return the ArrayList of integer id of planners.
+     * @return the List of integer id of planners.
      */
-    public ArrayList<Integer> getPlannerByAuthor(String author){
+    public List<Integer> getPlannerByAuthor(String author){
         return plannerManager.getPlannersByAuthor(author);
     }
 
     /**
-     * return an ArrayList of all integer id of all planners made public by all authors.
-     * @return the ArrayList of all public planner's id
+     * return a List of all integer id of all planners made public by all authors.
+     * @return the List of all public planner's id
      */
-    public ArrayList<Integer> getPublicPlanners(){
+    public List<Integer> getPublicPlanners(){
         return plannerManager.getPublicPlanners();
     }
 
@@ -245,6 +245,6 @@ public class PlannerController {
      * @return a boolean value representing whether the change is successful or not.
      */
     public boolean changeTaskStatus(String taskName, String status) {
-        return plannerManager.changTaskStatus(Integer.parseInt(getCurrPlannerId()), taskName, status);
+        return plannerManager.changeTaskStatus(Integer.parseInt(getCurrPlannerId()), taskName, status);
     }
 }

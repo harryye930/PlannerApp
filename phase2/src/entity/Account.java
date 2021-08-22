@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * A instance of this class represent an account in this application.
@@ -17,8 +18,8 @@ public abstract class Account implements Serializable {
     protected String email;
     protected String password;
     protected LocalDateTime suspendedTime;
-    protected ArrayList<Account> friends;
-    protected HashMap<String, ArrayList<String>> mailbox;
+    protected List<Account> friends;
+    protected HashMap<String, List<String>> mailbox;
 
     public Account() {
         this.accountType = "regular";
@@ -56,9 +57,9 @@ public abstract class Account implements Serializable {
 
     /**
      * return the friends of the user.
-     * @return an ArrayList of Account representing the friends of the user.
+     * @return a List of Account representing the friends of the user.
      */
-    public ArrayList<Account> getFriends() {
+    public List<Account> getFriends() {
         return friends;
     }
 
@@ -72,7 +73,7 @@ public abstract class Account implements Serializable {
     }
 
     /**
-     * add the given Account to the ArrayList of friends
+     * add the given Account to the List of friends
      * @param acc the account to be added
      */
     public void addFriend(Account acc){
@@ -80,7 +81,7 @@ public abstract class Account implements Serializable {
     }
 
     /**
-     * delete the friend from the ArrayList
+     * delete the friend from the List of friends
      * @param acc the given Account, representing the friend
      * @return whether the change is made in 'friends' or not
      */
@@ -94,43 +95,9 @@ public abstract class Account implements Serializable {
     }
 
     /**
-     * return the mailbox of the user
-     * @return HashMap<String, ArrayList<String>>, representing the mailbox
+     * @return A String that represents the email of this account.
      */
-    public HashMap<String, ArrayList<String>> getMailbox() {
-        return mailbox;
-    }
-
-    /**
-     * add the message to mailbox
-     * @param id the String of userId representing the sender
-     * @param mail the String representing thr message
-     */
-    public void receiveMail(String id, String mail){
-        mailbox.get(id).add(mail);
-    }
-
-    /**
-     * see all mail in the mailbox.
-     * @return the String representation of the mailbox
-     */
-    public String seeAllMail(){
-        return mailbox.toString();
-    }
-
-    /**
-     * see all mails of one specific sender
-     * @param userId the sender's user id
-     * @return the string representation of all mails of the sender.
-     */
-    public String seeOnesMail(String userId){
-        return mailbox.get(userId).toString();
-    }
-
-    /**
-     * @return A String that represent the email of this account.
-     */
-    public String  getEmail() {
+    public String getEmail() {
         return this.email;
     }
 
@@ -142,35 +109,35 @@ public abstract class Account implements Serializable {
     }
 
     /**
-     * @return A String that represent the user ID.
+     * @return A String that represents the user ID.
      */
     public String getUserId() {
         return this.userId;
     }
 
     /**
-     * @return A String that represent the user name.
+     * @return A String that represents the user name.
      */
     public String getUserName() {
         return this.userName;
     }
 
     /**
-     * @param userName represent the user name of this account.
+     * @param userName representing the username of this account.
      */
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
     /**
-     * @return A String represent the password of this account.
+     * @return A String that represents the password of this account.
      */
     public String getPassword() {
         return this.password;
     }
 
     /**
-     * @param password Represent the password of this account.
+     * @param password Representing the password of this account.
      */
     public void setPassword(String password) {
         this.password = password;

@@ -4,6 +4,7 @@ package controller;
 import gateway.TemplateGateway;
 import use_case.TemplateManager;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -125,11 +126,11 @@ public class TemplateController{
     /**
      * Return a collection of all template id in String.
      * @param publishedTemplatesOnly Boolean indicating whether to retrieve ids of only published templates or not.
-     * @return An ArrayList that contain the id of all template
+     * @return A List that contain the id of all template
      */
-    public ArrayList<String> getAllTemplateIds(boolean publishedTemplatesOnly) {
-        ArrayList<String> res = new ArrayList<>();
-        ArrayList<Integer> arr;
+    public List<String> getAllTemplateIds(boolean publishedTemplatesOnly) {
+        List<String> res = new ArrayList<>();
+        List<Integer> arr;
         if (publishedTemplatesOnly) {
             arr = new ArrayList<>(this.templateManager.retrievePublishedTemplates().keySet());
         } else {
@@ -143,10 +144,10 @@ public class TemplateController{
 
     /**
      * Retrieves a collection of all prompts in the template with a given template ID.
-     * @param ID of the the template.
-     * @return An ArrayList that contains the prompts of template with a given ID.
+     * @param ID of the template.
+     * @return A List that contains the prompts of template with a given ID.
      */
-    public ArrayList<String> getTemplatePrompts(int ID) {
+    public List<String> getTemplatePrompts(int ID) {
         return this.templateManager.retrievePrompts(ID);
     }
 

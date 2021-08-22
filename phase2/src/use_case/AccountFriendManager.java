@@ -3,6 +3,7 @@ package use_case;
 import entity.Account;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AccountFriendManager {
     private final AccountManager accManager;
@@ -57,13 +58,13 @@ public class AccountFriendManager {
     }
 
     /**
-     * return the ArrayList of friend ids of a user
+     * Returns the List of friend ids of a user
      * @param selfId the user
-     * @return the ArrayList of friend ids (String) of the user
+     * @return List of friend ids (String) of the user
      */
-    public ArrayList<String> getFriends(String selfId){
-        ArrayList<Account> friends = accManager.findAccount(selfId).getFriends();
-        ArrayList<String> friendIds = new ArrayList<>();
+    public List<String> getFriends(String selfId){
+        List<Account> friends = accManager.findAccount(selfId).getFriends();
+        List<String> friendIds = new ArrayList<>();
         for (Account i : friends){
             friendIds.add(i.getUserId());
         }

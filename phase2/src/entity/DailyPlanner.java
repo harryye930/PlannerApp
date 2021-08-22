@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class DailyPlanner extends Planner {
     private final HashMap<String, String> dailyPlannerTask;
-    private final ArrayList<String> timesList; // time array
+    private final List<String> timesList; // time array
     private final int ID;
     private int interval;  //minutes interval
     private int startHour;
@@ -27,7 +28,7 @@ public class DailyPlanner extends Planner {
      */
     public DailyPlanner(String plannerName, String startTime, String endTime, int Interval) {
         // generate hashmap with given time interval with empty content
-        // and a arraylist of time for reference since hashmap don't have order per se
+        // and an arraylist of time for reference since hashmap don't have order per se
         // https://facingissuesonit.com/2019/05/10/java-generate-15-minute-time-interval-am-pm/
         super();
         this.plannerName = plannerName;
@@ -218,7 +219,7 @@ public class DailyPlanner extends Planner {
      */
     public int getClosestMins(int NewStartMins, int Interval) {
         //new list of all possible mins given ineterval, ie. 0, 5, 10, 15... for interval=5
-        ArrayList<Integer> numbers = new ArrayList<>(0);
+        List<Integer> numbers = new ArrayList<>(0);
         numbers.add(0);
         for (int i = 0; i < (60 - Interval); i = i + Interval) {
             numbers.add(i);
@@ -247,8 +248,8 @@ public class DailyPlanner extends Planner {
         //make to the current time toString, and find the substring of the current hour and current mins.
         int current_hour = Integer.parseInt(current_time.substring(0, 2));
         int current_min = Integer.parseInt(current_time.substring(3, 5));
-        //construct a empty arraylist that will store the remaining tasks today.
-        ArrayList<String> remain_tasks = new ArrayList<>();
+        //construct an empty arraylist that will store the remaining tasks today.
+        List<String> remain_tasks = new ArrayList<>();
         //compare the daily tasks time with the current time, if it is later than now, then add to remain_tasks.
         for (String time : timesList) {
             String task_hour = time.substring(0, 2);

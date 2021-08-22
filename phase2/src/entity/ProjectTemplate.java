@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents one type of Template in the program - a Task Template, which allows users to create a Planner where
@@ -14,6 +14,7 @@ public class ProjectTemplate extends Template{
      * thirdStatusPrompt: Prompt for the third status heading (e.g., Completed).
      */
     private String firstStatusPrompt, secondStatusPrompt, thirdStatusPrompt;
+    private String type;
     private final int id;
 
     public ProjectTemplate(String name, String plannerNamePrompt,
@@ -23,7 +24,8 @@ public class ProjectTemplate extends Template{
         this.firstStatusPrompt = firstStatusPrompt;
         this.secondStatusPrompt = secondStatusPrompt;
         this.thirdStatusPrompt = thirdStatusPrompt;
-        this.setTemplateType("project");
+        this.type = "project";
+//        this.setTemplateType("project");
     }
 
     /**
@@ -82,7 +84,7 @@ public class ProjectTemplate extends Template{
 
     @Override
     public String isType() {
-        return "Project";
+        return this.type;
     }
 
     @Override
@@ -92,11 +94,11 @@ public class ProjectTemplate extends Template{
 
     /**
      * Returns all the prompts of this template.
-     * @return ArrayList<String> that contains prompts of the template.
+     * @return List<String> that contains prompts of the template.
      */
     @Override
-    public ArrayList<String> retrievePrompts() {
-        ArrayList<String> prompts = super.retrievePrompts();
+    public List<String> retrievePrompts() {
+        List<String> prompts = super.retrievePrompts();
         prompts.add(firstStatusPrompt);
         prompts.add(secondStatusPrompt);
         prompts.add(thirdStatusPrompt);

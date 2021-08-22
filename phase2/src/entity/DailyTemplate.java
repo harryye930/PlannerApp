@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents one type of Template in the program - a Daily Template, which allows users to create a Planner where
@@ -14,6 +14,7 @@ public class DailyTemplate extends Template{
      * incrementPrompt: Prompt for the time increment of the planner that will be created based on this template.
      */
     private String startTimePrompt, endTimePrompt, incrementPrompt;
+    private String type;
     private final int id;
 
     public DailyTemplate(String name, String plannerNamePrompt,
@@ -23,7 +24,8 @@ public class DailyTemplate extends Template{
         this.startTimePrompt = startTimePrompt;
         this.endTimePrompt = endTimePrompt;
         this.incrementPrompt = incrementPrompt;
-        this.setTemplateType("daily");
+        this.type = "daily";
+//        this.setTemplateType("daily");
     }
 
     /**
@@ -77,7 +79,7 @@ public class DailyTemplate extends Template{
 
     @Override
     public String isType() {
-        return "Daily";
+        return this.type;
     }
 
     @Override
@@ -87,11 +89,11 @@ public class DailyTemplate extends Template{
 
     /**
      * Returns all the prompts of this template.
-     * @return ArrayList<String> that contains prompts of the template.
+     * @return List<String> that contains prompts of the template.
      */
     @Override
-    public ArrayList<String> retrievePrompts() {
-        ArrayList<String> prompts = super.retrievePrompts();
+    public List<String> retrievePrompts() {
+        List<String> prompts = super.retrievePrompts();
         prompts.add(startTimePrompt);
         prompts.add(endTimePrompt);
         prompts.add(incrementPrompt);
