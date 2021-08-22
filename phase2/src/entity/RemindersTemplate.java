@@ -17,12 +17,10 @@ public class RemindersTemplate extends Template{
     private int id;
 
     /**
-     *
-     * @param name the name of the template
-     * @param plannerNamePrompt the planner name that corresponds to the template
-     * @param taskHeadingPrompt the prompt for the heading of the tasks (e.g., Tasks To Be Completed)
-     * @param dateHeadingPrompt the prompt for the date at which each task should be completed by (e.g., Date)
-     * @param completionStatusHeadingPrompt the prompt for the completion status heading (e.g., Completed (Y/N))
+     * Prompts that are unique to this template:
+     * @param taskHeadingPrompt Prompt for the heading of the tasks (e.g., Tasks To Be Completed).
+     * @param dateHeadingPrompt Prompt for the date at which each task should be completed by (e.g., Date).
+     * @param completionStatusHeadingPrompt Prompt for the completion status heading (e.g., Completed (Y/N)).
      */
     public RemindersTemplate(String name, String plannerNamePrompt,
                              String taskHeadingPrompt, String dateHeadingPrompt, String completionStatusHeadingPrompt) {

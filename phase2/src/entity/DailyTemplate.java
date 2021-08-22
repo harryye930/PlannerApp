@@ -8,10 +8,10 @@ import java.util.ArrayList;
  */
 public class DailyTemplate extends Template{
     /**
-     * Prompts that are unique to this template.
-     * startTimePrompt: the prompt for the start time of the planner that will be created based on this template.
-     * endTimePrompt: the prompt for the end time of the planner that will be created based on this template.
-     * incrementPrompt: the prompt for the time increment of the planner that will be created based on this template.
+     * Prompts that are unique to this template:
+     * startTimePrompt: Prompt for the start time of the planner that will be created based on this template.
+     * endTimePrompt: Prompt for the end time of the planner that will be created based on this template.
+     * incrementPrompt: Prompt for the time increment of the planner that will be created based on this template.
      */
     private String startTimePrompt, endTimePrompt, incrementPrompt;
     private final int id;
