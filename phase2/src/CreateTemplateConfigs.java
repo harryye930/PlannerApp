@@ -1,10 +1,9 @@
-import Controller.TemplateController;
-import Entity.DailyTemplate;
-import Entity.ProjectTemplate;
-import Entity.RemindersTemplate;
-import Entity.Template;
-import Gateway.TemplateGateway;
-import UseCase.TemplateManager;
+import entity.DailyTemplate;
+import entity.ProjectTemplate;
+import entity.RemindersTemplate;
+import entity.Template;
+import gateway.TemplateGateway;
+import use_case.TemplateManager;
 
 /**
  * Creates template config file.
