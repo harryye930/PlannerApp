@@ -81,7 +81,7 @@ public class CreateTemplateUI extends GeneralUI implements ActionListener {
 
         // Add JScrollPane showing templateInfo below the existingTemplatesLabel
         templateInfo = data.getTemplates(createTemplatePanel);
-        templateInfo.setBounds(25, 50, 400, 500);
+        templateInfo.setBounds(25, 75, 400, 450);
         templateInfo.setBackground(new Color(143, 141, 141));
         createTemplatePanel.add(templateInfo);
 
