@@ -80,6 +80,8 @@ public class TemplateOptionUI extends GeneralPresenter implements ActionListener
             temp.add(back);
 
             cl.show(main, "templateInfo");
+        } else if (e.getSource() == back) {
+            this.getParent().run();
         }
     }
 }
