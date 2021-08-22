@@ -1,4 +1,4 @@
-prompt: Please enter the planner ID you want to operate on
+prompt: <html>Please enter the planner ID<br/> you want to operate on</html>
 unTrash: Recover
 delete: permanent delete
 goBack: Go Back

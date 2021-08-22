@@ -41,8 +41,8 @@ public class PlannerTrashBinUI extends GeneralUI implements ActionListener {
         data.getTrashBin(accessController.getCurrUserId(), panel);
 
         FormBuilder fb = new FormBuilder();
-        fb.setBounds(450, 50, 300, 250);
-        fb.addTitleLabel("prompt", labelToStrings.get("prompt"));
+        fb.setBounds(425, 50, 300, 250);
+        fb.addLabel("prompt", labelToStrings.get("prompt"));
         fb.addTextField("plannerId");
         fb.addSubmitButton("unTrash", labelToStrings.get("unTrash"));
         fb.addSubmitButton("delete", labelToStrings.get("delete"));
