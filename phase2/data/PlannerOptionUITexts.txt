@@ -2,3 +2,4 @@ prompt: Planner Menu
 createPlannerButton: Create new planner
 checkPlannerButton: Check planner
 back: Return to menu
+trashBin: Trash Bin

@@ -23,8 +23,8 @@ public class CreateAccountUI extends GeneralUI implements KeyListener, ActionLis
     private boolean flag = false;
     private Map<String, String> labelToStrings = new UIGateway().loadCreateAccountUITexts();
 
-    private final GeneralUI adminAccUI = new AdminAccountUI(this);
-    private final GeneralUI regularAccUI = new RegularAccountUI(this);
+    private final GeneralUI adminAccUI = new AdminAccountUI(this.getParent());
+    private final GeneralUI regularAccUI = new RegularAccountUI(this.getParent());
 
     private final JLabel createAccount = new JLabel(labelToStrings.get("createAccount"));
     private final JLabel passwordPrompt0 = new JLabel(labelToStrings.get("passwordPrompt"));
