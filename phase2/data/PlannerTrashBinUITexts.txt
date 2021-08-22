@@ -1,0 +1,8 @@
+prompt: Please enter the planner ID you want to operate on
+unTrash: Recover
+delete: permanent delete
+goBack: Go Back
+unTrashSuccessPrompt: Recover success!
+unTrashFailPrompt: Invalid input, please try again!
+deleteSuccessPrompt: Delete success!
+deleteFailPrompt: Invalid input, please try again!

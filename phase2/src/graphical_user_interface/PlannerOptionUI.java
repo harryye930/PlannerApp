@@ -21,6 +21,7 @@ public class PlannerOptionUI extends GeneralUI {
 
     private final GeneralUI createPlanner = new CreatePlannerUI(this);
     private final GeneralUI checkPlanner = new CheckPlannerUI(this);
+    private final GeneralUI trashBin = new PlannerTrashBinUI(this);
 
     public PlannerOptionUI(GeneralUI parent) {
         this.setParent(parent);
@@ -45,10 +46,11 @@ public class PlannerOptionUI extends GeneralUI {
         panel.setLayout(null);
 
         FormBuilder fb = new FormBuilder();
-        fb.setBounds(50, 100, 600, 250);
+        fb.setBounds(50, 100, 600, 300);
         fb.addTitleLabel("prompt", labelToStrings.get("prompt"));
         fb.addSuperButton("newPlanner", labelToStrings.get("createPlannerButton"), createPlanner);
         fb.addSuperButton("checkPlanner", labelToStrings.get("checkPlannerButton"), checkPlanner);
+        fb.addSuperButton("trashBin", labelToStrings.get("trashBin"), trashBin);
         fb.addSuperButton("back", labelToStrings.get("back"), this.getParent());
 
         form = fb.getForm();

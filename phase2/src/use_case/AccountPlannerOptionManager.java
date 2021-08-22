@@ -60,15 +60,14 @@ public class AccountPlannerOptionManager {
      * @param retriever A String representing the User ID or Email.
      * @param plannerId A String representing the planner id.
      */
-    public void removePlanner(String retriever, String plannerId) {
+    public boolean removePlanner(String retriever, String plannerId) {
         Account account = this.accountManager.findAccount(retriever);
         String status = account.getAccountType();
 
-//        if (status.equals("regular") | status.equals("temporary")){
-//            ((UserAccount) account).removePlanner(plannerId);
-//        }
         if (!Objects.equals(status, "admin")) {
-            ((UserAccount) account).removePlanner(plannerId);
+            return ((UserAccount) account).removePlanner(plannerId);
+        } else {
+            return false;
         }
     }
 
@@ -97,5 +96,16 @@ public class AccountPlannerOptionManager {
         } else {
             return false;
         }
+    }
+
+    /**
+     * remove the planner permanently.
+     * @param userId A String representing the user id
+     * @param plannerId A String representing the planner id.
+     * @return whether the removing is successful or not
+     */
+    public boolean permanentTrashPlanner(String userId, String plannerId) {
+        UserAccount acc = (UserAccount) accountManager.findAccount(userId);
+        return acc.removeFromTrash(plannerId);
     }
 }

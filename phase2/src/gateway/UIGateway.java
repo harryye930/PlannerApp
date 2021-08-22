@@ -93,4 +93,9 @@ public class UIGateway extends Reader{
         String templateOptionUIFilePath = folderPath + "TemplateOptionUITexts.txt";
         return super.readTextFile(templateOptionUIFilePath);
     }
+
+    public Map<String, String> PlannerTrashBinUITexts() {
+        String plannerTrashBinUIFilePath = folderPath + "PlannerTrashBinUITexts.txt";
+        return super.readTextFile(plannerTrashBinUIFilePath);
+    }
 }
