@@ -33,6 +33,14 @@ public class FormBuilder implements ActionListener{
         this.nameToComponent.put(name, label);
     }
 
+    public void addTitleLabel(String name, String prompt) {
+        JLabel label = new JLabel(prompt);
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setFont(new Font("MV Boli", Font.PLAIN, 20));
+        label.setBounds(0, 100, 700, 50);
+        this.nameToComponent.put(name, label);
+    }
+
     public void addTextField(String name) {
         this.nameToComponent.put(name, new JTextField());
     }

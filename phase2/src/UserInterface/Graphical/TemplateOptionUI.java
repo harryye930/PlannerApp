@@ -2,6 +2,8 @@ package UserInterface.Graphical;
 
 import Gateway.UIGateway;
 import UserInterface.GeneralPresenter;
+import strategy.IForm;
+import strategy.formGenerator.FormBuilder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,26 +11,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
-//TODO: combine with AccountOptionUI
 /**
  * GUI class for displaying template options for a regular user.
  * Options include: view all templates, return to main menu.
  */
 public class TemplateOptionUI extends GeneralPresenter implements ActionListener{
     private boolean flag = false;
-    private Map<String, String> labelToStrings = new UIGateway().loadTemplateOptionUITexts();
+    private final Map<String, String> labelToStrings = new UIGateway().loadTemplateOptionUITexts();
 
-    // all buttons
-    JButton viewAllTemplateButton = new JButton(labelToStrings.get("viewAllTemplateButton"));
-    JButton returnToMainMenuButton= new JButton(labelToStrings.get("returnToMainMenuButton"));
-    JButton back = new JButton(labelToStrings.get("goBack"));
-    JPanel temp = new JPanel();
+    private IForm form;
 
-    // panel
+    private final JButton back = new JButton(labelToStrings.get("goBack"));
     private final JPanel templateMenu = new JPanel();
-
-    // menu text
-    private JLabel prompt;
 
     public TemplateOptionUI(GeneralPresenter parent) {
         this.setParent(parent);
@@ -52,25 +46,16 @@ public class TemplateOptionUI extends GeneralPresenter implements ActionListener
         main.add(templateMenu, "templateMenu");
         templateMenu.setLayout(null);
 
-        prompt = new JLabel(labelToStrings.get("prompt"));
-        prompt.setHorizontalAlignment(JLabel.CENTER);
-        prompt.setVerticalAlignment(JLabel.TOP);
-        prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
-        prompt.setBounds(0, 100, 700, 50);
-        prompt.setOpaque(true);
-        templateMenu.add(prompt);
+        FormBuilder fb = new FormBuilder();
+        fb.setBounds(100, 100, 500, 250);
+        fb.addTitleLabel("prompt", labelToStrings.get("prompt"));
+        fb.addSubmitButton("viewAllTemplateButton", labelToStrings.get("viewAllTemplateButton"));
+        fb.addSubmitButton("returnToMainMenuButton", labelToStrings.get("returnToMainMenuButton"));
+        fb.addSuperButton("goBack", labelToStrings.get("goBack"), this.getParent());
+        fb.addListener(this);
 
-        JPanel panel = new JPanel();
-        panel.setBounds(150, 150, 400, 200);
-        panel.setLayout(new GridLayout(4, 1));
-        templateMenu.add(panel);
-
-        panel.add(viewAllTemplateButton);
-        panel.add(returnToMainMenuButton);
-
-        returnToMainMenuButton.addActionListener(this);
-        viewAllTemplateButton.addActionListener(this);
-
+        form = fb.getForm();
+        templateMenu.add(form.getPanel());
     }
 
     /**
@@ -80,9 +65,9 @@ public class TemplateOptionUI extends GeneralPresenter implements ActionListener
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == returnToMainMenuButton){
+        if (e.getSource() == form.get("returnToMainMenuButton")){
             cl.show(main, "regularUserMainMenu");
-        } else if (e.getSource() == viewAllTemplateButton) {
+        } else if (e.getSource() == form.get("viewAllTemplateButton")) {
             JPanel temp = new JPanel();
             temp.setLayout(null);
 
@@ -96,10 +81,6 @@ public class TemplateOptionUI extends GeneralPresenter implements ActionListener
             temp.add(back);
 
             cl.show(main, "templateInfo");
-        } else if (e.getSource() == back) {
-            main.remove(temp);
-            cl.show(main, "templateMenu");
         }
-
     }
 }

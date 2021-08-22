@@ -58,7 +58,7 @@ public class RegularAccountUI extends GeneralPresenter {
 //        prompt.setHorizontalAlignment(JLabel.CENTER);
 //        panel.add(prompt);
 
-        buttons.addLabel("prompt", labelToStrings.get("prompt"));
+        buttons.addTitleLabel("prompt", labelToStrings.get("prompt"));
         buttons.addSuperButton("plannerOption", labelToStrings.get("plannerOptionButton"), plannerOptionUI);
         buttons.addSuperButton("templateOption", labelToStrings.get("templateOptionButton"), templateOptionUI);
         buttons.addSuperButton("accountOption", labelToStrings.get("accountOptionButton"), accountOptionUI);

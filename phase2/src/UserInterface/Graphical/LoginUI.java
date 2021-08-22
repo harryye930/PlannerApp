@@ -63,7 +63,6 @@ public class LoginUI extends GeneralPresenter implements ActionListener {
         prompt.setVerticalAlignment(JLabel.TOP);
         prompt.setFont(new Font("MV Boli", Font.PLAIN, 20));
         prompt.setBounds(0, 100, 700, 50);
-        prompt.setOpaque(true);
         menu.add(prompt);
 
         JPanel panel = new JPanel();

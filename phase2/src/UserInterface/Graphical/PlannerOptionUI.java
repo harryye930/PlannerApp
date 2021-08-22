@@ -47,8 +47,8 @@ public class PlannerOptionUI extends GeneralPresenter {
         panel.setLayout(null);
 
         FormBuilder fb = new FormBuilder();
-        fb.setBounds(150, 100, 600, 250);
-        fb.addLabel("prompt", labelToStrings.get("prompt"));
+        fb.setBounds(50, 100, 600, 250);
+        fb.addTitleLabel("prompt", labelToStrings.get("prompt"));
         fb.addSuperButton("newPlanner", labelToStrings.get("createPlannerButton"), createPlanner);
         fb.addSuperButton("checkPlanner", labelToStrings.get("checkPlannerButton"), checkPlanner);
         fb.addSuperButton("back", labelToStrings.get("back"), this.getParent());
