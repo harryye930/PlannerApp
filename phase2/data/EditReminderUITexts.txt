@@ -1,0 +1,9 @@
+submit: Submit
+delete: Delete
+goBack: Go Back
+prompt0f: <html>Please enter the task heading it wants to add:</html>
+prompt1f: <html>Please enter the task Deadline you want to assign: (in form of MM/dd/yyyy)</html>
+changeButtonF: change status page
+prompt0s: <html>Please enter the task name the user wants to change status</html>
+prompt1s: <html>Please enter the status the user wants to change</html>
+changeButtonS: Change to add task page
