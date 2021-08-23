@@ -25,28 +25,15 @@ public class DailyPlanner extends Planner {
      */
     public DailyPlanner(String plannerName, String startTime, String endTime, int Interval) {
         super();
-        this.plannerName = plannerName;
-        this.interval = Interval;
-        this.startHour = Integer.parseInt(startTime.substring(0, 2));
-        this.endHour = Integer.parseInt(endTime.substring(0, 2));
-        this.timesList = new ArrayList<>();
-        this.dailyPlannerTask = new HashMap<>();
-        this.NumAgendas = 0;
-        String timeFormat;
-        for (int h = this.startHour; h < this.endHour; h++) {
-            timeFormat = String.format("%02d:%02d", h, 0);
-            timesList.add(timeFormat);
-            h = h + interval;
-        }
-
-        //add all time to Hashmap with empty agenda
-        for (String time : timesList) {
-            dailyPlannerTask.put(time, "N/A");
-        }
+        initializePlannerVars(plannerName, startTime, endTime, Interval);
     }
 
     public DailyPlanner(int numPlannersLoaded, String plannerName, String startTime, String endTime, int Interval) {
         super(numPlannersLoaded);
+        initializePlannerVars(plannerName, startTime, endTime, Interval);
+    }
+
+    private void initializePlannerVars(String plannerName, String startTime, String endTime, int Interval) {
         this.plannerName = plannerName;
         this.interval = Interval;
         this.startHour = Integer.parseInt(startTime.substring(0, 2));
