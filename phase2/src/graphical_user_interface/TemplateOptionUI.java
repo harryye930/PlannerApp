@@ -73,7 +73,7 @@ public class TemplateOptionUI extends GeneralUI implements ActionListener{
             main.add(temp, "templateInfo");
 
             back.addActionListener(this);
-            back.setBounds(515, 150, 100, 40);
+            back.setBounds(475, 225, 200, 50);
             temp.add(back);
 
             cl.show(main, "templateInfo");
