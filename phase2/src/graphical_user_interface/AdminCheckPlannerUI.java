@@ -13,7 +13,6 @@ public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
     private String  userId;
 
     // Panel
-    private JScrollPane accountInfo;
     JPanel menu = new JPanel();
 
     // Button
@@ -54,7 +53,7 @@ public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
         menu.setLayout(null);
         main.add(menu, "adminCheckPlanner");
 
-        accountInfo = data.getPlanners(menu);
+        data.getPlanners(menu);
 
         JLabel prompt = new JLabel(labelToStrings.get("prompt"));
         prompt.setBounds(475, 100, 200, 40);
@@ -79,8 +78,7 @@ public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
         back.addActionListener(this);
     }
 
-    private void update() {
-        accountInfo = data.getPlanners(menu);
+    private void update() { data.getPlanners(menu);
     }
 
     /**
