@@ -7,15 +7,18 @@ import java.util.Map;
 
 public class ProjectPlanner extends Planner{
     private Map<String, List<String>> tasks;
+    private final int id;
     private int numTasks = 0;
 
     public ProjectPlanner(String plannerName, String firstColName, String secondColName, String thirdColName) {
         super();
+        this.id = super.getID();
         initializePlannerVars(plannerName, firstColName, secondColName, thirdColName);
     }
 
     public ProjectPlanner(int numPlannersLoaded, String plannerName, String firstColName, String secondColName, String thirdColName) {
         super(numPlannersLoaded);
+        this.id = super.getID();
         initializePlannerVars(plannerName, firstColName, secondColName, thirdColName);
     }
 
@@ -115,6 +118,15 @@ public class ProjectPlanner extends Planner{
             tasks.get(currColumn).remove(agenda);
             return true;
         }
+    }
+
+    /*** Show the id for the planner
+     *
+     * @return a int id for the planner.
+     */
+    @Override
+    public int getID(){
+        return id;
     }
 
     /**

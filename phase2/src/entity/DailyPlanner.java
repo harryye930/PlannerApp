@@ -14,6 +14,7 @@ public class DailyPlanner extends Planner {
     private int startHour;
     private int endHour;
     private int NumAgendas;
+    private final int id;
 
     /**
      * initialize DailyPlanner
@@ -25,11 +26,13 @@ public class DailyPlanner extends Planner {
      */
     public DailyPlanner(String plannerName, String startTime, String endTime, int Interval) {
         super();
+        this.id = super.getID();
         initializePlannerVars(plannerName, startTime, endTime, Interval);
     }
 
     public DailyPlanner(int numPlannersLoaded, String plannerName, String startTime, String endTime, int Interval) {
         super(numPlannersLoaded);
+        this.id = super.getID();
         initializePlannerVars(plannerName, startTime, endTime, Interval);
     }
 
@@ -61,6 +64,15 @@ public class DailyPlanner extends Planner {
      */
     public String getType() {
         return "daily";
+    }
+
+    /*** Show the id for the planner
+     *
+     * @return a int id for the planner.
+     */
+    @Override
+    public int getID(){
+        return id;
     }
 
 
@@ -106,7 +118,7 @@ public class DailyPlanner extends Planner {
 
         String timeInfo = String.format("Start time -> %d:%d, End time -> %d:%d. \n",
                 this.startHour, 0, this.endHour, 0);
-        String plannerInfo = this.plannerName + "\n" + "ID: " + super.getID() + "\n" + timeInfo + "\nTasks: \n";
+        String plannerInfo = this.plannerName + "\n" + "ID: " + this.id + "\n" + timeInfo + "\nTasks: \n";
         sb.append(plannerInfo);
         for (String time : timesList) {
             sb.append(time);
