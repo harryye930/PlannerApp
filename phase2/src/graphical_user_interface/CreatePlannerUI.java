@@ -1,6 +1,8 @@
 package graphical_user_interface;
 
 import gateway.UIGateway;
+import graphical_user_interface.builder.FormBuilder;
+import graphical_user_interface.builder.IForm;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,21 +23,12 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
 
     private final GeneralUI checkPlanner = new CheckPlannerUI(this);
 
+    IForm selectTemplateForm;
+    IForm inputForm;
+
     private final JPanel createPlanner = new JPanel();
     private final JPanel inputPage = new JPanel();
-
-    private final JLabel message = new JLabel(labelToStrings.get("message"));
-    private final JTextField id = new JTextField();
-    private final JTextField p1 = new JTextField();
-    private final JTextField p2 = new JTextField();
-    private final JTextField p3 = new JTextField();
-    JTextField name = new JTextField();
-
-    private final JButton submit = new JButton(labelToStrings.get("submit"));
-    private final JButton returnToPlannerMenu = new JButton(labelToStrings.get("returnToPlannerMenu"));
-    private final JButton confirm = new JButton(labelToStrings.get("confirm"));
-    private final JButton back = new JButton(labelToStrings.get("goBack"));
-
+    private JScrollPane templateInfo;
 
     public CreatePlannerUI(GeneralUI parent) {
         this.setParent(parent);
@@ -47,7 +40,7 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
     @Override
     public void run() {
         if (menuFlag) {
-            data.getTemplates(createPlanner);
+            templateInfo = data.getTemplates(createPlanner);
             cl.show(main, "createPlanner");
         } else {
             this.showMenu();
@@ -58,81 +51,87 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
 
     private void showMenu() {
         createPlanner.setLayout(null);
-
         main.add(createPlanner, "createPlanner");
-        JScrollPane templateInfo = data.getTemplates(createPlanner);
+
+        templateInfo = data.getTemplates(createPlanner);
         createPlanner.add(templateInfo);
 
-        message.setBounds(450, 50, 200, 50);
-        createPlanner.add(message);
+        FormBuilder selectTemplateFormBuilder = new FormBuilder();
+        selectTemplateFormBuilder.setBounds(450, 50, 200, 300);
 
-        id.setBounds(500, 130, 100, 50);
-        createPlanner.add(id);
+        selectTemplateFormBuilder.addLabel("message", labelToStrings.get("message"));
+        selectTemplateFormBuilder.addTextField("id");
+        selectTemplateFormBuilder.addSubmitButton("submit", labelToStrings.get("submit"));
+        selectTemplateFormBuilder.addSubmitButton("returnToPlannerMenu", labelToStrings.get("returnToPlannerMenu"));
 
-        submit.setBounds(515, 200, 70, 40);
-        submit.addActionListener(this);
-        createPlanner.add(submit);
-
-        returnToPlannerMenu.setBounds(445, 250, 210, 40);
-        returnToPlannerMenu.addActionListener(this);
-        createPlanner.add(returnToPlannerMenu);
+        selectTemplateFormBuilder.addListener(this);
+        selectTemplateForm = selectTemplateFormBuilder.getForm();
+        createPlanner.add(selectTemplateForm.getPanel());
     }
 
-    private void showCreatePage() {
-        List<String> prompts = templateController.
-                getTemplatePrompts(Integer.parseInt(templateController.getCurrTemplateId()));
-        JPanel curr = new JPanel();
-        curr.setLayout(new GridLayout(10, 1));
-        inputPage.add(curr);
-        curr.setBounds(50, 100, 400, 300);
-
+    private void createInputPage(List<String> prompts) {
+        inputPage.setLayout(null);
         main.add(inputPage, "inputPage");
 
-        JLabel prompt1 = new JLabel(prompts.get(0));
-        JLabel prompt2 = new JLabel(prompts.get(1));
-        JLabel prompt3 = new JLabel(prompts.get(2));
-        JLabel prompt4 = new JLabel(prompts.get(3));
+        FormBuilder inputFormBuilder = new FormBuilder();
+        inputFormBuilder.setBounds(50, 50, 550, 500);
 
-        curr.add(prompt1);
-        curr.add(name);
-        curr.add(prompt2);
-        curr.add(p1);
-        curr.add(prompt3);
-        curr.add(p2);
-        curr.add(prompt4);
-        curr.add(p3);
-        curr.add(confirm);
-        curr.add(back);
+        inputFormBuilder.addLabel("plannerNamePrompt", prompts.get(0));
+        inputFormBuilder.addTextField("name");
+        inputFormBuilder.addLabel("firstPlannerPrompt", prompts.get(1));
+        inputFormBuilder.addTextField("p1");
+        inputFormBuilder.addLabel("secondPlannerPrompt", prompts.get(2));
+        inputFormBuilder.addTextField("p2");
+        inputFormBuilder.addLabel("thirdPlannerPrompt", prompts.get(3));
+        inputFormBuilder.addTextField("p3");
+        inputFormBuilder.addSubmitButton("confirm", labelToStrings.get("confirm"));
+        inputFormBuilder.addSubmitButton("goBack", labelToStrings.get("goBack"));
 
-        confirm.addActionListener(this);
-        back.addActionListener(this);
+        inputFormBuilder.addListener(this);
+        inputForm = inputFormBuilder.getForm();
+        inputPage.add(inputForm.getPanel());
+    }
+
+    private void updateInputPage(List<String> prompts){
+        ((JLabel)inputForm.get("plannerNamePrompt")).setText(prompts.get(0));
+        ((JLabel)inputForm.get("firstPlannerPrompt")).setText(prompts.get(1));
+        ((JLabel)inputForm.get("secondPlannerPrompt")).setText(prompts.get(2));
+        ((JLabel)inputForm.get("thirdPlannerPrompt")).setText(prompts.get(3));
     }
 
     /**
      * Invoked when an action occurs.
-     *
      * @param e
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == submit) {
-            if (!templateController.checkTemplate(id.getText())) {
-                this.message.setText(labelToStrings.get("invalidInput"));
+        if (e.getSource() == selectTemplateForm.get("submit")) {
+            System.out.println(((JTextField)selectTemplateForm.get("id")).getText());
+            if (!templateController.checkTemplate(((JTextField)selectTemplateForm.get("id")).getText())) {
+                ((JLabel)selectTemplateForm.get("message")).setText(labelToStrings.get("invalidInput"));
             } else {
+                List<String> prompts = templateController.getTemplatePrompts(
+                        Integer.parseInt(templateController.getCurrTemplateId()));
                 if (createPageFlag) {
-                    templateController.getTemplatePrompts(Integer.parseInt(templateController.getCurrTemplateId()));
+                    System.out.println(templateController.getTemplatePrompts(Integer.parseInt(templateController.getCurrTemplateId())));
+                    this.updateInputPage(prompts);
                     cl.show(main, "inputPage");
                 } else {
-                    this.showCreatePage();
+                    this.createInputPage(prompts);
                     cl.show(main, "inputPage");
                     createPageFlag = !createPageFlag;
                 }
-
             }
-        } else if (e.getSource() == returnToPlannerMenu || e.getSource() == back) {
+        } else if (e.getSource() == selectTemplateForm.get("returnToPlannerMenu")){
             this.getParent().run();
-        } else if (e.getSource() == confirm) {
-            plannerController.createPlanner(p1.getText(), p2.getText(), p3.getText(), name.getText());
+        } else if (e.getSource() == inputForm.get("goBack")){
+            templateInfo = data.getTemplates(createPlanner);
+            cl.show(main, "createPlanner");
+        } else if (e.getSource() == inputForm.get("confirm")) {
+            plannerController.createPlanner(((JTextField)inputForm.get("p1")).getText(),
+                                            ((JTextField)inputForm.get("p2")).getText(),
+                                            ((JTextField)inputForm.get("p3")).getText(),
+                                            ((JTextField)inputForm.get("name")).getText());
             this.checkPlanner.run();
         }
     }
