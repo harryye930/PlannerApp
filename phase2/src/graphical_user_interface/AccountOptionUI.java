@@ -129,10 +129,11 @@ public class AccountOptionUI extends GeneralUI implements ActionListener {
             String message = accessController.changePassword(accessController.getCurrUserId(),
                     ((JTextField)passwordForm.get("originalPassword")).getText(),
                     ((JTextField) passwordForm.get("newPassword")).getText());
-            main.remove(changeMenu);
+//            main.remove(changeMenu);
             ((JTextField)passwordForm.get("originalPassword")).setText("");
-            ((JTextField) passwordForm.get("newPassword")).setText(message);
-            this.run();
+            ((JTextField) passwordForm.get("newPassword")).setText("");
+            ((JLabel)passwordForm.get("enterOriginalPassword")).setText(message);
+//            this.run();
 
         } else if (e.getSource() == nameForm.get("back") ||
                 e.getSource() == passwordForm.get("back")) {
