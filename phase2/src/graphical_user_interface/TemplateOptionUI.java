@@ -67,7 +67,7 @@ public class TemplateOptionUI extends GeneralUI implements ActionListener{
             JPanel temp = new JPanel();
             temp.setLayout(null);
 
-            JScrollPane templates = data.getTemplates(temp);
+            JScrollPane templates = data.getPublishedTemplates(temp);
             templates.setBounds(25, 25, 400, 500);
             temp.add(templates);
             main.add(temp, "templateInfo");

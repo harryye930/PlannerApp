@@ -38,7 +38,12 @@ public class ViewData {
     }
 
     public JScrollPane getTemplates(JPanel panel) {
-        this.updateTemplates(panel);
+        this.updateTemplates(panel, false);
+        return this.templates;
+    }
+
+    public JScrollPane getPublishedTemplates(JPanel panel) {
+        this.updateTemplates(panel, true);
         return this.templates;
     }
 
@@ -77,9 +82,9 @@ public class ViewData {
         return this.trashBin;
     }
 
-    private void updateTemplates(JPanel panel) {
+    private void updateTemplates(JPanel panel, boolean publishedTemplatesOnly) {
         this.scrollPaneInit(templates, panel);
-        templateInfo.setText(templateController.detailViewAllTemplates(false));
+        templateInfo.setText(templateController.detailViewAllTemplates(publishedTemplatesOnly));
         this.textAreaInit(templateInfo);
     }
 

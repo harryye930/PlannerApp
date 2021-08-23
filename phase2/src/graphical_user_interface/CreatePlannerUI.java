@@ -40,7 +40,7 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
     @Override
     public void run() {
         if (menuFlag) {
-            templateInfo = data.getTemplates(createPlanner);
+            templateInfo = data.getPublishedTemplates(createPlanner);
             cl.show(main, "createPlanner");
         } else {
             this.showMenu();
@@ -53,7 +53,7 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
         createPlanner.setLayout(null);
         main.add(createPlanner, "createPlanner");
 
-        templateInfo = data.getTemplates(createPlanner);
+        templateInfo = data.getPublishedTemplates(createPlanner);
         createPlanner.add(templateInfo);
 
         FormBuilder selectTemplateFormBuilder = new FormBuilder();
@@ -123,7 +123,7 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
         } else if (e.getSource() == selectTemplateForm.get("returnToPlannerMenu")){
             this.getParent().run();
         } else if (e.getSource() == inputForm.get("goBack")){
-            templateInfo = data.getTemplates(createPlanner);
+            templateInfo = data.getPublishedTemplates(createPlanner);
             cl.show(main, "createPlanner");
         } else if (e.getSource() == inputForm.get("confirm")) {
             plannerController.createPlanner(((JTextField)inputForm.get("p1")).getText(),
