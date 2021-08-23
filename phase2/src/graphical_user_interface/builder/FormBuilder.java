@@ -28,7 +28,7 @@ public class FormBuilder implements ActionListener{
 
     public void addLabel(String name, String prompt) {
         JLabel label = new JLabel(prompt);
-        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setHorizontalAlignment(JLabel.LEFT);
         this.nameToComponent.put(name, label);
     }
 

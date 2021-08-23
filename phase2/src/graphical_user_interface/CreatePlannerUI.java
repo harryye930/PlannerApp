@@ -106,14 +106,12 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == selectTemplateForm.get("submit")) {
-            System.out.println(((JTextField)selectTemplateForm.get("id")).getText());
             if (!templateController.checkTemplate(((JTextField)selectTemplateForm.get("id")).getText())) {
                 ((JLabel)selectTemplateForm.get("message")).setText(labelToStrings.get("invalidInput"));
             } else {
                 List<String> prompts = templateController.getTemplatePrompts(
                         Integer.parseInt(templateController.getCurrTemplateId()));
                 if (createPageFlag) {
-                    System.out.println(templateController.getTemplatePrompts(Integer.parseInt(templateController.getCurrTemplateId())));
                     this.updateInputPage(prompts);
                     cl.show(main, "inputPage");
                 } else {
