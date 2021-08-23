@@ -40,6 +40,11 @@ public class FormBuilder implements ActionListener{
         this.nameToComponent.put(name, label);
     }
 
+    public void addList(String name, String[] listOptions){
+        JList<String> list = new JList<>(listOptions);
+        this.nameToComponent.put(name, list);
+    }
+
     public void addTextField(String name) {
         this.nameToComponent.put(name, new JTextField());
     }
