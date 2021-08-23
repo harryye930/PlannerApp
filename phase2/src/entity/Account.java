@@ -24,7 +24,7 @@ public abstract class Account implements Serializable {
 
     public Account() {
         this.accountType = "regular";
-        this.userId = ((Integer) this.hashCode()).toString();
+        this.userId = ((Integer)Math.abs(this.hashCode())).toString();
         suspendedTime = LocalDateTime.now();
         friends = new ArrayList<>();
         mailbox = new HashMap<>();

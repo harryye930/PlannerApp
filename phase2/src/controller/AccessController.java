@@ -352,7 +352,11 @@ public class AccessController{
      * @return whether it's successful for 2 users to add friend
      */
     public boolean addFriend(String selfId, String friendId){
-        return accFriendManager.addFriend(selfId, friendId);
+        if (selfId.equals(friendId)) {
+            return false;
+        } else {
+            return accFriendManager.addFriend(selfId, friendId);
+        }
     }
 
     /**
