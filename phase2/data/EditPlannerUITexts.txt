@@ -1,0 +1,9 @@
+timeSlotPrompt: Please enter the time slot you want to add agenda to (in form of HH:MM)
+agendaPrompt: Please enter the agenda you want to add
+statusPrompt: Please enter the task name you wan to change status:
+columnPrompt: Please enter the column name you want to change to:
+changeToAdd: Change to Add Page
+addNamePrompt: Please enter the column name you want to add task to
+taskName: Please enter the task you want to add
+changeToEdit: Change to Edit page
+invalidPrompt: Invalid input!

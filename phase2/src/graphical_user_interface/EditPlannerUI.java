@@ -1,5 +1,6 @@
 package graphical_user_interface;
 
+import gateway.UIGateway;
 import graphical_user_interface.builder.FormBuilder;
 import graphical_user_interface.builder.IForm;
 
@@ -7,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class EditPlannerUI extends GeneralUI implements ActionListener {
     private boolean flag = false;
@@ -16,6 +18,7 @@ public class EditPlannerUI extends GeneralUI implements ActionListener {
     private final JList<String> list = new JList<>();
 
     private final GeneralUI editRemainder = new EditReminder(this.getParent());
+    private final Map<String, String> labelToStrings = new UIGateway().loadEditPlannerUITexts();
 
     private IForm dailyEditForm;
     private IForm projectEditForm;
@@ -90,10 +93,10 @@ public class EditPlannerUI extends GeneralUI implements ActionListener {
         FormBuilder fb = new FormBuilder();
         fb.setBounds(450, 25, 200, 250);
         fb.addLabel("timeSlotPrompt",
-                "Please enter the time slot you want to add agenda to (in form of HH:MM)");
+                labelToStrings.get("timeSlotPrompt"));
         fb.addTextField("timeSlot");
         fb.addLabel("agendaPrompt",
-                "Please enter the agenda you want to add");
+                labelToStrings.get("agendaPrompt"));
         fb.addTextField("agenda");
         this.dailyEditForm = fb.getForm();
     }
@@ -101,11 +104,11 @@ public class EditPlannerUI extends GeneralUI implements ActionListener {
     private void initProjectEditForm() {
         FormBuilder fb = new FormBuilder();
         fb.setBounds(450, 25, 200, 250);
-        fb.addLabel("statusPrompt", "Please enter the task name you wan to change status:");
+        fb.addLabel("statusPrompt", labelToStrings.get("statusPrompt"));
         fb.addTextField("status");
-        fb.addLabel("columnPrompt", "Please enter the column name you want to change to:");
+        fb.addLabel("columnPrompt", labelToStrings.get("columnPrompt"));
         fb.addTextField("column");
-        fb.addSubmitButton("changeToAdd", "Change to add page");
+        fb.addSubmitButton("changeToAdd", labelToStrings.get("changeToAdd"));
         fb.addListener(this);
         this.projectEditForm = fb.getForm();
     }
@@ -113,11 +116,11 @@ public class EditPlannerUI extends GeneralUI implements ActionListener {
     private void initProjectAddForm() {
         FormBuilder fb = new FormBuilder();
         fb.setBounds(450, 25, 200, 250);
-        fb.addLabel("addNamePrompt", "Please enter the column name you want to add task to");
+        fb.addLabel("addNamePrompt", labelToStrings.get("addNamePrompt"));
         fb.addTextField("addColumnName");
-        fb.addLabel("taskNamePrompt", "Please enter the task you want to add.");
+        fb.addLabel("taskNamePrompt", labelToStrings.get("taskNamePrompt"));
         fb.addTextField("taskName");
-        fb.addSubmitButton("changeToEdit", "Change to edit page");
+        fb.addSubmitButton("changeToEdit", labelToStrings.get("changeToEdit"));
         fb.addListener(this);
         this.projectAddForm = fb.getForm();
     }
@@ -144,7 +147,7 @@ public class EditPlannerUI extends GeneralUI implements ActionListener {
                         ((JTextField)dailyEditForm.get("agenda")).getText())) {
                     this.update();
                 } else {
-                    ((JLabel)dailyEditForm.get("timeSlotPrompt")).setText("invalid input format!");
+                    ((JLabel)dailyEditForm.get("timeSlotPrompt")).setText(labelToStrings.get("invalidPrompt"));
                     ((JTextField)dailyEditForm.get("agenda")).setText("");
                     ((JTextField)dailyEditForm.get("timeSlot")).setText("");
                 }
@@ -153,14 +156,14 @@ public class EditPlannerUI extends GeneralUI implements ActionListener {
                         ((JTextField)projectAddForm.get("taskName")).getText())) {
                     this.update();
                 } else {
-                    ((JLabel)projectAddForm.get("addNamePrompt")).setText("invalid input format!");
+                    ((JLabel)projectAddForm.get("addNamePrompt")).setText(labelToStrings.get("invalidPrompt"));
                 }
             } else if (type.equals("project")) {
                 if (plannerController.edit(((JTextField) projectEditForm.get("status")).getText(),
                         ((JTextField)projectEditForm.get("column")).getText())) {
                     this.update();
                 } else {
-                    ((JLabel)projectEditForm.get("statusPrompt")).setText("invalid input format!");
+                    ((JLabel)projectEditForm.get("statusPrompt")).setText(labelToStrings.get("invalidPrompt"));
                 }
             }
         } else if (e.getSource() == menuForm.get("delete")) {

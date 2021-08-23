@@ -13,7 +13,6 @@ import java.util.Map;
  * any friends-only planners if they are added to the friends list of another user)
  */
 
-//TODO: show friends-only planners
 public class CheckPlannerUI extends GeneralUI implements ActionListener {
     private boolean flag = false;
     private final Map<String, String> labelToStrings = new UIGateway().loadCheckPlannerUITexts();
