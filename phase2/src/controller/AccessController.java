@@ -272,7 +272,9 @@ public class AccessController{
         StringBuilder res = new StringBuilder();
         String sep = "\n=====================\n";
         for (Account i : acc){
-            res.append(i.toString()).append(sep);
+            if (!isAdmin(i.getUserId()).equals("admin")) {
+                res.append(i.toString()).append(sep);
+            }
         }
         return res.toString();
     }
