@@ -81,7 +81,7 @@ public class PlannerController {
             System.out.printf("Planner of type %s cannot be created.", type);
             return null;
         } else {
-            id = this.plannerManager.createPlanner(type, name, firstInput, secondInput, thirdInput);
+            id = createdPlannerID;
             this.currPlannerId = Integer.toString(id);
             accessController.setPlanner(accessController.getCurrUserId(), this.currPlannerId);
             this.save();
