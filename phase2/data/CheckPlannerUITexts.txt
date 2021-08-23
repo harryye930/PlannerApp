@@ -1,4 +1,4 @@
-prompt: <html>Please enter the ID of the planner <br/> you want to edit:</html>
+prompt: <html>Please enter the ID of the planner you want to edit:</html>
 goBack: Go back
 submit: Submit
 invalidInput: Invalid ID, please try again!
