@@ -17,6 +17,11 @@ public class DailyTemplate extends Template{
     private String type;
     private final int id;
 
+    /**
+     * Constructs a DailyTemplate object.
+     * @param name Name of this template.
+     * @param plannerNamePrompt Prompt for getting the name of the planner that can be created from this template.
+     */
     public DailyTemplate(String name, String plannerNamePrompt,
                          String startTimePrompt, String endTimePrompt, String incrementPrompt) {
         super(name, plannerNamePrompt);
@@ -27,6 +32,11 @@ public class DailyTemplate extends Template{
         this.type = "daily";
     }
 
+    /**
+     * Constructs a DailyTemplate object.
+     * @param numTemplatesLoaded Number of Templates already loaded in the program. So the ID of the template will start
+     *                           from numTemplatesLoaded + 1.
+     */
     public DailyTemplate(int numTemplatesLoaded, String name, String plannerNamePrompt,
                          String startTimePrompt, String endTimePrompt, String incrementPrompt) {
         super(numTemplatesLoaded, name, plannerNamePrompt);
@@ -46,14 +56,6 @@ public class DailyTemplate extends Template{
     }
 
     /**
-     * Getter for retrieving the prompt for the start time of the planner that will be created based on this template.
-     * @return String that's the prompt for the start time of this template.
-     */
-    public String getStartTimePrompt (){
-        return startTimePrompt;
-    }
-
-    /**
      * Setter for changing the prompt for the end time of the planner that will be created based on this template.
      * @param newPrompt A new prompt for the template.
      */
@@ -62,28 +64,11 @@ public class DailyTemplate extends Template{
     }
 
     /**
-     * Getter for retrieving the prompt for the end time of the planner that will be created based on this template.
-     * @return String that's the prompt for the end time of this template.
-     */
-    public String getEndTimePrompt (){
-        return endTimePrompt;
-    }
-
-    /**
      * Setter for changing the prompt for the time increment of the planner that will be created based on this template.
      * @param newPrompt A new prompt for the template.
      */
     private void setIncrementPrompt (String newPrompt){
         incrementPrompt = newPrompt;
-    }
-
-    /**
-     * Getter for retrieving the prompt for the time increment of the planner that will be created
-     * based on this template.
-     * @return String that's the prompt for the time increment of this template.
-     */
-    public String getIncrementPrompt (){
-        return incrementPrompt;
     }
 
     @Override
@@ -98,7 +83,7 @@ public class DailyTemplate extends Template{
 
     /**
      * Returns all the prompts of this template.
-     * @return List<String> that contains prompts of the template.
+     * @return List<String> that contains all the prompts of this template.
      */
     @Override
     public List<String> retrievePrompts() {
@@ -110,8 +95,8 @@ public class DailyTemplate extends Template{
     }
 
     /**
-     * Replace the old prompt of this template with the new prompt.
-     * If the provided old prompt is not one of the prompts in this template, it does nothing.
+     * Replaces the oldPrompt of this template with the newPrompt.
+     * If the provided oldPrompt is not one of the prompts in this template, it does nothing.
      * @param oldPrompt is the provided prompt to be replaced.
      * @param newPrompt is the new prompt provided to replace the old prompt.
      */

@@ -8,13 +8,14 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Manages templates.
+ * Stores and manages Templates.
  */
 public class TemplateManager implements Serializable {
 
     private Map<Integer, Template> templates;  // a mapping of template ID to Template
-    private int numTemplatesLoaded;
-    private boolean hasInitialized = false;
+    private int numTemplatesLoaded; // number of templates read in from external file at the start of the program
+    private boolean hasInitialized = false; // flag indicating if the templates that are read in from external file
+                                            // have been added to the TemplateManager
 
     /**
      * Creates a new empty TemplateManager.
@@ -23,12 +24,16 @@ public class TemplateManager implements Serializable {
         templates = new HashMap<>();
     }
 
+    /**
+     * Sets the numTemplatesLoaded attribute.
+     * @param numTemplatesLoaded Number of templates read in from external file at the start of the program.
+     */
     public void setNumTemplatesLoaded(int numTemplatesLoaded) {
         this.numTemplatesLoaded = numTemplatesLoaded;
     }
 
     /**
-     * Getter for Map of Template objects stored in TemplateManager, keys are Template ID's, values are the Template
+     * Gets the Map of Template objects stored in TemplateManager, keys are Template ID's, values are the Template
      * object corresponding to the ID.
      * @return Map of Template objects stored in TemplateManager.
      */
@@ -38,7 +43,7 @@ public class TemplateManager implements Serializable {
 
     /**
      * Adds a new Template to TemplateManager.
-     * @param t Template to be added.
+     * @param t Template object to be added.
      */
     public void addTemplate(Template t){
         // Add template <t> to the collection of templates stored in this TemplateManager object.
@@ -120,15 +125,6 @@ public class TemplateManager implements Serializable {
     }
 
     /**
-     * Removes a Template from TemplateManager.
-     * @param t Template being removed from TemplateManager.
-     */
-    public void removeTemplate(Template t) {
-        // Remove template <t> from the collection of templates stored in this TemplateManager object.
-        templates.remove(t.getId(), t);
-    }
-
-    /**
      * Changes the name of the Template with ID to newName.
      * @param ID ID of template being edited.
      * @param newName New value to set the name of the Template to.
@@ -139,7 +135,7 @@ public class TemplateManager implements Serializable {
 
     /**
      * Retrieves prompts of the Template with ID.
-     * @param ID ID of template being edited.
+     * @param ID ID of template.
      * @return List that contains prompts.
      */
     public List<String> retrievePrompts(int ID) {
@@ -157,39 +153,9 @@ public class TemplateManager implements Serializable {
         this.getTemplates().get(ID).renamePrompt(promptNumber, newName);
     }
 
-//    /**
-//     * For Template with ID, adds a new prompt named promptName to the list of prompts and numbers it with promptNumber
-//     * (i.e., all existing prompts that have number equal to or greater than promptNumber will have their number
-//     * increased by 1).
-//     * Note that the prompt numbers start from 0.
-//     * @param ID ID of template being edited.
-//     * @param promptNumber The number to give to the new prompt.
-//     * @param promptName The name to give to the new prompt.
-//     */
-//    public void addTemplatePrompt(int ID, int promptNumber, String promptName){
-//        this.getTemplates().get(ID).addPrompt(promptNumber, promptName);
-//    }
-//
-//    /**
-//     * For Template with ID, adds a new prompt named promptName to the end of the existing list of prompts.
-//     * @param ID ID of template being edited.
-//     * @param promptName The name to give to the new prompt.
-//     */
-//    public void addTemplatePrompt(int ID, String promptName){
-//        this.getTemplates().get(ID).addPrompt(promptName);
-//    }
-//
-//    /**
-//     * For Template with ID,  removes an existing prompt with promptNumber.
-//     * @param ID ID of template being edited.
-//     * @param promptNumber The number that corresponds to the prompt to remove.
-//     */
-//    public void removeTemplatePrompt(int ID, int promptNumber){
-//        this.getTemplates().get(ID).removePrompt(promptNumber);
-//    }
     /**
      * Retrieves and returns all published templates stored in this TemplateManager (i.e., templates that are viewable
-     * by all users).
+     * to all users).
      * A template is published if their publishedStatus is true.
      * @return Map<Integer, Template> which contains all published templates.
      */
@@ -205,15 +171,14 @@ public class TemplateManager implements Serializable {
     }
 
     /**
-     * @return Number of templates in TemplateManager.
+     * @return Number of templates stored in TemplateManager.
      */
     public int numberOfTemplates() {
         return templates.size();
     }
 
     /**
-     * Returns number of published templates in the TemplateManager (i.e., templates that are viewable by all users).
-     * @return Number of published template in TemplateManager.
+     * @return Number of published template stored in the TemplateManager (i.e., templates that are viewable to all users).
      */
     public int numberOfPublishedTemplates() {
         return retrievePublishedTemplates().size();
@@ -283,7 +248,7 @@ public class TemplateManager implements Serializable {
     }
 
     /**
-     * Get detailed string representation of a specified Template that's stored in TemplateManager.
+     * Returns detailed string representation of a Template with ID that's stored in TemplateManager.
      * @param ID ID of the Template.
      * @return String representation of the Template object corresponding to the ID. String representation contains
      * detailed representation of the Template, including name, type, number of prompts, and what those prompts are.
@@ -293,31 +258,7 @@ public class TemplateManager implements Serializable {
     }
 
     /**
-     * Get preview (a summary that only includes basic info) of a specified Template that's stored in TemplateManager.
-     * @param ID ID of the Template.
-     * @return String preview of Template corresponding to ID that includes basic information.
-     */
-    public String previewTemplate(int ID){
-        return this.getTemplates().get(ID).getTemplatePreview();
-    }
-
-    /**
-     * Preview all Templates stored in the system.
-     * This method is used when user wants to see a list of all Templates, before they select which template they want
-     * to see in detail.
-     * @param publishedTemplatesOnly Boolean indicating whether to show only published templates or not.
-     * @return String that contains preview of all Template objects stored in the system.
-     */
-    public String previewAllTemplates(boolean publishedTemplatesOnly){
-        if (publishedTemplatesOnly) {
-            return this.viewPublishedInTemplateManager("Summary");
-        } else {
-            return this.viewTemplateManager("Summary");
-        }
-    }
-
-    /**
-     * View all Templates stored in the system in detail.
+     * Views all Templates stored in the system in detail.
      * This method is used when user wants to see a list of all Templates in detail.
      * @param publishedTemplatesOnly Boolean indicating whether to show only published templates or not.
      * @return String that contains detailed representation of all Template objects stored in the system.
@@ -331,8 +272,8 @@ public class TemplateManager implements Serializable {
     }
 
     /**
-     * Return the type of the template
-     * @param id A int representing the id of the template.
+     * Returns the type of the template with ID being id.
+     * @param id An integer representing the id of the template.
      * @return A String representing the Type of the template.
      */
     public String getType(int id) {
@@ -340,22 +281,13 @@ public class TemplateManager implements Serializable {
         return hm.get(id).isType();
     }
 
-    /**
-     * Returns the published status of a given template.
-     * @param id A int representing the id of the template.
-     * @return A boolean representing the Type of the template.
-     */
-    public boolean getPublishedStatus(int id) {
-        Map<Integer, Template> hm = this.getTemplates();
-        return hm.get(id).getPublishedStatus();
-    }
 
     /**
-     * Changes the published status of a given template (i.e., published to unpublished, vice versa).
-     * @param id A int representing the id of the template.
+     * Toggles the published status of a given template (i.e., published to unpublished, vice versa).
+     * @param id An integer representing the id of the template.
      */
     public void switchPublishedStatus(int id) {
         Map<Integer, Template> hm = this.getTemplates();
-        hm.get(id).switchPublishStatus();
+        hm.get(id).switchPublishedStatus();
     }
 }

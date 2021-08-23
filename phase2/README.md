@@ -38,6 +38,9 @@ days, where x is a number decided by the admin user
 - Added a "published" property to templates
   - Added the ability to change a template's "published" status (admin users only)
   - Added the ability to show only the published templates
+- Admin users can now create templates of an existing template type (daily, project, or reminders). A newly created 
+template should still be asking for the same things as an existing template, but they have the freedom of phrasing the
+template prompts differently or even in a different language.
 
 
 ## Project Specification

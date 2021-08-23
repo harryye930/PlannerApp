@@ -26,23 +26,23 @@ public class TemplateController{
     }
 
     /**
-     * Set the access controller
-     * @param accessController An access controller object
+     * Sets the access controller.
+     * @param accessController An AccessController object.
      */
     public void setAccessController(AccessController accessController) {
         this.accessController = accessController;
     }
 
     /**
-     * Set the planner controller.
-     * @param plannerController A planner Controller object.
+     * Sets the planner controller.
+     * @param plannerController A PlannerController object.
      */
     public void setPlannerController(PlannerController plannerController) {
         this.plannerController = plannerController;
     }
 
     /**
-     * Get the current template ID.
+     * Gets the current template ID.
      * @return A String representing the current template ID.
      */
     public String getCurrTemplateId() {
@@ -50,19 +50,7 @@ public class TemplateController{
     }
 
     /**
-     * Preview all Templates stored in the system.
-     * This method is used when user wants to see a list of all Templates, before they select which template they want
-     * to see in detail.
-     * @param publishedTemplatesOnly Boolean indicating whether to show only published templates or not.
-     * @return String that contains preview of all Template objects stored in the system.
-     */
-    public String previewAllTemplates(boolean publishedTemplatesOnly){
-        return templateManager.previewAllTemplates(publishedTemplatesOnly);
-    }
-
-    /**
-     * View all Templates stored in the system in detail.
-     * This method is used when user wants to see a list of all Templates in detail.
+     * Views all Templates stored in the system in detail.
      * @param publishedTemplatesOnly Boolean indicating whether to show only published templates or not.
      * @return String that contains detailed representation of all Template objects stored in the system.
      */
@@ -80,16 +68,8 @@ public class TemplateController{
         return templateManager.detailViewTemplate(id);
     }
 
-//    /**
-//     * Add Template t into TemplateManager.
-//     * @param t Template to be added to TemplateManager.
-//     */
-//    public void addTemplate(Template t){
-//        templateManager.importTemplate(t);
-//    }
-
     /**
-     * Saves all templates stored in TemplateManager.
+     * Saves all templates stored in TemplateManager to an external file.
      * @return A boolean value representing whether the saving process is successful.
      */
     public boolean save() {
@@ -97,7 +77,7 @@ public class TemplateController{
     }
 
     /**
-     * Loads all templates into TemplateManager.
+     * Loads all templates from an external file into TemplateManager.
      * @return A boolean value representing whether the loading process is successful.
      */
     public boolean load() {
@@ -105,14 +85,11 @@ public class TemplateController{
     }
 
     /**
-     * Check the template, similar to login so that the controller will
-     * remember the template's id.
+     * Checks if there is a template with ID being id stored in the program.
+     * If so, then the program remembers the template id.
      * @param id A String representing the template id we want to check.
-     * @return A boolean value representing whether the template is stored in the system.
+     * @return A boolean value representing whether a template with ID being id is stored in the program.
      */
-    // TODO: Same TODO as the one for viewTemplates() above. Please indicate whether you want to get ID of just published
-    // TODO: templates (i.e., publishedTemplatesOnly = true) or IDs of all templates regardless of its published status
-    // TODO: (i.e., publishedTemplatesOnly = false). I put it as false for now.
     public boolean checkTemplate(String id) {
         for (String tempId: this.getAllTemplateIds(false)) {
             if (Objects.equals(id, tempId)) {
@@ -124,35 +101,35 @@ public class TemplateController{
     }
 
     /**
-     * Return a collection of all template id in String.
-     * @param publishedTemplatesOnly Boolean indicating whether to retrieve ids of only published templates or not.
-     * @return A List that contain the id of all template
+     * Returns a collection of all template id's in String.
+     * @param publishedTemplatesOnly Boolean indicating whether to retrieve ids of only the published templates.
+     * @return A List that contains the id's of all templates.
      */
     public List<String> getAllTemplateIds(boolean publishedTemplatesOnly) {
-        List<String> res = new ArrayList<>();
-        List<Integer> arr;
+        List<String> output = new ArrayList<>();
+        List<Integer> allIntIDs;
         if (publishedTemplatesOnly) {
-            arr = new ArrayList<>(this.templateManager.retrievePublishedTemplates().keySet());
+            allIntIDs = new ArrayList<>(this.templateManager.retrievePublishedTemplates().keySet());
         } else {
-            arr = new ArrayList<>(this.templateManager.getTemplates().keySet());
+            allIntIDs = new ArrayList<>(this.templateManager.getTemplates().keySet());
         }
-        for (Integer id: arr) {
-            res.add(id.toString());
+        for (Integer id: allIntIDs) {
+            output.add(id.toString());
         }
-        return res;
+        return output;
     }
 
     /**
-     * Retrieves a collection of all prompts in the template with a given template ID.
+     * Retrieves a collection of all prompts in the template with the given template ID.
      * @param ID of the template.
-     * @return A List that contains the prompts of template with a given ID.
+     * @return A List that contains the prompts of template with the given ID.
      */
     public List<String> getTemplatePrompts(int ID) {
         return this.templateManager.retrievePrompts(ID);
     }
 
     /**
-     * Return the template type with give id.
+     * Returns the type of template with give id.
      * @param id An int representing the template id.
      * @return A String representing the type of the template.
      */
@@ -161,16 +138,7 @@ public class TemplateController{
     }
 
     /**
-     * Return the template published status with a given id.
-     * @param id An int representing the template id.
-     * @return A boolean representing the published status of the template.
-     */
-    public boolean getTemplatePublishedStatus(int id) {
-        return this.templateManager.getPublishedStatus(id);
-    }
-
-    /**
-     * Changes the published status of a given template (i.e., published to unpublished, vice versa).
+     * Toggles the published status of template with id (i.e., published to unpublished, vice versa).
      * @param id An int representing the id of the template.
      */
     public void switchPublishedStatus(int id) {

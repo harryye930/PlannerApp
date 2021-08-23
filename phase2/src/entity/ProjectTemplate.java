@@ -3,20 +3,25 @@ package entity;
 import java.util.List;
 
 /**
- * Represents one type of Template in the program - a Task Template, which allows users to create a Planner where
+ * Represents one type of Template in the program - a Project Template, which allows users to create a Planner where
  * users can fill in tasks for a particular project based on the status of the tasks.
  */
 public class ProjectTemplate extends Template{
     /**
      * Prompts that are unique to this template:
-     * firstStatusPrompt: Prompt for the first status heading (e.g., To Do).
-     * secondStatusPrompt: Prompt for the second status heading (e.g., Doing).
-     * thirdStatusPrompt: Prompt for the third status heading (e.g., Completed).
+     * firstStatusPrompt: Prompt asking for the first status column heading (e.g., To Do).
+     * secondStatusPrompt: Prompt asking for the second status column heading (e.g., Doing).
+     * thirdStatusPrompt: Prompt asking for the third status column heading (e.g., Completed).
      */
     private String firstStatusPrompt, secondStatusPrompt, thirdStatusPrompt;
     private String type;
     private final int id;
 
+    /**
+     * Constructs a ProjectTemplate object.
+     * @param name Name of this template.
+     * @param plannerNamePrompt Prompt for getting the name of the planner that can be created from this template.
+     */
     public ProjectTemplate(String name, String plannerNamePrompt,
                            String firstStatusPrompt, String secondStatusPrompt, String thirdStatusPrompt) {
         super(name, plannerNamePrompt);
@@ -27,6 +32,11 @@ public class ProjectTemplate extends Template{
         this.type = "project";
     }
 
+    /**
+     * Constructs a ProjectTemplate object.
+     * @param numTemplatesLoaded Number of Templates already loaded in the program. So the ID of the template will start
+     *                            from numTemplatesLoaded + 1.
+     */
     public ProjectTemplate(int numTemplatesLoaded, String name, String plannerNamePrompt,
                            String firstStatusPrompt, String secondStatusPrompt, String thirdStatusPrompt) {
         super(numTemplatesLoaded, name, plannerNamePrompt);
@@ -42,17 +52,8 @@ public class ProjectTemplate extends Template{
      * this template.
      * @param newPrompt A new prompt for the template.
      */
-    public void setFirstStatusPrompt (String newPrompt){
+    private void setFirstStatusPrompt (String newPrompt){
         firstStatusPrompt = newPrompt;
-    }
-
-    /**
-     * Getter for retrieving the prompt for the first status heading of the planner that will be created based on
-     * this template.
-     * @return String that's the prompt for the first status heading of this template.
-     */
-    public String getFirstStatusPrompt (){
-        return firstStatusPrompt;
     }
 
     /**
@@ -60,17 +61,8 @@ public class ProjectTemplate extends Template{
      * this template.
      * @param newPrompt A new prompt for the template.
      */
-    public void setSecondStatusPrompt (String newPrompt){
+    private void setSecondStatusPrompt (String newPrompt){
         secondStatusPrompt = newPrompt;
-    }
-
-    /**
-     * Getter for retrieving the prompt for the second status heading of the planner that will be created based on
-     * this template.
-     * @return String that's the prompt for the second status heading of this template.
-     */
-    public String getSecondStatusPrompt (){
-        return secondStatusPrompt;
     }
 
     /**
@@ -78,17 +70,8 @@ public class ProjectTemplate extends Template{
      * this template.
      * @param newPrompt A new prompt for the template.
      */
-    public void setThirdStatusPrompt (String newPrompt){
+    private void setThirdStatusPrompt (String newPrompt){
         thirdStatusPrompt = newPrompt;
-    }
-
-    /**
-     * Getter for retrieving the prompt for the third status heading of the planner that will be created based on
-     * this template.
-     * @return String that's the prompt for the third status heading of this template.
-     */
-    public String getThirdStatusPrompt (){
-        return thirdStatusPrompt;
     }
 
     @Override
@@ -115,8 +98,8 @@ public class ProjectTemplate extends Template{
     }
 
     /**
-     * Replace the old prompt of this template with the new prompt.
-     * If the provided old prompt is not one of the prompts in this template, it does nothing.
+     * Replaces the oldPrompt of this template with the newPrompt.
+     * If the provided oldPrompt is not one of the prompts in this template, it does nothing.
      * @param oldPrompt is the provided prompt to be replaced.
      * @param newPrompt is the new prompt provided to replace the old prompt.
      */

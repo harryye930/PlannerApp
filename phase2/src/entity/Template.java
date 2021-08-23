@@ -4,16 +4,16 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Represents a Template in the program. Can be a Daily Template, or a Project Template, etc., which are
- * implemented as subclasses.
+ * Represents a Template in the program.
+ * Can be a Daily Template, or a Project Template, etc., which are implemented as subclasses.
  */
 public abstract class Template implements Serializable {
     /**
      * name: Name of this template.
-     * plannerNamePrompt: Prompt for the planner name that can be created based on this template.
+     * plannerNamePrompt: Prompt for getting the name of the planner that can be created from this template.
      * id: ID of this template.
+     * type: Type of this template.
      * publishedStatus: Published status of this template (if true, the template is published).
-     * templateType: Type of this template.
      */
     protected String name;
     protected String plannerNamePrompt;
@@ -21,15 +21,11 @@ public abstract class Template implements Serializable {
     private String type;
     protected boolean publishedStatus;
 
-    public Template(int numTemplatesLoaded, String name, String plannerNamePrompt) {
-        this.name = name;
-        this.plannerNamePrompt = plannerNamePrompt;
-        publishedStatus = false;  // the default published status of all templates are false (i.e., unpublished)
-        type = null;
-        id = numTemplatesLoaded;
-        id++;
-    }
-
+    /**
+     * Constructs a new Template object named name, and has plannerNamePrompt.
+     * @param name Name of this template.
+     * @param plannerNamePrompt Prompt for getting the name of the planner that can be created from this template.
+     */
     public Template(String name, String plannerNamePrompt) {
         this.name = name;
         this.plannerNamePrompt = plannerNamePrompt;
@@ -38,13 +34,19 @@ public abstract class Template implements Serializable {
         id++;
     }
 
-//    /**
-//     * Set the type of the template
-//     * @param type A String representing the type of the template.
-//     */
-//    public void setType(String type) {
-//        this.type = type;
-//    }
+    /**
+     * Constructs a new Template object named name, and has plannerNamePrompt.
+     * @param numTemplatesLoaded Number of Templates already loaded in the program. So the ID of the template will start
+     *                           from numTemplatesLoaded + 1.
+     */
+    public Template(int numTemplatesLoaded, String name, String plannerNamePrompt) {
+        this.name = name;
+        this.plannerNamePrompt = plannerNamePrompt;
+        publishedStatus = false;  // the default published status of all templates are false (i.e., unpublished)
+        type = null;
+        id = numTemplatesLoaded;
+        id++;
+    }
 
     /**
      * Setter for changing the name of this template.
@@ -63,19 +65,11 @@ public abstract class Template implements Serializable {
     }
 
     /**
-     * Setter for changing the prompt for the name of the planner that will be created based on this template.
-     * @param newPrompt A new prompt for the template.
+     * Setter for changing the prompt asking for the name of the planner that will be created from this template.
+     * @param newPrompt A new prompt for asking the name of the planner in the template.
      */
     public void setPlannerNamePrompt(String newPrompt){
         plannerNamePrompt = newPrompt;
-    }
-
-    /**
-     * Getter for retrieving the prompt for the name of the planner that will be created based on this template.
-     * @return String that's the prompt for the name of this template.
-     */
-    public String getPlannerNamePrompt(){
-        return plannerNamePrompt;
     }
 
     /**
@@ -96,16 +90,16 @@ public abstract class Template implements Serializable {
 
     /**
      * Getter for retrieving the published status of this template.
-     * @return boolean indicating whether this template is published (i.e., visible to users) or not.
+     * @return boolean indicating whether this template is published (i.e., visible to regular users) or not.
      */
     public boolean getPublishedStatus() {
         return publishedStatus;
     }
 
     /**
-     * Switch publishedStatus of this template. Switched to unpublished if current status is published, vice versa.
+     * Toggle publishedStatus of this template. Switched to unpublished if current status is published, and vice versa.
      */
-    public void switchPublishStatus() {
+    public void switchPublishedStatus() {
         publishedStatus = !publishedStatus;
     }
 
@@ -120,10 +114,8 @@ public abstract class Template implements Serializable {
         stringRep += "Type: " + this.isType() + "\n";
         stringRep += "Published: " + this.getPublishedStatus() + "\n\n";
         stringRep += "Prompts: " + "\n";
-        int i = 0;
-        for (String p: retrievePrompts()){
-            stringRep += "Prompt " + i + ": " + p + "\n";
-            i++;
+        for (Map.Entry<Integer, String> entry: assignPromptNumberToPrompts().entrySet()){
+            stringRep += "Prompt " + entry.getKey() + ": " + entry.getValue() + "\n";
         }
         stringRep += "---------------------------------------------------------\n";
         return stringRep;
@@ -147,7 +139,7 @@ public abstract class Template implements Serializable {
     }
 
     /**
-     * Returns the number of prompts of the template.
+     * Returns the number of prompts in this template.
      * @return int that represents the number of prompts.
      */
     public int numPrompts() {
@@ -155,41 +147,19 @@ public abstract class Template implements Serializable {
     }
 
     /**
-     * Returns true if the provided prompt is one of the prompts of this template.
-     * @param prompt is the given prompt being checked
-     * @return a boolean that represents the presence or absence of the given prompt.
-     */
-    protected boolean hasPrompt(String prompt) {
-        List<String> templatePrompts = retrievePrompts();
-        return templatePrompts.contains(prompt);
-    }
-
-    /**
-     * Returns the type of the template.
-     * @return String that's the type of the template.
+     * Returns the type of this template.
+     * @return String that's the type of this template.
      */
     public abstract String isType();
 
     /**
      * Returns all the prompts of this template.
-     * @return List<String> that contains prompts of the template.
+     * @return List<String> that contains all the prompts of the template.
      */
     public List<String> retrievePrompts() {
         List<String> prompts = new ArrayList<>();
         prompts.add(plannerNamePrompt);
         return prompts;
-    }
-
-    /**
-     * Replace the old prompt of this template with the new prompt.
-     * If the provided old prompt is not one of the prompts in this template, it does nothing.
-     * @param oldPrompt is the provided prompt to be replaced.
-     * @param newPrompt is the new prompt provided to replace the old prompt.
-     */
-    public void replacePrompt(String oldPrompt, String newPrompt) {
-        if (oldPrompt.equals(plannerNamePrompt)) {
-            setPlannerNamePrompt(newPrompt);
-        }
     }
 
     /**
@@ -199,14 +169,25 @@ public abstract class Template implements Serializable {
      */
     private Map<Integer, String> assignPromptNumberToPrompts() {
         // Numbers assigned to the prompts correspond to the index of the prompt in the ArrayList prompts.
-        List<String> templatePrompts = retrievePrompts();
         Map<Integer, String> promptsToNumbers = new HashMap<>();
         int i = 0;
-        for (String prompt: templatePrompts) {
+        for (String prompt: retrievePrompts()) {
             promptsToNumbers.put(i, prompt);
             i++;
         }
         return promptsToNumbers;
+    }
+
+    /**
+     * Replace the old prompt of this template with the new prompt.
+     * If the provided old prompt is not one of the prompts in this template, it does nothing.
+     * @param oldPrompt is the provided prompt to be replaced.
+     * @param newPrompt is the new prompt provided to replace the old prompt.
+     */
+    protected void replacePrompt(String oldPrompt, String newPrompt) {
+        if (oldPrompt.equals(plannerNamePrompt)) {
+            setPlannerNamePrompt(newPrompt);
+        }
     }
 
     /**
@@ -227,32 +208,5 @@ public abstract class Template implements Serializable {
     public void renamePrompt(int promptNumber, String newName){
         replacePrompt(findPrompt(promptNumber), newName);
     }
-
-//    /**
-//     * Adds a new prompt named promptName to the list of prompts and number it with promptNumber (i.e., all existing
-//     * prompts that have number equal to or greater than promptNumber will have their number increased by 1).
-//     * Note that the prompt numbers start from 0.
-//     * @param promptNumber The number to give to the new prompt.
-//     * @param promptName The name to give to the new prompt.
-//     */
-//    public void addPrompt(int promptNumber, String promptName){
-//        this.prompts.add(promptNumber, promptName);
-//    }
-//
-//    /**
-//     * Adds a new prompt named promptName to the end of the existing list of prompts.
-//     * @param promptName The name to give to the new prompt.
-//     */
-//    public void addPrompt(String promptName){
-//        addPrompt(this.numPrompts(), promptName);
-//    }
-//
-//    /**
-//     * Removes an existing prompt with promptNumber.
-//     * @param promptNumber The number that corresponds to the prompt to remove.
-//     */
-//    public void removePrompt(int promptNumber){
-//        this.prompts.remove(promptNumber);
-//    }
 
 }
