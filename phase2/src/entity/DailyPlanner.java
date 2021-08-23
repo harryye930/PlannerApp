@@ -10,12 +10,9 @@ import java.util.Map;
 public class DailyPlanner extends Planner {
     private Map<String, String> dailyPlannerTask;
     private List<String> timesList; // time array
-    private int ID;
     private int interval;  //minutes interval
     private int startHour;
-    private int startMins;
     private int endHour;
-    private int endMins;
     private int NumAgendas;
 
     /**
@@ -27,39 +24,19 @@ public class DailyPlanner extends Planner {
      * @param Interval:    time interval between each calendar time, in minutes
      */
     public DailyPlanner(String plannerName, String startTime, String endTime, int Interval) {
-        // generate hashmap with given time interval with empty content
-        // and an arraylist of time for reference since hashmap doesn't have order per se
-        // https://facingissuesonit.com/2019/05/10/java-generate-15-minute-time-interval-am-pm/
         super();
-        initializePlannerVars(plannerName, startTime, endTime, Interval);
-    }
-
-    public DailyPlanner(int numPlannersLoaded, String plannerName, String startTime, String endTime, int Interval) {
-        // generate hashmap with given time interval with empty content
-        // and an arraylist of time for reference since hashmap doesn't have order per se
-        // https://facingissuesonit.com/2019/05/10/java-generate-15-minute-time-interval-am-pm/
-        super(numPlannersLoaded);
-        initializePlannerVars(plannerName, startTime, endTime, Interval);
-    }
-
-    private void initializePlannerVars(String plannerName, String startTime, String endTime, int Interval) {
         this.plannerName = plannerName;
         this.interval = Interval;
         this.startHour = Integer.parseInt(startTime.substring(0, 2));
-        this.startMins = Integer.parseInt(startTime.substring(3, 5));
         this.endHour = Integer.parseInt(endTime.substring(0, 2));
-        this.endMins = Integer.parseInt(endTime.substring(3, 5));
         this.timesList = new ArrayList<>();
         this.dailyPlannerTask = new HashMap<>();
-        this.ID = super.getID();
         this.NumAgendas = 0;
         String timeFormat;
         for (int h = this.startHour; h < this.endHour; h++) {
-            for (int m = this.startMins; m < 60; ) {
-                timeFormat = String.format("%02d:%02d", h, m);
-                timesList.add(timeFormat);
-                m = m + interval;
-            }
+            timeFormat = String.format("%02d:%02d", h, 0);
+            timesList.add(timeFormat);
+            h = h + interval;
         }
 
         //add all time to Hashmap with empty agenda
@@ -68,6 +45,27 @@ public class DailyPlanner extends Planner {
         }
     }
 
+    public DailyPlanner(int numPlannersLoaded, String plannerName, String startTime, String endTime, int Interval) {
+        super(numPlannersLoaded);
+        this.plannerName = plannerName;
+        this.interval = Interval;
+        this.startHour = Integer.parseInt(startTime.substring(0, 2));
+        this.endHour = Integer.parseInt(endTime.substring(0, 2));
+        this.timesList = new ArrayList<>();
+        this.dailyPlannerTask = new HashMap<>();
+        this.NumAgendas = 0;
+        String timeFormat;
+        for (int h = this.startHour; h < this.endHour; h++) {
+            timeFormat = String.format("%02d:%02d", h, 0);
+            timesList.add(timeFormat);
+            h = h + interval;
+        }
+
+        //add all time to Hashmap with empty agenda
+        for (String time : timesList) {
+            dailyPlannerTask.put(time, "N/A");
+        }
+    }
 
     /**
      * Show the planner type is daily planner
@@ -120,8 +118,8 @@ public class DailyPlanner extends Planner {
         sb.append("Status: ").append(this.privacyStatus).append("\n");
 
         String timeInfo = String.format("Start time -> %d:%d, End time -> %d:%d. \n",
-                this.startHour, this.startMins, this.endHour, this.endMins);
-        String plannerInfo = this.plannerName + "\n" + "ID: " + this.ID + "\n" + timeInfo + "\nTasks: \n";
+                this.startHour, 0, this.endHour, 0);
+        String plannerInfo = this.plannerName + "\n" + "ID: " + super.getID() + "\n" + timeInfo + "\nTasks: \n";
         sb.append(plannerInfo);
         for (String time : timesList) {
             sb.append(time);
@@ -142,16 +140,9 @@ public class DailyPlanner extends Planner {
     @Override
     public Boolean add(String time, String agenda) {
 
-//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-//        LocalDateTime now = LocalDateTime.now();
-//        String currTime = dtf.format(now);
         this.NumAgendas++;
         int newStartHour = Integer.parseInt(time.substring(0, 2));
-//        int newStartMins = Integer.parseInt(time.substring(3, 5));
-        String hourIndex;
-        String minIndex;
-//        if (newStartHour < this.startHour || newStartHour > this.endHour || newStartMins < 0 || newStartMins > 60) {
-//            return false;
+
         if (newStartHour < this.startHour) {
             int gap = startHour - newStartHour;
             for (int i = 0; i < gap; i++) {

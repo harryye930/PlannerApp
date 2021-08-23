@@ -158,7 +158,9 @@ public class PlannerController {
      * @return true iff is correctly request to change.
      */
     public boolean edit(String time, String newAgenda){
-        return plannerManager.edit(Integer.parseInt(currPlannerId), time, newAgenda);
+        boolean flag = plannerManager.edit(Integer.parseInt(currPlannerId), time, newAgenda);
+        this.save();
+        return flag;
     }
 
     /** Pass on request to change their own planner
@@ -167,7 +169,9 @@ public class PlannerController {
      * @return true iff the status is correctly requested to change. (from "public to "private or vise versa)
      */
     public boolean changePrivacyStatus(String status){
-        return plannerManager.changePrivacyStatus(Integer.parseInt(currPlannerId), status);
+        boolean flag = plannerManager.changePrivacyStatus(Integer.parseInt(currPlannerId), status);
+        this.save();
+        return flag;
     }
 
     /**
@@ -176,9 +180,10 @@ public class PlannerController {
      */
     public boolean deletePlanner(String plannerId){
         accessController.removePlanner(accessController.getCurrUserId(), plannerId);
-        return this.plannerManager.deletePlanner(Integer.parseInt(plannerId));
+        boolean flag = this.plannerManager.deletePlanner(Integer.parseInt(plannerId));
+        this.save();
+        return flag;
     }
-
 
     /**
      * Show all the planners id of one author.
@@ -234,7 +239,9 @@ public class PlannerController {
      * @return a boolean value representing whether the change is successful or not.
      */
     public boolean add(String i, String j) {
-        return this.plannerManager.add(Integer.parseInt(this.getCurrPlannerId()), i, j);
+        boolean flag = this.plannerManager.add(Integer.parseInt(this.getCurrPlannerId()), i, j);
+        this.save();
+        return flag;
     }
 
     /**
@@ -244,6 +251,8 @@ public class PlannerController {
      * @return a boolean value representing whether the change is successful or not.
      */
     public boolean changeTaskStatus(String taskName, String status) {
-        return plannerManager.changeTaskStatus(Integer.parseInt(getCurrPlannerId()), taskName, status);
+        boolean flag = plannerManager.changeTaskStatus(Integer.parseInt(getCurrPlannerId()), taskName, status);
+        this.save();
+        return flag;
     }
 }

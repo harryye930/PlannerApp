@@ -61,6 +61,7 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
 
         main.add(createPlanner, "createPlanner");
         JScrollPane templateInfo = data.getTemplates(createPlanner);
+        createPlanner.add(templateInfo);
 
         message.setBounds(450, 50, 200, 50);
         createPlanner.add(message);
@@ -119,6 +120,7 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
                 this.message.setText(labelToStrings.get("invalidInput"));
             } else {
                 if (createPageFlag) {
+                    templateController.getTemplatePrompts(Integer.parseInt(templateController.getCurrTemplateId()));
                     cl.show(main, "inputPage");
                 } else {
                     this.showCreatePage();
