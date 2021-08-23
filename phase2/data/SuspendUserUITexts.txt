@@ -1,4 +1,4 @@
 goBack: Go back
-prompt: <html>Please enter the number of days<br/> you want to suspend this user for:</html>
+prompt: <html>Please enter the number of days you want to suspend this user for:</html>
 suspendButton: Suspend
 unsuspendButton: Un-suspend
