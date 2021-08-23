@@ -80,7 +80,7 @@ public abstract class Template implements Serializable {
 
     /**
      * Getter for retrieving the id of this template.
-     * @return String that represents the id of this template.
+     * @return Integer that represents the id of this template.
      */
     public int getId() {
         return id;
