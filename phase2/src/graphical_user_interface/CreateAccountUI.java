@@ -11,8 +11,6 @@ import java.awt.event.KeyListener;
 import java.util.Map;
 import java.util.Objects;
 
-
-// TODO: To be merged later
 /**
  * GUI class for creating a new account by entering email, username, password, and confirmed password.
  * Allows user to create a temporary account by checking a box for creating temporary account.
@@ -23,8 +21,8 @@ public class CreateAccountUI extends GeneralUI implements KeyListener, ActionLis
     private boolean flag = false;
     private Map<String, String> labelToStrings = new UIGateway().loadCreateAccountUITexts();
 
-    private final GeneralUI adminAccUI = new AdminAccountUI(this.getParent());
-    private final GeneralUI regularAccUI = new RegularAccountUI(this.getParent());
+    private final GeneralUI adminAccUI;
+    private final GeneralUI regularAccUI;
 
     private final JLabel createAccount = new JLabel(labelToStrings.get("createAccount"));
     private final JLabel passwordPrompt0 = new JLabel(labelToStrings.get("passwordPrompt"));
@@ -44,6 +42,8 @@ public class CreateAccountUI extends GeneralUI implements KeyListener, ActionLis
 
     public CreateAccountUI(GeneralUI parent) {
         this.setParent(parent);
+        this.adminAccUI = new AdminAccountUI(this.getParent());
+        this.regularAccUI = new RegularAccountUI(this.getParent());
     }
 
     /**
