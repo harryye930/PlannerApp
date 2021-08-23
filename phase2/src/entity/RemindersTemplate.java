@@ -15,7 +15,7 @@ public class RemindersTemplate extends Template{
 //     */
     private String taskHeadingPrompt, dateHeadingPrompt, completionStatusHeadingPrompt;
     private String type;
-    private int id;
+    private final int id;
 
     /**
      * Prompts that are unique to this template:
@@ -31,7 +31,22 @@ public class RemindersTemplate extends Template{
         this.dateHeadingPrompt = dateHeadingPrompt;
         this.completionStatusHeadingPrompt = completionStatusHeadingPrompt;
         this.type = "reminders";
-//        this.setTemplateType("Reminders");
+    }
+
+    /**
+     * Prompts that are unique to this template:
+     * @param taskHeadingPrompt Prompt for the heading of the tasks (e.g., Tasks To Be Completed).
+     * @param dateHeadingPrompt Prompt for the date at which each task should be completed by (e.g., Date).
+     * @param completionStatusHeadingPrompt Prompt for the completion status heading (e.g., Completed (Y/N)).
+     */
+    public RemindersTemplate(int numTemplatesLoaded, String name, String plannerNamePrompt,
+                             String taskHeadingPrompt, String dateHeadingPrompt, String completionStatusHeadingPrompt) {
+        super(numTemplatesLoaded, name, plannerNamePrompt);
+        this.id = super.getId();
+        this.taskHeadingPrompt = taskHeadingPrompt;
+        this.dateHeadingPrompt = dateHeadingPrompt;
+        this.completionStatusHeadingPrompt = completionStatusHeadingPrompt;
+        this.type = "reminders";
     }
 
     /**

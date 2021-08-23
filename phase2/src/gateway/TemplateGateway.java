@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class TemplateGateway extends Reader<HashMap<Integer, Template>> {
 
     private String filePath;
-    private HashMap<Integer, Template> idToTemplate = new HashMap<Integer, Template>();
+    private HashMap<Integer, Template> idToTemplate = new HashMap<>();
 
     private final TemplateManager tm;
 
@@ -42,8 +42,9 @@ public class TemplateGateway extends Reader<HashMap<Integer, Template>> {
             if (hm == null) {return true;} else {
                 this.idToTemplate = hm;
             }
+            tm.setNumTemplatesLoaded(hm.size());
             for (Template temp: this.idToTemplate.values()) {
-                tm.importTemplate(temp);
+                tm.addTemplate(temp);
             }
             return true;
         } catch (Exception ex) {

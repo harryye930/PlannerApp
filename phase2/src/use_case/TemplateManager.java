@@ -13,12 +13,18 @@ import java.util.*;
 public class TemplateManager implements Serializable {
 
     private Map<Integer, Template> templates;  // a mapping of template ID to Template
+    private int numTemplatesLoaded;
+    private boolean hasInitialized = false;
 
     /**
      * Creates a new empty TemplateManager.
      */
     public TemplateManager(){
         templates = new HashMap<>();
+    }
+
+    public void setNumTemplatesLoaded(int numTemplatesLoaded) {
+        this.numTemplatesLoaded = numTemplatesLoaded;
     }
 
     /**
@@ -31,23 +37,11 @@ public class TemplateManager implements Serializable {
     }
 
     /**
-     * Imports a Template to TemplateManager. Must not change anything in the Template t.
-     * This method is usually used for importing Templates from serialized files.
-     * @param t Template being imported to TemplateManager.
-     */
-    public void importTemplate(Template t) {
-        // Add template <t> to the collection of templates stored in this TemplateManager object.
-        templates.put(t.getId(), t);
-    }
-
-    /**
-     * Adds a new Template to TemplateManager. Ensures that the ID of the Template adds on to the ID of the last
-     * template already stored in the TemplateManager.
+     * Adds a new Template to TemplateManager.
      * @param t Template to be added.
      */
     public void addTemplate(Template t){
-        int originalID = t.getId();
-        t.setID(numberOfTemplates() + originalID);
+        // Add template <t> to the collection of templates stored in this TemplateManager object.
         templates.put(t.getId(), t);
     }
 
@@ -91,18 +85,37 @@ public class TemplateManager implements Serializable {
                                 String firstPlannerPrompt,
                                 String secondPlannerPrompt,
                                 String thirdPlannerPrompt){
-        if (templateType.equals("daily")){
-            return new DailyTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
-                    secondPlannerPrompt, thirdPlannerPrompt);
-        } else if (templateType.equals("project")){
-            return new ProjectTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
-                    secondPlannerPrompt, thirdPlannerPrompt);
-        } else if (templateType.equals("reminders")){
-            return new RemindersTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
-                    secondPlannerPrompt, thirdPlannerPrompt);
+        if (!hasInitialized){
+            if (templateType.equals("daily")){
+                hasInitialized = true;
+                return new DailyTemplate(numTemplatesLoaded, templateName, plannerNamePrompt, firstPlannerPrompt,
+                        secondPlannerPrompt, thirdPlannerPrompt);
+            } else if (templateType.equals("project")){
+                hasInitialized = true;
+                return new ProjectTemplate(numTemplatesLoaded, templateName, plannerNamePrompt, firstPlannerPrompt,
+                        secondPlannerPrompt, thirdPlannerPrompt);
+            } else if (templateType.equals("reminders")){
+                hasInitialized = true;
+                return new RemindersTemplate(numTemplatesLoaded, templateName, plannerNamePrompt, firstPlannerPrompt,
+                        secondPlannerPrompt, thirdPlannerPrompt);
+            } else {
+                System.out.printf("Template type %s is undefined for this program.", templateType);
+                return null;
+            }
         } else {
-            System.out.printf("Template type %s is undefined for this program.", templateType);
-            return null;
+            if (templateType.equals("daily")){
+                return new DailyTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
+                        secondPlannerPrompt, thirdPlannerPrompt);
+            } else if (templateType.equals("project")){
+                return new ProjectTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
+                        secondPlannerPrompt, thirdPlannerPrompt);
+            } else if (templateType.equals("reminders")){
+                return new RemindersTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
+                        secondPlannerPrompt, thirdPlannerPrompt);
+            } else {
+                System.out.printf("Template type %s is undefined for this program.", templateType);
+                return null;
+            }
         }
     }
 

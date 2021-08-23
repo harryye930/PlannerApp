@@ -25,7 +25,16 @@ public class ProjectTemplate extends Template{
         this.secondStatusPrompt = secondStatusPrompt;
         this.thirdStatusPrompt = thirdStatusPrompt;
         this.type = "project";
-//        this.setTemplateType("project");
+    }
+
+    public ProjectTemplate(int numTemplatesLoaded, String name, String plannerNamePrompt,
+                           String firstStatusPrompt, String secondStatusPrompt, String thirdStatusPrompt) {
+        super(numTemplatesLoaded, name, plannerNamePrompt);
+        this.id = super.getId();
+        this.firstStatusPrompt = firstStatusPrompt;
+        this.secondStatusPrompt = secondStatusPrompt;
+        this.thirdStatusPrompt = thirdStatusPrompt;
+        this.type = "project";
     }
 
     /**
