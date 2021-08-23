@@ -8,7 +8,6 @@ import java.util.Map;
 public class ProjectPlanner extends Planner{
     private Map<String, List<String>> tasks;
     private int numTasks = 0;
-    private int ID;
 
     public ProjectPlanner(String plannerName, String firstColName, String secondColName, String thirdColName) {
         super();
@@ -21,7 +20,6 @@ public class ProjectPlanner extends Planner{
     }
 
     private void initializePlannerVars(String plannerName, String firstColName, String secondColName, String thirdColName) {
-        this.ID = super.getID();
         this.plannerName = plannerName;
         this.tasks = new HashMap<>();
         tasks.put(firstColName, new ArrayList<>());

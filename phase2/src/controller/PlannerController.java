@@ -40,6 +40,7 @@ public class PlannerController {
         this.plannerManager = new PlannerManager();
         this.accGateway = new PlannerGateway(plannerManager);
         this.load();
+        this.plannerManager.setNumPlannersLoaded(this.plannerManager.getMaxIdNumber());
     }
 
     /**

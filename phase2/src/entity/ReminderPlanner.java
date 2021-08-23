@@ -16,7 +16,6 @@ public class ReminderPlanner extends Planner{
     private List<String> TaskPromptTasks, DatePromptTasks, CompletionPromptTasks;
     private String taskHeading, dateHeading, completionStatusHeading;
     private int NumAgendas;
-    private int ID;
 
     /**
      * @param taskHeading the first column name of the reminder planner
@@ -47,7 +46,6 @@ public class ReminderPlanner extends Planner{
         this.reminderPlannerTask.put(this.taskHeading, this.TaskPromptTasks);
         this.reminderPlannerTask.put(this.dateHeading, this.DatePromptTasks);
         this.reminderPlannerTask.put(this.completionStatusHeading, this.CompletionPromptTasks);
-        this.ID = super.getID();
         this.NumAgendas = 0;
     }
 
