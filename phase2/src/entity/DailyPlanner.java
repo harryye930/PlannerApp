@@ -42,10 +42,10 @@ public class DailyPlanner extends Planner {
         this.dailyPlannerTask = new HashMap<>();
         this.NumAgendas = 0;
         String timeFormat;
-        for (int h = this.startHour; h < this.endHour; h++) {
-            timeFormat = String.format("%02d:%02d", h, 0);
+        int m = 0;
+        for (int h = this.startHour; h < this.endHour; h+=interval) {
+            timeFormat = String.format("%02d:%02d", h, m);
             timesList.add(timeFormat);
-            h = h + interval;
         }
 
         //add all time to Hashmap with empty agenda

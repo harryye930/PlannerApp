@@ -74,6 +74,7 @@ public class PlannerController {
     public String createPlanner(String firstInput, String secondInput, String thirdInput, String name) {
         String type = this.templateController.getTemplateType(
                 Integer.parseInt(templateController.getCurrTemplateId()));
+        System.out.println(type);
         int id;
         Integer createdPlannerID = this.plannerManager.createPlanner(type, name, firstInput, secondInput, thirdInput);
         if (createdPlannerID == null){

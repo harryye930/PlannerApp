@@ -159,7 +159,7 @@ public class AccessController{
             return "repeatingPassword"; // new password cannot be the same as the old password
         }
 
-        if (!passwordCalculator.getPasswordComplexityLevel(newPassWord).equals("Too Weak")){
+        if (passwordCalculator.getPasswordComplexityLevel(newPassWord).equals("Too Weak")){
             return "passwordTooWeak"; // new password is not complex enough
         }
 
