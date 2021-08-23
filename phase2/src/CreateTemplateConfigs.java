@@ -13,12 +13,12 @@ public class CreateTemplateConfigs {
         // Create a daily template
         String dailyTemplateName = "Default Daily Template";
         String dailyPlannerNamePrompt = "What is the name of the planner that will be created from this Daily Template?";
-        String startTimePrompt = "<html>What is the start time of the planner? <br/>" +
-                "Enter in the form of hh:mm in 24-hour clock (e.g., 09:00 means 9am)</html>";
-        String endTimePrompt = "<html>What is the end time of the planner? <br/>" +
-                "Enter in the form of hh:mm in 24-hour clock (e.g., 21:00 means 9pm)</html>";
-        String timeIncrementPrompt = "<html>What is the time increment of the planner? Enter a multiple of 60 <br/>" +
-                "(e.g., if it's 1 hour, enter 60; if it's 2 hours, enter 120)</html>";
+        String startTimePrompt = "<html>What is the start hour of the planner? <br/>" +
+                "Enter in the form of hh:00 in 24-hour clock (e.g., 09:00 means 9am)</html>";
+        String endTimePrompt = "<html>What is the end hour of the planner? <br/>" +
+                "Enter in the form of hh:00 in 24-hour clock (e.g., 21:00 means 9pm)</html>";
+        String timeIncrementPrompt = "<html>What is the time increment of the planner (in hour)? Enter an integer. <br/>" +
+                "(e.g., if it's 1 hour, enter 1)</html>";
         Template dailyTemplate = new DailyTemplate(dailyTemplateName, dailyPlannerNamePrompt, startTimePrompt,
                 endTimePrompt, timeIncrementPrompt);
         dailyTemplate.setPublishedStatus(true);
