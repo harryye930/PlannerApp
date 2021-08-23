@@ -40,6 +40,7 @@ public class SuspendUserUI extends GeneralUI implements ActionListener {
     @Override
     public void run() {
         if (flag) {
+            data.getAccount(userId, menu);
             cl.show(main, "suspendAccount");
         } else {
             this.showMenu();
@@ -52,7 +53,7 @@ public class SuspendUserUI extends GeneralUI implements ActionListener {
         main.add(menu, "suspendAccount");
         menu.setLayout(null);
 
-        accountInfo = data.getAccount(userId, menu);
+        data.getAccount(userId, menu);
 
         if (accessController.getSuspensionStatus(userId)) {
             suspend.setText(labelToStrings.get("unsuspendButton"));
@@ -76,7 +77,7 @@ public class SuspendUserUI extends GeneralUI implements ActionListener {
     }
 
     private void update() {
-        this.accountInfo = data.getAccount(userId, menu);
+        data.getAccount(userId, menu);
         if (accessController.getSuspensionStatus(userId)) {
             prompt.setVisible(false);
             text.setVisible(false);
