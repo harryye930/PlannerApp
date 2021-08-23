@@ -14,6 +14,7 @@ public class EditReminder extends GeneralUI implements ActionListener {
     //Button
     private final JButton changeButton = new JButton();
     private final JButton submit = new JButton("Submit");
+    private final JButton delete = new JButton("Delete");
     private final JButton back = new JButton("Go back");
 
     //Text
@@ -54,7 +55,8 @@ public class EditReminder extends GeneralUI implements ActionListener {
         text1.setBounds(472, 175, 200, 40);
         changeButton.setBounds(475, 225, 200, 40);
         submit.setBounds(500, 275, 150, 40);
-        back.setBounds(500, 325, 150, 40);
+        delete.setBounds(500, 325, 150, 40);
+        back.setBounds(500, 375, 150, 40);
 
         remainderEdit.add(changeButton);
         remainderEdit.add(text0);
@@ -64,10 +66,12 @@ public class EditReminder extends GeneralUI implements ActionListener {
         remainderEdit.add(text0);
         remainderEdit.add(text1);
         remainderEdit.add(submit);
+        remainderEdit.add(delete);
         remainderEdit.add(back);
 
         changeButton.addActionListener(this);
         submit.addActionListener(this);
+        delete.addActionListener(this);
         back.addActionListener(this);
         this.updateLabel();
     }
@@ -103,6 +107,9 @@ public class EditReminder extends GeneralUI implements ActionListener {
             }
             data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
         }  else if (e.getSource() == back) {
+            this.getParent().run();
+        } else if (e.getSource() == delete) {
+            accessController.removePlanner(accessController.getCurrUserId(), plannerController.getCurrPlannerId());
             this.getParent().run();
         }
     }
