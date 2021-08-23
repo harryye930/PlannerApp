@@ -12,13 +12,18 @@ import java.util.Map;
 
 public class PlannerManager{
     private Map<Integer, Planner> idToPlanner;
-
+    private int numPlannersLoaded;
+    private boolean hasInitialized = false;
 
     /**
      * Initializes the PlannerManager.
      */
     public PlannerManager() {
         this.idToPlanner = new HashMap<>();
+    }
+
+    public void setNumPlannersLoaded(int numPlannersLoaded){
+        this.numPlannersLoaded = numPlannersLoaded;
     }
 
     /** Creates an empty Daily Planner -- default interval 60 mins.
@@ -81,15 +86,31 @@ public class PlannerManager{
      */
     private Planner getPlanner(String plannerType,
                                String plannerName, String firstInput, String secondInput, String thirdInput){
-        if (plannerType.equals("daily")){
-            return new DailyPlanner(plannerName, firstInput, secondInput, Integer.parseInt(thirdInput));
-        } else if (plannerType.equals("project")){
-            return new ProjectPlanner(plannerName, firstInput, secondInput, thirdInput);
-        } else if (plannerType.equals("reminders")){
-            return new ReminderPlanner(plannerName, firstInput, secondInput, thirdInput);
+        if (!hasInitialized){
+            if (plannerType.equals("daily")){
+                hasInitialized = true;
+                return new DailyPlanner(numPlannersLoaded, plannerName, firstInput, secondInput, Integer.parseInt(thirdInput));
+            } else if (plannerType.equals("project")){
+                hasInitialized = true;
+                return new ProjectPlanner(numPlannersLoaded, plannerName, firstInput, secondInput, thirdInput);
+            } else if (plannerType.equals("reminders")){
+                hasInitialized = true;
+                return new ReminderPlanner(numPlannersLoaded, plannerName, firstInput, secondInput, thirdInput);
+            } else {
+                System.out.printf("Planner type %s is undefined for this program.", plannerType);
+                return null;
+            }
         } else {
-            System.out.printf("Planner type %s is undefined for this program.", plannerType);
-            return null;
+            if (plannerType.equals("daily")){
+                return new DailyPlanner(plannerName, firstInput, secondInput, Integer.parseInt(thirdInput));
+            } else if (plannerType.equals("project")){
+                return new ProjectPlanner(plannerName, firstInput, secondInput, thirdInput);
+            } else if (plannerType.equals("reminders")){
+                return new ReminderPlanner(plannerName, firstInput, secondInput, thirdInput);
+            } else {
+                System.out.printf("Planner type %s is undefined for this program.", plannerType);
+                return null;
+            }
         }
     }
 

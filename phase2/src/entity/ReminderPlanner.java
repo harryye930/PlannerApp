@@ -12,14 +12,13 @@ import java.util.*;
  */
 public class ReminderPlanner extends Planner{
 
-    private final Map<String, List<String>> reminderPlannerTask;
+    private Map<String, List<String>> reminderPlannerTask;
     private List<String> TaskPromptTasks, DatePromptTasks, CompletionPromptTasks;
     private String taskHeading, dateHeading, completionStatusHeading;
     private int NumAgendas;
     private int ID;
 
     /**
-     *
      * @param taskHeading the first column name of the reminder planner
      * @param dateHeading the second column name of the reminder planner
      * @param completionStatusHeading the third column name of the reminder planner
@@ -27,6 +26,16 @@ public class ReminderPlanner extends Planner{
     public ReminderPlanner(String plannerName, String taskHeading, String dateHeading,
                            String completionStatusHeading){
         super();
+        initializePlannerVars(plannerName, taskHeading, dateHeading, completionStatusHeading);
+    }
+
+    public ReminderPlanner(int numPlannersLoaded, String plannerName, String taskHeading, String dateHeading,
+                           String completionStatusHeading){
+        super(numPlannersLoaded);
+        initializePlannerVars(plannerName, taskHeading, dateHeading, completionStatusHeading);
+    }
+
+    private void initializePlannerVars(String plannerName, String taskHeading, String dateHeading, String completionStatusHeading) {
         this.plannerName = plannerName;
         this.taskHeading = taskHeading;
         this.dateHeading = dateHeading;
@@ -41,7 +50,6 @@ public class ReminderPlanner extends Planner{
         this.ID = super.getID();
         this.NumAgendas = 0;
     }
-
 
     /** Show the current planner
      *

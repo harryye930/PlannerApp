@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class PlannerGateway extends Reader<HashMap<Integer, Planner>> {
 
     private final String filePath;
-    private HashMap<Integer, Planner> idToPlanner = new HashMap<Integer, Planner>();
+    private HashMap<Integer, Planner> idToPlanner = new HashMap<>();
 
     private final PlannerManager pm;
 
@@ -49,8 +49,8 @@ public class PlannerGateway extends Reader<HashMap<Integer, Planner>> {
             if (hm == null) {return true;} else{
                 this.idToPlanner = hm;
             }
+            pm.setNumPlannersLoaded(hm.size());
             pm.setIdToPlanner(this.idToPlanner);
-
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();

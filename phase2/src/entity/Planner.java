@@ -15,12 +15,19 @@ public abstract class Planner implements Serializable {
     /**
      * Initialize the Planner.
      */
-    public Planner(){
+    public Planner(int numPlannersLoaded){
         this.plannerName = "New Planner";
-        ID++;
         this.privacyStatus = "private";
         this.author = "TODO";
+        ID = numPlannersLoaded;
+        ID++;
+    }
 
+    public Planner(){
+        this.plannerName = "New Planner";
+        this.privacyStatus = "private";
+        this.author = "TODO";
+        ID++;
     }
 
     /**

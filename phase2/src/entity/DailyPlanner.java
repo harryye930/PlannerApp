@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public class DailyPlanner extends Planner {
-    private final Map<String, String> dailyPlannerTask;
-    private final List<String> timesList; // time array
-    private final int ID;
+    private Map<String, String> dailyPlannerTask;
+    private List<String> timesList; // time array
+    private int ID;
     private int interval;  //minutes interval
     private int startHour;
     private int startMins;
@@ -31,6 +31,18 @@ public class DailyPlanner extends Planner {
         // and an arraylist of time for reference since hashmap doesn't have order per se
         // https://facingissuesonit.com/2019/05/10/java-generate-15-minute-time-interval-am-pm/
         super();
+        initializePlannerVars(plannerName, startTime, endTime, Interval);
+    }
+
+    public DailyPlanner(int numPlannersLoaded, String plannerName, String startTime, String endTime, int Interval) {
+        // generate hashmap with given time interval with empty content
+        // and an arraylist of time for reference since hashmap doesn't have order per se
+        // https://facingissuesonit.com/2019/05/10/java-generate-15-minute-time-interval-am-pm/
+        super(numPlannersLoaded);
+        initializePlannerVars(plannerName, startTime, endTime, Interval);
+    }
+
+    private void initializePlannerVars(String plannerName, String startTime, String endTime, int Interval) {
         this.plannerName = plannerName;
         this.interval = Interval;
         this.startHour = Integer.parseInt(startTime.substring(0, 2));

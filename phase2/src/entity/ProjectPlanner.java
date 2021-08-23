@@ -6,12 +6,21 @@ import java.util.List;
 import java.util.Map;
 
 public class ProjectPlanner extends Planner{
-    private final Map<String, List<String>> tasks;
+    private Map<String, List<String>> tasks;
     private int numTasks = 0;
-    private final int ID;
+    private int ID;
 
     public ProjectPlanner(String plannerName, String firstColName, String secondColName, String thirdColName) {
         super();
+        initializePlannerVars(plannerName, firstColName, secondColName, thirdColName);
+    }
+
+    public ProjectPlanner(int numPlannersLoaded, String plannerName, String firstColName, String secondColName, String thirdColName) {
+        super(numPlannersLoaded);
+        initializePlannerVars(plannerName, firstColName, secondColName, thirdColName);
+    }
+
+    private void initializePlannerVars(String plannerName, String firstColName, String secondColName, String thirdColName) {
         this.ID = super.getID();
         this.plannerName = plannerName;
         this.tasks = new HashMap<>();
