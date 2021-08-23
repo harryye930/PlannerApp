@@ -16,7 +16,7 @@ public class AccountGateway extends Reader<HashMap<String, Account>> {
     private final String idMapPath;
     private final String tempPasswordPath = "tempPassword.txt";
 
-    private HashMap<String, Account> idToAccount = new HashMap<String, Account>();
+    private HashMap<String, Account> idToAccount = new HashMap<>();
 
     private final AccountManager am;
 

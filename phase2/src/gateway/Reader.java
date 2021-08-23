@@ -38,7 +38,7 @@ public class Reader<T> implements IGateWay<T> {
         File nf = new File(filePath);
         try {
             if (nf.createNewFile() || nf.delete()) {
-                FileOutputStream fileOut = new FileOutputStream(new File(filePath));
+                FileOutputStream fileOut = new FileOutputStream(filePath);
                 ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
                 objectOut.writeObject(obj);
                 objectOut.close();
@@ -63,8 +63,7 @@ public class Reader<T> implements IGateWay<T> {
     public T readSer(String filePath) {
         File nf = new File(filePath);
         try {
-            if (nf.createNewFile()) {
-                nf.delete();
+            if (nf.createNewFile() && nf.delete()) {
                 return null;
             }
             FileInputStream fileIn = new FileInputStream(filePath);
