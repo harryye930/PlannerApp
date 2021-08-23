@@ -211,7 +211,6 @@ public class CreateAccountUI extends GeneralUI implements KeyListener, ActionLis
     public void keyReleased(KeyEvent e) {
         if (e.getSource() == password0) {
             passwordPrompt0.setText(labelToStrings.get("complexityLevel") + accessController.getPasswordStrength(password0.getText()));
-            System.out.println(password0.getText());
         }
     }
 }
