@@ -2,7 +2,7 @@ package gateway;
 
 import java.util.Map;
 
-public class UIGateway extends Reader{
+public class UIGateway extends Reader<Map<String, String>>{
 
     public UIGateway() {
         super("data/", "phase2/data/");

@@ -1,8 +1,5 @@
 package gateway;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * The interface of the Gateway.
  */

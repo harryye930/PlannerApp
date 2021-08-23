@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class TemplateManager implements Serializable {
 
-    private Map<Integer, Template> templates;  // a mapping of template ID to Template
+    private final Map<Integer, Template> templates;  // a mapping of template ID to Template
     private int numTemplatesLoaded; // number of templates read in from external file at the start of the program
     private boolean hasInitialized = false; // flag indicating if the templates that are read in from external file
                                             // have been added to the TemplateManager
@@ -91,35 +91,37 @@ public class TemplateManager implements Serializable {
                                 String secondPlannerPrompt,
                                 String thirdPlannerPrompt){
         if (!hasInitialized){
-            if (templateType.equals("daily")){
-                hasInitialized = true;
-                return new DailyTemplate(numTemplatesLoaded, templateName, plannerNamePrompt, firstPlannerPrompt,
-                        secondPlannerPrompt, thirdPlannerPrompt);
-            } else if (templateType.equals("project")){
-                hasInitialized = true;
-                return new ProjectTemplate(numTemplatesLoaded, templateName, plannerNamePrompt, firstPlannerPrompt,
-                        secondPlannerPrompt, thirdPlannerPrompt);
-            } else if (templateType.equals("reminders")){
-                hasInitialized = true;
-                return new RemindersTemplate(numTemplatesLoaded, templateName, plannerNamePrompt, firstPlannerPrompt,
-                        secondPlannerPrompt, thirdPlannerPrompt);
-            } else {
-                System.out.printf("Template type %s is undefined for this program.", templateType);
-                return null;
+            switch (templateType) {
+                case "daily":
+                    hasInitialized = true;
+                    return new DailyTemplate(numTemplatesLoaded, templateName, plannerNamePrompt, firstPlannerPrompt,
+                            secondPlannerPrompt, thirdPlannerPrompt);
+                case "project":
+                    hasInitialized = true;
+                    return new ProjectTemplate(numTemplatesLoaded, templateName, plannerNamePrompt, firstPlannerPrompt,
+                            secondPlannerPrompt, thirdPlannerPrompt);
+                case "reminders":
+                    hasInitialized = true;
+                    return new RemindersTemplate(numTemplatesLoaded, templateName, plannerNamePrompt, firstPlannerPrompt,
+                            secondPlannerPrompt, thirdPlannerPrompt);
+                default:
+                    System.out.printf("Template type %s is undefined for this program.", templateType);
+                    return null;
             }
         } else {
-            if (templateType.equals("daily")){
-                return new DailyTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
-                        secondPlannerPrompt, thirdPlannerPrompt);
-            } else if (templateType.equals("project")){
-                return new ProjectTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
-                        secondPlannerPrompt, thirdPlannerPrompt);
-            } else if (templateType.equals("reminders")){
-                return new RemindersTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
-                        secondPlannerPrompt, thirdPlannerPrompt);
-            } else {
-                System.out.printf("Template type %s is undefined for this program.", templateType);
-                return null;
+            switch (templateType) {
+                case "daily":
+                    return new DailyTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
+                            secondPlannerPrompt, thirdPlannerPrompt);
+                case "project":
+                    return new ProjectTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
+                            secondPlannerPrompt, thirdPlannerPrompt);
+                case "reminders":
+                    return new RemindersTemplate(templateName, plannerNamePrompt, firstPlannerPrompt,
+                            secondPlannerPrompt, thirdPlannerPrompt);
+                default:
+                    System.out.printf("Template type %s is undefined for this program.", templateType);
+                    return null;
             }
         }
     }
@@ -195,9 +197,9 @@ public class TemplateManager implements Serializable {
             throw new IllegalArgumentException(
                     String.format("Invalid user input %s. Please enter either \"Detail\" or \"Summary\".", viewOption));
         }
-        String stringRep = "Number of templates stored in the TemplateManager: " + this.numberOfTemplates()
-                            + "\n";
-        stringRep += "Templates: " + "\n";
+        StringBuilder stringRep = new StringBuilder("Number of templates stored in the TemplateManager: " + this.numberOfTemplates()
+                + "\n");
+        stringRep.append("Templates: " + "\n");
 
         // Traverse through all key-value pairs in templates, and add those templates' string representation
         // to stringRep.
@@ -205,14 +207,14 @@ public class TemplateManager implements Serializable {
             Template value = items.getValue();
 
             if (viewOption.equals("Detail")){
-                stringRep += value.toString();
+                stringRep.append(value.toString());
             } else {
-                stringRep += value.getTemplatePreview();
+                stringRep.append(value.getTemplatePreview());
             }
 
-            stringRep += "\n";
+            stringRep.append("\n");
         }
-        return stringRep;
+        return stringRep.toString();
     }
 
     /**
@@ -227,9 +229,9 @@ public class TemplateManager implements Serializable {
             throw new IllegalArgumentException(
                     String.format("Invalid user input %s. Please enter either \"Detail\" or \"Summary\".", viewOption));
         }
-        String stringRep = "Number of templates stored in the TemplateManager: " + this.numberOfPublishedTemplates()
-                + "\n";
-        stringRep += "Templates: " + "\n";
+        StringBuilder stringRep = new StringBuilder("Number of templates stored in the TemplateManager: " + this.numberOfPublishedTemplates()
+                + "\n");
+        stringRep.append("Templates: " + "\n");
 
         // Traverse through all key-value pairs in templates, and add those templates' string representation
         // to stringRep.
@@ -237,14 +239,14 @@ public class TemplateManager implements Serializable {
             Template value = items.getValue();
 
             if (viewOption.equals("Detail")){
-                stringRep += value.toString();
+                stringRep.append(value.toString());
             } else {
-                stringRep += value.getTemplatePreview();
+                stringRep.append(value.getTemplatePreview());
             }
 
-            stringRep += "\n";
+            stringRep.append("\n");
         }
-        return stringRep;
+        return stringRep.toString();
     }
 
     /**

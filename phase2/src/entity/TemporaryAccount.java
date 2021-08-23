@@ -1,15 +1,12 @@
 package entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A instance of this class represents a temporary account in this application.
  */
 public class TemporaryAccount extends UserAccount {
 
-    private List<String > planners = new ArrayList<>();
     private final LocalDateTime startDate;
     private LocalDateTime endDate;
 

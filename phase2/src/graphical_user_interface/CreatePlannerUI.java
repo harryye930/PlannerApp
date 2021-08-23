@@ -5,13 +5,11 @@ import graphical_user_interface.builder.FormBuilder;
 import graphical_user_interface.builder.IForm;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
 
-// TODO: To be merged later.
 /**
  * GUI class for the first planner creation screen.
  * Displays a list of templates available, and asks the user to enter the ID of the template they would like to use.
@@ -101,7 +99,7 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
 
     /**
      * Invoked when an action occurs.
-     * @param e
+     * @param e An event object
      */
     @Override
     public void actionPerformed(ActionEvent e) {

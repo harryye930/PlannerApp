@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class UserAccount extends Account {
 
-    private List<String> planners = new ArrayList<>();
+    private final List<String> planners = new ArrayList<>();
     private final List<String> trashPlanner = new ArrayList<>();
 
     /**
@@ -20,15 +20,6 @@ public class UserAccount extends Account {
         this.accountType = "regular";
         super.email = email;
         super.userId = ((Integer) (email).hashCode()).toString();
-    }
-
-    /**
-     * @param planners represent a list of planners that belong to this user.
-     */
-    public UserAccount(List<String> planners) {
-        super();
-        this.accountType = "regular";
-        this.planners = planners;
     }
 
     /**
@@ -49,22 +40,6 @@ public class UserAccount extends Account {
             return true;
         }
         return false;
-    }
-
-    /**
-     *  Add a list of planners to planners.
-     * @param planners the planners id that need to be added.
-     * @return Return true if any one of the planner is successfully added.
-     */
-    public boolean setPlanners(List<String> planners) {
-        boolean flag = false;
-        for (String planner : planners) {
-            if (!this.planners.contains(planner)) {
-                this.planners.add(planner);
-                flag = true;
-            }
-        }
-        return flag;
     }
 
     /**

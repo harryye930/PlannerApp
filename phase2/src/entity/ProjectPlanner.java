@@ -16,18 +16,11 @@ public class ProjectPlanner extends Planner{
         initializePlannerVars(plannerName, firstColName, secondColName, thirdColName);
     }
 
-    public ProjectPlanner(int numPlannersLoaded, String plannerName, String firstColName, String secondColName, String thirdColName) {
+    public ProjectPlanner(int numPlannersLoaded, String plannerName, String firstColName, String secondColName,
+                          String thirdColName) {
         super(numPlannersLoaded);
         this.id = super.getID();
         initializePlannerVars(plannerName, firstColName, secondColName, thirdColName);
-    }
-
-    private void initializePlannerVars(String plannerName, String firstColName, String secondColName, String thirdColName) {
-        this.plannerName = plannerName;
-        this.tasks = new HashMap<>();
-        tasks.put(firstColName, new ArrayList<>());
-        tasks.put(secondColName, new ArrayList<>());
-        tasks.put(thirdColName, new ArrayList<>());
     }
 
     /**
@@ -122,7 +115,7 @@ public class ProjectPlanner extends Planner{
 
     /*** Show the id for the planner
      *
-     * @return a int id for the planner.
+     * @return An int id for the planner.
      */
     @Override
     public int getID(){
@@ -147,5 +140,13 @@ public class ProjectPlanner extends Planner{
             tasks.get(currColumn).remove(agenda);
             return true;
         }
+    }
+
+    private void initializePlannerVars(String plannerName, String firstColName, String secondColName, String thirdColName) {
+        this.plannerName = plannerName;
+        this.tasks = new HashMap<>();
+        tasks.put(firstColName, new ArrayList<>());
+        tasks.put(secondColName, new ArrayList<>());
+        tasks.put(thirdColName, new ArrayList<>());
     }
 }

@@ -57,7 +57,7 @@ public class TemplateOptionUI extends GeneralUI implements ActionListener{
     /**
      * Invoked when an action occurs.
      *
-     * @param e
+     * @param e An event object
      */
     @Override
     public void actionPerformed(ActionEvent e) {

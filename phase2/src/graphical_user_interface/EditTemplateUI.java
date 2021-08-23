@@ -12,13 +12,11 @@ public class EditTemplateUI extends GeneralUI implements ActionListener {
     private boolean flag = false;
     private boolean firstScreen = true;
     private String editOption;
-    private Map<String, String> labelToStrings = new UIGateway().loadEditTemplateUITexts();
+    private final Map<String, String> labelToStrings = new UIGateway().loadEditTemplateUITexts();
 
     // Panel/Pane
     private final JPanel editTemplate = new JPanel();
-    private JScrollPane template;
-    private JPanel editPanel = new JPanel();
-    private JScrollPane templateInfo;
+    private final JPanel editPanel = new JPanel();
     private final CardLayout editCardLayout = new CardLayout();
 
     // TextArea/Field
@@ -43,7 +41,7 @@ public class EditTemplateUI extends GeneralUI implements ActionListener {
     @Override
     public void run() {
         if (flag){
-            template = data.getTemplate(templateController.getCurrTemplateId(), editTemplate);
+            data.getTemplate(templateController.getCurrTemplateId(), editTemplate);
             cl.show(main, "editTemplate");
         } else {
             this.buildEditPanel();
@@ -59,7 +57,7 @@ public class EditTemplateUI extends GeneralUI implements ActionListener {
         main.add(editTemplate, "editTemplate");
 
         // Show template detail view on the left side of the panel
-        template = data.getTemplate(templateController.getCurrTemplateId(), editTemplate);
+        data.getTemplate(templateController.getCurrTemplateId(), editTemplate);
 
         JPanel editPanel = getEditPanel();
         editPanel.setBounds(450, 25, 225, 200);

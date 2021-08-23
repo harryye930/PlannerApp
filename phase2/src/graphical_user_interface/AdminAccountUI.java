@@ -23,8 +23,6 @@ public class AdminAccountUI extends GeneralUI {
     // Components
     private final JPanel panel = new JPanel();
 
-    private IForm form;
-
     public AdminAccountUI(GeneralUI parent) {
         this.setParent(parent);
     }
@@ -55,7 +53,7 @@ public class AdminAccountUI extends GeneralUI {
         buttons.addSuperButton("logOutButton", labelToStrings.get("logOutButton"), this.getParent());
         buttons.setBounds(150, 150, 400, 200);
 
-        form = buttons.getForm();
+        IForm form = buttons.getForm();
         panel.add(form.getPanel());
 
     }

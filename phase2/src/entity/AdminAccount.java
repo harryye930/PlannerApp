@@ -5,11 +5,6 @@ package entity;
  */
 public class AdminAccount  extends Account {
 
-    public AdminAccount() {
-        super();
-        super.accountType = "admin";
-    }
-
     /**
      * @param email represent the email of this admin account.
      */

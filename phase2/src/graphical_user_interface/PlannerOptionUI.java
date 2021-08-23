@@ -14,8 +14,6 @@ public class PlannerOptionUI extends GeneralUI {
     private boolean flag = false;
     private final Map<String, String> labelToStrings = new UIGateway().loadPlannerOptionUITexts();
 
-    private IForm form;
-
     // JComponent
     private final JPanel panel = new JPanel();
 
@@ -53,7 +51,7 @@ public class PlannerOptionUI extends GeneralUI {
         fb.addSuperButton("trashBin", labelToStrings.get("trashBin"), trashBin);
         fb.addSuperButton("back", labelToStrings.get("back"), this.getParent());
 
-        form = fb.getForm();
+        IForm form = fb.getForm();
         panel.add(form.getPanel());
     }
 }

@@ -5,7 +5,6 @@ import graphical_user_interface.builder.FormBuilder;
 import graphical_user_interface.builder.IForm;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
@@ -135,7 +134,7 @@ public class EditPlannerUI extends GeneralUI implements ActionListener {
     /**
      * Invoked when an action occurs.
      *
-     * @param e
+     * @param e An event object
      */
     @Override
     public void actionPerformed(ActionEvent e) {
