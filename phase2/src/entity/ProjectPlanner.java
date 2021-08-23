@@ -7,21 +7,22 @@ import java.util.Map;
 
 public class ProjectPlanner extends Planner{
     private Map<String, List<String>> tasks;
+    private final int id;
     private int numTasks = 0;
-    private int ID;
 
     public ProjectPlanner(String plannerName, String firstColName, String secondColName, String thirdColName) {
         super();
+        this.id = super.getID();
         initializePlannerVars(plannerName, firstColName, secondColName, thirdColName);
     }
 
     public ProjectPlanner(int numPlannersLoaded, String plannerName, String firstColName, String secondColName, String thirdColName) {
         super(numPlannersLoaded);
+        this.id = super.getID();
         initializePlannerVars(plannerName, firstColName, secondColName, thirdColName);
     }
 
     private void initializePlannerVars(String plannerName, String firstColName, String secondColName, String thirdColName) {
-        this.ID = super.getID();
         this.plannerName = plannerName;
         this.tasks = new HashMap<>();
         tasks.put(firstColName, new ArrayList<>());
@@ -103,7 +104,7 @@ public class ProjectPlanner extends Planner{
      * @return True iff the agenda is successfully moved to newColumn.
      */
     @Override
-    public Boolean ChangeTaskStatus(String newColumn, String agenda) {
+    public Boolean ChangeTaskStatus(String agenda, String newColumn) {
         String currColumn = null;
         for (String columnN: tasks.keySet()) {
             if (tasks.get(columnN).contains(agenda)) {
@@ -117,6 +118,15 @@ public class ProjectPlanner extends Planner{
             tasks.get(currColumn).remove(agenda);
             return true;
         }
+    }
+
+    /*** Show the id for the planner
+     *
+     * @return a int id for the planner.
+     */
+    @Override
+    public int getID(){
+        return id;
     }
 
     /**

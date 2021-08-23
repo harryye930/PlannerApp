@@ -16,7 +16,7 @@ public class ReminderPlanner extends Planner{
     private List<String> TaskPromptTasks, DatePromptTasks, CompletionPromptTasks;
     private String taskHeading, dateHeading, completionStatusHeading;
     private int NumAgendas;
-    private int ID;
+    private int id;
 
     /**
      * @param taskHeading the first column name of the reminder planner
@@ -26,12 +26,14 @@ public class ReminderPlanner extends Planner{
     public ReminderPlanner(String plannerName, String taskHeading, String dateHeading,
                            String completionStatusHeading){
         super();
+        this.id = super.getID();
         initializePlannerVars(plannerName, taskHeading, dateHeading, completionStatusHeading);
     }
 
     public ReminderPlanner(int numPlannersLoaded, String plannerName, String taskHeading, String dateHeading,
                            String completionStatusHeading){
         super(numPlannersLoaded);
+        this.id = super.getID();
         initializePlannerVars(plannerName, taskHeading, dateHeading, completionStatusHeading);
     }
 
@@ -47,7 +49,6 @@ public class ReminderPlanner extends Planner{
         this.reminderPlannerTask.put(this.taskHeading, this.TaskPromptTasks);
         this.reminderPlannerTask.put(this.dateHeading, this.DatePromptTasks);
         this.reminderPlannerTask.put(this.completionStatusHeading, this.CompletionPromptTasks);
-        this.ID = super.getID();
         this.NumAgendas = 0;
     }
 
@@ -173,5 +174,14 @@ public class ReminderPlanner extends Planner{
             } else{
             return false;
         }
+    }
+
+    /*** Show the id for the planner
+     *
+     * @return a int id for the planner.
+     */
+    @Override
+    public int getID(){
+        return id;
     }
 }
