@@ -43,10 +43,9 @@ public class DailyPlanner extends Planner {
         this.NumAgendas = 0;
         String timeFormat;
         int m = 0;
-        for (int h = this.startHour; h < this.endHour; h++) {
+        for (int h = this.startHour; h < this.endHour; h+=interval) {
             timeFormat = String.format("%02d:%02d", h, m);
             timesList.add(timeFormat);
-            h = h + interval;
         }
 
         //add all time to Hashmap with empty agenda
