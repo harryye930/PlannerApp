@@ -26,34 +26,6 @@ public class PlannerManager{
         this.numPlannersLoaded = numPlannersLoaded;
     }
 
-    /** Creates an empty Daily Planner -- default interval 60 mins.
-     * @param plannerName Name of the planner.
-     * @param startTime Start time of planner.
-     * @param endTime End time of planner.
-     * @return ID of the created Daily Planner.
-     */
-    public int newDailyPlanner(String plannerName, String startTime, String endTime, String interval){
-
-        DailyPlanner dailyPlanner = new DailyPlanner(plannerName, startTime, endTime, Integer.parseInt(interval));
-        this.idToPlanner.put(dailyPlanner.getID(), dailyPlanner);
-        return dailyPlanner.getID();
-    }
-
-    /**
-     * Creates an empty Project Planner.
-     * @param plannerName The name of the planner.
-     * @param firstColumn The column heading for the first status column.
-     * @param secondColumn The column heading for the second status column.
-     * @param thirdColumn The column heading for the third status column.
-     * @return The ID of the created Project Planner.
-     */
-    public int newProjectPlanner(String plannerName, String firstColumn, String secondColumn, String thirdColumn){
-
-        ProjectPlanner projectPlanner = new ProjectPlanner(plannerName, firstColumn, secondColumn, thirdColumn);
-        this.idToPlanner.put(projectPlanner.getID(), projectPlanner);
-        return projectPlanner.getID();
-    }
-
     /**
      * Creates an empty planner of type plannerType.
      * @param plannerType Type of the planner to be created.
@@ -87,29 +59,31 @@ public class PlannerManager{
     private Planner getPlanner(String plannerType,
                                String plannerName, String firstInput, String secondInput, String thirdInput){
         if (!hasInitialized){
-            if (plannerType.equals("daily")){
-                hasInitialized = true;
-                return new DailyPlanner(numPlannersLoaded, plannerName, firstInput, secondInput, Integer.parseInt(thirdInput));
-            } else if (plannerType.equals("project")){
-                hasInitialized = true;
-                return new ProjectPlanner(numPlannersLoaded, plannerName, firstInput, secondInput, thirdInput);
-            } else if (plannerType.equals("reminders")){
-                hasInitialized = true;
-                return new ReminderPlanner(numPlannersLoaded, plannerName, firstInput, secondInput, thirdInput);
-            } else {
-                System.out.printf("Planner type %s is undefined for this program.", plannerType);
-                return null;
+            switch (plannerType) {
+                case "daily":
+                    hasInitialized = true;
+                    return new DailyPlanner(numPlannersLoaded, plannerName, firstInput, secondInput, Integer.parseInt(thirdInput));
+                case "project":
+                    hasInitialized = true;
+                    return new ProjectPlanner(numPlannersLoaded, plannerName, firstInput, secondInput, thirdInput);
+                case "reminders":
+                    hasInitialized = true;
+                    return new ReminderPlanner(numPlannersLoaded, plannerName, firstInput, secondInput, thirdInput);
+                default:
+                    System.out.printf("Planner type %s is undefined for this program.", plannerType);
+                    return null;
             }
         } else {
-            if (plannerType.equals("daily")){
-                return new DailyPlanner(plannerName, firstInput, secondInput, Integer.parseInt(thirdInput));
-            } else if (plannerType.equals("project")){
-                return new ProjectPlanner(plannerName, firstInput, secondInput, thirdInput);
-            } else if (plannerType.equals("reminders")){
-                return new ReminderPlanner(plannerName, firstInput, secondInput, thirdInput);
-            } else {
-                System.out.printf("Planner type %s is undefined for this program.", plannerType);
-                return null;
+            switch (plannerType) {
+                case "daily":
+                    return new DailyPlanner(plannerName, firstInput, secondInput, Integer.parseInt(thirdInput));
+                case "project":
+                    return new ProjectPlanner(plannerName, firstInput, secondInput, thirdInput);
+                case "reminders":
+                    return new ReminderPlanner(plannerName, firstInput, secondInput, thirdInput);
+                default:
+                    System.out.printf("Planner type %s is undefined for this program.", plannerType);
+                    return null;
             }
         }
     }
@@ -167,22 +141,6 @@ public class PlannerManager{
         return new ArrayList<>(this.idToPlanner.values());
     }
 
-
-    /**
-     * print all planners in the system
-     * @return String representation of all planners
-     */
-    public String showAllPlanners (){
-        List<Planner> allPlanners = getAllPlanner();
-        StringBuilder allPlannersStringBuilder= new StringBuilder();
-        for (Planner planner : allPlanners){
-            allPlannersStringBuilder.append(toString(planner.getID()));
-            allPlannersStringBuilder.append("\n");
-        }
-        return allPlannersStringBuilder.toString();
-    }
-
-
     /**
      * delete a planner from all planners.
      * @param id the id of the planner to be deleted
@@ -196,15 +154,6 @@ public class PlannerManager{
         else{
             return false;
         }
-    }
-
-    /**
-     * set the author of the planner
-     * @param id the integer id of the planner
-     * @param author the identifier of a user
-     */
-    public void setPlannerAuthor(int id, String author){
-        findPlanner(id).setAuthor(author);
     }
 
     /**
