@@ -13,12 +13,12 @@ public class CreateTemplateConfigs {
         // Create a daily template
         String dailyTemplateName = "Default Daily Template";
         String dailyPlannerNamePrompt = "What is the name of the planner that will be created from this Daily Template?";
-        String startTimePrompt = "<html>What is the start hour of the planner? <br/>" +
-                "Enter in the form of hh:00 in 24-hour clock (e.g., 09:00 means 9am)</html>";
-        String endTimePrompt = "<html>What is the end hour of the planner? <br/>" +
-                "Enter in the form of hh:00 in 24-hour clock (e.g., 21:00 means 9pm)</html>";
-        String timeIncrementPrompt = "<html>What is the time increment of the planner (in hour)? Enter an integer. <br/>" +
-                "(e.g., if it's 1 hour, enter 1)</html>";
+        String startTimePrompt = "What is the start hour of the planner? " +
+                "Enter in the form of hh:00 in 24-hour clock (e.g., 09:00 means 9am)";
+        String endTimePrompt = "What is the end hour of the planner? " +
+                "Enter in the form of hh:00 in 24-hour clock (e.g., 21:00 means 9pm)";
+        String timeIncrementPrompt = "What is the time increment of the planner (in hour)? Enter an integer. " +
+                "(e.g., if it's 1 hour, enter 1)";
         Template dailyTemplate = new DailyTemplate(dailyTemplateName, dailyPlannerNamePrompt, startTimePrompt,
                 endTimePrompt, timeIncrementPrompt);
         dailyTemplate.setPublishedStatus(true);
@@ -35,12 +35,12 @@ public class CreateTemplateConfigs {
 
         String remindersTemplateName = "Default Reminders Template";
         String remindersPlannerNamePrompt = "What is the name of the planner that will be created from this Reminders Template?";
-        String taskHeadingPrompt = "<html>Enter the column name for the column containing task names in the planner <br/>" +
-                "(e.g., \"Tasks\", \"Review Items\", \"Assignments\", etc.)</html>";
-        String dateHeadingPrompt = "<html>Enter the column name for the column containing deadlines/dates in the planner </br>" +
-                "(e.g., \"Deadline\", \"Due Date\", etc.)</html>";
-        String completionStatusHeadingPrompt = "<html>Enter the column name for the column containing completion status in the planner </br>" +
-                "(e.g., \"Completion Status\", \"Completed?\", etc.)</html>";
+        String taskHeadingPrompt = "Enter the column name for the column containing task names in the planner " +
+                "(e.g., \"Tasks\", \"Review Items\", \"Assignments\", etc.)";
+        String dateHeadingPrompt = "Enter the column name for the column containing deadlines/dates in the planner </br>" +
+                "(e.g., \"Deadline\", \"Due Date\", etc.)";
+        String completionStatusHeadingPrompt = "Enter the column name for the column containing completion status in the planner </br>" +
+                "(e.g., \"Completion Status\", \"Completed?\", etc.)";
         Template remindersTemplate = new RemindersTemplate(remindersTemplateName, remindersPlannerNamePrompt,
                 taskHeadingPrompt, dateHeadingPrompt, completionStatusHeadingPrompt);
         remindersTemplate.setPublishedStatus(true);

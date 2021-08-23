@@ -76,13 +76,13 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
         FormBuilder inputFormBuilder = new FormBuilder();
         inputFormBuilder.setBounds(50, 50, 550, 500);
 
-        inputFormBuilder.addLabel("plannerNamePrompt", prompts.get(0));
+        inputFormBuilder.addLabel("plannerNamePrompt", "<html>" + prompts.get(0) + "</html>");
         inputFormBuilder.addTextField("name");
-        inputFormBuilder.addLabel("firstPlannerPrompt", prompts.get(1));
+        inputFormBuilder.addLabel("firstPlannerPrompt", "<html>" + prompts.get(1) + "</html>");
         inputFormBuilder.addTextField("p1");
-        inputFormBuilder.addLabel("secondPlannerPrompt", prompts.get(2));
+        inputFormBuilder.addLabel("secondPlannerPrompt", "<html>" + prompts.get(2) + "</html>");
         inputFormBuilder.addTextField("p2");
-        inputFormBuilder.addLabel("thirdPlannerPrompt", prompts.get(3));
+        inputFormBuilder.addLabel("thirdPlannerPrompt", "<html>" + prompts.get(3) + "</html>");
         inputFormBuilder.addTextField("p3");
         inputFormBuilder.addSubmitButton("confirm", labelToStrings.get("confirm"));
         inputFormBuilder.addSubmitButton("goBack", labelToStrings.get("goBack"));
@@ -93,10 +93,10 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
     }
 
     private void updateInputPage(List<String> prompts){
-        ((JLabel)inputForm.get("plannerNamePrompt")).setText(prompts.get(0));
-        ((JLabel)inputForm.get("firstPlannerPrompt")).setText(prompts.get(1));
-        ((JLabel)inputForm.get("secondPlannerPrompt")).setText(prompts.get(2));
-        ((JLabel)inputForm.get("thirdPlannerPrompt")).setText(prompts.get(3));
+        ((JLabel)inputForm.get("plannerNamePrompt")).setText("<html>" + prompts.get(0) + "</html>");
+        ((JLabel)inputForm.get("firstPlannerPrompt")).setText("<html>" + prompts.get(1) + "</html>");
+        ((JLabel)inputForm.get("secondPlannerPrompt")).setText("<html>" + prompts.get(2) + "</html>");
+        ((JLabel)inputForm.get("thirdPlannerPrompt")).setText("<html>" + prompts.get(3) + "</html>");
     }
 
     /**
