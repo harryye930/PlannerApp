@@ -104,7 +104,7 @@ public class ProjectPlanner extends Planner{
      * @return True iff the agenda is successfully moved to newColumn.
      */
     @Override
-    public Boolean ChangeTaskStatus(String newColumn, String agenda) {
+    public Boolean ChangeTaskStatus(String agenda, String newColumn) {
         String currColumn = null;
         for (String columnN: tasks.keySet()) {
             if (tasks.get(columnN).contains(agenda)) {
