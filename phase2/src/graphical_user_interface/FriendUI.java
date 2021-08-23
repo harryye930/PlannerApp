@@ -43,7 +43,7 @@ public class FriendUI extends GeneralUI implements ActionListener {
         friendsInfo = data.getFriendsInfo(friendUI);
 
         FormBuilder fb = new FormBuilder();
-        fb.setBounds(475, 50, 300, 240);
+        fb.setBounds(425, 50, 300, 240);
         fb.addLabel("prompt", labelToStrings.get("prompt"));
         fb.addTextField("id");
         fb.addSubmitButton("addFriend", labelToStrings.get("addFriend"));
