@@ -40,20 +40,6 @@ public class PlannerManager{
     }
 
     /**
-     * return the maximum number of id in the id pool.
-     * @return A int representing the biggest id number.
-     */
-    public int getMaxIdNumber() {
-        int cur = 0;
-        for (int id: idToPlanner.keySet()) {
-            if (id > cur) {
-                cur = id;
-            }
-        }
-        return cur;
-    }
-
-    /**
      * Creates an empty Project Planner.
      * @param plannerName The name of the planner.
      * @param firstColumn The column heading for the first status column.
@@ -103,15 +89,12 @@ public class PlannerManager{
         if (!hasInitialized){
             if (plannerType.equals("daily")){
                 hasInitialized = true;
-                numPlannersLoaded += 1;
                 return new DailyPlanner(numPlannersLoaded, plannerName, firstInput, secondInput, Integer.parseInt(thirdInput));
             } else if (plannerType.equals("project")){
                 hasInitialized = true;
-                numPlannersLoaded += 1;
                 return new ProjectPlanner(numPlannersLoaded, plannerName, firstInput, secondInput, thirdInput);
             } else if (plannerType.equals("reminders")){
                 hasInitialized = true;
-                numPlannersLoaded += 1;
                 return new ReminderPlanner(numPlannersLoaded, plannerName, firstInput, secondInput, thirdInput);
             } else {
                 System.out.printf("Planner type %s is undefined for this program.", plannerType);
