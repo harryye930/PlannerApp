@@ -54,7 +54,7 @@ public class EditReminder extends GeneralUI implements ActionListener {
 
         data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
 
-        prompt1.setBounds(472, 25, 200, 40);
+        prompt1.setBounds(472, 25, 200, 50);
         prompt0.setBounds(472, 125, 200, 40);
         text0.setBounds(472, 75, 200, 40);
         text1.setBounds(472, 175, 200, 40);
@@ -108,7 +108,7 @@ public class EditReminder extends GeneralUI implements ActionListener {
             if (isAdd) {
                 System.out.println(plannerController.add(text1.getText(), text0.getText()));
             } else {
-                System.out.println(plannerController.changeTaskStatus(text0.getText(), text1.getText()));
+                System.out.println(plannerController.changeTaskStatus(text1.getText(), text0.getText()));
             }
             data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
         }  else if (e.getSource() == back) {
