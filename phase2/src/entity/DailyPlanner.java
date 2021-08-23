@@ -42,8 +42,9 @@ public class DailyPlanner extends Planner {
         this.dailyPlannerTask = new HashMap<>();
         this.NumAgendas = 0;
         String timeFormat;
+        int m = 0;
         for (int h = this.startHour; h < this.endHour; h++) {
-            timeFormat = String.format("%02d:%02d", h, 0);
+            timeFormat = String.format("%02d:%02d", h, m);
             timesList.add(timeFormat);
             h = h + interval;
         }

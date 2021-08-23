@@ -84,7 +84,7 @@ public class ReminderPlanner extends Planner{
      */
     @Override
     public String getType(){
-        return "reminder";
+        return "reminders";
     }
 
     /**
