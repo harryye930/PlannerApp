@@ -65,6 +65,7 @@ public class ReminderPlanner extends Planner{
         sb.append("Planner Name: ").append(this.plannerName).append("\n");
         sb.append("Planner ID: ").append(this.getID()).append("\n");
         sb.append("Tasks: ").append(this.getNumAgendas()).append("\n");
+
         for (int i = 0; i < taskNums; i++) {
             sb.append("\n").append(this.taskHeading).append(": ").
                     append(this.reminderPlannerTask.get(this.taskHeading).get(i)).append("\n");
@@ -72,6 +73,12 @@ public class ReminderPlanner extends Planner{
                     append(this.reminderPlannerTask.get(this.dateHeading).get(i)).append("\n");
             sb.append("\n").append(this.completionStatusHeading).append(": ").
                     append(this.reminderPlannerTask.get(this.completionStatusHeading).get(i)).append("\n");
+            sb.append("-----------------\n");
+        }
+        if (taskNums == 0) {
+            sb.append("\n").append(this.taskHeading).append(": ");
+            sb.append("\n").append(this.dateHeading).append(": ");
+            sb.append("\n").append(this.completionStatusHeading).append(": \n");
             sb.append("-----------------\n");
         }
         return sb.toString();
