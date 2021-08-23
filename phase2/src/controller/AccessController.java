@@ -270,8 +270,9 @@ public class AccessController{
     public String viewAllAccount(){
         List<Account> acc = getAllAccount();
         StringBuilder res = new StringBuilder();
+        String sep = "\n=====================\n";
         for (Account i : acc){
-            res.append(i.toString()).append("\n");
+            res.append(i.toString()).append(sep);
         }
         return res.toString();
     }
