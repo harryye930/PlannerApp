@@ -7,14 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
-//TODO: cannot integrate JList right now.
 public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
     private boolean flag = false;
     private Map<String, String> labelToStrings = new UIGateway().loadAdminCheckPlannerUITexts();
     private String  userId;
 
     // Panel
-    private JScrollPane accountInfo;
     JPanel menu = new JPanel();
 
     // Button
@@ -55,7 +53,7 @@ public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
         menu.setLayout(null);
         main.add(menu, "adminCheckPlanner");
 
-        accountInfo = data.getAccount(userId, menu);
+        data.getPlanners(menu);
 
         JLabel prompt = new JLabel(labelToStrings.get("prompt"));
         prompt.setBounds(475, 100, 200, 40);
@@ -80,8 +78,7 @@ public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
         back.addActionListener(this);
     }
 
-    private void update() {
-        accountInfo = data.getAccount(userId, menu);
+    private void update() { data.getPlanners(menu);
     }
 
     /**

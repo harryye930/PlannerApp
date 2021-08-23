@@ -84,7 +84,7 @@ public class ViewData {
     }
 
     private void updatePlanners(JPanel panel) {
-        String separator = "\n===============\n";
+        String separator = "\n==================\nPublic Planners:\n";
         this.scrollPaneInit(planners, panel);
         plannerInfo.setText(plannerController.viewUserPlanners() + separator + plannerController.viewPublicPlanners());
         this.textAreaInit(plannerInfo);

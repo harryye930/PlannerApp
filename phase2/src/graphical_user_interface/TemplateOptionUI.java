@@ -48,7 +48,6 @@ public class TemplateOptionUI extends GeneralUI implements ActionListener{
         fb.addTitleLabel("prompt", labelToStrings.get("prompt"));
         fb.addSubmitButton("viewAllTemplateButton", labelToStrings.get("viewAllTemplateButton"));
         fb.addSubmitButton("returnToMainMenuButton", labelToStrings.get("returnToMainMenuButton"));
-        fb.addSuperButton("goBack", labelToStrings.get("goBack"), this.getParent());
         fb.addListener(this);
 
         form = fb.getForm();
@@ -79,7 +78,7 @@ public class TemplateOptionUI extends GeneralUI implements ActionListener{
 
             cl.show(main, "templateInfo");
         } else if (e.getSource() == back) {
-            this.getParent().run();
+            this.run();
         }
     }
 }

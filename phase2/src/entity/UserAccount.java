@@ -86,7 +86,9 @@ public class UserAccount extends Account {
             result.append("This  user is currently suspended till:\n");
             result.append(this.suspendedTime.toString()).append("\n");
         }
-        result.append("This is an Regular Account with following information available:\n" + "User Name: ").append(this.userName).append("\n").append("User ID: ").append(this.userId).append("\n").append("User Email:").append(this.email).append("\n");
+        result.append("This is an Regular Account with following information available:\n" + "User Name: ")
+                .append(this.userName).append("\n").append("User ID: ").
+                append(this.userId).append("\n").append("User Email:").append(this.email).append("\n");
         return result.toString();
     }
 

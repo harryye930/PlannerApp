@@ -103,7 +103,6 @@ public class PlannerController {
     public String viewUserPlanners() {
         StringBuilder res = new StringBuilder();
         List<String> plannerIds = this.accessController.getPlanners(this.accessController.getCurrUserId());
-        System.out.println(plannerIds.toString());
         if (plannerIds.size() == 0) {
             return "No personal planners available yet.";
         } else {
