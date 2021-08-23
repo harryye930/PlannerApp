@@ -73,7 +73,7 @@ public class CreateTemplateUI extends GeneralUI implements ActionListener {
 
         // Add existingTemplatesLabel
         JLabel existingTemplatesLabel = new JLabel(labelToStrings.get("existingTemplatesLabel"));
-        existingTemplatesLabel.setBounds(25, 25, 400, 25);
+        existingTemplatesLabel.setBounds(25, 0, 400, 25);
         createTemplatePanel.add(existingTemplatesLabel);
 
         // Add JScrollPane showing templateInfo below the existingTemplatesLabel
