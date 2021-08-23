@@ -1,4 +1,4 @@
-prompt: <html>Please enter the user<br/> id you want to operate on:</html>
-suspend: Suspend Operation
+prompt: <html>Please enter the ID of the user <br/> you want to operate on:</html>
+suspend: Suspend User
 checkPlanner: Check Planner
-goBack: Go back
+goBack: Return to Main Menu

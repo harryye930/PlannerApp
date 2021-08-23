@@ -1,5 +1,5 @@
 delete: Delete
-goBack: Go back
+goBack: Return to Main Menu
 submit: Submit
-prompt: <html>Please enter the planner ID you<br/> want to operate on:</html>
+prompt: <html>Please enter the ID of the planner<br/> you want to edit:</html>
 invalidInput: Invalid input, please try again!

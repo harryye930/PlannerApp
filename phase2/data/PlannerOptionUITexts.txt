@@ -1,5 +1,5 @@
 prompt: Planner Menu
-createPlannerButton: Create new planner
-checkPlannerButton: Check planner
-back: Return to menu
+createPlannerButton: Create Planner
+checkPlannerButton: Check my planner(s)
+back: Return to Main Menu
 trashBin: Trash Bin

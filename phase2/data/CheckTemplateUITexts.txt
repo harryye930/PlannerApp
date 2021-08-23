@@ -1,4 +1,4 @@
 prompt: <html>Please enter the ID of the template<br/> you would like to edit:</html>
-goBack: Go back
+goBack: Return to Template Menu
 submit: Submit
 invalidInput: Invalid ID, please try again!

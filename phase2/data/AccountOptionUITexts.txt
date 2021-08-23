@@ -1,8 +1,8 @@
-changeUsername: Change User Name
+changeUsername: Change Username
 changePassword: Change Password
-back: Go back
-addFriend: Add friend
-changeUsernameMessage: Please enter your new user name:
+back: Return to Main Menu
+addFriend: Add Friend
+changeUsernameMessage: Please enter your new username:
 submit: Submit
 goBack: Go back
 enterOriginalPassword: Please enter your original password:

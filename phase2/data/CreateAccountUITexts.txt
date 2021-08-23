@@ -1,4 +1,4 @@
-createAccount: Register your account!
+createAccount: Please register a new account.
 passwordPrompt: Password
 register: Register
 goBack: Go back
@@ -6,7 +6,7 @@ generatePassword: Generate
 registerTempAccount: Register a temporary account
 goNext: Got it!
 emailPrompt: Please enter your email:
-userNamePrompt: User name:
+userNamePrompt: Username:
 confirmPasswordPrompt: Reconfirm your Password
 incorrectPassword: Incorrect password, please try again
 weakPassword: Password too weak, please try again

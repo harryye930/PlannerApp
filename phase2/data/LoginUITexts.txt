@@ -1,8 +1,8 @@
 prompt: Welcome!
 retrieverPrompt: User ID or Email:
 passwordPrompt: Password:
-login: Login
-createAccount: Create new Account
-guest: Login as guest
+login: Log in
+createAccount: Create new account
+guest: Log in as guest
 invalidInput: Invalid input, please try again!
-forgetPassword: Forget password
+forgetPassword: Forgot password

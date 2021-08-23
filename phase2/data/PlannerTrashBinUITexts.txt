@@ -1,8 +1,8 @@
-prompt: <html>Please enter the planner ID<br/> you want to operate on</html>
+prompt: <html>Please enter the ID of the planner <br/> you want to edit</html>
 unTrash: Recover
-delete: permanent delete
-goBack: Go Back
-unTrashSuccessPrompt: Recover success!
+delete: Permanently Delete
+goBack: Return to Planner Menu
+unTrashSuccessPrompt: Recover successful!
 unTrashFailPrompt: Invalid input, please try again!
-deleteSuccessPrompt: Delete success!
+deleteSuccessPrompt: Delete successful!
 deleteFailPrompt: Invalid input, please try again!
