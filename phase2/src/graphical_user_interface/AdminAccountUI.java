@@ -8,13 +8,7 @@ import java.util.Map;
 
 /**
  * GUI class for displaying the main menu for an admin user.
- * The main menu includes: planner options, edit template, suspend account
- * - Edit Template
- * - Planner options
- *  - change privacy setting
- *  - interact with all planners
- *  - delete planner
- * - Suspend account
+ * The main menu includes: planner options, template options, account options
  */
 public class AdminAccountUI extends GeneralUI {
     private boolean flag = false;

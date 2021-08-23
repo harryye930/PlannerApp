@@ -46,7 +46,7 @@ public class AdminTemplateOptionUI extends GeneralUI {
 
         FormBuilder buttons = new FormBuilder();
 
-        buttons.addLabel("prompt", labelToStrings.get("prompt"));
+        buttons.addTitleLabel("prompt", labelToStrings.get("prompt"));
         buttons.addSuperButton("createTemplate", labelToStrings.get("createTemplate"), createTemplateUI);
         buttons.addSuperButton("editTemplate", labelToStrings.get("editTemplate"), checkTemplateUI);
         buttons.addSuperButton("returnToMainMenuButton", labelToStrings.get("returnToMainMenuButton"), this.getParent());

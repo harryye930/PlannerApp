@@ -53,7 +53,7 @@ public class CheckTemplateUI extends GeneralUI implements ActionListener {
         fb.setBounds(450, 50, 225, 240);
         fb.addLabel("prompt", labelToStrings.get("prompt"));
         fb.addTextField("templateId");
-        fb.addSubmitButton("submit", labelToStrings.get("prompt"));
+        fb.addSubmitButton("submit", labelToStrings.get("submit"));
         fb.addSuperButton("goBack", labelToStrings.get("goBack"), this.getParent());
         fb.addListener(this);
 
