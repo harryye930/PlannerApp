@@ -61,6 +61,7 @@ public class ReminderPlanner extends Planner{
         StringBuilder sb = new StringBuilder("\n");
         int taskNums = this.TaskPromptTasks.size();
 
+        sb.append("This is a Reminder Planner\n");
         sb.append("Privacy Status: ").append(this.privacyStatus).append("\n");
         sb.append("Planner Name: ").append(this.plannerName).append("\n");
         sb.append("Planner ID: ").append(this.getID()).append("\n");
@@ -159,22 +160,22 @@ public class ReminderPlanner extends Planner{
 
     /**
      *
-     * @param TaskName the task name the user wants to change status
-     * @param TaskStatus the status the user wants to change
+     * @param taskName the task name the user wants to change status
+     * @param taskStatus the status the user wants to change
      * @return true iff the task status is corrected changed.
      */
     @Override
-    public Boolean ChangeTaskStatus(String TaskName, String TaskStatus){
-        if (this.reminderPlannerTask.get(this.taskHeading).contains(TaskName)){
-            int TaskIndex = this.reminderPlannerTask.get(this.taskHeading).indexOf(TaskName);
+    public Boolean ChangeTaskStatus(String taskName, String taskStatus){
+        if (this.reminderPlannerTask.get(this.taskHeading).contains(taskName)){
+            int TaskIndex = this.reminderPlannerTask.get(this.taskHeading).indexOf(taskName);
             if (Objects.equals(this.reminderPlannerTask.
                     get(this.completionStatusHeading).get(TaskIndex), "incomplete")){
                 this.reminderPlannerTask.get(completionStatusHeading).remove(TaskIndex);
-                this.reminderPlannerTask.get(this.taskHeading).add(TaskIndex, "completed");
+                this.reminderPlannerTask.get(completionStatusHeading).add(TaskIndex, "completed");
             } else if (Objects.equals(this.reminderPlannerTask.
                     get(this.completionStatusHeading).get(TaskIndex), "completed")){
                 this.reminderPlannerTask.get(completionStatusHeading).remove(TaskIndex);
-                this.reminderPlannerTask.get(this.taskHeading).add(TaskIndex, "incomplete");
+                this.reminderPlannerTask.get(completionStatusHeading).add(TaskIndex, "incomplete");
             }
             return true;
             } else{

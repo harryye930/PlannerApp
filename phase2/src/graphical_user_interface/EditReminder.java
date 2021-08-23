@@ -78,13 +78,13 @@ public class EditReminder extends GeneralUI implements ActionListener {
 
     private void updateLabel() {
         if (isAdd) {
-            prompt0.setText("Please enter the task heading it wants to add:");
-            prompt1.setText("Please enter the task date it wants to add:");
-            changeButton.setText("Change to change status menu");
+            prompt0.setText("<html>Please enter the task heading it wants to add:</html>");
+            prompt1.setText("<html>Please enter the task Deadline you want to assign: (in form of MM/dd/yyyy)</html>");
+            changeButton.setText("change status page");
         } else {
-            prompt0.setText("Please enter the task name the user wants to change status");
-            prompt1.setText("Please enter the status the user wants to change");
-            changeButton.setText("Change to add task menu");
+            prompt0.setText("<html>Please enter the task name the user wants to change status</html>");
+            prompt1.setText("<html>Please enter the status the user wants to change</html>");
+            changeButton.setText("Change to add task page");
         }
         data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
     }
@@ -101,9 +101,9 @@ public class EditReminder extends GeneralUI implements ActionListener {
             this.updateLabel();
         } else if (e.getSource() == submit) {
             if (isAdd) {
-                System.out.println(plannerController.add(text0.getText(), text1.getText()));
+                System.out.println(plannerController.add(text1.getText(), text0.getText()));
             } else {
-                plannerController.changeTaskStatus(text0.getText(), text1.getText());
+                System.out.println(plannerController.changeTaskStatus(text0.getText(), text1.getText()));
             }
             data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
         }  else if (e.getSource() == back) {
