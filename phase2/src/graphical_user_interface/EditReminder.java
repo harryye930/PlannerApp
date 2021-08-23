@@ -4,13 +4,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//TODO: To be merged later.
 public class EditReminder extends GeneralUI implements ActionListener {
     private boolean flag = false;
     private boolean isAdd = true;
 
     //Panel
-    private JScrollPane plannerInfo;
     JPanel remainderEdit = new JPanel();
 
     //Button
@@ -36,34 +34,42 @@ public class EditReminder extends GeneralUI implements ActionListener {
     @Override
     public void run() {
         if (flag) {
-            cl.show(main, "editRemainder");
+            cl.show(main, "editReminder");
         } else {
             this.showEditPanel();
-            cl.show(main, "editRemainder");
+            cl.show(main, "editReminder");
             flag = !flag;
         }
     }
 
     private void showEditPanel() {
-        main.add(remainderEdit, "editRemainder");
+        main.add(remainderEdit, "editReminder");
+        remainderEdit.setLayout(null);
 
-        plannerInfo = data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
+        data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
 
-        prompt1.setBounds(472, 25, 200, 30);
-        prompt0.setBounds(472, 125, 200, 30);
-        text0.setBounds(472, 75, 200, 30);
-        text1.setBounds(472, 175, 200, 30);
-        changeButton.setBounds(500, 225, 150, 30);
-        submit.setBounds(500, 275, 150, 30);
-        back.setBounds(472, 325, 150, 30);
+        prompt1.setBounds(472, 25, 200, 40);
+        prompt0.setBounds(472, 125, 200, 40);
+        text0.setBounds(472, 75, 200, 40);
+        text1.setBounds(472, 175, 200, 40);
+        changeButton.setBounds(475, 225, 200, 40);
+        submit.setBounds(500, 275, 150, 40);
+        back.setBounds(500, 325, 150, 40);
 
         remainderEdit.add(changeButton);
         remainderEdit.add(text0);
         remainderEdit.add(text1);
+        remainderEdit.add(prompt0);
+        remainderEdit.add(prompt1);
+        remainderEdit.add(text0);
+        remainderEdit.add(text1);
+        remainderEdit.add(submit);
+        remainderEdit.add(back);
 
         changeButton.addActionListener(this);
         submit.addActionListener(this);
         back.addActionListener(this);
+        this.updateLabel();
     }
 
     private void updateLabel() {
@@ -76,7 +82,7 @@ public class EditReminder extends GeneralUI implements ActionListener {
             prompt1.setText("Please enter the status the user wants to change");
             changeButton.setText("Change to add task menu");
         }
-        plannerInfo = data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
+        data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
     }
 
     /**
@@ -91,10 +97,11 @@ public class EditReminder extends GeneralUI implements ActionListener {
             this.updateLabel();
         } else if (e.getSource() == submit) {
             if (isAdd) {
-                plannerController.add(text0.getText(), text1.getText());
+                System.out.println(plannerController.add(text0.getText(), text1.getText()));
             } else {
                 plannerController.changeTaskStatus(text0.getText(), text1.getText());
             }
+            data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
         }  else if (e.getSource() == back) {
             this.getParent().run();
         }

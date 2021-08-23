@@ -16,7 +16,7 @@ public class ReminderPlanner extends Planner{
     private List<String> TaskPromptTasks, DatePromptTasks, CompletionPromptTasks;
     private String taskHeading, dateHeading, completionStatusHeading;
     private int NumAgendas;
-    private int id;
+    private final int id;
 
     /**
      * @param taskHeading the first column name of the reminder planner
@@ -58,22 +58,21 @@ public class ReminderPlanner extends Planner{
      */
     @Override
     public String toString(){
-        StringBuilder sb = new StringBuilder();
-        int TaskNums = this.TaskPromptTasks.size();
-        for(int i = 0; i < TaskNums - 1; i++){
-            // get the task name of the reminder
-            sb.append(this.taskHeading).append(": ");
-            sb.append(this.reminderPlannerTask.get(this.taskHeading).get(i)).append("\n");
+        StringBuilder sb = new StringBuilder("\n");
+        int taskNums = this.TaskPromptTasks.size();
 
-            // get the task deadline date of the reminder
-            sb.append(this.dateHeading).append(": ");
-            sb.append(this.reminderPlannerTask.get(this.dateHeading).get(i)).append("\n");
-
-            // get the task completion status of the reminder
-            sb.append(this.completionStatusHeading).append(": ");
-            sb.append(this.reminderPlannerTask.get(this.completionStatusHeading).get(i)).append("\n");
-
-            sb.append("\n");
+        sb.append("Privacy Status: ").append(this.privacyStatus).append("\n");
+        sb.append("Planner Name: ").append(this.plannerName).append("\n");
+        sb.append("Planner ID: ").append(this.getID()).append("\n");
+        sb.append("Tasks: ").append(this.getNumAgendas()).append("\n");
+        for (int i = 0; i < taskNums; i++) {
+            sb.append("\n").append(this.taskHeading).append(": ").
+                    append(this.reminderPlannerTask.get(this.taskHeading).get(i)).append("\n");
+            sb.append("\n").append(this.dateHeading).append(": ").
+                    append(this.reminderPlannerTask.get(this.dateHeading).get(i)).append("\n");
+            sb.append("\n").append(this.completionStatusHeading).append(": ").
+                    append(this.reminderPlannerTask.get(this.completionStatusHeading).get(i)).append("\n");
+            sb.append("-----------------\n");
         }
         return sb.toString();
     }
@@ -103,10 +102,10 @@ public class ReminderPlanner extends Planner{
      * @return true iff the input time is a valid time format
      */
     public boolean isValid(String dateStr) {
-        DateFormat sdf = new SimpleDateFormat(dateStr);
+        DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         sdf.setLenient(false);
         try {
-            sdf.parse("MM/dd/yyyy");
+            sdf.parse(dateStr);
         } catch (ParseException e) {
             return false;
         }

@@ -17,7 +17,7 @@ public class EditPlannerUI extends GeneralUI implements ActionListener {
     private final JPanel panel = new JPanel();
     private final JList<String> list = new JList<>();
 
-    private final GeneralUI editRemainder = new EditReminder(this.getParent());
+    private final GeneralUI editRemainder;
     private final Map<String, String> labelToStrings = new UIGateway().loadEditPlannerUITexts();
 
     private IForm dailyEditForm;
@@ -27,6 +27,7 @@ public class EditPlannerUI extends GeneralUI implements ActionListener {
 
     public EditPlannerUI(GeneralUI parent) {
         this.setParent(parent);
+        this.editRemainder = new EditReminder(parent);
     }
 
     /**
@@ -34,6 +35,10 @@ public class EditPlannerUI extends GeneralUI implements ActionListener {
      */
     @Override
     public void run() {
+        if (plannerController.getType(Integer.parseInt(plannerController.getCurrPlannerId())).equals("reminders")) {
+            editRemainder.run();
+            return;
+        }
         if (flag) {
             update();
             cl.show(main, "editPlanner");
@@ -80,8 +85,10 @@ public class EditPlannerUI extends GeneralUI implements ActionListener {
             panel.removeAll();
             panel.add(menuForm.getPanel());
             panel.add(projectEditForm.getPanel());
-        } else if (type.equals("remainders")){
+        } else if (type.equals("reminders")){
+            panel.removeAll();
             editRemainder.run();
+            return;
         }
         data.getPlanner(plannerController.getCurrPlannerId(), panel);
         panel.add(list);
