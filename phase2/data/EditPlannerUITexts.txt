@@ -1,9 +1,9 @@
-timeSlotPrompt: <html>Please enter the time slot you want to add agenda to (in form of HH:MM):</html>
-agendaPrompt: <html>Please enter the agenda you want to add:</html>
+timeSlotPrompt: <html>Please enter the time slot you want to add agenda to (in form of HH:MM)</html>
+agendaPrompt: <html>Please enter the agenda you want to add</html>
 statusPrompt: <html>Please enter the task name you want to change status for:</html>
 columnPrompt: <html>Please enter the column name you want to change to:</html>
-changeToAdd: <html>Return to Add Page</html>
-addNamePrompt: <html>Please enter the column name you want to add task to:</html>
-taskNamePrompt: <html>Please enter the task you want to add:</html>
-changeToEdit: <html>Return to Edit page</html>
-invalidPrompt: <html>Invalid input!</html>
+changeToAdd: Return to Add Page
+addNamePrompt: <html>Please enter the column name you want to add task to</html>
+taskNamePrompt: <html>Please enter the task you want to add</html>
+changeToEdit: Return to Edit page
+invalidPrompt: Invalid input!
