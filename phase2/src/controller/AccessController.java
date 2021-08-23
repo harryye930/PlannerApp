@@ -302,6 +302,7 @@ public class AccessController{
     public boolean removePlanner(String retriever, String plannerId) {
         boolean flag = this.accPlanner.removePlanner(retriever, plannerId);
         this.save();
+        plannerController.save();
         return flag;
     }
 
