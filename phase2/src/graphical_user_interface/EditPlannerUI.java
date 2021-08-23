@@ -174,7 +174,8 @@ public class EditPlannerUI extends GeneralUI implements ActionListener {
                 }
             }
         } else if (e.getSource() == menuForm.get("delete")) {
-            if (plannerController.deletePlanner(plannerController.getCurrPlannerId())) {
+            if (accessController.removePlanner(accessController.getCurrUserId(), plannerController.getCurrPlannerId())){
+//                plannerController.deletePlanner(plannerController.getCurrPlannerId()
                 this.getParent().run();
             }
         }
