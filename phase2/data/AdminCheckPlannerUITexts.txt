@@ -1,5 +1,9 @@
-delete: Delete
+delete: Delete Planner
 goBack: Return to Main Menu
 submit: Submit
-prompt: <html>Please enter the ID of the planner<br/> you want to edit:</html>
+prompt: <html>Please enter the ID of the planner you want to edit:</html>
 invalidInput: Invalid input, please try again!
+changeStatusPrompt: <html>To change the status of the planner, select one of the options below and click "Submit".</html>
+statusOption1: private
+statusOption2: public
+statusOption3: friends-only

@@ -1,6 +1,8 @@
 package graphical_user_interface;
 
 import gateway.UIGateway;
+import graphical_user_interface.builder.FormBuilder;
+import graphical_user_interface.builder.IForm;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,19 +14,11 @@ public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
     private Map<String, String> labelToStrings = new UIGateway().loadAdminCheckPlannerUITexts();
     private String  userId;
 
+    IForm editInputForm;
+
     // Panel
-    JPanel menu = new JPanel();
-
-    // Button
-    private JButton delete = new JButton(labelToStrings.get("delete"));
-    private JButton back = new JButton(labelToStrings.get("goBack"));
-    private JButton submit = new JButton(labelToStrings.get("submit"));
-
-    // List
-    private final JList<String> changePrivacy = new JList<>(new String[]{"private", "public", "friends-only"});
-
-    // Text
-    private final JTextField text = new JTextField();
+    JPanel editPlanner = new JPanel();
+    JScrollPane allPlanners;
 
     public AdminCheckPlannerUI(GeneralUI parent) {
         this.setParent(parent);
@@ -50,35 +44,33 @@ public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
     }
 
     private void showMenu() {
-        menu.setLayout(null);
-        main.add(menu, "adminCheckPlanner");
+        editPlanner.setLayout(null);
+        main.add(editPlanner, "adminCheckPlanner");
 
-        data.getPlanners(menu);
+        allPlanners = data.getPlanners(editPlanner);
 
-        JLabel prompt = new JLabel(labelToStrings.get("prompt"));
-        prompt.setBounds(475, 100, 200, 40);
-        menu.add(prompt);
+        FormBuilder editInputBuilder = new FormBuilder();
 
-        text.setBounds(475, 150, 200, 40);
-        menu.add(text);
+        editInputBuilder.setBounds(460, 0, 230, 550);
+        editInputBuilder.addLabel("prompt", labelToStrings.get("prompt"));
+        editInputBuilder.addTextField("idTextField");
+        editInputBuilder.addSubmitButton("delete", labelToStrings.get("delete"));
+        editInputBuilder.addLabel("blankRow1", " ");
+        editInputBuilder.addLabel("changeStatusPrompt", labelToStrings.get("changeStatusPrompt"));
+        editInputBuilder.addList("statusOptions", new String[]{labelToStrings.get("statusOption1"),
+                                                                    labelToStrings.get("statusOption2"),
+                                                                    labelToStrings.get("statusOption3")});
+        editInputBuilder.addSubmitButton("submit", labelToStrings.get("submit"));
+        editInputBuilder.addLabel("blankRow2", " ");
+        editInputBuilder.addSuperButton("back", labelToStrings.get("goBack"), this.getParent());
 
-        delete.setBounds(515, 200, 100, 40);
-        menu.add(delete);
-        delete.addActionListener(this);
-
-        changePrivacy.setBounds(500, 250, 150, 60);
-        menu.add(changePrivacy);
-
-        submit.setBounds(500, 350, 150, 60);
-        menu.add(submit);
-        submit.addActionListener(this);
-
-        back.setBounds(515, 400, 100, 40);
-        menu.add(back);
-        back.addActionListener(this);
+        editInputBuilder.addListener(this);
+        editInputForm = editInputBuilder.getForm();
+        editPlanner.add(editInputForm.getPanel());
     }
 
-    private void update() { data.getPlanners(menu);
+    private void update() {
+        allPlanners = data.getPlanners(editPlanner);
     }
 
     /**
@@ -88,27 +80,33 @@ public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == delete) {
-            if (plannerController.checkPlanner(text.getText())) {
-                plannerController.deletePlanner(text.getText());
-                text.setText("");
+        if (e.getSource() == editInputForm.get("delete")){
+            if (plannerController.checkPlanner(((JTextField)editInputForm.get("idTextField")).getText())) {
+                System.out.println(((JTextField)editInputForm.get("idTextField")).getText());
+                plannerController.deletePlanner(((JTextField)editInputForm.get("idTextField")).getText());
+                ((JTextField)editInputForm.get("idTextField")).setText("");
+                System.out.println(((JTextField)editInputForm.get("idTextField")).getText());
                 update();
             } else {
-                text.setText(labelToStrings.get("invalidInput"));
+                ((JTextField)editInputForm.get("idTextField")).setText(labelToStrings.get("invalidInput"));
             }
-        } else if (e.getSource() == submit) {
-            if (plannerController.checkPlanner(text.getText())) {
-                if (changePrivacy.getSelectedIndex() != -1) {
-                    plannerController.changePrivacyStatus(changePrivacy.getSelectedValue());
-                    text.setText("");
-                    changePrivacy.setSelectedIndex(-1);
+        } else if (e.getSource() == editInputForm.get("submit")) {
+            if (plannerController.checkPlanner(((JTextField)editInputForm.get("idTextField")).getText())) {
+//                System.out.println(((JTextField)editInputForm.get("idTextField")).getText());
+                if (((JList<String>)editInputForm.get("statusOptions")).getSelectedIndex() != -1) {
+//                    System.out.println(((JList<String>)editInputForm.get("statusOptions")).getSelectedIndex());
+//                    System.out.println(((JList<String>)editInputForm.get("statusOptions")).getSelectedValue());
+                    plannerController.changePrivacyStatus(((JList<String>)editInputForm.get("statusOptions")).getSelectedValue());
+                    ((JTextField)editInputForm.get("idTextField")).setText("");
+                    ((JList<String>)editInputForm.get("statusOptions")).setSelectedIndex(-1);
                     update();
+//                    System.out.println(plannerController.viewUserPlanners() + "\n" + plannerController.viewPublicPlanners());
+//                    System.out.println(((JList<String>)editInputForm.get("statusOptions")).getSelectedIndex());
+//                    System.out.println(((JList<String>)editInputForm.get("statusOptions")).getSelectedValue());
                 }
             } else {
-                text.setText(labelToStrings.get("invalidInput"));
+                ((JTextField)editInputForm.get("idTextField")).setText(labelToStrings.get("invalidInput"));
             }
-        } else if (e.getSource() == back) {
-            this.getParent().run();
         }
     }
 }

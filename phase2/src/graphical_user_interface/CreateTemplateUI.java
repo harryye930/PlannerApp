@@ -80,7 +80,6 @@ public class CreateTemplateUI extends GeneralUI implements ActionListener {
         templateInfo = data.getTemplates(createTemplatePanel);
         templateInfo.setBounds(25, 75, 400, 450);
         templateInfo.setBackground(new Color(143, 141, 141));
-        createTemplatePanel.add(templateInfo);
 
         FormBuilder optionsFormBuilder = new FormBuilder();
 
