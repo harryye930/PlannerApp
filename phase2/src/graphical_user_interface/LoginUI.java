@@ -33,10 +33,6 @@ public class LoginUI extends GeneralUI implements ActionListener {
 
     public LoginUI() {}
 
-    public LoginUI(GeneralUI parent) {
-        this.setParent(parent);
-    }
-
     /**
      * run the presenter from the beginning.
      */
@@ -74,7 +70,6 @@ public class LoginUI extends GeneralUI implements ActionListener {
         panel.add(retrieverPrompt);
 
         retriever = new JTextField();
-        //retriever.setVisible(false);
         panel.add(retriever);
 
         JLabel passwordPrompt = new JLabel(labelToStrings.get("passwordPrompt"));
@@ -105,7 +100,7 @@ public class LoginUI extends GeneralUI implements ActionListener {
     /**
      * Invoked when an action occurs.
      *
-     * @param e
+     * @param e An event object
      */
     @Override
     public void actionPerformed(ActionEvent e) {

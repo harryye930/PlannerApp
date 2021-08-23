@@ -14,8 +14,6 @@ public class AdminTemplateOptionUI extends GeneralUI {
     private boolean flag = false;
     private final Map<String, String> labelToStrings = new UIGateway().loadAdminTemplateOptionUITexts();
 
-    private IForm form;
-
     private final GeneralUI createTemplateUI = new CreateTemplateUI(this);
     private final GeneralUI checkTemplateUI = new CheckTemplateUI(this);
 
@@ -52,7 +50,7 @@ public class AdminTemplateOptionUI extends GeneralUI {
         buttons.addSuperButton("returnToMainMenuButton", labelToStrings.get("returnToMainMenuButton"), this.getParent());
         buttons.setBounds(150, 100, 400, 250);
 
-        form = buttons.getForm();
+        IForm form = buttons.getForm();
         panel.add(form.getPanel());
     }
 }

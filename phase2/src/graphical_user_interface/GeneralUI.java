@@ -45,14 +45,6 @@ public abstract class GeneralUI {
      */
     public abstract void run();
 
-//    /**
-//     * set the child presenter of the current presenter.
-//     * @param child A GeneralUI representing the child presenter we want to set.
-//     */
-//    public void setChild(String child) {
-//        this.child = child;
-//    }
-
     /**
      * Set the parent of the current presenter.
      * @param parent A GeneralUI representing the parent we want to assign.
@@ -68,10 +60,4 @@ public abstract class GeneralUI {
         return this.parent;
     }
 
-//    /**
-//     * @return The child Presenter.
-//     */
-//    public String getChild() {
-//        return this.child;
-//    }
 }

@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 public class CreateAccountUI extends GeneralUI implements KeyListener, ActionListener {
     private boolean flag = false;
-    private Map<String, String> labelToStrings = new UIGateway().loadCreateAccountUITexts();
+    private final Map<String, String> labelToStrings = new UIGateway().loadCreateAccountUITexts();
 
     private final GeneralUI adminAccUI;
     private final GeneralUI regularAccUI;
@@ -35,7 +35,6 @@ public class CreateAccountUI extends GeneralUI implements KeyListener, ActionLis
     private final JButton generatePassword = new JButton(labelToStrings.get("generatePassword"));
     private final JPanel create = new JPanel();
     private final JCheckBox registerTempAccount = new JCheckBox(labelToStrings.get("registerTempAccount"));
-    private JPanel grids;
     private final JButton goNext = new JButton(labelToStrings.get("goNext"));
     JPanel messagePanel = new JPanel();
 
@@ -74,7 +73,7 @@ public class CreateAccountUI extends GeneralUI implements KeyListener, ActionLis
         create.add(generatePassword);
         generatePassword.addActionListener(this);
 
-        grids = new JPanel();
+        JPanel grids = new JPanel();
         grids.setLayout(new GridLayout(6, 2));
         grids.setBounds(70, 100, 500, 250);
         create.add(grids);
@@ -182,7 +181,7 @@ public class CreateAccountUI extends GeneralUI implements KeyListener, ActionLis
      * See the class description for {@link KeyEvent} for a definition of
      * a key typed event.
      *
-     * @param e
+     * @param e An event object
      */
     @Override
     public void keyTyped(KeyEvent e) {
@@ -194,7 +193,7 @@ public class CreateAccountUI extends GeneralUI implements KeyListener, ActionLis
      * See the class description for {@link KeyEvent} for a definition of
      * a key pressed event.
      *
-     * @param e
+     * @param e An event object
      */
     @Override
     public void keyPressed(KeyEvent e) {
@@ -205,7 +204,7 @@ public class CreateAccountUI extends GeneralUI implements KeyListener, ActionLis
      * See the class description for {@link KeyEvent} for a definition of
      * a key released event.
      *
-     * @param e
+     * @param e An event object
      */
     @Override
     public void keyReleased(KeyEvent e) {

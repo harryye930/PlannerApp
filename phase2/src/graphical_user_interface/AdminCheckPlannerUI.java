@@ -11,8 +11,8 @@ import java.util.Map;
 
 public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
     private boolean flag = false;
-    private Map<String, String> labelToStrings = new UIGateway().loadAdminCheckPlannerUITexts();
-    private String  userId;
+    private final Map<String, String> labelToStrings = new UIGateway().loadAdminCheckPlannerUITexts();
+
 
     IForm editInputForm;
 
@@ -22,10 +22,6 @@ public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
 
     public AdminCheckPlannerUI(GeneralUI parent) {
         this.setParent(parent);
-    }
-
-    public void setUserId(String id) {
-        this.userId = id;
     }
 
     /**
@@ -92,17 +88,11 @@ public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
             }
         } else if (e.getSource() == editInputForm.get("submit")) {
             if (plannerController.checkPlanner(((JTextField)editInputForm.get("idTextField")).getText())) {
-//                System.out.println(((JTextField)editInputForm.get("idTextField")).getText());
                 if (((JList<String>)editInputForm.get("statusOptions")).getSelectedIndex() != -1) {
-//                    System.out.println(((JList<String>)editInputForm.get("statusOptions")).getSelectedIndex());
-//                    System.out.println(((JList<String>)editInputForm.get("statusOptions")).getSelectedValue());
                     plannerController.changePrivacyStatus(((JList<String>)editInputForm.get("statusOptions")).getSelectedValue());
                     ((JTextField)editInputForm.get("idTextField")).setText("");
                     ((JList<String>)editInputForm.get("statusOptions")).setSelectedIndex(-1);
                     update();
-//                    System.out.println(plannerController.viewUserPlanners() + "\n" + plannerController.viewPublicPlanners());
-//                    System.out.println(((JList<String>)editInputForm.get("statusOptions")).getSelectedIndex());
-//                    System.out.println(((JList<String>)editInputForm.get("statusOptions")).getSelectedValue());
                 }
             } else {
                 ((JTextField)editInputForm.get("idTextField")).setText(labelToStrings.get("invalidInput"));

@@ -10,11 +10,10 @@ import java.util.Map;
 public class SuspendUserUI extends GeneralUI implements ActionListener {
     private boolean flag = false;
     private String userId;
-    private Map<String, String> labelToStrings = new UIGateway().loadSuspendUserUITexts();
+    private final Map<String, String> labelToStrings = new UIGateway().loadSuspendUserUITexts();
 
     // Panel
-    private JScrollPane accountInfo;
-    private JPanel menu = new JPanel();
+    private final JPanel menu = new JPanel();
 
     // Button
     private final JButton suspend = new JButton();
@@ -24,7 +23,7 @@ public class SuspendUserUI extends GeneralUI implements ActionListener {
     private final JTextField text = new JTextField();
 
     // Label
-    private JLabel prompt = new JLabel(labelToStrings.get("prompt"));
+    private final JLabel prompt = new JLabel(labelToStrings.get("prompt"));
 
     public SuspendUserUI(GeneralUI parent) {
         this.setParent(parent);
@@ -64,12 +63,6 @@ public class SuspendUserUI extends GeneralUI implements ActionListener {
         if (accessController.getSuspensionStatus(userId)) {
             suspend.setText(labelToStrings.get("unsuspendButton"));
         } else {
-//            prompt.setBounds(450, 50, 200, 50);
-//            menu.add(prompt);
-//
-//            text.setBounds(450, 100, 250, 50);
-//            menu.add(text);
-
             suspend.setText(labelToStrings.get("suspendButton"));
         }
 
@@ -100,7 +93,7 @@ public class SuspendUserUI extends GeneralUI implements ActionListener {
     /**
      * Invoked when an action occurs.
      *
-     * @param e
+     * @param e An event object
      */
     @Override
     public void actionPerformed(ActionEvent e) {

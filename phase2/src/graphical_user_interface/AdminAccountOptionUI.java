@@ -13,7 +13,6 @@ import java.util.Map;
  * Options include: suspend any account by any number of days.
  */
 public class AdminAccountOptionUI extends GeneralUI implements KeyListener {
-    private String userId;
     private boolean flag = false;
     private final Map<String, String> labelToStrings = new UIGateway().loadAdminAccountOptionUITexts();
 
@@ -66,7 +65,7 @@ public class AdminAccountOptionUI extends GeneralUI implements KeyListener {
      * See the class description for {@link KeyEvent} for a definition of
      * a key typed event.
      *
-     * @param e
+     * @param e An event object
      */
     @Override
     public void keyTyped(KeyEvent e) {
@@ -78,7 +77,7 @@ public class AdminAccountOptionUI extends GeneralUI implements KeyListener {
      * See the class description for {@link KeyEvent} for a definition of
      * a key pressed event.
      *
-     * @param e
+     * @param e An event object
      */
     @Override
     public void keyPressed(KeyEvent e) {
@@ -90,7 +89,7 @@ public class AdminAccountOptionUI extends GeneralUI implements KeyListener {
      * See the class description for {@link KeyEvent} for a definition of
      * a key released event.
      *
-     * @param e
+     * @param e An event object
      */
     @Override
     public void keyReleased(KeyEvent e) {
@@ -98,7 +97,6 @@ public class AdminAccountOptionUI extends GeneralUI implements KeyListener {
             JTextField text = (JTextField) form.get("accountId");
 
             adminSuspendAccount.setUserId(text.getText());
-            adminCheckPlannerUI.setUserId(text.getText());
         }
     }
 }

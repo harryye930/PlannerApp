@@ -18,8 +18,6 @@ public class RegularAccountUI extends GeneralUI {
     private final GeneralUI templateOptionUI = new TemplateOptionUI(this);
     private final GeneralUI accountOptionUI = new AccountOptionUI(this);
 
-    private IForm form;
-
     public RegularAccountUI(GeneralUI parent) {
         this.setParent(parent);
     }
@@ -56,7 +54,7 @@ public class RegularAccountUI extends GeneralUI {
         buttons.addSuperButton("logOut", labelToStrings.get("logOutButton"), this.getParent());
         buttons.setBounds(150, 150, 400, 200);
 
-        form = buttons.getForm();
+        IForm form = buttons.getForm();
         panel.add(form.getPanel());
     }
 }

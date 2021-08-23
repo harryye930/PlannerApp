@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class CreateTemplateUI extends GeneralUI implements ActionListener {
     private boolean flag = false;
-    private Map<String, String> labelToStrings = new UIGateway().loadCreateTemplateUITexts();
+    private final Map<String, String> labelToStrings = new UIGateway().loadCreateTemplateUITexts();
 
     //Forms
     IForm optionsForm;
@@ -44,9 +44,6 @@ public class CreateTemplateUI extends GeneralUI implements ActionListener {
     // Panel/Pane
     private final JPanel createTemplatePanel = new JPanel();
     private JScrollPane templateInfo;
-    private JPanel dailyInputPanel;
-    private JPanel projectInputPanel;
-    private JPanel remindersInputPanel;
 
     public CreateTemplateUI(GeneralUI parent) {
         this.setParent(parent);
@@ -125,7 +122,7 @@ public class CreateTemplateUI extends GeneralUI implements ActionListener {
     }
 
     private void showDailyInputPanel(){
-        dailyInputPanel = new JPanel();
+        JPanel dailyInputPanel = new JPanel();
 
         dailyInputForm = createInputForm("dailySubmitButton",
                 startTimePromptStr, endTimePromptStr, timeIncrementPromptStr);
@@ -135,7 +132,7 @@ public class CreateTemplateUI extends GeneralUI implements ActionListener {
     }
 
     private void showProjectInputPanel(){
-        projectInputPanel = new JPanel();
+        JPanel projectInputPanel = new JPanel();
 
         projectInputForm = createInputForm("projectSubmitButton",
                 firstStatusPromptStr, secondStatusPromptStr, thirdStatusPromptStr);
@@ -145,7 +142,7 @@ public class CreateTemplateUI extends GeneralUI implements ActionListener {
     }
 
     private void showRemindersInputPanel(){
-        remindersInputPanel = new JPanel();
+        JPanel remindersInputPanel = new JPanel();
 
         remindersInputForm = createInputForm("remindersSubmitButton",
                 taskHeadingPromptStr, dateHeadingPromptStr, completionHeadingPromptStr);
