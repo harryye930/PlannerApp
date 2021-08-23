@@ -57,7 +57,7 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
         createPlanner.add(templateInfo);
 
         FormBuilder selectTemplateFormBuilder = new FormBuilder();
-        selectTemplateFormBuilder.setBounds(450, 50, 200, 300);
+        selectTemplateFormBuilder.setBounds(450, 50, 200, 200);
 
         selectTemplateFormBuilder.addLabel("message", labelToStrings.get("message"));
         selectTemplateFormBuilder.addTextField("id");
