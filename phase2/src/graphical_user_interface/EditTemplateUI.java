@@ -43,7 +43,7 @@ public class EditTemplateUI extends GeneralUI implements ActionListener {
     @Override
     public void run() {
         if (flag){
-            template = data.getTemplate(templateController.getCurrTemplateId(), editPanel);
+            template = data.getTemplate(templateController.getCurrTemplateId(), editTemplate);
             cl.show(main, "editTemplate");
         } else {
             this.buildEditPanel();
@@ -59,7 +59,7 @@ public class EditTemplateUI extends GeneralUI implements ActionListener {
         main.add(editTemplate, "editTemplate");
 
         // Show template detail view on the left side of the panel
-        template = data.getTemplate(templateController.getCurrTemplateId(), editPanel);
+        template = data.getTemplate(templateController.getCurrTemplateId(), editTemplate);
 
         JPanel editPanel = getEditPanel();
         editPanel.setBounds(450, 25, 225, 200);
@@ -105,26 +105,6 @@ public class EditTemplateUI extends GeneralUI implements ActionListener {
         nameButton.addActionListener(this);
         statusButton.addActionListener(this);
         backToTemplatesButton.addActionListener(this);
-
-//        // Show prompt and buttons on the right side of the panel
-//        selectionPrompt.setBounds(450, 50, 225, 40);
-//        selectionPrompt.setEditable(false);
-//        editOptionsPanel.add(selectionPrompt);
-//
-//        nameButton.setBounds(450, 150, 225, 40);
-//        nameButton.addActionListener(this);
-//        editOptionsPanel.add(nameButton);
-//        nameButton.addActionListener(this);
-//
-//        statusButton.setBounds(450, 200, 225, 40);
-//        statusButton.addActionListener(this);
-//        editOptionsPanel.add(statusButton);
-//        statusButton.addActionListener(this);
-//
-//        backToTemplatesButton.setBounds(450, 250, 225, 40);
-//        backToTemplatesButton.addActionListener(this);
-//        editOptionsPanel.add(backToTemplatesButton);
-//        backToTemplatesButton.addActionListener(this);
 
         return editOptionsPanel;
     }
@@ -189,7 +169,6 @@ public class EditTemplateUI extends GeneralUI implements ActionListener {
             this.showEditUI();
             cl.show(main, "editTemplate");
         } else if (e.getSource() == backToTemplatesButton) {
-            templateInfo = data.getTemplates(editPanel);
             this.getParent().run();
         }
     }
