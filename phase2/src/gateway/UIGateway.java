@@ -103,4 +103,9 @@ public class UIGateway extends Reader<Map<String, String>>{
         String editPlannerUIFilePath = folderPath + "EditPlannerUITexts.txt";
         return super.readTextFile(editPlannerUIFilePath);
     }
+
+    public Map<String, String> loadEditReminderUITexts() {
+        String editReminderUIFilePath = folderPath + "EditReminderUITexts.txt";
+        return super.readTextFile(editReminderUIFilePath);
+    }
 }

@@ -1,21 +1,26 @@
 package graphical_user_interface;
 
+import gateway.UIGateway;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class EditReminder extends GeneralUI implements ActionListener {
     private boolean flag = false;
     private boolean isAdd = true;
+
+    private final Map<String, String> labelToStrings = new UIGateway().loadEditReminderUITexts();
 
     //Panel
     JPanel remainderEdit = new JPanel();
 
     //Button
     private final JButton changeButton = new JButton();
-    private final JButton submit = new JButton("Submit");
-    private final JButton delete = new JButton("Delete");
-    private final JButton back = new JButton("Go back");
+    private final JButton submit = new JButton(labelToStrings.get("submit"));
+    private final JButton delete = new JButton(labelToStrings.get("delete"));
+    private final JButton back = new JButton(labelToStrings.get("goBack"));
 
     //Text
     private final JTextField text0 = new JTextField();
@@ -78,13 +83,13 @@ public class EditReminder extends GeneralUI implements ActionListener {
 
     private void updateLabel() {
         if (isAdd) {
-            prompt0.setText("<html>Please enter the task heading it wants to add:</html>");
-            prompt1.setText("<html>Please enter the task Deadline you want to assign: (in form of MM/dd/yyyy)</html>");
-            changeButton.setText("change status page");
+            prompt0.setText(labelToStrings.get("prompt0f"));
+            prompt1.setText(labelToStrings.get("prompt1f"));
+            changeButton.setText(labelToStrings.get("changeButtonF"));
         } else {
-            prompt0.setText("<html>Please enter the task name the user wants to change status</html>");
-            prompt1.setText("<html>Please enter the status the user wants to change</html>");
-            changeButton.setText("Change to add task page");
+            prompt0.setText(labelToStrings.get("prompt0s"));
+            prompt1.setText(labelToStrings.get("prompt1s"));
+            changeButton.setText(labelToStrings.get("changeButtonS"));
         }
         data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
     }
