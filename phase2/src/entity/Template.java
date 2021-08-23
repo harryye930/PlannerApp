@@ -1,10 +1,7 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents a Template in the program. Can be a Daily Template, or a Project Template, etc., which are
@@ -21,8 +18,17 @@ public abstract class Template implements Serializable {
     protected String name;
     protected String plannerNamePrompt;
     private static int id;
-    protected boolean publishedStatus;
     private String type;
+    protected boolean publishedStatus;
+
+    public Template(int numTemplatesLoaded, String name, String plannerNamePrompt) {
+        this.name = name;
+        this.plannerNamePrompt = plannerNamePrompt;
+        publishedStatus = false;  // the default published status of all templates are false (i.e., unpublished)
+        type = null;
+        id = numTemplatesLoaded;
+        id++;
+    }
 
     public Template(String name, String plannerNamePrompt) {
         this.name = name;
@@ -74,18 +80,10 @@ public abstract class Template implements Serializable {
 
     /**
      * Getter for retrieving the id of this template.
-     * @return int that represent the id of this template.
+     * @return String that represents the id of this template.
      */
     public int getId() {
         return id;
-    }
-
-    /**
-     * Setter for changing the ID of this template.
-     * @param id New ID for this template.
-     */
-    public void setID(int id){
-        this.id = id;
     }
 
     /**

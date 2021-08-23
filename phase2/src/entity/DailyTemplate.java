@@ -25,7 +25,16 @@ public class DailyTemplate extends Template{
         this.endTimePrompt = endTimePrompt;
         this.incrementPrompt = incrementPrompt;
         this.type = "daily";
-//        this.setTemplateType("daily");
+    }
+
+    public DailyTemplate(int numTemplatesLoaded, String name, String plannerNamePrompt,
+                         String startTimePrompt, String endTimePrompt, String incrementPrompt) {
+        super(numTemplatesLoaded, name, plannerNamePrompt);
+        this.id = super.getId();
+        this.startTimePrompt = startTimePrompt;
+        this.endTimePrompt = endTimePrompt;
+        this.incrementPrompt = incrementPrompt;
+        this.type = "daily";
     }
 
     /**

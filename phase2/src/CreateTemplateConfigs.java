@@ -47,9 +47,9 @@ public class CreateTemplateConfigs {
 
         // Add templates to TemplateManager
         TemplateManager tm = new TemplateManager();
-        tm.importTemplate(dailyTemplate);
-        tm.importTemplate(projectTemplate);
-        tm.importTemplate(remindersTemplate);
+        tm.addTemplate(dailyTemplate);
+        tm.addTemplate(projectTemplate);
+        tm.addTemplate(remindersTemplate);
         System.out.println(tm.detailViewAllTemplates(true));
 
         TemplateGateway templateGateway = new TemplateGateway(tm);
