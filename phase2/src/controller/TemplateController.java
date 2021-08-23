@@ -184,6 +184,7 @@ public class TemplateController{
      */
     public void setTemplateName(int id, String newName){
         this.templateManager.setTemplateName(id, newName);
+        this.save();
     }
 
     /**
@@ -202,6 +203,7 @@ public class TemplateController{
                                String firstPlannerPrompt, String secondPlannerPrompt, String thirdPlannerPrompt){
         this.templateManager.createTemplate(templateType, templateName, plannerNamePrompt, firstPlannerPrompt,
                 secondPlannerPrompt, thirdPlannerPrompt);
+        this.save();
     }
 
 }
