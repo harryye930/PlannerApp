@@ -4,6 +4,6 @@ statusPrompt: Please enter the task name you want to change status for:
 columnPrompt: Please enter the column name you want to change to:
 changeToAdd: Return to Add Page
 addNamePrompt: Please enter the column name you want to add task to
-taskName: Please enter the task you want to add
+taskNamePrompt: Please enter the task you want to add
 changeToEdit: Return to Edit page
 invalidPrompt: Invalid input!
