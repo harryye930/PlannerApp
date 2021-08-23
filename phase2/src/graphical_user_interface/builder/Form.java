@@ -15,21 +15,20 @@ public class Form implements IForm {
         this.panel = panel;
     }
 
+    /**
+     * Get the JPanel that contains all the Swing components built in the form.
+     * @return A JPanel contains all the Swing components built in the form.
+     */
     @Override
     public JPanel getPanel() {
         return panel;
     }
 
-    @Override
-    public Map<String, JComponent> getComponents() {
-        return components;
-    }
-
-    @Override
-    public Map<String, JButton> getSuperButtons() {
-        return superButtons;
-    }
-
+    /**
+     * Get the component object in the form by its name.
+     * @param name A String representing the name of the component.
+     * @return A JComponent that has the given name.
+     */
     @Override
     public JComponent get(String name) {
         if (components.containsKey(name)) {
