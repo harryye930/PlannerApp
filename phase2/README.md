@@ -11,7 +11,7 @@ program will need to read in.
   - Added Temporary account that is only kept in the system for 30 days
 - Make at least one change to one of the templates from Phase 1 that results in a change to the way the user 
 interacts with it
-  - Added a prompt called to all templates to ask for the name of the planner when user creates a 
+  - Added a prompt to all templates to ask for the name of the planner when user creates a 
   planner from a template
 - Allow admin users to change any of the users' creations from private to public or public to private
 - The admin user should be able to interact with every user's creations, even if they are private. If the admin user 
@@ -120,9 +120,8 @@ these classes can be reused separately.
 ## Project Specification
 ### Users
 #### Admin Users are able to:
-- Select a template, and change the template name, template "published" status, rephrase template prompts (what the 
-prompts are asking for should still be the same, they are only allowed to rephrase the prompts)
-- Create a new daily, project, or reminder template (same here, the prompts in a new template should be asking for a set
+- Select a template, and change the template name, template "published" status
+- Create a new daily, project, or reminder template (the prompts in a new template should be asking for a set
 of things in a set order for that type of template; however, users have the freedom to phrase the prompts the 
 way they want, as long as the prompts are asking for the required set of things)
 - Change any of the users' planners from private to public or public to private
