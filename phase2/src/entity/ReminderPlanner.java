@@ -1,44 +1,48 @@
 package entity;
 
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-
 /**
  * Represents one type of Planner in the program - a Reminder Planner, it corresponds to the Reminder Template.
+ * Allows users to add reminders for tasks that still need to be completed, their required completion date,
+ * and completion status.
  */
 public class ReminderPlanner extends Planner{
-
     private Map<String, List<String>> reminderPlannerTask;
     private List<String> TaskPromptTasks, DatePromptTasks, CompletionPromptTasks;
     private String taskHeading, dateHeading, completionStatusHeading;
     private int NumAgendas;
-    private final int id;
+    private final int ID;
 
     /**
-     * @param taskHeading the first column name of the reminder planner
-     * @param dateHeading the second column name of the reminder planner
-     * @param completionStatusHeading the third column name of the reminder planner
+     * Constructs a ReminderPlanner.
+     * @param taskHeading The first column name of the reminder planner.
+     * @param dateHeading The second column name of the reminder planner.
+     * @param completionStatusHeading The third column name of the reminder planner.
      */
     public ReminderPlanner(String plannerName, String taskHeading, String dateHeading,
                            String completionStatusHeading){
-        super();
-        this.id = super.getID();
-        initializePlannerVars(plannerName, taskHeading, dateHeading, completionStatusHeading);
+        super(plannerName);
+        this.ID = super.getID();
+        initializePlannerVars(taskHeading, dateHeading, completionStatusHeading);
     }
 
+    /**
+     * Constructs a ReminderPlanner.
+     * @param numPlannersLoaded Number of planners already loaded in the program. So the ID of the planner will start
+     *                            from numPlannersLoaded + 1.
+     */
     public ReminderPlanner(int numPlannersLoaded, String plannerName, String taskHeading, String dateHeading,
                            String completionStatusHeading){
-        super(numPlannersLoaded);
-        this.id = super.getID();
-        initializePlannerVars(plannerName, taskHeading, dateHeading, completionStatusHeading);
+        super(numPlannersLoaded, plannerName);
+        this.ID = super.getID();
+        initializePlannerVars(taskHeading, dateHeading, completionStatusHeading);
     }
 
-    private void initializePlannerVars(String plannerName, String taskHeading, String dateHeading, String completionStatusHeading) {
-        this.plannerName = plannerName;
+    private void initializePlannerVars(String taskHeading, String dateHeading, String completionStatusHeading) {
         this.taskHeading = taskHeading;
         this.dateHeading = dateHeading;
         this.completionStatusHeading = completionStatusHeading;
@@ -52,9 +56,8 @@ public class ReminderPlanner extends Planner{
         this.NumAgendas = 0;
     }
 
-    /** Show the current planner
-     *
-     * @return a string represent reminder planner's content
+    /**
+     * @return A string representation of this reminder planner.
      */
     @Override
     public String toString(){
@@ -87,8 +90,7 @@ public class ReminderPlanner extends Planner{
 
 
     /**
-     *
-     * @return the String type of the planner (which is Reminder).
+     * @return A String representing the type of the planner.
      */
     @Override
     public String getType(){
@@ -96,8 +98,8 @@ public class ReminderPlanner extends Planner{
     }
 
     /**
-     *
-     * @return the number of agendas in the reminder planner.
+     * Returns the total number of agendas stored in this reminder planner object.
+     * @return An integer representing the total number of agendas.
      */
     @Override
     public int getNumAgendas(){
@@ -105,9 +107,9 @@ public class ReminderPlanner extends Planner{
     }
 
     /**
-     *
-     * @param dateStr the date string the user enters
-     * @return true iff the input time is a valid time format
+     * Checks if the input dateStr is of valid time format.
+     * @param dateStr The date string the user enters.
+     * @return true iff the input time is of valid time format.
      */
     public boolean isValid(String dateStr) {
         DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -121,10 +123,10 @@ public class ReminderPlanner extends Planner{
     }
 
     /**
-     *
+     * Adds a task to this reminder planner. Defaults the completion status to "incomplete".
      * @param s1 the task heading it wants to add.
      * @param s2 the task date it wants to add.
-     * @return true iff the agenda is correctly added to current planner.
+     * @return true iff the task is correctly added to current planner.
      */
     @Override
     public Boolean add (String s1, String s2){
@@ -139,12 +141,11 @@ public class ReminderPlanner extends Planner{
         }
     }
 
-
     /**
-     *
-     * @param OldAgenda the original agenda the user wants to change
-     * @param NewAgenda the new content of the agenda user wish to edit
-     * @return true iff the agenda is correctly edited on current planner
+     * Replaces OldAgenda with NewAgenda.
+     * @param OldAgenda The original agenda the user wants to replace.
+     * @param NewAgenda The new agenda the user wants to change to,
+     * @return true iff the agenda is correctly edited in this planner.
      */
     @Override
     public Boolean edit(String OldAgenda, String NewAgenda){
@@ -159,9 +160,8 @@ public class ReminderPlanner extends Planner{
     }
 
     /**
-     *
-     * @param taskName the task name the user wants to change status
-     * @param taskStatus the status the user wants to change
+     * @param taskName The name of the task that the user wants to change status for.
+     * @param taskStatus The status that the user wants to change to.
      * @return true iff the task status is corrected changed.
      */
     @Override
@@ -183,12 +183,11 @@ public class ReminderPlanner extends Planner{
         }
     }
 
-    /*** Show the id for the planner
-     *
-     * @return a int id for the planner.
+    /**
+     * @return An integer representing id of the planner.
      */
     @Override
     public int getID(){
-        return id;
+        return ID;
     }
 }

@@ -2,117 +2,92 @@ package entity;
 
 import java.io.Serializable;
 
-/** the planner entity
+/** The planner entity.
  * @author Runlong, Zifan
  */
-
 public abstract class Planner implements Serializable {
+    /**
+     * plannerName: Name of the planner.
+     * ID: ID of the planner.
+     * privacyStatus: Privacy Status of the planner.
+     */
     protected String plannerName;
     private static int ID;
     protected String privacyStatus;
-    protected String author;
 
     /**
-     * Initialize the Planner.
+     * Initializes the Planner.
+     * @param numPlannersLoaded Number of planners already loaded in the program. So the ID of the planner will start
+     *                            from numPlannersLoaded + 1.
+     * @param plannerName Name of the planner.
      */
-    public Planner(int numPlannersLoaded){
-        this.plannerName = "New Planner";
+    public Planner(int numPlannersLoaded, String plannerName){
+        this.plannerName = plannerName;
         this.privacyStatus = "private";
-        this.author = "TODO";
         ID = numPlannersLoaded;
         ID++;
     }
 
-    public Planner(){
-        this.plannerName = "New Planner";
-        this.privacyStatus = "private";
-        this.author = "TODO";
-        ID++;
-    }
-
     /**
-     * Initialize the Planner.
+     * Initializes the Planner.
      * @param plannerName: the planner name.
      */
     public Planner(String plannerName){
         this.plannerName = plannerName;
-        ID++;
         this.privacyStatus = "private";
-        this.author = "TODO";
-
+        ID++;
     }
 
-
-    /** Show the current planner
-     *
-     * @return a string represent this planner's content
+    /**
+     * @return A string representation of this planner.
      */
     public abstract String toString();
 
-
-     /*** Show the id for the planner
-      *
-      * @return a int id for the planner.
+     /**
+      * @return An integer representing the id of this planner.
       */
     public int getID(){
         return ID;
     }
 
-
-     /** @return a String representing the planner status.
-     */
+     /**
+      * @return A String representing this planner's privacy status.
+      */
     public String getPrivacyStatus() {
         return this.privacyStatus;
     }
 
-    /** @return a String representing of the planner author.
-     */
-    public String getAuthor() {
-        return this.author;
-    }
-
-
-    /** set a String representing of the planner author.
-     */
-    public void setAuthor(String author){
-        this.author = author;
-    }
-
-
-    /** @return a String representing of the planner type.
+    /**
+     * @return A String representing the planner type.
      */
     public abstract String getType();
 
-
-    /** Show the number of planner agendas.
-     *
-     * @return an int representing of the number of planner agendas.
+    /**
+     * Shows the number of planner agendas.
+     * @return An int representing the number of planner agendas.
      */
     public abstract int getNumAgendas();
 
-
-    /** Add agenda to current planner
-     *
-     * @param s1 the first input of the add method.
-     * @param s2 the second input of the add method.
-     * @return true iff the agenda is correctly added to current planner.
+    /**
+     * Adds agenda to this planner.
+     * @param s1 The first input of the add method.
+     * @param s2 The second input of the add method.
+     * @return true iff the agenda is correctly added to this planner.
      */
     public abstract Boolean add(String s1, String s2);
 
-
-    /** Edit agenda to current planner
-     *
-     * @param OldAgenda the original agenda the user wants to change
-     * @param NewAgenda the new content of the agenda user wish to edit
-     * @return true iff the agenda is correctly edited on current planner
+    /**
+     * Edits agenda in this planner.
+     * @param OldAgenda The original agenda that the user wants to change.
+     * @param NewAgenda The new agenda that the user wants to change to.
+     * @return true iff the agenda is correctly edited in this planner.
      */
     public abstract Boolean edit(String OldAgenda, String NewAgenda);
 
 
-    /** Change the planner's privacy status
-     *
-     * @param status : expected status of this planner: public or private or friends-only
-     * @return true iff the planner is correctly changed the privacy status
+    /** Changes the planner's privacy status to status.
+     * @param status: New status for this planner. Must be "public", "private", or "friends-only".
+     * @return true iff the privacy status of this planner is correctly changed to status.
      */
     public boolean ChangePrivacyStatus(String status){
         if (this.privacyStatus.equals(status)){
@@ -123,12 +98,11 @@ public abstract class Planner implements Serializable {
         }
     }
 
-
     /**
-     *
-     * @param TaskName the task name the user wants to change status
-     * @param TaskStatus the status the user wants to change
-     * @return true iff the planner is correctly changed to the right status
+     * Updates the status of Task with TaskName to TaskStatus.
+     * @param TaskName The name of the task that the user wants to change status for.
+     * @param TaskStatus The status the user wants to change to.
+     * @return true iff the task is correctly changed to the given TaskStatus.
      */
     public abstract Boolean ChangeTaskStatus(String TaskName, String TaskStatus);
 

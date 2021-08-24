@@ -7,6 +7,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A type of Planner - Daily Planner. Displays a planner that starts at a specified hour, ends at a specified hour, 
+ * with a specified time interval. Allows users to fill in any activities planned for a particular hour. 
+ */
 public class DailyPlanner extends Planner {
     private Map<String, String> dailyPlannerTask;
     private List<String> timesList; // time array
@@ -14,30 +18,33 @@ public class DailyPlanner extends Planner {
     private int startHour;
     private int endHour;
     private int NumAgendas;
-    private final int id;
+    private final int ID;
 
     /**
-     * initialize DailyPlanner
-     *
-     * @param plannerName: the name of the planner
-     * @param startTime:   the start time of the current planner, "HH:MM"
-     * @param endTime:     the end time of the current planner, "HH:MM"
-     * @param Interval:    time interval between each calendar time, in minutes
+     * Initializes a DailyPlanner.
+     * @param plannerName: The name of the planner
+     * @param startTime: The start time of the current planner, "HH:MM"
+     * @param endTime: The end time of the current planner, "HH:MM"
+     * @param Interval: Time interval between each calendar time, in hours
      */
     public DailyPlanner(String plannerName, String startTime, String endTime, int Interval) {
-        super();
-        this.id = super.getID();
-        initializePlannerVars(plannerName, startTime, endTime, Interval);
+        super(plannerName);
+        this.ID = super.getID();
+        initializePlannerVars(startTime, endTime, Interval);
     }
 
+    /**
+     * Initializes a DailyPlanner.
+     * @param numPlannersLoaded Number of planners already loaded in the program. So the ID of the planner will start
+     *                            from numPlannersLoaded + 1.
+     */
     public DailyPlanner(int numPlannersLoaded, String plannerName, String startTime, String endTime, int Interval) {
-        super(numPlannersLoaded);
-        this.id = super.getID();
-        initializePlannerVars(plannerName, startTime, endTime, Interval);
+        super(numPlannersLoaded, plannerName);
+        this.ID = super.getID();
+        initializePlannerVars(startTime, endTime, Interval);
     }
 
-    private void initializePlannerVars(String plannerName, String startTime, String endTime, int Interval) {
-        this.plannerName = plannerName;
+    private void initializePlannerVars(String startTime, String endTime, int Interval) {
         this.interval = Interval;
         this.startHour = Integer.parseInt(startTime.substring(0, 2));
         this.endHour = Integer.parseInt(endTime.substring(0, 2));
@@ -50,7 +57,6 @@ public class DailyPlanner extends Planner {
             timeFormat = String.format("%02d:%02d", h, m);
             timesList.add(timeFormat);
         }
-
         //add all time to Hashmap with empty agenda
         for (String time : timesList) {
             dailyPlannerTask.put(time, "N/A");
@@ -58,58 +64,30 @@ public class DailyPlanner extends Planner {
     }
 
     /**
-     * Show the planner type is daily planner
-     *
-     * @return a string represent this planner is daily planner
+     * @return A string representing that this planner is daily planner.
      */
     public String getType() {
         return "daily";
     }
 
-    /*** Show the id for the planner
-     *
-     * @return a int id for the planner.
+    /**
+     * @return An integer representing the ID of the planner.
      */
     @Override
     public int getID(){
-        return id;
+        return ID;
     }
 
-
     /**
-     * Set a name for the daily planner representing in String.
-     */
-    public void setPlannerName(String PlannerName) {
-        this.plannerName = PlannerName;
-    }
-
-
-    /**
-     * Show the current time based on the system time
-     *
-     * @return a string representation of the current time
-     */
-    public String CurrentTime() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-        LocalDateTime now = LocalDateTime.now();
-        return dtf.format(now);
-    }
-
-
-    /**
-     * Get the number of agendas the daily planner has
-     *
-     * @return a integer representation of the number of agendas
+     * Gets the number of agendas the daily planner has.
+     * @return An integer representation of the number of agendas.
      */
     public int getNumAgendas() {
         return this.NumAgendas;
     }
 
-
     /**
-     * Show the current planner
-     *
-     * @return a string represent this planner's content
+     * @return A string representing this DailyPlanner.
      */
     @Override
     public String toString() {
@@ -118,7 +96,7 @@ public class DailyPlanner extends Planner {
 
         String timeInfo = String.format("Start time -> %d:%d, End time -> %d:%d. \n",
                 this.startHour, 0, this.endHour, 0);
-        String plannerInfo = this.plannerName + "\n" + "ID: " + this.id + "\n" + timeInfo + "\nTasks: \n";
+        String plannerInfo = this.plannerName + "\n" + "ID: " + this.ID + "\n" + timeInfo + "\nTasks: \n";
         sb.append(plannerInfo);
         for (String time : timesList) {
             sb.append(time);
@@ -129,16 +107,14 @@ public class DailyPlanner extends Planner {
         return sb.toString();
     }
 
-
     /**
-     * add agenda to current planner, if the user does not give a time.
-     *
-     * @param time: the timeslot of the new agenda.
-     * @return true iff the agenda is correctly added to current planner
+     * Adds agenda to the timeslot corresponding to time in this planner.
+     * @param time: The timeslot of the new agenda.
+     * @param agenda: The agenda to be added.
+     * @return true iff the agenda is correctly added to this planner.
      */
     @Override
     public Boolean add(String time, String agenda) {
-
         this.NumAgendas++;
         int newStartHour = Integer.parseInt(time.substring(0, 2));
 
@@ -166,76 +142,41 @@ public class DailyPlanner extends Planner {
             String hour = String.format("%02d", newStartHour);
             this.dailyPlannerTask.put(hour + ":00", agenda);
         }
-        System.out.println(this.dailyPlannerTask);
 
         this.NumAgendas++;
         return true;
-
     }
 
 
     /**
-     * edit agenda to current planner (given index)
-     *
-     * @param time   index of the agenda user wish to edit
-     * @param agenda content of the agenda user wish to edit
-     * @return true iff the agenda is correctly edited on current planner
+     * Changes the agenda in the timeslot time to agenda in this planner.
+     * @param time: The timeslot to be edited.
+     * @param agenda: The new agenda for time.
+     * @return true iff the agenda is correctly edited on this planner.
      */
     @Override
     public Boolean edit(String time, String agenda) {
         return this.add(time, agenda);
     }
 
-
     /**
-     * @param TaskName   the task name the user wants to change status
-     * @param TaskStatus the status the user wants to change
-     * @return true iff the planner is correctly changed to the right status
+     * @param TaskName: The name of the task that the user wants to change status for
+     * @param TaskStatus: The status that the user wants to change to
+     * @return true iff the task is correctly changed to the right status
      */
     @Override
     public Boolean ChangeTaskStatus(String TaskName, String TaskStatus) {
         return false; // This is a daily planner which does not need to change status.
     }
 
-
     /**
-     * delete agenda to current planner
-     *
-     * @param time index of the agenda user wish to delete
-     * @return true iff the agenda is correctly deleted from current planner
+     * Deletes agenda in the timeslot corresponding to time in this planner.
+     * @param time Timeslot where the user wants to delete agenda.
+     * @return true iff the agenda is correctly deleted from time in this planner.
      */
     public boolean delete(String time) {
         // delete everything on that time slot, i.e. no option to delete one thing
         // check if is legal time frame
         return edit(time, "N/A");
-    }
-
-
-    /**
-     * for Phase 2
-     * take the new agenda start time to the closest minutes based on the interval
-     *
-     * @param NewStartMins the start time for a agenda
-     * @param Interval     the time interval set by the user
-     * @return the closest time the user may reach
-     */
-    public int getClosestMins(int NewStartMins, int Interval) {
-        //new list of all possible mins given ineterval, ie. 0, 5, 10, 15... for interval=5
-        List<Integer> numbers = new ArrayList<>(0);
-        numbers.add(0);
-        for (int i = 0; i < (60 - Interval); i = i + Interval) {
-            numbers.add(i);
-        }
-        int distance = Math.abs(numbers.get(0) - NewStartMins);
-        int idx = 0;
-        for (int c = 1; c < numbers.size(); c++) {
-            int cdistance = Math.abs(numbers.get(c) - NewStartMins);
-            if (cdistance < distance) {
-                idx = c;
-                distance = cdistance;
-            }
-        }
-        return numbers.get(idx);
-
     }
 }
