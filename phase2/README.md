@@ -126,11 +126,9 @@ prompts are asking for should still be the same, they are only allowed to rephra
 of things in a set order for that type of template; however, users have the freedom to phrase the prompts the 
 way they want, as long as the prompts are asking for the required set of things)
 - Change any of the users' planners from private to public or public to private
-  - can admin user revert change as well? QUESTION
 - Interact with every user's planners, even if they are private
 - Delete any planner, including private planners (e.g., if they decide that the content of the planner is not 
 appropriate for the app)
-  - can admin user undo delete as well? QUESTION
 - "Suspend" a user by x number of days, where x is a number decided by the admin user. This means the user is 
 not allowed to log in for x number of days
 
