@@ -23,7 +23,7 @@ public class RegularAccountUI extends GeneralUI {
     }
 
     /**
-     * run the presenter from the beginning.
+     * Runs the UI from the beginning.
      */
     @Override
     public void run() {
@@ -37,9 +37,6 @@ public class RegularAccountUI extends GeneralUI {
         }
     }
 
-    /**
-     * Initialize the UI with buttons and Label using GridStyleButtons strategy.
-     */
     private void showMenu() {
         JPanel panel = new JPanel();
         main.add(panel, "regularUserMainMenu");

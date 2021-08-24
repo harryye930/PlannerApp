@@ -9,14 +9,22 @@ import java.awt.*;
 
 
 /**
- * A parent class for all presenters.
+ * A parent class for all UI classes.
  */
 public abstract class GeneralUI {
+    /**
+     * accessController: An instance of AccessController.
+     * templateController: An instance of TemplateController.
+     * plannerController: An instance of PlannerController.
+     * main: The main JPanel.
+     * cl: The CardLayout for main JPanel.
+     * frame: The JFrame that the main JPanel will be added to.
+     * data: An instance of ViewData which fetches data from controllers.
+     */
     protected static AccessController accessController = new AccessController();
     protected static TemplateController templateController = new TemplateController();
     protected static PlannerController plannerController = new PlannerController();
 
-//    private String child;
     private GeneralUI parent;
     protected static JPanel main = new JPanel();
     protected static CardLayout cl;
@@ -41,12 +49,12 @@ public abstract class GeneralUI {
     }
 
     /**
-     * run the presenter from the beginning.
+     * Runs the UI from the beginning.
      */
     public abstract void run();
 
     /**
-     * Set the parent of the current presenter.
+     * Sets the parent of the current UI.
      * @param parent A GeneralUI representing the parent we want to assign.
      */
     public void setParent(GeneralUI parent) {
@@ -54,7 +62,7 @@ public abstract class GeneralUI {
     }
 
     /**
-     * @return The Parent Presenter
+     * @return The Parent UI.
      */
     public GeneralUI getParent() {
         return this.parent;

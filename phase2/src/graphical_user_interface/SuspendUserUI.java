@@ -7,6 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
+/**
+ * GUI class for suspending a user.
+ */
 public class SuspendUserUI extends GeneralUI implements ActionListener {
     private boolean flag = false;
     private String userId;
@@ -29,12 +32,16 @@ public class SuspendUserUI extends GeneralUI implements ActionListener {
         this.setParent(parent);
     }
 
+    /**
+     * Sets the ID or email of the user to be suspended.
+     * @param id Identifier of the user to be suspended. Must be User ID or User Email.
+     */
     public void setUserId(String id) {
         this.userId = id;
     }
 
     /**
-     * run the presenter from the beginning.
+     * Runs the UI from the beginning.
      */
     @Override
     public void run() {
@@ -92,19 +99,17 @@ public class SuspendUserUI extends GeneralUI implements ActionListener {
 
     /**
      * Invoked when an action occurs.
-     *
-     * @param e An event object
+     * @param e A semantic event which indicates that a component-defined action occurred.
      */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == suspend) {
             if (accessController.getSuspensionStatus(userId)) {
                 accessController.unSuspendUser(userId);
-                update();
             } else {
                 accessController.suspendUser(userId, Integer.parseInt(text.getText()));
-                update();
             }
+            update();
         } else if (e.getSource() == back) {
             this.getParent().run();
         }

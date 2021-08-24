@@ -34,7 +34,7 @@ public class LoginUI extends GeneralUI implements ActionListener {
     public LoginUI() {}
 
     /**
-     * run the presenter from the beginning.
+     * Runs the UI from the beginning.
      */
     @Override
     public void run() {
@@ -99,8 +99,7 @@ public class LoginUI extends GeneralUI implements ActionListener {
 
     /**
      * Invoked when an action occurs.
-     *
-     * @param e An event object
+     * @param e A semantic event which indicates that a component-defined action occurred.
      */
     @Override
     public void actionPerformed(ActionEvent e) {

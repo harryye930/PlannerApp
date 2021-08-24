@@ -49,6 +49,9 @@ public class CreateTemplateUI extends GeneralUI implements ActionListener {
         this.setParent(parent);
     }
 
+    /**
+     * Runs the UI from the beginning.
+     */
     @Override
     public void run(){
         if (flag){
@@ -151,6 +154,10 @@ public class CreateTemplateUI extends GeneralUI implements ActionListener {
         main.add(remindersInputPanel, "reminders");
     }
 
+    /**
+     * Invoked when an action occurs.
+     * @param e A semantic event which indicates that a component-defined action occurred.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == optionsForm.get("dailyTemplateButton")){

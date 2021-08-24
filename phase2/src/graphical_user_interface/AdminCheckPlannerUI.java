@@ -13,7 +13,6 @@ public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
     private boolean flag = false;
     private final Map<String, String> labelToStrings = new UIGateway().loadAdminCheckPlannerUITexts();
 
-
     IForm editInputForm;
 
     // Panel
@@ -25,7 +24,7 @@ public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
     }
 
     /**
-     * run the presenter from the beginning.
+     * Runs the UI from the beginning.
      */
     @Override
     public void run() {
@@ -71,8 +70,7 @@ public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
 
     /**
      * Invoked when an action occurs.
-     *
-     * @param e
+     * @param e A semantic event which indicates that a component-defined action occurred.
      */
     @Override
     public void actionPerformed(ActionEvent e) {

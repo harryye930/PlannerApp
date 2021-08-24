@@ -26,7 +26,7 @@ public class PlannerOptionUI extends GeneralUI {
     }
 
     /**
-     * run the presenter from the beginning.
+     * Runs the UI from the beginning.
      */
     @Override
     public void run() {

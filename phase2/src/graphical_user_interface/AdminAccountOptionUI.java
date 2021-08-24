@@ -27,6 +27,9 @@ public class AdminAccountOptionUI extends GeneralUI implements KeyListener {
         this.setParent(parent);
     }
 
+    /**
+     * Runs the UI from the beginning.
+     */
     @Override
     public void run(){
         if (flag) {
@@ -62,9 +65,7 @@ public class AdminAccountOptionUI extends GeneralUI implements KeyListener {
 
     /**
      * Invoked when a key has been typed.
-     * See the class description for {@link KeyEvent} for a definition of
-     * a key typed event.
-     *
+     * See the class description for {@link KeyEvent} for a definition of a key typed event.
      * @param e An event object
      */
     @Override
@@ -74,9 +75,7 @@ public class AdminAccountOptionUI extends GeneralUI implements KeyListener {
 
     /**
      * Invoked when a key has been pressed.
-     * See the class description for {@link KeyEvent} for a definition of
-     * a key pressed event.
-     *
+     * See the class description for {@link KeyEvent} for a definition of a key pressed event.
      * @param e An event object
      */
     @Override
@@ -86,9 +85,7 @@ public class AdminAccountOptionUI extends GeneralUI implements KeyListener {
 
     /**
      * Invoked when a key has been released.
-     * See the class description for {@link KeyEvent} for a definition of
-     * a key released event.
-     *
+     * See the class description for {@link KeyEvent} for a definition of a key released event.
      * @param e An event object
      */
     @Override

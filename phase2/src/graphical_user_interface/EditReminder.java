@@ -14,7 +14,7 @@ public class EditReminder extends GeneralUI implements ActionListener {
     private final Map<String, String> labelToStrings = new UIGateway().loadEditReminderUITexts();
 
     //Panel
-    JPanel remainderEdit = new JPanel();
+    JPanel reminderEdit = new JPanel();
 
     //Button
     private final JButton changeButton = new JButton();
@@ -35,7 +35,7 @@ public class EditReminder extends GeneralUI implements ActionListener {
     }
 
     /**
-     * run the presenter from the beginning.
+     * Runs the UI from the beginning.
      */
     @Override
     public void run() {
@@ -49,10 +49,10 @@ public class EditReminder extends GeneralUI implements ActionListener {
     }
 
     private void showEditPanel() {
-        main.add(remainderEdit, "editReminder");
-        remainderEdit.setLayout(null);
+        main.add(reminderEdit, "editReminder");
+        reminderEdit.setLayout(null);
 
-        data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
+        data.getPlanner(plannerController.getCurrPlannerId(), reminderEdit);
 
         prompt1.setBounds(472, 25, 200, 50);
         prompt0.setBounds(472, 125, 200, 40);
@@ -63,16 +63,16 @@ public class EditReminder extends GeneralUI implements ActionListener {
         delete.setBounds(500, 325, 150, 40);
         back.setBounds(500, 375, 150, 40);
 
-        remainderEdit.add(changeButton);
-        remainderEdit.add(text0);
-        remainderEdit.add(text1);
-        remainderEdit.add(prompt0);
-        remainderEdit.add(prompt1);
-        remainderEdit.add(text0);
-        remainderEdit.add(text1);
-        remainderEdit.add(submit);
-        remainderEdit.add(delete);
-        remainderEdit.add(back);
+        reminderEdit.add(changeButton);
+        reminderEdit.add(text0);
+        reminderEdit.add(text1);
+        reminderEdit.add(prompt0);
+        reminderEdit.add(prompt1);
+        reminderEdit.add(text0);
+        reminderEdit.add(text1);
+        reminderEdit.add(submit);
+        reminderEdit.add(delete);
+        reminderEdit.add(back);
 
         changeButton.addActionListener(this);
         submit.addActionListener(this);
@@ -91,13 +91,12 @@ public class EditReminder extends GeneralUI implements ActionListener {
             prompt1.setText(labelToStrings.get("prompt1s"));
             changeButton.setText(labelToStrings.get("changeButtonS"));
         }
-        data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
+        data.getPlanner(plannerController.getCurrPlannerId(), reminderEdit);
     }
 
     /**
      * Invoked when an action occurs.
-     *
-     * @param e An event object
+     * @param e A semantic event which indicates that a component-defined action occurred.
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -110,7 +109,7 @@ public class EditReminder extends GeneralUI implements ActionListener {
             } else {
                 System.out.println(plannerController.changeTaskStatus(text1.getText(), text0.getText()));
             }
-            data.getPlanner(plannerController.getCurrPlannerId(), remainderEdit);
+            data.getPlanner(plannerController.getCurrPlannerId(), reminderEdit);
         }  else if (e.getSource() == back) {
             this.getParent().run();
         } else if (e.getSource() == delete) {

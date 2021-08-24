@@ -38,6 +38,9 @@ public class EditTemplateUI extends GeneralUI implements ActionListener {
         this.setParent(parent);
     }
 
+    /**
+     * Runs the UI from the beginning.
+     */
     @Override
     public void run() {
         if (flag){
@@ -139,6 +142,10 @@ public class EditTemplateUI extends GeneralUI implements ActionListener {
         return editStatusPanel;
     }
 
+    /**
+     * Invoked when an action occurs.
+     * @param e A semantic event which indicates that a component-defined action occurred.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == nameButton){

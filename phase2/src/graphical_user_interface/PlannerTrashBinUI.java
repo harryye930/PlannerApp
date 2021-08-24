@@ -9,6 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
+/**
+ * GUI class for displaying planner trash bin UI for a regular user.
+ * Options include: recover a deleted planner, permanently delete a planner, and return to the planner menu.
+ */
 public class PlannerTrashBinUI extends GeneralUI implements ActionListener {
     private boolean flag = false;
     private final Map<String, String> labelToStrings = new UIGateway().PlannerTrashBinUITexts();
@@ -21,7 +25,7 @@ public class PlannerTrashBinUI extends GeneralUI implements ActionListener {
     }
 
     /**
-     * run the presenter from the beginning.
+     * Runs the UI from the beginning.
      */
     @Override
     public void run() {
@@ -55,8 +59,7 @@ public class PlannerTrashBinUI extends GeneralUI implements ActionListener {
 
     /**
      * Invoked when an action occurs.
-     *
-     * @param e An event object
+     * @param e A semantic event which indicates that a component-defined action occurred.
      */
     @Override
     public void actionPerformed(ActionEvent e) {

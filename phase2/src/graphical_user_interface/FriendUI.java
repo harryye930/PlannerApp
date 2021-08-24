@@ -18,12 +18,11 @@ public class FriendUI extends GeneralUI implements ActionListener {
     JScrollPane friendsInfo;
     JPanel friendUI = new JPanel();
 
-
     public FriendUI(GeneralUI parent) {
         this.setParent(parent);
     }
     /**
-     * run the presenter from the beginning.
+     * Runs the UI from the beginning.
      */
     @Override
     public void run() {
@@ -61,8 +60,7 @@ public class FriendUI extends GeneralUI implements ActionListener {
 
     /**
      * Invoked when an action occurs.
-     *
-     * @param e An event object
+     * @param e A semantic event which indicates that a component-defined action occurred.
      */
     @Override
     public void actionPerformed(ActionEvent e) {

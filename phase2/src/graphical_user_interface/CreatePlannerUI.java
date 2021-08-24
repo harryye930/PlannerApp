@@ -33,7 +33,7 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
     }
 
     /**
-     * run the presenter from the beginning.
+     * Runs the UI from the beginning.
      */
     @Override
     public void run() {
@@ -99,7 +99,7 @@ public class CreatePlannerUI extends GeneralUI implements ActionListener {
 
     /**
      * Invoked when an action occurs.
-     * @param e An event object
+     * @param e A semantic event which indicates that a component-defined action occurred.
      */
     @Override
     public void actionPerformed(ActionEvent e) {

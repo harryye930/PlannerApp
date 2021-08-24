@@ -46,7 +46,7 @@ public class CreateAccountUI extends GeneralUI implements KeyListener, ActionLis
     }
 
     /**
-     * run the presenter from the beginning.
+     * Runs the UI from the beginning.
      */
     @Override
     public void run() {
@@ -124,9 +124,7 @@ public class CreateAccountUI extends GeneralUI implements KeyListener, ActionLis
                 id = accessController.createTemporaryAccount(email.getText(), userName.getText(), password0.getText());
             }
 
-            //messagePanel.setLayout(new GridLayout(2, 1));
             messagePanel.setLayout(null);
-            //messagePanel.setBounds(100, 100, 200, 200);
 
             JLabel message = new JLabel(labelToStrings.get("rememberID") + id);
             message.setBounds(50, 0, 600, 300);
@@ -146,8 +144,7 @@ public class CreateAccountUI extends GeneralUI implements KeyListener, ActionLis
 
     /**
      * Invoked when an action occurs.
-     *
-     * @param e
+     * @param e A semantic event which indicates that a component-defined action occurred.
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -178,9 +175,7 @@ public class CreateAccountUI extends GeneralUI implements KeyListener, ActionLis
 
     /**
      * Invoked when a key has been typed.
-     * See the class description for {@link KeyEvent} for a definition of
-     * a key typed event.
-     *
+     * See the class description for {@link KeyEvent} for a definition of a key typed event.
      * @param e An event object
      */
     @Override
@@ -190,9 +185,7 @@ public class CreateAccountUI extends GeneralUI implements KeyListener, ActionLis
 
     /**
      * Invoked when a key has been pressed.
-     * See the class description for {@link KeyEvent} for a definition of
-     * a key pressed event.
-     *
+     * See the class description for {@link KeyEvent} for a definition of a key pressed event.
      * @param e An event object
      */
     @Override
@@ -201,9 +194,7 @@ public class CreateAccountUI extends GeneralUI implements KeyListener, ActionLis
 
     /**
      * Invoked when a key has been released.
-     * See the class description for {@link KeyEvent} for a definition of
-     * a key released event.
-     *
+     * See the class description for {@link KeyEvent} for a definition of a key released event.
      * @param e An event object
      */
     @Override

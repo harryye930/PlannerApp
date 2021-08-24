@@ -29,6 +29,9 @@ public class CheckTemplateUI extends GeneralUI implements ActionListener {
         this.setParent(parent);
     }
 
+    /**
+     * Runs the UI from the beginning.
+     */
     @Override
     public void run(){
         if (flag) {
@@ -43,7 +46,7 @@ public class CheckTemplateUI extends GeneralUI implements ActionListener {
 
     }
 
-    public void showTemplates() {
+    private void showTemplates() {
         checkTemplate.setLayout(null);
         main.add(checkTemplate, "checkTemplate");
 
@@ -61,6 +64,10 @@ public class CheckTemplateUI extends GeneralUI implements ActionListener {
         checkTemplate.add(form.getPanel());
     }
 
+    /**
+     * Invoked when an action occurs.
+     * @param e A semantic event which indicates that a component-defined action occurred.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == form.get("submit")){

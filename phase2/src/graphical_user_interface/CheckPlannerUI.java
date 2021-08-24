@@ -31,7 +31,7 @@ public class CheckPlannerUI extends GeneralUI implements ActionListener {
         this.setParent(parent);
     }
     /**
-     * run the presenter from the beginning.
+     * Runs the UI from the beginning.
      */
     @Override
     public void run() {
@@ -46,7 +46,7 @@ public class CheckPlannerUI extends GeneralUI implements ActionListener {
         }
     }
 
-    public void showPlanners() {
+    private void showPlanners() {
         checkPlanner.setLayout(null);
         main.add(checkPlanner, "checkPlanner");
 
@@ -66,8 +66,7 @@ public class CheckPlannerUI extends GeneralUI implements ActionListener {
 
     /**
      * Invoked when an action occurs.
-     *
-     * @param e An event object
+     * @param e A semantic event which indicates that a component-defined action occurred.
      */
     @Override
     public void actionPerformed(ActionEvent e) {

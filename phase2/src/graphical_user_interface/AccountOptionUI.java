@@ -32,7 +32,7 @@ public class AccountOptionUI extends GeneralUI implements ActionListener {
     }
 
     /**
-     * run the presenter from the beginning.
+     * Runs the UI from the beginning.
      */
     @Override
     public void run() {
@@ -128,11 +128,9 @@ public class AccountOptionUI extends GeneralUI implements ActionListener {
             String message = accessController.changePassword(accessController.getCurrUserId(),
                     ((JTextField)passwordForm.get("originalPassword")).getText(),
                     ((JTextField) passwordForm.get("newPassword")).getText());
-//            main.remove(changeMenu);
             ((JTextField)passwordForm.get("originalPassword")).setText("");
             ((JTextField) passwordForm.get("newPassword")).setText("");
             ((JLabel)passwordForm.get("enterOriginalPassword")).setText(message);
-//            this.run();
 
         } else if (e.getSource() == nameForm.get("back") ||
                 e.getSource() == passwordForm.get("back")) {
