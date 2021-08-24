@@ -47,30 +47,6 @@ public class DailyTemplate extends Template{
         this.type = "daily";
     }
 
-    /**
-     * Setter for changing the prompt for the start time of the planner that will be created based on this template.
-     * @param newPrompt A new prompt for the template.
-     */
-    private void setStartTimePrompt (String newPrompt){
-        startTimePrompt = newPrompt;
-    }
-
-    /**
-     * Setter for changing the prompt for the end time of the planner that will be created based on this template.
-     * @param newPrompt A new prompt for the template.
-     */
-    private void setEndTimePrompt (String newPrompt){
-        endTimePrompt = newPrompt;
-    }
-
-    /**
-     * Setter for changing the prompt for the time increment of the planner that will be created based on this template.
-     * @param newPrompt A new prompt for the template.
-     */
-    private void setIncrementPrompt (String newPrompt){
-        incrementPrompt = newPrompt;
-    }
-
     @Override
     public String isType() {
         return this.type;
@@ -92,25 +68,5 @@ public class DailyTemplate extends Template{
         prompts.add(endTimePrompt);
         prompts.add(incrementPrompt);
         return prompts;
-    }
-
-    /**
-     * Replaces the oldPrompt of this template with the newPrompt.
-     * If the provided oldPrompt is not one of the prompts in this template, it does nothing.
-     * @param oldPrompt is the provided prompt to be replaced.
-     * @param newPrompt is the new prompt provided to replace the old prompt.
-     */
-    @Override
-    public void replacePrompt(String oldPrompt, String newPrompt) {
-        super.replacePrompt(oldPrompt, newPrompt);
-        if (oldPrompt.equals(startTimePrompt)) {
-            setStartTimePrompt(newPrompt);
-        }
-        if (oldPrompt.equals(endTimePrompt)) {
-            setEndTimePrompt(newPrompt);
-        }
-        if (oldPrompt.equals(incrementPrompt)) {
-            setIncrementPrompt(newPrompt);
-        }
     }
 }

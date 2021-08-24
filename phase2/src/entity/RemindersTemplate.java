@@ -47,31 +47,6 @@ public class RemindersTemplate extends Template{
         this.type = "reminders";
     }
 
-    /**
-     * Setter for changing the prompt for the task heading of the planner that will be created based on this template.
-     * @param newPrompt A new prompt for the template.
-     */
-    private void setTaskHeadingPrompt (String newPrompt){
-        taskHeadingPrompt = newPrompt;
-    }
-
-    /**
-     * Setter for changing the prompt for the date heading of the planner that will be created based on this template.
-     * @param newPrompt A new prompt for the template.
-     */
-    private void setDateHeadingPrompt (String newPrompt){
-        dateHeadingPrompt = newPrompt;
-    }
-
-    /**
-     * Setter for changing the prompt for the completion status heading of the planner that will be created based on
-     * this template.
-     * @param newPrompt A new prompt for the template.
-     */
-    private void setCompletionStatusHeadingPrompt (String newPrompt){
-        completionStatusHeadingPrompt = newPrompt;
-    }
-
     @Override
     public String isType() {
         return this.type;
@@ -93,25 +68,5 @@ public class RemindersTemplate extends Template{
         prompts.add(dateHeadingPrompt);
         prompts.add(completionStatusHeadingPrompt);
         return prompts;
-    }
-
-    /**
-     * Replaces the oldPrompt of this template with the newPrompt.
-     * If the provided oldPrompt is not one of the prompts in this template, it does nothing.
-     * @param oldPrompt is the provided prompt to be replaced.
-     * @param newPrompt is the new prompt provided to replace the old prompt.
-     */
-    @Override
-    public void replacePrompt(String oldPrompt, String newPrompt) {
-        super.replacePrompt(oldPrompt, newPrompt);
-        if (oldPrompt.equals(taskHeadingPrompt)) {
-            setTaskHeadingPrompt(newPrompt);
-        }
-        if (oldPrompt.equals(dateHeadingPrompt)) {
-            setDateHeadingPrompt(newPrompt);
-        }
-        if (oldPrompt.equals(completionStatusHeadingPrompt)) {
-            setCompletionStatusHeadingPrompt(newPrompt);
-        }
     }
 }

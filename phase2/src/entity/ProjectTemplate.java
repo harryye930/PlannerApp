@@ -47,33 +47,6 @@ public class ProjectTemplate extends Template{
         this.type = "project";
     }
 
-    /**
-     * Setter for changing the prompt for the first status heading of the planner that will be created based on
-     * this template.
-     * @param newPrompt A new prompt for the template.
-     */
-    private void setFirstStatusPrompt (String newPrompt){
-        firstStatusPrompt = newPrompt;
-    }
-
-    /**
-     * Setter for changing the prompt for the second status heading of the planner that will be created based on
-     * this template.
-     * @param newPrompt A new prompt for the template.
-     */
-    private void setSecondStatusPrompt (String newPrompt){
-        secondStatusPrompt = newPrompt;
-    }
-
-    /**
-     * Setter for changing the prompt for the third status heading of the planner that will be created based on
-     * this template.
-     * @param newPrompt A new prompt for the template.
-     */
-    private void setThirdStatusPrompt (String newPrompt){
-        thirdStatusPrompt = newPrompt;
-    }
-
     @Override
     public String isType() {
         return this.type;
@@ -95,25 +68,5 @@ public class ProjectTemplate extends Template{
         prompts.add(secondStatusPrompt);
         prompts.add(thirdStatusPrompt);
         return prompts;
-    }
-
-    /**
-     * Replaces the oldPrompt of this template with the newPrompt.
-     * If the provided oldPrompt is not one of the prompts in this template, it does nothing.
-     * @param oldPrompt is the provided prompt to be replaced.
-     * @param newPrompt is the new prompt provided to replace the old prompt.
-     */
-    @Override
-    public void replacePrompt(String oldPrompt, String newPrompt) {
-        super.replacePrompt(oldPrompt, newPrompt);
-        if (oldPrompt.equals(firstStatusPrompt)) {
-            setFirstStatusPrompt(newPrompt);
-        }
-        if (oldPrompt.equals(secondStatusPrompt)) {
-            setSecondStatusPrompt(newPrompt);
-        }
-        if (oldPrompt.equals(thirdStatusPrompt)) {
-            setThirdStatusPrompt(newPrompt);
-        }
     }
 }

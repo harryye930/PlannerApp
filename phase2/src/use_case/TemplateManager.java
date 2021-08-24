@@ -145,17 +145,6 @@ public class TemplateManager implements Serializable {
     }
 
     /**
-     * For Template with ID, renames the prompt with the corresponding promptNumber to newName.
-     * Note that the prompt numbers start from 0.
-     * @param ID ID of template being edited.
-     * @param promptNumber The number of the prompt to rename.
-     * @param newName The new name to give to the prompt.
-     */
-    public void renameTemplatePrompt(int ID, int promptNumber, String newName) {
-        this.getTemplates().get(ID).renamePrompt(promptNumber, newName);
-    }
-
-    /**
      * Retrieves and returns all published templates stored in this TemplateManager (i.e., templates that are viewable
      * to all users).
      * A template is published if their publishedStatus is true.

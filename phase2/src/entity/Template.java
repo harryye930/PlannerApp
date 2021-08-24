@@ -65,14 +65,6 @@ public abstract class Template implements Serializable {
     }
 
     /**
-     * Setter for changing the prompt asking for the name of the planner that will be created from this template.
-     * @param newPrompt A new prompt for asking the name of the planner in the template.
-     */
-    public void setPlannerNamePrompt(String newPrompt){
-        plannerNamePrompt = newPrompt;
-    }
-
-    /**
      * Getter for retrieving the id of this template.
      * @return Integer that represents the id of this template.
      */
@@ -108,17 +100,17 @@ public abstract class Template implements Serializable {
      * @return String that represents the Template object in detail.
      */
     public String toString() {
-        String stringRep = "---------------------------------------------------------\n";
-        stringRep += "ID: " + this.getId() + "\n";
-        stringRep += "Name: " + this.getName() + "\n";
-        stringRep += "Type: " + this.isType() + "\n";
-        stringRep += "Published: " + this.getPublishedStatus() + "\n\n";
-        stringRep += "Prompts: " + "\n";
+        StringBuilder stringRep = new StringBuilder("---------------------------------------------------------\n");
+        stringRep.append("ID: ").append(this.getId()).append("\n");
+        stringRep.append("Name: ").append(this.getName()).append("\n");
+        stringRep.append("Type: ").append(this.isType()).append("\n");
+        stringRep.append("Published: ").append(this.getPublishedStatus()).append("\n\n");
+        stringRep.append("Prompts: " + "\n");
         for (Map.Entry<Integer, String> entry: assignPromptNumberToPrompts().entrySet()){
-            stringRep += "Prompt " + entry.getKey() + ": " + entry.getValue() + "\n";
+            stringRep.append("Prompt ").append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
         }
-        stringRep += "---------------------------------------------------------\n";
-        return stringRep;
+        stringRep.append("---------------------------------------------------------\n");
+        return stringRep.toString();
     }
 
     /**
@@ -177,36 +169,4 @@ public abstract class Template implements Serializable {
         }
         return promptsToNumbers;
     }
-
-    /**
-     * Replace the old prompt of this template with the new prompt.
-     * If the provided old prompt is not one of the prompts in this template, it does nothing.
-     * @param oldPrompt is the provided prompt to be replaced.
-     * @param newPrompt is the new prompt provided to replace the old prompt.
-     */
-    protected void replacePrompt(String oldPrompt, String newPrompt) {
-        if (oldPrompt.equals(plannerNamePrompt)) {
-            setPlannerNamePrompt(newPrompt);
-        }
-    }
-
-    /**
-     * Returns the prompt at a given prompt number.
-     * @param promptNumber The number of the prompt to retrieve.
-     * @return String that's the prompt of the template with the provided prompt number.
-     */
-    private String findPrompt(int promptNumber) {
-        Map<Integer, String> templatePromptsToNumber = assignPromptNumberToPrompts();
-        return templatePromptsToNumber.get(promptNumber);
-    }
-
-    /**
-     * Renames the prompt with the corresponding promptNumber to newName. Note that the prompt numbers start from 0.
-     * @param promptNumber The number of the prompt to rename.
-     * @param newName The new name to give to the prompt.
-     */
-    public void renamePrompt(int promptNumber, String newName){
-        replacePrompt(findPrompt(promptNumber), newName);
-    }
-
 }
