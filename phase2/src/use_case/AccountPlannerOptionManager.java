@@ -8,9 +8,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Manages Planner functionalities for users stored in AccountManager.
+ */
 public class AccountPlannerOptionManager {
     private final AccountManager accountManager;
 
+    /**
+     * Constructs an AccountPlannerOptionManager.
+     * @param accountManager An instance of AccountManager that stores Accounts that AccountPlannerOptionManager can operate on.
+     */
     public AccountPlannerOptionManager(AccountManager accountManager) {
         this.accountManager = accountManager;
     }

@@ -3,13 +3,17 @@ package entity;
 import java.time.LocalDateTime;
 
 /**
- * A instance of this class represents a temporary account in this application.
+ * An instance of this class represents a temporary account in this application.
  */
 public class TemporaryAccount extends UserAccount {
 
     private final LocalDateTime startDate;
     private LocalDateTime endDate;
 
+    /**
+     * Constructs a TemporaryAccount.
+     * @param email representing the email of this account.
+     */
     public TemporaryAccount(String email) {
         super(email);
         super.accountType = "temporary";
@@ -58,7 +62,6 @@ public class TemporaryAccount extends UserAccount {
      * Set the end time of this account.
      */
     public void setEndDate(LocalDateTime endDate) {
-
         this.endDate = endDate;
     }
 }

@@ -1,10 +1,13 @@
 package entity;
 
 /**
- * A instance of this class represents a trial account in this application.
+ * An instance of this class represents a trial account in this application.
  */
 public class TrialAccount extends UserAccount{
 
+    /**
+     * Constructs a TrialAccount.
+     */
     public TrialAccount() {
         super("");
         super.accountType = "trial";

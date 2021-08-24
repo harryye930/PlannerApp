@@ -59,7 +59,6 @@ public class UIGateway extends Reader<Map<String, String>>{
     }
 
     public Map<String, String> loadEditTemplateUITexts(){
-        //TODO: add EditPlannerUI, EditReminder UI after refactoring
         String editTemplateUIFilePath = folderPath + "EditTemplateUITexts.txt";
         return super.readTextFile(editTemplateUIFilePath);
     }
@@ -94,7 +93,7 @@ public class UIGateway extends Reader<Map<String, String>>{
         return super.readTextFile(templateOptionUIFilePath);
     }
 
-    public Map<String, String> PlannerTrashBinUITexts() {
+    public Map<String, String> loadPlannerTrashBinUITexts() {
         String plannerTrashBinUIFilePath = folderPath + "PlannerTrashBinUITexts.txt";
         return super.readTextFile(plannerTrashBinUIFilePath);
     }

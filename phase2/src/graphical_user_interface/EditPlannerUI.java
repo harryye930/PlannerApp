@@ -26,7 +26,7 @@ public class EditPlannerUI extends GeneralUI implements ActionListener {
 
     public EditPlannerUI(GeneralUI parent) {
         this.setParent(parent);
-        this.editRemainder = new EditReminder(parent);
+        this.editRemainder = new EditReminderPlannerUI(parent);
     }
 
     /**

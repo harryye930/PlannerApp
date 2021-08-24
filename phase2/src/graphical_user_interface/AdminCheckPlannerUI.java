@@ -76,10 +76,8 @@ public class AdminCheckPlannerUI extends GeneralUI implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == editInputForm.get("delete")){
             if (plannerController.checkPlanner(((JTextField)editInputForm.get("idTextField")).getText())) {
-                System.out.println(((JTextField)editInputForm.get("idTextField")).getText());
                 plannerController.deletePlanner(((JTextField)editInputForm.get("idTextField")).getText());
                 ((JTextField)editInputForm.get("idTextField")).setText("");
-                System.out.println(((JTextField)editInputForm.get("idTextField")).getText());
                 update();
             } else {
                 ((JTextField)editInputForm.get("idTextField")).setText(labelToStrings.get("invalidInput"));

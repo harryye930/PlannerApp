@@ -10,9 +10,18 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A instance of this class represent an account in this application.
+ * An instance of this class represents an account in this application.
  */
 public abstract class Account implements Serializable {
+    /**
+     * accountType: Type of Account.
+     * userName: Username associated with the Account.
+     * userId: User ID associated with the Account.
+     * email: Email associated with the Account.
+     * password: Password associated with the Account.
+     * suspendedTime: Time this Account is suspended for.
+     * friends: List of Accounts that are this Account's friends.
+     */
     protected String accountType;
     protected String userName;
     protected String userId;
@@ -20,29 +29,37 @@ public abstract class Account implements Serializable {
     protected String password;
     protected LocalDateTime suspendedTime;
     protected List<Account> friends;
-    protected Map<String, List<String>> mailbox;
 
+    /**
+     * Constructs an Account object.
+     */
     public Account() {
         this.accountType = "regular";
         this.userId = ((Integer)Math.abs(this.hashCode())).toString();
         suspendedTime = LocalDateTime.now();
         friends = new ArrayList<>();
-        mailbox = new HashMap<>();
     }
 
     /**
-     * suspendedTime is the variable that determines how long (in days) the user need to wait for them
-     * to be able to login again. Set the suspended time with given integer
-     * @param time the time that set to be suspended (in days).
+     * suspendedTime is the variable that determines how long (in days) the user needs to wait
+     * to be able to login again.
+     * Set the suspended time to time.
+     * @param time The time that was set for a user to be suspended (in days).
      */
     public void setSuspendedTime(long time){
         suspendedTime = suspendedTime.plusDays(time);
     }
 
+    /**
+     * Resets the suspendedTime.
+     */
     public void removeSuspendTime(){
         suspendedTime = LocalDateTime.now();
     }
 
+    /**
+     * @return The suspendedTime.
+     */
     public LocalDateTime getSuspendedTime(){
         return suspendedTime;
     }
@@ -103,7 +120,7 @@ public abstract class Account implements Serializable {
     }
 
     /**
-     * @param email representing the email of this account.
+     * @param email A String representing the email of this account.
      */
     public void setEmail(String email) {
         this.email = email;
@@ -117,14 +134,14 @@ public abstract class Account implements Serializable {
     }
 
     /**
-     * @return A String that represents the user name.
+     * @return A String that represents the username.
      */
     public String getUserName() {
         return this.userName;
     }
 
     /**
-     * @param userName representing the username of this account.
+     * @param userName A String representing the username of this account.
      */
     public void setUserName(String userName) {
         this.userName = userName;
@@ -138,27 +155,17 @@ public abstract class Account implements Serializable {
     }
 
     /**
-     * @param password Representing the password of this account.
+     * @param password A String representing the password of this account.
      */
     public void setPassword(String password) {
         this.password = password;
     }
 
     /**
-     * @return the type of this account.
+     * @return A String representing the type of this account.
      */
     public String getAccountType() {
         return this.accountType;
-    }
-
-    private int find(String[] lst, String item) {
-        // return the index of the item in the list, -1 if not found.
-        for (int i = 0; i < lst.length; i++) {
-            if (lst[i].equals(item)) {
-                return i;
-            }
-        }
-        return -1;
     }
 }
 

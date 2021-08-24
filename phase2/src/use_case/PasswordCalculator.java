@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+/**
+ * A class dedicated to evaluating complexity level of passwords and generating passwords that satisfy specified complexity.
+ */
 public class PasswordCalculator {
 
     /**

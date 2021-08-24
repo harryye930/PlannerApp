@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class PlannerTrashBinUI extends GeneralUI implements ActionListener {
     private boolean flag = false;
-    private final Map<String, String> labelToStrings = new UIGateway().PlannerTrashBinUITexts();
+    private final Map<String, String> labelToStrings = new UIGateway().loadPlannerTrashBinUITexts();
 
     private final JPanel panel = new JPanel();
     private IForm form;

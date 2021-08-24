@@ -5,9 +5,17 @@ import entity.Account;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages friend functionalities for users stored in AccountManager (check if two users are friends, delete friend,
+ * add friend, etc.)
+ */
 public class AccountFriendManager {
     private final AccountManager accManager;
 
+    /**
+     * Constructs an AccountFriendManager.
+     * @param accManager An instance of AccountManager that stores Accounts that AccountFriendManager can operate on.
+     */
     public AccountFriendManager(AccountManager accManager) {
         this.accManager = accManager;
     }

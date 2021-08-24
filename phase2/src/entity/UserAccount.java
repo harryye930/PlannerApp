@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A instance of this class represents a user account in this application.
+ * An instance of this class represents a user account in this application.
  */
 public class UserAccount extends Account {
 
@@ -13,6 +13,7 @@ public class UserAccount extends Account {
     private final List<String> trashPlanner = new ArrayList<>();
 
     /**
+     * Constructs a UserAccount.
      * @param email represent the email of this user account.
      */
     public UserAccount(String email) {

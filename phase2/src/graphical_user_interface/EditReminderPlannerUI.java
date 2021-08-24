@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
-public class EditReminder extends GeneralUI implements ActionListener {
+public class EditReminderPlannerUI extends GeneralUI implements ActionListener {
     private boolean flag = false;
     private boolean isAdd = true;
 
@@ -30,7 +30,7 @@ public class EditReminder extends GeneralUI implements ActionListener {
     JLabel prompt0 = new JLabel();
     JLabel prompt1 = new JLabel();
 
-    public EditReminder(GeneralUI parent) {
+    public EditReminderPlannerUI(GeneralUI parent) {
         this.setParent(parent);
     }
 

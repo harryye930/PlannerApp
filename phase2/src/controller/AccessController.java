@@ -23,6 +23,9 @@ public class AccessController{
 
     private String currUserId;
 
+    /**
+     * Constructs an AccessController.
+     */
     public AccessController(){
         accManager = new AccountManager();
         accGateway = new AccountGateway(accManager);
@@ -187,7 +190,6 @@ public class AccessController{
      */
     public boolean updateAndSaveTempPassword(String retriever){
         String tempPassword = this.generateTempPassword();
-        System.out.println(tempPassword);
         return accManager.setPassword(retriever, tempPassword) && accGateway.saveTempPassword(tempPassword);
     }
 
@@ -199,48 +201,6 @@ public class AccessController{
     public void changeUserName(String retriever, String userName) {
         accManager.setUserName(retriever, userName);
         this.save();
-    }
-
-    /**
-     * Log out the current account, delete the account if it's trial account or due temporary account.
-     */
-    public void logOut() {
-        if (isAdmin(currUserId).equals("trial")) {
-            for (String plannerId: getPlanners(currUserId)) {
-                plannerController.deletePlanner(plannerId);
-            }
-            accManager.removeAccount(currUserId);
-        } else if (isAdmin(currUserId).equals("temporary")) {
-            this.removeAccount(currUserId);
-        }
-        this.save();
-        plannerController.save();
-        templateController.save();
-    }
-
-    /**
-     * Remove an account. User can only remove an account after they logged in or when a trial account logged out.
-     * @param retriever A String representing the User ID or Email.
-     * @return A boolean value representing whether the remove operation is successful or not.
-     */
-    public boolean removeAccount(String retriever) {
-        String accountType = accManager.findAccount(retriever).getAccountType();
-        if(accountType.equals("temporary")){
-             if (accManager.deleteTempAccount(retriever)) {
-                 for (String plannerId: getPlanners(currUserId)) {
-                     plannerController.deletePlanner(plannerId);
-                 }
-                 this.save();
-                 return true;
-             } else {
-                 return false;
-             }
-        }
-        else {
-            boolean flag =  accManager.removeAccount(retriever);
-            this.save();
-            return flag;
-        }
     }
 
     /**
@@ -273,7 +233,7 @@ public class AccessController{
         String sep = "\n=====================\n";
         for (Account i : acc){
             if (!isAdmin(i.getUserId()).equals("admin")) {
-                res.append(i.toString()).append(sep);
+                res.append(i).append(sep);
             }
         }
         return res.toString();

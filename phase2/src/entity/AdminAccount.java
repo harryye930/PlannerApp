@@ -1,12 +1,13 @@
 package entity;
 
 /**
- * A instance of this class represents a admin account in this application.
+ * An instance of this class represents an admin account in this application.
  */
 public class AdminAccount  extends Account {
 
     /**
-     * @param email represent the email of this admin account.
+     * Constructs an AdminAccount.
+     * @param email representing the email of this admin account.
      */
     public AdminAccount(String email) {
         super();

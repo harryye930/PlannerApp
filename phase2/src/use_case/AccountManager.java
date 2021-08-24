@@ -8,7 +8,7 @@ import java.util.*;
 
 
 /**
- * Manages Accounts.
+ * Stores and manages Accounts.
  */
 public class AccountManager implements Serializable{
     private final Map<String, Account> idToAccount;
@@ -25,7 +25,7 @@ public class AccountManager implements Serializable{
         }
 
     /**
-     * change the userName of an account
+     * Change the userName of an account
      * @param retriever A String representing the user ID or Email.
      * @param userName the userName user enters that they want to change to
      */
