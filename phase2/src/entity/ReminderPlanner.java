@@ -12,9 +12,9 @@ import java.util.*;
  */
 public class ReminderPlanner extends Planner{
     private Map<String, List<String>> reminderPlannerTask;
-    private List<String> TaskPromptTasks, DatePromptTasks, CompletionPromptTasks;
+    private List<String> taskPromptTasks, datePromptTasks, completionPromptTasks;
     private String taskHeading, dateHeading, completionStatusHeading;
-    private int NumAgendas;
+    private int numAgendas;
     private final int ID;
 
     /**
@@ -46,14 +46,14 @@ public class ReminderPlanner extends Planner{
         this.taskHeading = taskHeading;
         this.dateHeading = dateHeading;
         this.completionStatusHeading = completionStatusHeading;
-        this.TaskPromptTasks = new ArrayList<>();
-        this.DatePromptTasks = new ArrayList<>();
-        this.CompletionPromptTasks = new ArrayList<>();
+        this.taskPromptTasks = new ArrayList<>();
+        this.datePromptTasks = new ArrayList<>();
+        this.completionPromptTasks = new ArrayList<>();
         this.reminderPlannerTask = new HashMap<>();
-        this.reminderPlannerTask.put(this.taskHeading, this.TaskPromptTasks);
-        this.reminderPlannerTask.put(this.dateHeading, this.DatePromptTasks);
-        this.reminderPlannerTask.put(this.completionStatusHeading, this.CompletionPromptTasks);
-        this.NumAgendas = 0;
+        this.reminderPlannerTask.put(this.taskHeading, this.taskPromptTasks);
+        this.reminderPlannerTask.put(this.dateHeading, this.datePromptTasks);
+        this.reminderPlannerTask.put(this.completionStatusHeading, this.completionPromptTasks);
+        this.numAgendas = 0;
     }
 
     /**
@@ -62,7 +62,7 @@ public class ReminderPlanner extends Planner{
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder("\n");
-        int taskNums = this.TaskPromptTasks.size();
+        int taskNums = this.taskPromptTasks.size();
 
         sb.append("This is a Reminder Planner\n");
         sb.append("Privacy Status: ").append(this.privacyStatus).append("\n");
@@ -103,7 +103,7 @@ public class ReminderPlanner extends Planner{
      */
     @Override
     public int getNumAgendas(){
-        return this.NumAgendas;
+        return this.numAgendas;
     }
 
     /**
@@ -136,7 +136,7 @@ public class ReminderPlanner extends Planner{
             this.reminderPlannerTask.get(this.taskHeading).add(s1);
             this.reminderPlannerTask.get(this.dateHeading).add(s2);
             this.reminderPlannerTask.get(this.completionStatusHeading).add("incomplete");
-            this.NumAgendas ++;
+            this.numAgendas++;
             return true;
         }
     }

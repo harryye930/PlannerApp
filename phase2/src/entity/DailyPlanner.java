@@ -2,8 +2,6 @@ package entity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +15,7 @@ public class DailyPlanner extends Planner {
     private int interval;  //minutes interval
     private int startHour;
     private int endHour;
-    private int NumAgendas;
+    private int numAgendas;
     private final int ID;
 
     /**
@@ -50,7 +48,7 @@ public class DailyPlanner extends Planner {
         this.endHour = Integer.parseInt(endTime.substring(0, 2));
         this.timesList = new ArrayList<>();
         this.dailyPlannerTask = new HashMap<>();
-        this.NumAgendas = 0;
+        this.numAgendas = 0;
         String timeFormat;
         int m = 0;
         for (int h = this.startHour; h < this.endHour; h+=interval) {
@@ -83,7 +81,7 @@ public class DailyPlanner extends Planner {
      * @return An integer representation of the number of agendas.
      */
     public int getNumAgendas() {
-        return this.NumAgendas;
+        return this.numAgendas;
     }
 
     /**
@@ -115,7 +113,7 @@ public class DailyPlanner extends Planner {
      */
     @Override
     public Boolean add(String time, String agenda) {
-        this.NumAgendas++;
+        this.numAgendas++;
         int newStartHour = Integer.parseInt(time.substring(0, 2));
 
         if (newStartHour < this.startHour) {
@@ -143,7 +141,7 @@ public class DailyPlanner extends Planner {
             this.dailyPlannerTask.put(hour + ":00", agenda);
         }
 
-        this.NumAgendas++;
+        this.numAgendas++;
         return true;
     }
 
