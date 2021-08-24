@@ -32,7 +32,7 @@ public class AccountPlannerOptionManager {
         Account account = this.accountManager.findAccount(retriever);
         String status = account.getAccountType();
 
-        if (status.equals("regular") | status.equals("temporary")){
+        if (!status.equals("admin")){
             return ((UserAccount) account).setPlanners(plannerId);
         } else {
             return false;
@@ -49,9 +49,9 @@ public class AccountPlannerOptionManager {
         Account account = this.accountManager.findAccount(retriever);
         String status = account.getAccountType();
 
-        if (status.equals("regular") || status.equals("temporary") || status.equals("trial") ){
+        if (!status.equals("admin") ){
             return ((UserAccount) account).getPlanner();
-        } else if (status.equals("admin")){
+        } else {
             HashSet<String> ids = new HashSet<>();
             for (Account acc: accountManager.getAllAccount()) {
                 if (!accountManager.checkAccountRole(acc.getUserId()).equals("admin")) {
@@ -60,7 +60,6 @@ public class AccountPlannerOptionManager {
             }
             return new ArrayList<>(ids);
         }
-        return new ArrayList<>();
     }
 
     /**

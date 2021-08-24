@@ -57,7 +57,7 @@ public class CheckPlannerUI extends GeneralUI implements ActionListener {
         fb.addLabel("prompt", labelToStrings.get("prompt"));
         fb.addTextField("plannerId");
         fb.addSubmitButton("submit", labelToStrings.get("submit"));
-        fb.addSuperButton("goBack", labelToStrings.get("goBack"), this.getParent());
+        fb.addSubmitButton("goBack", labelToStrings.get("goBack"));
         fb.addListener(this);
 
         form = fb.getForm();
@@ -76,6 +76,9 @@ public class CheckPlannerUI extends GeneralUI implements ActionListener {
             } else {
                 ((JLabel)(this.form.get("prompt"))).setText(labelToStrings.get("invalidInput"));
             }
+        } else if (e.getSource() == form.get("goBack")) {
+            checkPlanner.remove(plannerInfo);
+            this.getParent().run();
         }
     }
 }
