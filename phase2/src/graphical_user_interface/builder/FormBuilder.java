@@ -72,14 +72,6 @@ public class FormBuilder implements ActionListener{
     }
 
     /**
-     * Add a JPasswordField to the form which can be used to take password.
-     * @param name A String representing the name of the component, can be used to access component.
-     */
-    public void addPasswordText(String name) {
-        this.nameToComponent.put(name, new JPasswordField());
-    }
-
-    /**
      * Add a JButton to the form, the event triggered by this button is decided outside this class.
      * @param name A String representing the name of the component, can be used to access component.
      * @param prompt A String representing the prompt on the button.
