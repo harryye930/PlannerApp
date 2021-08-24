@@ -6,11 +6,11 @@ import use_case.PlannerManager;
 import java.util.List;
 
 /**
- *  the Planner controller.
+ * The Planner controller.
  */
 public class PlannerController {
     private final PlannerManager plannerManager;
-    private final PlannerGateway accGateway;
+    private final PlannerGateway plannerGateway;
 
     private AccessController accessController;
     private TemplateController templateController;
@@ -18,63 +18,62 @@ public class PlannerController {
     private String currPlannerId;
 
     /**
-     * Set the access Controller.
-     * @param accessController A access Controller Controller.
+     * Sets the access Controller.
+     * @param accessController An AccessController object.
      */
     public void setAccessController(AccessController accessController) {
         this.accessController = accessController;
     }
 
     /**
-     * Set the template Controller.
-     * @param templateController A template controller object
+     * Sets the template Controller.
+     * @param templateController A TemplateController object.
      */
     public void setTemplateController(TemplateController templateController) {
         this.templateController = templateController;
     }
 
     /**
-     * Initialize the PlannerController. Create a new PlannerManager.
+     * Initializes the PlannerController. Creates a new PlannerManager.
      */
     public PlannerController(){
         this.plannerManager = new PlannerManager();
-        this.accGateway = new PlannerGateway(plannerManager);
+        this.plannerGateway = new PlannerGateway(plannerManager);
         this.load();
     }
 
     /**
-     * Get the current planner ID.
-     * @return the planner id
+     * Gets the current planner ID.
+     * @return The current planner id.
      */
     public String getCurrPlannerId() {
         return currPlannerId;
     }
 
     /**
-     * Save the data to the database, call this function when a saving is needed. Must be called
-     * when exit the application.
-     * @return A boolean value representing whether the loading process is successful or not.
+     * Saves the planners.
+     * Call this function when a saving is needed. Must be called when exit the application.
+     * @return A boolean value representing whether the saving process is successful.
      */
     public boolean save() {
-        return this.accGateway.save();
+        return this.plannerGateway.save();
     }
 
     /**
-     * Load in the data from database to AccountManager.
-     * @return A boolean value representing whether the loading process is successful or not.
+     * Loads in the planners to PlannerManager.
+     * @return A boolean value representing whether the loading process is successful.
      */
     public boolean load() {
-        return this.accGateway.load();
+        return this.plannerGateway.load();
     }
 
     /**
-     * Create a new planner based on the chosen template.
+     * Creates a new planner based on the chosen template.
      * @return A String representing the planner id.
      */
     public String createPlanner(String firstInput, String secondInput, String thirdInput, String name) {
         String type = this.templateController.getTemplateType(
                 Integer.parseInt(templateController.getCurrTemplateId()));
-        System.out.println(type);
         int id;
         Integer createdPlannerID = this.plannerManager.createPlanner(type, name, firstInput, secondInput, thirdInput);
         if (createdPlannerID == null){
@@ -89,16 +88,16 @@ public class PlannerController {
         }
     }
 
-    /** Pass on request to get a string representation of a planner
-     *
-     * @return a string of the planner tasks
+    /**
+     * Gets a string representation of the planner with id.
+     * @return A string representing the planner.
      */
     public String toString(int id){
         return plannerManager.findPlanner(id).toString();
     }
 
     /**
-     * Return a String of planners owned by current user.
+     * Returns a String of planners owned by current user.
      * @return A String representing the information of planners.
      */
     public String viewUserPlanners() {
@@ -116,7 +115,7 @@ public class PlannerController {
     }
 
     /**
-     * Return a String of public planners.
+     * Returns a String representation of all public planners.
      * @return A String representing the information of public planners.
      */
     public String viewPublicPlanners() {
@@ -124,16 +123,15 @@ public class PlannerController {
         List<Integer> publicPlanners = this.getPublicPlanners();
         for (int plannerId: publicPlanners) {
             res.append(this.toString(plannerId));
-            res.append("==================================");
+            res.append("==================================\n");
         }
         return res.toString();
     }
 
     /**
-     * Check the planner with given id, similar to the login process.
-     * @param id A String representing the if the planner we want to check.
-     * @return A boolean value representing whether the planner is available to the
-     * user or not.
+     * Checks if the planner with id is available to the current user.
+     * @param id A string representing the ID of the planner.
+     * @return A boolean value representing whether the planner is available to the current user.
      */
     public boolean checkPlanner(String id) {
         List<String> plannerIds;
@@ -151,23 +149,23 @@ public class PlannerController {
         }
     }
 
-
-    /** Pass on request to edit daily planner.
-     *
-     * @param time: time slot on DailyPlanner, HH:MM
-     * @param newAgenda: new agenda item
-     * @return true iff is correctly request to change.
+    /**
+     * Passes on request to edit a planner.
+     * @param item: The item for which the agenda will be changed. The item varies based on the type of the planner,
+     *            e.g., item is timeslot for daily planner, and is status column for project planner.
+     * @param newAgenda: New agenda item.
+     * @return true iff is edit is successful.
      */
-    public boolean edit(String time, String newAgenda){
-        boolean flag = plannerManager.edit(Integer.parseInt(currPlannerId), time, newAgenda);
+    public boolean edit(String item, String newAgenda){
+        boolean flag = plannerManager.edit(Integer.parseInt(currPlannerId), item, newAgenda);
         this.save();
         return flag;
     }
 
-    /** Pass on request to change their own planner
-     *
-     * @param status "private" or "public" or "friends-only"
-     * @return true iff the status is correctly requested to change. (from "public to "private or vise versa)
+    /**
+     * Passes on request to change the privacy status of the current planner.
+     * @param status New status to set the planner to. Must be "private" or "public" or "friends-only"
+     * @return true iff the planner's privacy status has been successfully set to status.
      */
     public boolean changePrivacyStatus(String status){
         boolean flag = plannerManager.changePrivacyStatus(Integer.parseInt(currPlannerId), status);
@@ -176,7 +174,7 @@ public class PlannerController {
     }
 
     /**
-     * delete the planner corresponding to the given id.
+     * Deletes the planner corresponding to the given plannerId.
      * @return true if successfully deleted, false if otherwise.
      */
     public boolean deletePlanner(String plannerId){
@@ -187,57 +185,36 @@ public class PlannerController {
     }
 
     /**
-     * Show all the planners id of one author.
-     * @param author the userId of the author.
-     * @return the List of integer id of planners.
-     */
-    public List<Integer> getPlannerByAuthor(String author){
-        return plannerManager.getPlannersByAuthor(author);
-    }
-
-    /**
-     * return a List of all integer id of all planners made public by all authors.
-     * @return the List of all public planner's id
+     * Returns a list of id's of all planners that are public.
+     * @return List of all public planner's id.
      */
     public List<Integer> getPublicPlanners(){
         return plannerManager.getPublicPlanners();
     }
 
     /**
-     * get the type of the planner. could be "daily" or "project" planner.
-     * @param id the id of the planner
-     * @return the String representation of the type of planner.
+     * Gets the type of the planner with id.
+     * @param id The id of the planner.
+     * @return String representation of the type of the planner.
      */
     public String getType(int id){
         return plannerManager.plannerType(id);
     }
 
     /**
-     * Get the number of agendas of a planner corresponding to given integer id.
-     * @param id the integer id of the planner
-     * @return the number of agendas of the planner
-     */
-    public int getNumAgendas(int id) {
-        return plannerManager.getNumAgendas(id);
-    }
-
-    /**
-     * Return the privacy status of the planner corresponding to the given id.
-     * @param id the integer id of the planner
-     * @return the String "private" or "public".
+     * Returns the privacy status of the planner corresponding to the given id.
+     * @param id The id of the planner.
+     * @return String representing the privacy status of the planner.
      */
     public String  getPrivacyStatus(int id) {
         return this.plannerManager.getPrivacyStatus(id);
     }
 
-    //TODO the ChangeTaskStatus method, based on project type; daily always return false; project planner detail see
-    //TODO in project planner entity class; reminder planner the second input parameter should be a default value(e.g. "")
-
     /**
-     * Add new agenda or task to the planner
-     * @param i the first String input depending on the planner type
-     * @param j the second String input depending on the planner type.
-     * @return a boolean value representing whether the change is successful or not.
+     * Adds new agenda or task to the planner.
+     * @param i The first String input depending on the planner type.
+     * @param j The second String input depending on the planner type.
+     * @return A boolean value representing whether the change is successful.
      */
     public boolean add(String i, String j) {
         boolean flag = this.plannerManager.add(Integer.parseInt(this.getCurrPlannerId()), i, j);
@@ -246,10 +223,10 @@ public class PlannerController {
     }
 
     /**
-     * Change the status of the given task.
+     * Changes the status of the given task.
      * @param taskName A String representing the task name.
      * @param status A String representing the task status.
-     * @return a boolean value representing whether the change is successful or not.
+     * @return A boolean value representing whether the change is successful.
      */
     public boolean changeTaskStatus(String taskName, String status) {
         boolean flag = plannerManager.changeTaskStatus(Integer.parseInt(getCurrPlannerId()), taskName, status);

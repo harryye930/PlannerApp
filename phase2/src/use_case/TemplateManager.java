@@ -283,7 +283,6 @@ public class TemplateManager implements Serializable {
         return hm.get(id).isType();
     }
 
-
     /**
      * Toggles the published status of a given template (i.e., published to unpublished, vice versa).
      * @param id An integer representing the id of the template.
