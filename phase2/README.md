@@ -46,6 +46,20 @@ template prompts differently or even in a different language.
 
 ## Design Patterns
 In this program, we used the following design patterns.
+### Dependency Injection
+Here we will give one example of using Dependency Injection in the program.
+- Which classes were involved?\
+  GeneralUI, AccessController, TemplateController, and PlannerController.
+- How was this design pattern implemented and why did we use it?\
+In the GeneralUI class (the parent class for all GUI classes), we call the constructor for all three controllers.\
+And in each of the controllers, we have setter methods which take in an instance of another controller.\
+<br/>
+This way, we are not calling constructors of the other controllers in every controller class, and the GeneralUI class is 
+the only place where we call those constructors. So if we need to change the constructor of a controller class, the
+GeneralUI class is the only place we need to change.\
+<br/>
+This eliminates the dependency between controller classes, and makes the program more Open/Closed.
+
 ### Builder
 - Which classes were involved?
   - IForm: An interface with a list of required methods for returning components of a Form.
