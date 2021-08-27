@@ -1,3 +1,5 @@
+Authors: Jinyoung Lee, Raazia Hashim, Xiaoxue Yang, Xueqing Zhai, Runlong Ye, Zeyang Ni, Zifan Ye
+
 ## How to run the program
 To run the program, run the main method in Main.java. \
 Make sure to not touch the data folder sitting directly inside the phase2 folder, as it contains external files that the 
