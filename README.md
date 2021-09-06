@@ -51,14 +51,14 @@ In this program, we used the following design patterns.
 ### Dependency Injection
 Here we will give one example of using Dependency Injection in the program.
 - Which classes were involved?\
-  GeneralUI, AccessController, TemplateController, and PlannerController.
+  GeneralUI, AccessController, TemplateController, and Planne.\rController.
 - How was this design pattern implemented and why did we use it?\
-In the GeneralUI class (the parent class for all GUI classes), we call the constructor for all three controllers.\
-And in each of the controllers, we have setter methods which take in an instance of another Controller.\
+In the GeneralUI class (the parent class for all GUI classes), we call the constructor for all three controllers. \
+And in each of the controllers, we have setter methods which take in an instance of another Controller. \
 <br/>
 This way, we are not calling constructors of the other controllers in every Controller class, and the GeneralUI class is 
 the only place where we call those constructors. So if we need to change the constructor of a Controller class, the
-GeneralUI class is the only place we need to change.\
+GeneralUI class is the only place we need to change. \
 <br/>
 This eliminates the dependency between Controller classes, and makes the program more Open/Closed.
 
@@ -80,7 +80,7 @@ in every GUI class. \
 <br/>
 Therefore, by having a builder class and having different GUI classes call the builder methods that they need in order, \
 we encapsulate the process of building a Panel from the rest of the program. It also helps us keep the layout (including 
-bounds on the screen, font, etc.) as uniform as possible across all GUI classes.\
+bounds on the screen, font, etc.) as uniform as possible across all GUI classes. \
 <br/>
 The type of object returned by getForm() method in the FormBuilder is IForm, this way, GUI classes will depend on \
 abstraction instead of a specific class. This makes the program more Open/Closed as we can easily replace a FormBuilder 
